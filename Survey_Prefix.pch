@@ -1,0 +1,50 @@
+//
+// Prefix header for all source files of the 'Survey' target in the 'Survey' project
+//
+
+#ifdef __OBJC__
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "SurveyAppDelegate.h"
+#import "Constants-Defines.h"
+
+#if defined(DEBUG)
+
+#define SHOW_VIEW_CONTROLLER_CLASS_NAME
+
+#endif
+
+//#define SHOW_CUSTOMER_XML
+
+#if defined(RELEASE) && defined(SHOW_CUSTOMER_XML)
+#error You cannot have the SHOW_CUSTOMER_XML flag defined in a RELEASE build.
+#endif
+
+//#define SHOW_SQL_STATEMENTS
+
+#if defined(RELEASE) && defined(SHOW_SQL_STATEMENTS)
+#error You cannot have the SHOW_SQL_STATEMENTS flag defined in a RELEASE build.
+#endif
+
+#if defined(DEBUG)
+#define METHOD_LOG (NSLog(@"METHOD_LOG: %@ %s", NSStringFromSelector(_cmd), __FILE__))
+#define DebugLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#define METHOD_LOG
+#define DebugLog(...)
+#endif
+
+#pragma mark - Override credentials
+
+#if defined(DEBUG)
+
+//#define OVERRIDE_USER_NAME          @"bobatlas"
+//#define OVERRIDE_PASSWORD           @"a"
+//#define OVERRIDE_BETA_PASSWORD      @"webdir:pvobeta2 add:wsds.atlasworldgroup.com"
+//#define OVERRIDE_DRIVER_NUMBER      @"5089"
+//#define OVERRIDE_HAULING_AGENT      @"0207"
+
+#endif
+
+#endif

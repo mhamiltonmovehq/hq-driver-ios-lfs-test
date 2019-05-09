@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<IGCSync>
+  <survey_download>
+    <weight_override>12000</weight_override>
+    <last_name>Doe</last_name>
+    <first_name>John</first_name>
+    <company_name>Doe Inc. </company_name>
+    <email>john@email.com</email>
+    <email_address>john@email.com</email_address>
+    <primary_phone>(123) 123-1234</primary_phone>
+    <origin_info>
+      <add1>123 Origin Ave</add1>
+      <city>Beverly Hills</city>
+      <state>CA</state>
+      <zip>90210</zip>
+      <first_name>John</first_name>
+      <last_name>Doe</last_name>
+      <company_name>Doe Inc. </company_name>
+    </origin_info>
+    <consignee_last_name>Doe</consignee_last_name>
+    <consignee_first_name>John</consignee_first_name>
+    <dest_info>
+      <add1>123 Destination St. </add1>
+      <city>Galena</city>
+      <state>OH</state>
+      <zip>43021</zip>
+      <first_name>John</first_name>
+      <last_name>Doe</last_name>
+    </dest_info>
+    <pricing_mode>400N</pricing_mode>
+    <notes>Shuttle required at origin</notes>
+    <order_number>DEMOPACK1</order_number>
+    <sync_field>DEMOPACK1</sync_field>
+    <booking_agent>
+      <code>1234</code>
+    </booking_agent>
+    <pack_from>7/18/2014</pack_from>
+    <pack_to>7/18/2014</pack_to>
+    <pack_prefer>7/18/2014</pack_prefer>
+    <load_from>7/18/2014</load_from>
+    <load_to>7/18/2014</load_to>
+    <load_prefer>7/18/2014</load_prefer>
+    <deliver_from>7/18/2014</deliver_from>
+    <deliver_to>7/18/2014</deliver_to>
+    <deliver_prefer>7/18/2014</deliver_prefer>
+    <decision>7/18/2014</decision>
+    <survey_date>7/18/2014</survey_date>
+    <follow_up>7/18/2014</follow_up>
+    <inventory_date>7/18/2014</inventory_date>
+  </survey_download>
+  <pvo_driver_inventory>
+    <load_type>Household</load_type>
+    <location>
+      <pvo_location_type>PackersInventory</pvo_location_type>
+      <rooms>
+        <inventory_room name="Dining Room">
+          <items>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000005</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000006</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000007</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000008</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000009</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000010</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000011</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000012</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000013</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Dish Pack - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000014</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Dish Towels</description>
+                <carton_content>
+                  <description>Dish Towels</description>
+                </carton_content>
+                <description>Dishes</description>
+                <carton_content>
+                  <description>Dishes</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+          </items>
+        </inventory_room>
+        <inventory_room name="Family Room">
+          <items>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>Fish Tank 1</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000004</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>true</has_dimensions>
+              <length>10</length>
+              <width>20</width>
+              <height>20</height>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents />
+              <inventory_damage>
+                <process_type>Loading</process_type>
+                <damage code="D" description="Dented" />
+                <location code="3" description="Corner" />
+                <location code="12" description="Edge" />
+              </inventory_damage>
+              <descriptive_symbols />
+            </item>
+          </items>
+        </inventory_room>
+        <inventory_room name="Master Bedroom ">
+          <items>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>1.5 - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000001</barcode>
+              <tag_color>Red</tag_color>
+              <notes />
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Bedding</description>
+                <carton_content>
+                  <description>Bedding</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>6.0 - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000002</barcode>
+              <tag_color>Red</tag_color>
+              <notes>Antique jewelry </notes>
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>Clothes (Hers)</description>
+                <carton_content>
+                  <description>Clothes (Hers)</description>
+                </carton_content>
+                <description>Clothes (His)</description>
+                <carton_content>
+                  <description>Clothes (His)</description>
+                </carton_content>
+                <description>Coats</description>
+                <carton_content>
+                  <description>Coats</description>
+                </carton_content>
+                <description>Jewelry</description>
+                <carton_content>
+                  <description>Jewelry</description>
+                </carton_content>
+                <description>Jewelry Box</description>
+                <carton_content>
+                  <description>Jewelry Box</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols />
+              <high_value>
+                <cost>1000.00</cost>
+              </high_value>
+            </item>
+            <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+              <article_name>1.5 - CP</article_name>
+              <quantity>1</quantity>
+              <barcode>0010000003</barcode>
+              <tag_color>Red</tag_color>
+              <notes>Electronics inside</notes>
+              <has_dimensions>false</has_dimensions>
+              <packer_initials>SKS</packer_initials>
+              <model_number />
+              <serial_number />
+              <carton_contents>
+                <description>CD Player</description>
+                <carton_content>
+                  <description>CD Player</description>
+                </carton_content>
+                <description>Camera</description>
+                <carton_content>
+                  <description>Camera</description>
+                </carton_content>
+                <description>Stereo</description>
+                <carton_content>
+                  <description>Stereo</description>
+                </carton_content>
+              </carton_contents>
+              <descriptive_symbols>
+                <symbol code="MCU" description="Mechanical Condition Unknown" />
+              </descriptive_symbols>
+            </item>
+          </items>
+        </inventory_room>
+      </rooms>
+    </location>
+  </pvo_driver_inventory>
+</IGCSync>

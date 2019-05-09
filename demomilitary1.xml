@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<IGCSync>
+    <survey_download>
+        <weight_override>5000</weight_override>
+        <last_name>Smith</last_name>
+        <first_name>Jane</first_name>
+        <company_name>IGC Software</company_name>
+        <email>test@igcsoftware.com</email>
+        <email_address>test@igcsoftware.com</email_address>
+        <primary_phone>(123) 123-1234</primary_phone>
+        <origin_info>
+            <add1>123 Origin Street</add1>
+            <city>Beverly Hills</city>
+            <state>CA</state>
+            <zip>90210</zip>
+            <first_name>Jane</first_name>
+            <last_name>Smith</last_name>
+            <company_name>IGC Software</company_name>
+        </origin_info>
+        <consignee_last_name>Smith</consignee_last_name>
+        <consignee_first_name>Jane</consignee_first_name>
+        <dest_info>
+            <add1>123 Destination Way</add1>
+            <city>Galena</city>
+            <state>OH</state>
+            <zip>43021</zip>
+            <first_name>Jane</first_name>
+            <last_name>Smith</last_name>
+        </dest_info>
+        <pricing_mode>400N</pricing_mode>
+        <notes>Shuttle required at origin</notes>
+        <order_number>DEMOMILITARY1</order_number>
+        <sync_field>DEMOMILITARY1</sync_field>
+        <gbl_number>123456</gbl_number>
+        <booking_agent>
+            <code>1234</code>
+        </booking_agent>
+        <pack_from>7/18/2014</pack_from>
+        <pack_to>7/18/2014</pack_to>
+        <pack_prefer>7/18/2014</pack_prefer>
+        <load_from>7/18/2014</load_from>
+        <load_to>7/18/2014</load_to>
+        <load_prefer>7/18/2014</load_prefer>
+        <deliver_from>7/18/2014</deliver_from>
+        <deliver_to>7/18/2014</deliver_to>
+        <deliver_prefer>7/18/2014</deliver_prefer>
+        <decision>7/18/2014</decision>
+        <survey_date>7/18/2014</survey_date>
+        <follow_up>7/18/2014</follow_up>
+        <inventory_date>7/18/2014</inventory_date>
+    </survey_download>
+    <pvo_driver_inventory>
+        <load_type>Military</load_type>
+        <location>
+            <pvo_location_type>Residence</pvo_location_type>
+            <rooms>
+                <inventory_room name="Family Room">
+                    <items>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>TV-Flat 30-59 - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000004</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols>
+                                <symbol code="C" description="Color TV" />
+                                <symbol code="SW" description="Stretch Wrapped" />
+                            </descriptive_symbols>
+                            <high_value>
+                                <cost>1200.00</cost>
+                            </high_value>
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Overstuffed</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000005</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="BR" description="Broken" />
+                                <location code="8" description="Right" />
+                                <location code="6" description="Leg" />
+                            </inventory_damage>
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="P" description="Peeling" />
+                                <location code="5" description="Left" />
+                                <location code="1" description="Arm" />
+                            </inventory_damage>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Sofa, 4 Cushion </article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000006</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="F" description="Faded" />
+                                <location code="(15s)" description="Seats" />
+                            </inventory_damage>
+                            <descriptive_symbols />
+                            <high_value>
+                                <cost>700.00</cost>
+                            </high_value>
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Speaker </article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000007</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Speaker </article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000008</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Speaker </article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000009</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                    </items>
+                </inventory_room>
+                <inventory_room name="Garage">
+                    <items>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Snowblower</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000027</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="L" description="Loose" />
+                                <location code="4" description="Front" />
+                            </inventory_damage>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Table, Utility</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000028</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="CH" description="Chipped" />
+                                <location code="10" description="Top" />
+                            </inventory_damage>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Tire w/ Rim</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000029</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Toolchest, Medium</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000030</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="D" description="Dented" />
+                                <location code="(3s)" description="Corners" />
+                            </inventory_damage>
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="CR" description="Crushed" />
+                                <location code="10" description="Top" />
+                                <location code="13" description="Center" />
+                            </inventory_damage>
+                            <descriptive_symbols>
+                                <symbol code="PE" description="Professional Equipment" />
+                                <symbol code="SW" description="Stretch Wrapped" />
+                            </descriptive_symbols>
+                        </item>
+                    </items>
+                </inventory_room>
+                <inventory_room name="Kitchen">
+                    <items>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000010</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000011</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000012</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000013</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000014</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000015</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000016</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000017</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000018</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Dish Pack - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000019</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Dish Towels</description>
+                                <carton_content>
+                                    <description>Dish Towels</description>
+                                </carton_content>
+                                <description>Dishes</description>
+                                <carton_content>
+                                    <description>Dishes</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Kitchenette</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000020</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Kitchenette</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000021</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Kitchenette</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000022</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Kitchenette</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000023</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chair, Kitchenette</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000024</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <descriptive_symbols />
+                        </item>
+                    </items>
+                </inventory_room>
+                <inventory_room name="Master Bedroom ">
+                    <items>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>6.0 - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000001</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Clock</description>
+                                <carton_content>
+                                    <description>Clock</description>
+                                </carton_content>
+                                <description>Closet Items</description>
+                                <carton_content>
+                                    <description>Closet Items</description>
+                                </carton_content>
+                                <description>Clothes (Hers)</description>
+                                <carton_content>
+                                    <description>Clothes (Hers)</description>
+                                </carton_content>
+                                <description>Clothes (His)</description>
+                                <carton_content>
+                                    <description>Clothes (His)</description>
+                                </carton_content>
+                                <description>Curtains</description>
+                                <carton_content>
+                                    <description>Curtains</description>
+                                </carton_content>
+                                <description>Jewelry</description>
+                                <carton_content>
+                                    <description>Jewelry</description>
+                                </carton_content>
+                                <description>Jewelry Box</description>
+                                <carton_content>
+                                    <description>Jewelry Box</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols>
+                                <symbol code="CP" description="Carrier Packed" />
+                            </descriptive_symbols>
+                            <high_value>
+                                <cost>1200.00</cost>
+                            </high_value>
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>3.0 - PBO</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000002</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes>Holds electronics</notes>
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents />
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="BE" description="Bent" />
+                                <location code="3" description="Corner" />
+                            </inventory_damage>
+                            <descriptive_symbols>
+                                <symbol code="DBO" description="Disassembled By Owner" />
+                                <symbol code="PBO" description="Packed By Owner" />
+                            </descriptive_symbols>
+                            <high_value>
+                                <cost>300.00</cost>
+                            </high_value>
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>Chest, Cedar </article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000003</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Bedding</description>
+                                <carton_content>
+                                    <description>Bedding</description>
+                                </carton_content>
+                                <description>Clothes (Hers)</description>
+                                <carton_content>
+                                    <description>Clothes (Hers)</description>
+                                </carton_content>
+                                <description>Clothes (His)</description>
+                                <carton_content>
+                                    <description>Clothes (His)</description>
+                                </carton_content>
+                            </carton_contents>
+                            <inventory_damage>
+                                <process_type>Loading</process_type>
+                                <damage code="F" description="Faded" />
+                                <location code="10" description="Top" />
+                            </inventory_damage>
+                            <descriptive_symbols>
+                                <symbol code="SW" description="Stretch Wrapped" />
+                            </descriptive_symbols>
+                        </item>
+                    </items>
+                </inventory_room>
+                <inventory_room name="Office">
+                    <items>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>4.5 - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000025</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes />
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>CD Player</description>
+                                <carton_content>
+                                    <description>CD Player</description>
+                                </carton_content>
+                                <description>Compact Discs</description>
+                                <carton_content>
+                                    <description>Compact Discs</description>
+                                </carton_content>
+                                <description>Computer Manuals</description>
+                                <carton_content>
+                                    <description>Computer Manuals</description>
+                                </carton_content>
+                                <description>Desk Items</description>
+                                <carton_content>
+                                    <description>Desk Items</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols>
+                                <symbol code="MCU" description="Mechanical Condition Unknown" />
+                            </descriptive_symbols>
+                        </item>
+                        <item is_carton="false" is_cp="false" is_pbo="false" is_mpro="false" is_spro="false" is_deleted="false" is_delivered="false">
+                            <article_name>3.0 - CP</article_name>
+                            <quantity>1</quantity>
+                            <barcode>0010000026</barcode>
+                            <tag_color>Red</tag_color>
+                            <notes>Holds brand new Apple Computer</notes>
+                            <has_dimensions>false</has_dimensions>
+                            <model_number />
+                            <serial_number />
+                            <carton_contents>
+                                <description>Computer</description>
+                                <carton_content>
+                                    <description>Computer</description>
+                                </carton_content>
+                                <description>Speaker</description>
+                                <carton_content>
+                                    <description>Speaker</description>
+                                </carton_content>
+                            </carton_contents>
+                            <descriptive_symbols />
+                            <high_value>
+                                <cost>750.00</cost>
+                            </high_value>
+                        </item>
+                    </items>
+                </inventory_room>
+            </rooms>
+        </location>
+    </pvo_driver_inventory>
+</IGCSync>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<IGCSync>
+  <survey_download>
+    <weight_override>5000</weight_override>
+    <last_name>Jane</last_name>
+    <first_name>Calamity</first_name>
+    <company_name>Wildwest Inc.</company_name>
+    <email>tcalamity@example.com</email>
+    <email_address>tcalamity@example.com</email_address>
+    <primary_phone>(123) 123-1234</primary_phone>
+    <origin_info>
+      <add1>123 Origin Street</add1>
+      <city>Princeton</city>
+      <state>MO</state>
+      <zip>90210</zip>
+      <first_name>Calamity</first_name>
+      <last_name>Jane</last_name>
+      <company_name>Wildwest Inc.</company_name>
+    </origin_info>
+    <consignee_last_name>Jane</consignee_last_name>
+    <consignee_first_name>Calamity</consignee_first_name>
+    <dest_info>
+      <add1>123 Destination Way</add1>
+      <city>Miles City</city>
+      <state>MT</state>
+      <zip>59301</zip>
+      <first_name>Jane</first_name>
+      <last_name>Calamity</last_name>
+    </dest_info>
+    <pricing_mode>400N</pricing_mode>
+    <notes>Shuttle required at origin</notes>
+    <order_number>DEMO2</order_number>
+    <sync_field>DEMO2</sync_field>
+    <gbl_number>123456</gbl_number>
+    <booking_agent>
+      <code>1234</code>
+    </booking_agent>
+    <pack_from>7/18/2014</pack_from>
+    <pack_to>7/18/2014</pack_to>
+    <pack_prefer>7/18/2014</pack_prefer>
+    <load_from>7/18/2014</load_from>
+    <load_to>7/18/2014</load_to>
+    <load_prefer>7/18/2014</load_prefer>
+    <deliver_from>7/18/2014</deliver_from>
+    <deliver_to>7/18/2014</deliver_to>
+    <deliver_prefer>7/18/2014</deliver_prefer>
+    <decision>7/18/2014</decision>
+    <survey_date>7/18/2014</survey_date>
+    <follow_up>7/18/2014</follow_up>
+    <inventory_date>7/18/2014</inventory_date>
+  </survey_download>
+</IGCSync>
