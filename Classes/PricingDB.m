@@ -1197,32 +1197,33 @@ success:
 
 -(NSString*)getCRMSyncAddress:(int)vanlineID withEnvironment:(int)selectedEnvironment
 {
-    if (![self tableExists:@"CRMSettings"])
-        return @"";
-    
-    NSString *syncAddressColumn;
-    if (selectedEnvironment == 1) {
-        syncAddressColumn = @"QASyncAddress";
-    } else if (selectedEnvironment == 2) {
-        syncAddressColumn = @"ProdSyncAddress";
-    } else {
-        syncAddressColumn = @"DevSyncAddress";
-    }
-    
-    NSString *cmd = [NSString stringWithFormat:@"SELECT %@ FROM CRMSettings s WHERE VanlineID = %d", syncAddressColumn, vanlineID];
-    NSString *retval = @"";
-    
-    sqlite3_stmt *stmnt;
-    if([self prepareStatement:cmd withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
-            retval = [SurveyDB stringFromStatement:stmnt columnID:0];
-        }
-    }
-    sqlite3_finalize(stmnt);
-    
-    return retval;
+//    if (![self tableExists:@"CRMSettings"])
+//        return @"";
+//
+//    NSString *syncAddressColumn;
+//    if (selectedEnvironment == 1) {
+//        syncAddressColumn = @"QASyncAddress";
+//    } else if (selectedEnvironment == 2) {
+//        syncAddressColumn = @"ProdSyncAddress";
+//    } else {
+//        syncAddressColumn = @"DevSyncAddress";
+//    }
+//
+//    NSString *cmd = [NSString stringWithFormat:@"SELECT %@ FROM CRMSettings s WHERE VanlineID = %d", syncAddressColumn, vanlineID];
+//    NSString *retval = @"";
+//
+//    sqlite3_stmt *stmnt;
+//    if([self prepareStatement:cmd withStatement:&stmnt])
+//    {
+//        while(sqlite3_step(stmnt) == SQLITE_ROW)
+//        {
+//            retval = [SurveyDB stringFromStatement:stmnt columnID:0];
+//        }
+//    }
+//    sqlite3_finalize(stmnt);
+//
+//    return retval;
+    return @"https://homesafe.movehq.com";
 }
 
 //bulky inventory

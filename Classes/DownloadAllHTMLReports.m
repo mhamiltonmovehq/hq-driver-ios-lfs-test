@@ -44,7 +44,9 @@
         WebSyncRequest *req = [[WebSyncRequest alloc] init];
         req.type = WEB_REPORTS;
         req.functionName = @"GetPVOReport";
-        req.serverAddress = @"print.moverdocs.com";
+//        req.serverAddress = @"print.moverdocs.com";
+        req.serverAddress = @"homesafe-docs.movehq.com";
+
         req.pitsDir = @"PVOReports";
         
         if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"webdir:"].location != NSNotFound)

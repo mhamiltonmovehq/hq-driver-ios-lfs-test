@@ -42,7 +42,8 @@
         
         switch ([del.pricingDB vanline]) {
             default:
-                req.serverAddress = @"print.moverdocs.com";
+//                req.serverAddress = @"print.moverdocs.com";
+                req.serverAddress = @"homesafe-docs.movehq.com";
                 req.port = 80;
                 req.type = HEARTBEAT;
                 break;
