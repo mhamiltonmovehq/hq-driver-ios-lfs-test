@@ -2548,6 +2548,52 @@
         // OT 6177 - Atlas crating update
 
         //[db checkDatabaseIntegrity];
+        if (maj < ++ver)
+        {//MARK: Version 83 - Add OpsList related tables for replacing PVOCheckList
+            
+            // MattH: The below 2 conditionals were out on their alonesome. I gave them a home within a version update.
+            // now just check the tables directly
+            if (![db columnExists:@"Contact" inTable:@"Locations"])
+            {
+                [db updateDB:@"ALTER TABLE Locations ADD Contact TEXT"];
+                [db updateDB:@"UPDATE Locations SET Contact = ''"];
+            }
+            
+            if (![db columnExists:@"PaymentType" inTable:@"Customer"])
+            {
+                [db updateDB:@"ALTER TABLE Customer ADD PaymentType TEXT"];
+                [db updateDB:@"UPDATE Customer SET PaymentType = ''"];
+            }
+            
+            // Create the 'OpLists' table, this is the parent list of all OpLists on the device
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpLists (ListID INTEGER PRIMARY KEY, ServerListID TEXT, Agent TEXT, Name TEXT, BusinessLine TEXT, Commodity TEXT, OpListType INT)"];
+            
+            // Create the 'OpListSections' table, this lists all sections within each OpList
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListSections (SectionID INTEGER, SectionName TEXT, SortKey INT, ListID INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListQuestions' table, this lists all OpList Questions and which list they correlate to
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListQuestions (SeriesID INTEGER, SectionID INT, QuestionType INT, Question TEXT, DefaultAnswer TEXT, IsLimit INT, SortKey INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListMultChoiceOptions' table
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListMultChoiceOptions (OptionID INTEGER, SectionID INT, SeriesID INT, Option TEXT, SortKey INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListAppliedItems' table
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT)"];
+        }
+        
+        if (maj < ++ver)
+        {//MARK: Version 84 - Add a PrimaryKey to OpListAppliedItems
+            
+            if (![db columnExists:@"AppliedItemId" inTable:@"OpListAppliedItems"])
+            {
+                // MattH: Wanted to add a Primary Key to a table that is previously unused
+                //    So just dropping it is data safe.
+                [db updateDB:@"DROP TABLE OpListAppliedItems"];
+                [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (AppliedItemId INTEGER PRIMARY KEY, OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT, VehicleId INT)"];
+                
+                [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+            }
+        }
         
         [self completed];
     }
