@@ -146,18 +146,11 @@
                 break;
             default:
                 //debug and release use the test sites
-#if defined(DEBUG) || defined(RELEASE)
 //                req.serverAddress = @"dev.mobilemover.com";
                 ssl = YES;
                 req.serverAddress = @"homesafe-aisync.movehq.com";
                 req.port = 443;
                 req.type = PVO_SYNC;
-#else
-                ssl = YES;
-                req.serverAddress = PVO_WCF_ADDRESS;
-                req.port = 443;
-                req.type = PVO_SYNC;
-#endif
                 break;
         }
         
