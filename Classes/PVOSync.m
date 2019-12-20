@@ -1177,7 +1177,36 @@ exit:
                         [_appDelegate.surveyDB updateCustomerSync:sync];
                         break;
                     }
+                    
                 }
+            }
+            
+            XMLWriter *ordRequest = [self getRequestXML];
+            WCFDataParam *requestParm = [[WCFDataParam alloc] init];
+            requestParm.contents = ordRequest.file;
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                      requestParm,
+                                                                      nil]
+                                                             forKeys:[NSArray arrayWithObjects:@"request", nil]];
+            
+            req.functionName = @"ProcessInventoryForOrder";
+            //send the post request...
+            success = [req getData:&result
+                     withArguments:dict
+                      needsDecoded:YES
+                           withSSL:ssl
+                       flushToFile:nil
+                         withOrder:[NSArray arrayWithObjects:@"request", nil]];
+            
+            if(!success)
+            {
+                [self updateProgress:[NSString stringWithFormat:@"%@ failed to upload. Reason: %@", item.name, result] withPercent:1];
+                //set sync to falce, per defect 208
+                sync.syncToPVO = FALSE;
+                [_appDelegate.surveyDB updateCustomerSync:sync];
+                //                        [result release];
+                break;
             }
             
             [self updateProgress:[[NSString alloc] initWithFormat:@"%@ uploaded successfully.", item.name]
