@@ -445,6 +445,28 @@
     
     [rows removeAllObjects];
     
+    PVONavigationListItem *crew = [[PVONavigationListItem alloc] init];
+    crew.navItemID = PVO_CREW;
+    crew.display = @"Crew";
+    crew.reportNoteType = -1;
+    crew.reportTypeID = -1;
+    
+    PVONavigationListItem *actions = [[PVONavigationListItem alloc] init];
+    actions.navItemID = PVO_ACTIONS;
+    actions.display = @"Origin Actions";
+    actions.reportNoteType = -1;
+    actions.reportTypeID = -1;
+    
+    PVONavigationListItem *checklist = [[PVONavigationListItem alloc] init];
+    checklist.navItemID = PVO_CHECKLIST;
+    checklist.display = @"Checklist";
+    checklist.reportNoteType = -1;
+    checklist.reportTypeID = -1;
+    
+    [rows addObject:crew];
+    [rows addObject:actions];
+    [rows addObject:checklist];
+    
     PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
     [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
     
@@ -716,6 +738,19 @@
             
             [SurveyAppDelegate setDefaultBackButton:self];
             [self.navigationController pushViewController:bulkyInventoryController animated:YES];
+            break;
+        case PVO_CREW:
+            break;
+        case PVO_ACTIONS:
+            break;
+        case PVO_CHECKLIST:
+            
+            if(checklistController == nil)
+                checklistController = [[PVOChecklistController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:checklistController animated:YES];
             break;
         default:
             [SurveyAppDelegate showAlert:[NSString stringWithFormat:@"This functionality is not supported with this version of %@. Please check the App Store for any available updates.", appName]

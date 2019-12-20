@@ -55,6 +55,10 @@
 #import "PVOVehicle.h"
 #import "PVOBulkyData.h"
 #import "PVOBulkyInventoryItem.h"
+#import "OpList.h"
+#import "OLQuestion.h"
+#import "OLSection.h"
+#import "OLAppliedItem.h"
 
 @class AppFunctionality, SurveyAppDelegate, SurveyImage;
 
@@ -114,6 +118,7 @@
 -(NSString*)fullDBPath;
 -(void)closeDB;
 -(BOOL) updateDB: (NSString*)cmd;
+-(BOOL)updateDB:(NSString*)cmd withLastInsertRowID:(int*)lastInsertRowID;
 -(BOOL)prepareStatement:(NSString*)cmd withStatement:(sqlite3_stmt**)stmnt;
 -(BOOL)tableExists:(NSString*)table;
 -(BOOL)columnExists:(NSString*)column inTable:(NSString*)table;
@@ -645,6 +650,23 @@
 // Completion Dates methods
 -(void)setCompletionDate:(int)customerID isOrigin:(BOOL)origin;
 -(void)removeCompletionDate:(int)customerID isOrigin:(BOOL)origin;
+
+//operational list
+-(int)saveOpList:(OpList*)opList;
+-(OpList*)getOpListById:(int)opListId;
+-(int)getOpListIDForBusinessLine:(int)businessLine withAgent:(NSString*)agent;
+-(int)getOpListIDForBooker:(NSString*)agent;
+-(NSMutableArray*)getOpListSections:(int)listID;
+-(NSMutableArray*)getOpListSectionYesNoQuestions:(int)sectionID withServerListID:(NSString*)serverListID;
+-(NSMutableArray*)getOpListMultChoiceOptions:(int)sectionID withSeriesID:(int)seriesID withServerListID:(NSString*)serverListID;
+-(NSMutableArray*)getOpListAppliedItems:(int)customerID;
+-(OLAppliedItem*)getOpListAppliedItem:(int)customerID withSectionID:(int)sectionID withQuestionID:(int)seriesID withServerListID:(NSString*)serverListID withVehicleID:(int)vehicleId;
+-(void)saveOpListSection:(OLSection*)section;
+-(void)saveOpListQuestion:(OLQuestion*)question withSectionID:(int)sectionID;
+-(void)saveOpListItem:(OLAppliedItem*)item;
+-(void)deleteOperationalList;
+-(void)deleteOpListItemsForCustomerID:(int)custID;
+-(NSArray*)getOpListQuestionsAndAnswersWithListID:(int)listId withCustomerID:(int)customerId withVehicleID:(int)vehicleId;
 
 @end
 

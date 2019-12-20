@@ -70,6 +70,7 @@ UIAlertViewDelegate, PVOUploadReportViewDelegate, PVOSyncDelegate, HTMLReportGen
     PVOAutoInventoryController *autoInventoryController;
     PVOAutoInventorySignController *autoInventorySignController;
     PVOBulkyInventoryController *bulkyInventoryController;
+    PVOChecklistController *checklistController;
     DownloadFile *htmlDownloader;
     HTMLReportGenerator *htmlGenerator;
     

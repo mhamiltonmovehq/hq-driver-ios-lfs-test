@@ -12,8 +12,9 @@
 #import "PVOWireFrameTypeController.h"
 #import "PreviewPDFController.h"
 #import "PVOCheckListItem.h"
+#import "SurveyCustomer.h"
 
-@interface PVOChecklistController : UITableViewController <PVOWireFrameTypeControllerDelegate>
+@interface PVOChecklistController : UITableViewController
 {
     //Order *order;
     NSArray *checklist;
@@ -21,6 +22,7 @@
     PVOWireFrameTypeController *wireframe;
     //PreviewPDFController *previewPDF;
     PVOVehicle *vehicle;
+    SurveyCustomer *customer;
     
     BOOL isOrigin;
 }
