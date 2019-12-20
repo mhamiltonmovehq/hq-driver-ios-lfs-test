@@ -146,16 +146,11 @@
                 break;
             default:
                 //debug and release use the test sites
-#if defined(DEBUG) || defined(RELEASE)
-                req.serverAddress = @"dev.mobilemover.com";
-                req.port = 80;
-                req.type = PVO_SYNC;
-#else
+//                req.serverAddress = @"dev.mobilemover.com";
                 ssl = YES;
-                req.serverAddress = PVO_WCF_ADDRESS;
+                req.serverAddress = @"homesafe-aisync.movehq.com";
                 req.port = 443;
                 req.type = PVO_SYNC;
-#endif
                 break;
         }
         
@@ -972,7 +967,9 @@ exit:
     WebSyncRequest *reportReq = [[WebSyncRequest alloc] init];
     reportReq.type = WEB_REPORTS;
     reportReq.functionName = @"GetPVOReport";
-    reportReq.serverAddress = @"print.moverdocs.com";
+//    reportReq.serverAddress = @"print.moverdocs.com";
+    reportReq.serverAddress = @"homesafe-docs.movehq.com";
+
     reportReq.pitsDir = @"PVOBeta";
     
     if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"md:"].location != NSNotFound)

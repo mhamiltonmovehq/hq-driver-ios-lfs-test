@@ -110,7 +110,11 @@
     if (hasInternet && testExternal)
     {//test external connection.  timeout of 10 seconds
         NSHTTPURLResponse *resp = nil;
-        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://print.moverdocs.com/"]
+//        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://print.moverdocs.com/"]
+//                                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+//                                                                                timeoutInterval:10.0]
+//                                                 returningResponse:&resp error:nil];
+        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://homesafe-docs.movehq.com/"]
                                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                                                 timeoutInterval:10.0]
                                                  returningResponse:&resp error:nil];

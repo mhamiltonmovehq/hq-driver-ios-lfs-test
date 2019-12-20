@@ -32,11 +32,15 @@
 #define ITEM_LISTS_WCF_USER_AGENT @"ItemLists iPhone"
 
 #define ARPIN_PVO_WCF_ADDRESS @"igc.arpin.com"
-#define PVO_WCF_ADDRESS @"aisync1.mobilemover.com"
+//#define PVO_WCF_ADDRESS @"aisync1.mobilemover.com"
+#define PVO_WCF_ADDRESS @"homesafe-win.movehq.com"
+
 
 #define PVO_WCF_PATH @"/AISyncService/SyncService.svc"
-#define PVO_WCF_SOAP_ACTION_PREFIX @"http://AICloudService.ServiceModel/ISyncService/"
-#define PVO_WCF_XMLNS @"http://AICloudService.ServiceModel"
+#define PVO_WCF_PATH @"/SyncService.svc"
+
+#define PVO_WCF_SOAP_ACTION_PREFIX @"https://AICloudService.ServiceModel/ISyncService/"
+#define PVO_WCF_XMLNS @"https://AICloudService.ServiceModel"
 #define PVO_WCF_USER_AGENT @"AISync iPhone"
 
 
