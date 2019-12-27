@@ -27,18 +27,10 @@
     BOOL isOrigin;
 }
 
-//@property (nonatomic, retain) Order *order;
 @property (nonatomic, retain) NSArray *checklist;
-//@property (nonatomic, retain) ProcessExplanationController *process;
-//@property (retain, nonatomic) IBOutlet UITableView *tableChecklist;
-//@property (retain, nonatomic) IBOutlet UITableView *tableSummary;
 @property (retain, nonatomic) PVOVehicle *vehicle;
-
 @property (nonatomic) BOOL isOrigin;
-
-//- (IBAction)cmdNextClick:(id)sender;
-//- (IBAction)cmdPreviousClick:(id)sender;
-//- (IBAction)cmdDoneClick:(id)sender;
+@property (nonatomic) NSArray *sections;
 
 -(BOOL)verifyFieldsAreComplete;
 

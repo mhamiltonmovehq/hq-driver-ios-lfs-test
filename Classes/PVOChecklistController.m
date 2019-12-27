@@ -50,9 +50,6 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonSystemItemDone target:self action:@selector(cmdNextClick:)];
     
-    // Init our Customer object so we don't on every viewWillAppear, for pulling OpListID
-    SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
-    customer = [del.surveyDB getCustomer:del.customerID];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -66,9 +63,10 @@
     //[self.tableChecklist reloadData];
     
     SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
+    customer = [del.surveyDB getCustomer:del.customerID];
     DriverData *data = [del.surveyDB getDriverData];
-    //self.checklist = [del.surveyDB getCheckListItems:del.customerID withVehicleID:vehicle.vehicleID withAgencyCode:data.haulingAgent];
     int listID = [del.surveyDB getOpListIDForBusinessLine:customer.pricingMode withAgent:data.haulingAgent];
+    _sections = [del.surveyDB getOpListSections:listID];
     self.checklist = [del.surveyDB getOpListQuestionsAndAnswersWithListID:listID withCustomerID:del.customerID withVehicleID:vehicle.vehicleID];
     
     
@@ -115,22 +113,23 @@
         return;
     
     [self.navigationController popViewControllerAnimated:YES];
-    //[self.navigationController pushViewController:wireframe animated:YES];
 }
 
 
 -(BOOL)verifyFieldsAreComplete
 {
-    for (int i = 0; i < [checklist count]; i++)
-    {
-        OLCombinedQuestionAnswer *item = checklist[i];
-        
-        if(item.answer.yesNoResponse == NO)
+    for (NSMutableArray* section in checklist) {
+        for (int i = 0; i < [section count]; i++)
         {
-            [SurveyAppDelegate showAlert:@"All Items must be checked before continuing." withTitle:@"Items must be checked"];
-            return FALSE;
-        }
+            OLCombinedQuestionAnswer *item = section[i];
         
+            if(item.answer.yesNoResponse == NO)
+            {
+                [SurveyAppDelegate showAlert:@"All Items must be checked before continuing." withTitle:@"Items must be checked"];
+                return FALSE;
+            }
+        
+        }
     }
     
     return TRUE;
@@ -145,9 +144,12 @@
 {
     // Save applied OpListItems
     SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
-    for (OLCombinedQuestionAnswer *item in checklist)
-    {
-        [del.surveyDB saveOpListItem:item.answer];
+    
+    for (NSMutableArray* section in checklist) {
+        for (OLCombinedQuestionAnswer *item in section)
+        {
+            [del.surveyDB saveOpListItem:item.answer];
+        }
     }
 }
 
@@ -155,34 +157,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [checklist count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //    if(tableView == tableSummary)
-    //        return 2;
-    //    else
-    //        return [checklist count];
-    
-    return [checklist count];
+    return [checklist[section] count];
     
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if(tableView == tableSummary)
-    //        return 30;
-    //    else
-    //    {
-    OLCombinedQuestionAnswer *item = checklist[indexPath.row];
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
     return [AutoSizeLabelCell sizeOfCellForText:item.question.question];
-    //    }
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Pre-Ship Checklist";
+    return ((OLSection*)_sections[section]).sectionName;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -192,38 +184,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    static NSString *CellIdentifier = @"Cell";
     static NSString *AutoSizeCellIdentifier = @"AutoSizeLabelCell";
     
-    //    UITableViewCell *cell = nil;
     AutoSizeLabelCell *sizeCell = nil;
-    
-    //    if(tableView == self.tableSummary)
-    //    {
-    //        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    //        if (cell == nil) {
-    //            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-    //            cell.accessoryType = UITableViewCellAccessoryNone;
-    //            cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
-    //            cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
-    //        }
-    //
-    //        if(indexPath.row == 0)
-    //        {
-    //            SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
-    //            SurveyCustomer *customer = [del.surveyDB getCustomer:del.customerID];
-    //
-    //            cell.textLabel.text = @"Owner";
-    //            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", customer.lastName, customer.firstName];
-    //        }
-    //        else
-    //        {
-    //            cell.textLabel.text = @"Service Status";
-    //            cell.detailTextLabel.text = @"Service Type Description Goes Here?"; //[order serviceTypeDescrition];
-    //        }
-    //    }
-    //    else
-    //    {
     
     sizeCell = (AutoSizeLabelCell*)[tableView dequeueReusableCellWithIdentifier:AutoSizeCellIdentifier];
     
@@ -233,14 +196,12 @@
     }
     sizeCell.accessoryType = UITableViewCellAccessoryNone;
     
-    OLCombinedQuestionAnswer *item = checklist[indexPath.row];
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
     sizeCell.text = item.question.question;
     
     if(item.answer.yesNoResponse == YES)
         sizeCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    //    }
-    
-    //    return cell != nil ? cell : sizeCell;
+
     return sizeCell;
 }
 
@@ -251,11 +212,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    
-    //    if(tableView != self.tableSummary)
-    //    {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    OLCombinedQuestionAnswer *item = checklist[indexPath.row];
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
     if(item.answer.yesNoResponse == YES)
     {//remove it, clear check
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -266,8 +224,6 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         item.answer.yesNoResponse = YES;
     }
-    
-    //    }
     
 }
 

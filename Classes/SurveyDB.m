@@ -11009,6 +11009,7 @@
     
     for (OLSection *section in sections)
     {
+        NSMutableArray *sectionQuestions = [[NSMutableArray alloc] init];
         // So the customers want McAuto to use the same design for OpList as for PreFlightChecklist
         //    Since they want all questions on a single screen, I'm pulling all sections together
         //    This also helps customers with configuration on the MoveHQ side, as previously the plan
@@ -11030,8 +11031,10 @@
             combinedQA.questionId = question.questionID;
             combinedQA.question = question;
             combinedQA.answer = answer;
-            [retval addObject:combinedQA];
+            [sectionQuestions addObject:combinedQA];
         }
+        
+        [retval addObject:sectionQuestions];
     }
     
     return retval;
