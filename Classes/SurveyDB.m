@@ -11024,7 +11024,7 @@
             answer.opListID = listId;
             
             // Now that we have both the AppliedItem(Answer) and Question, combine them and add to our return
-            OLCombinedQuestionAnswer *combinedQA = [OLCombinedQuestionAnswer init];
+            OLCombinedQuestionAnswer *combinedQA = [[OLCombinedQuestionAnswer alloc] init];
             combinedQA.customerId = customerId;
             combinedQA.sectionId = section.sectionID;
             combinedQA.questionId = question.questionID;
@@ -11035,6 +11035,17 @@
     }
     
     return retval;
+}
+
+-(bool)areAllQuestionsAnsweredWithCustomerID:(int)customerId withVehicleID:(int)vehicleId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM OpListAppliedItems WHERE CustomerID = %d AND VehicleId = %d",customerId,vehicleId];
+    if([self getIntValueFromQuery:cmd] == 0)
+        return false;
+    
+    cmd = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM OpListAppliedItems WHERE CustomerID = %d AND VehicleId = %d AND YesNoResponse = 0",customerId,vehicleId];
+
+    return [self getIntValueFromQuery:cmd] == 0;
 }
 
 -(NSMutableArray*)getOpListSectionYesNoQuestions:(int)sectionID withServerListID:(NSString*)serverListID
@@ -11109,7 +11120,7 @@
 
 -(OLAppliedItem*)getOpListAppliedItem:(int)customerID withSectionID:(int)sectionID withQuestionID:(int)seriesID withServerListID:(NSString*)serverListID withVehicleID:(int)vehicleId
 {
-    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT AppliedItemId, OpListID, CustomerID, SectionID, SeriesID, TextResponse, YesNoResponse, DateResponse, QtyResponse, MultChoiceResponse, ServerListID, VehicleId FROM OpListAppliedItems WHERE CustomerID = %d AND SectionID = %d AND SeriesID = %d AND ServerListID = '%@' ORDER BY SeriesID",customerID,sectionID,seriesID,serverListID];
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT AppliedItemId, OpListID, CustomerID, SectionID, SeriesID, TextResponse, YesNoResponse, DateResponse, QtyResponse, MultChoiceResponse, ServerListID, VehicleId FROM OpListAppliedItems WHERE CustomerID = %d AND SectionID = %d AND SeriesID = %d AND ServerListID = '%@' AND VehicleId = %d ORDER BY SeriesID",customerID,sectionID,seriesID,serverListID,vehicleId];
     
     // Modified logic to return blank AppliedItems
     OLAppliedItem *retval = [[OLAppliedItem alloc] init];

@@ -114,13 +114,8 @@
     if(![self verifyFieldsAreComplete])
         return;
     
-    if(wireframe == nil)
-        wireframe = [[PVOWireFrameTypeController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    wireframe.isOrigin = isOrigin;
-    
-    [SurveyAppDelegate setDefaultBackButton:self];
-    [self.navigationController pushViewController:wireframe animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController pushViewController:wireframe animated:YES];
 }
 
 

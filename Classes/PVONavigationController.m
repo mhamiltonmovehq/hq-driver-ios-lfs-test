@@ -435,7 +435,7 @@
 
 -(void)setupCurrentPage
 {
-    //SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if(currentPage == PVO_DONE)
     {
@@ -445,6 +445,8 @@
     
     [rows removeAllObjects];
     
+    PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
+    
     PVONavigationListItem *crew = [[PVONavigationListItem alloc] init];
     crew.navItemID = PVO_CREW;
     crew.display = @"Crew";
@@ -453,7 +455,7 @@
     
     PVONavigationListItem *actions = [[PVONavigationListItem alloc] init];
     actions.navItemID = PVO_ACTIONS;
-    actions.display = @"Origin Actions";
+    actions.display = category.categoryID == 1 ? @"Origin Actions" : @"Destination Actions";
     actions.reportNoteType = -1;
     actions.reportTypeID = -1;
     
@@ -462,12 +464,12 @@
     checklist.display = @"Checklist";
     checklist.reportNoteType = -1;
     checklist.reportTypeID = -1;
+    checklist.itemCategory = category.categoryID;
     
     [rows addObject:crew];
     [rows addObject:actions];
     [rows addObject:checklist];
     
-    PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
     [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
     
     //set up all completed, enabled, required... should be driven from DB?
@@ -748,6 +750,8 @@
             if(checklistController == nil)
                 checklistController = [[PVOChecklistController alloc] initWithStyle:UITableViewStyleGrouped];
             
+            checklistController.vehicle = [[PVOVehicle alloc] init];
+            checklistController.vehicle.vehicleID = selectedItem.itemCategory;
             
             [SurveyAppDelegate setDefaultBackButton:self];
             [self.navigationController pushViewController:checklistController animated:YES];

@@ -667,6 +667,7 @@
 -(void)deleteOperationalList;
 -(void)deleteOpListItemsForCustomerID:(int)custID;
 -(NSArray*)getOpListQuestionsAndAnswersWithListID:(int)listId withCustomerID:(int)customerId withVehicleID:(int)vehicleId;
+-(bool)areAllQuestionsAnsweredWithCustomerID:(int)customerId withVehicleID:(int)vehicleId;
 
 @end
 

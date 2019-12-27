@@ -421,6 +421,9 @@
         case PVO_AUTO_INVENTORY_REPORT_DEST:
             retval = [PVOVehicle verifyAllVehiclesAreSigned:del.customerID withIsOrigin:NO];
             break;
+        case PVO_CHECKLIST:
+            retval = [del.surveyDB areAllQuestionsAnsweredWithCustomerID:del.customerID withVehicleID:_itemCategory];
+            break;
         default:
             
             //dynamic reports, or data entry items
