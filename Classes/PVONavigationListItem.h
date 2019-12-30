@@ -108,6 +108,10 @@
 #define PVO_BULKY_INVENTORY_REPORT_ORIG 410
 #define PVO_BULKY_INVENTORY_REPORT_DEST 411
 
+#define PVO_CREW 500
+#define PVO_ACTIONS 501
+#define PVO_CHECKLIST 502
+
 //load tag, display text, completed flag, selectable
 
 @interface PVONavigationListItem : NSObject {

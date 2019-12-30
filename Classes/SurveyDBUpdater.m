@@ -2548,6 +2548,30 @@
         // OT 6177 - Atlas crating update
 
         //[db checkDatabaseIntegrity];
+        if (maj < ++ver)
+        {//MARK: Version 83 - Add OpsList related tables for replacing PVOCheckList
+            // Create the 'OpLists' table, this is the parent list of all OpLists on the device
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpLists (ListID INTEGER PRIMARY KEY, ServerListID TEXT, Agent TEXT, Name TEXT, BusinessLine TEXT, Commodity TEXT, OpListType INT)"];
+            
+            // Create the 'OpListSections' table, this lists all sections within each OpList
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListSections (SectionID INTEGER, SectionName TEXT, SortKey INT, ListID INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListQuestions' table, this lists all OpList Questions and which list they correlate to
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListQuestions (SeriesID INTEGER, SectionID INT, QuestionType INT, Question TEXT, DefaultAnswer TEXT, IsLimit INT, SortKey INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListAppliedItems' table
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT)"];
+        
+            if (![db columnExists:@"AppliedItemId" inTable:@"OpListAppliedItems"])
+            {
+                // MattH: Wanted to add a Primary Key to a table that is previously unused
+                //    So just dropping it is data safe.
+                [db updateDB:@"DROP TABLE OpListAppliedItems"];
+                [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (AppliedItemId INTEGER PRIMARY KEY, OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT, VehicleId INT)"];
+                
+                [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+            }
+        }
         
         [self completed];
     }

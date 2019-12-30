@@ -435,7 +435,7 @@
 
 -(void)setupCurrentPage
 {
-    //SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if(currentPage == PVO_DONE)
     {
@@ -446,6 +446,30 @@
     [rows removeAllObjects];
     
     PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
+    
+    PVONavigationListItem *crew = [[PVONavigationListItem alloc] init];
+    crew.navItemID = PVO_CREW;
+    crew.display = @"Crew";
+    crew.reportNoteType = -1;
+    crew.reportTypeID = -1;
+    
+    PVONavigationListItem *actions = [[PVONavigationListItem alloc] init];
+    actions.navItemID = PVO_ACTIONS;
+    actions.display = category.categoryID == 1 ? @"Origin Actions" : @"Destination Actions";
+    actions.reportNoteType = -1;
+    actions.reportTypeID = -1;
+    
+    PVONavigationListItem *checklist = [[PVONavigationListItem alloc] init];
+    checklist.navItemID = PVO_CHECKLIST;
+    checklist.display = @"Checklist";
+    checklist.reportNoteType = -1;
+    checklist.reportTypeID = -1;
+    checklist.itemCategory = category.categoryID;
+    
+    [rows addObject:crew];
+    [rows addObject:actions];
+    [rows addObject:checklist];
+    
     [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
     
     //set up all completed, enabled, required... should be driven from DB?
@@ -716,6 +740,21 @@
             
             [SurveyAppDelegate setDefaultBackButton:self];
             [self.navigationController pushViewController:bulkyInventoryController animated:YES];
+            break;
+        case PVO_CREW:
+            break;
+        case PVO_ACTIONS:
+            break;
+        case PVO_CHECKLIST:
+            
+            if(checklistController == nil)
+                checklistController = [[PVOChecklistController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            checklistController.vehicle = [[PVOVehicle alloc] init];
+            checklistController.vehicle.vehicleID = selectedItem.itemCategory;
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:checklistController animated:YES];
             break;
         default:
             [SurveyAppDelegate showAlert:[NSString stringWithFormat:@"This functionality is not supported with this version of %@. Please check the App Store for any available updates.", appName]
