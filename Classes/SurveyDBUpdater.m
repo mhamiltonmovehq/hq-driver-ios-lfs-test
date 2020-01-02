@@ -2573,6 +2573,14 @@
             }
         }
         
+        if(maj < ++ver)
+        {
+            // Adds the table for PVOActionTimes (what controls the Orig/Dest start/arrived for jobs)
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS PVOActionTimes (PVOActionTimesId INTEGER PRIMARY KEY, CustomerId INTEGER, OrigStarted REAL, OrigArrived REAL, DestStarted REAL, DestArrived REAL)"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        
         [self completed];
     }
     @catch (NSException * e) {

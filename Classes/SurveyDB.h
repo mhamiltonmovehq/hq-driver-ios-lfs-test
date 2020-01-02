@@ -59,6 +59,7 @@
 #import "OLQuestion.h"
 #import "OLSection.h"
 #import "OLAppliedItem.h"
+#import "PVOActionTimes.h"
 
 @class AppFunctionality, SurveyAppDelegate, SurveyImage;
 
@@ -668,6 +669,10 @@
 -(void)deleteOpListItemsForCustomerID:(int)custID;
 -(NSArray*)getOpListQuestionsAndAnswersWithListID:(int)listId withCustomerID:(int)customerId withVehicleID:(int)vehicleId;
 -(bool)areAllQuestionsAnsweredWithCustomerID:(int)customerId withVehicleID:(int)vehicleId;
+
+// PVO Action Times
+-(void)savePVOActionTime:(PVOActionTimes*)actionTimes;
+-(PVOActionTimes*)getPVOActionTime:(int)customerId;
 
 @end
 

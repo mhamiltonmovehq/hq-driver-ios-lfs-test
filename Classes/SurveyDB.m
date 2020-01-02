@@ -11211,4 +11211,52 @@
     [self updateDB:@"DELETE FROM OpListMultChoiceOptions"];
 }
 
+-(void)savePVOActionTime:(PVOActionTimes*)actionTimes
+{
+    NSString* cmd = nil;
+    if (actionTimes.pvoActionTimesId == -1)
+    {
+        cmd = [[NSString alloc] initWithFormat:@"INSERT INTO PVOActionTimes(CustomerId, OrigStarted, OrigArrived, DestStarted, DestArrived) VALUES(%d,%f,%f,%f,%f)", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970]];
+    }
+    else
+    {
+        cmd = [[NSString alloc] initWithFormat:@"UPDATE PVOActionTimes SET CustomerId = %d, OrigStarted = %f, OrigArrived = %f, DestStarted = %f, DestArrived = %f WHERE PVOActionTimesId = %d", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970], actionTimes.pvoActionTimesId];
+    }
+    
+    [self updateDB:cmd];
+}
+
+-(PVOActionTimes*)getPVOActionTime:(int)customerId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PVOActionTimesId, OrigStarted, OrigArrived, DestStarted, DestArrived FROM PVOActionTimes WHERE CustomerId = %d", customerId];
+    
+    
+    PVOActionTimes *retval = [[PVOActionTimes alloc] init];
+    retval.pvoActionTimesId = -1;
+    retval.customerId = customerId;
+    
+    @synchronized(self)
+    {
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            if(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                retval.pvoActionTimesId = sqlite3_column_int(stmnt, 0);
+                retval.origStarted = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 1)];
+                retval.origArrived = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 2)];
+                retval.destStarted = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 3)];
+                retval.destArrived = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 4)];
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+    }
+    
+    return retval;
+}
+
+//CREATE TABLE IF NOT EXISTS PVOActionTimes (CustomerId INTEGER, OrigStarted REAL, OrigArrived REAL, DestStarted REAL, DestArrived REAL)
+
 @end
