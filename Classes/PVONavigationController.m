@@ -458,6 +458,7 @@
     actions.display = category.categoryID == 1 ? @"Origin Actions" : @"Destination Actions";
     actions.reportNoteType = -1;
     actions.reportTypeID = -1;
+    actions.itemCategory = category.categoryID;
     
     PVONavigationListItem *checklist = [[PVONavigationListItem alloc] init];
     checklist.navItemID = PVO_CHECKLIST;
@@ -744,6 +745,17 @@
         case PVO_CREW:
             break;
         case PVO_ACTIONS:
+            
+            if(actionsController == nil)
+                actionsController = [[PVOActionItemsController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            actionsController.isOrigin = selectedItem.itemCategory == 1;
+            
+            actionsController.actionTimes = [del.surveyDB getPVOActionTime:del.customerID];
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:actionsController animated:YES];
+            
             break;
         case PVO_CHECKLIST:
             
