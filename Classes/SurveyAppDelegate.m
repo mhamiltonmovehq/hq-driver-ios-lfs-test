@@ -30,6 +30,8 @@
 #import "RootViewController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "UIViewController+SwizzlePresent.h"
+
 #if defined(ATLASNET)
 #import <ScanbotSDK/ScanbotSDK.h>
 #endif
@@ -855,6 +857,14 @@
 	
 	[Fabric with:@[[Crashlytics class]]];
 
+    
+    // METHOD SWIZZLING
+    // This is for iOS13 and how they changed Modal presentations to no longer be full screen
+    //  which means the parent ViewWillAppear (and similar methods) do not get called
+    //  we have logic that depends on this, so we need to force all presentations to be
+    //  fullscreen
+    [UIViewController swizzlePresent];
+    
     [SurveyAppDelegate setupScanbot];
 
     //check beta password for debug code.  if present, go to debug view instead.
