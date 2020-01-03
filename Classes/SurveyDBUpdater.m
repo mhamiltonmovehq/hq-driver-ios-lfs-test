@@ -2580,6 +2580,55 @@
             
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
+        if (maj < ++ver)
+        {
+            [db updateDB:@"BEGIN TRANSACTION; \
+            DROP TABLE IF EXISTS `OpLists`;\
+            CREATE TABLE IF NOT EXISTS `OpLists` (\
+                `ListID`    INTEGER,\
+                `ServerListID`    TEXT,\
+                `Agent`    TEXT,\
+                `Name`    TEXT,\
+                `BusinessLine`    TEXT,\
+                `Commodity`    TEXT,\
+                `OpListType`    INT,\
+                PRIMARY KEY(`ListID`)\
+            );\
+            INSERT INTO `OpLists` (ListID,ServerListID,Agent,Name,BusinessLine,Commodity,OpListType) VALUES (1,'1','296','Test','0','All',0);\
+            DROP TABLE IF EXISTS `OpListSections`;\
+            CREATE TABLE IF NOT EXISTS `OpListSections` (\
+                `SectionID`    INTEGER,\
+                `SectionName`    TEXT,\
+                `SortKey`    INT,\
+                `ListID`    INT,\
+                `ServerListID`    TEXT\
+            );\
+            INSERT INTO `OpListSections` (SectionID,SectionName,SortKey,ListID,ServerListID) VALUES (1,'Packing',1,1,'1'),\
+             (2,'Furniture',2,1,'1'),\
+             (3,'Special Instructions',3,1,'1');\
+            DROP TABLE IF EXISTS `OpListQuestions`;\
+            CREATE TABLE IF NOT EXISTS `OpListQuestions` (\
+                `SeriesID`    INTEGER,\
+                `SectionID`    INT,\
+                `QuestionType`    INT,\
+                `Question`    TEXT,\
+                `DefaultAnswer`    TEXT,\
+                `IsLimit`    INT,\
+                `SortKey`    INT,\
+                `ServerListID`    TEXT\
+            );\
+            INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,1,2,'All cartons and materials are new','false','',1,'1'),\
+             (1,1,2,'Linens, towels, bedding, draperies and other items of this type shall be packed into wardrobe type cartons and completely sealed.','false','',2,'1'),\
+             (1,1,2,'All mattresses and box springs shall be packed in cartons and completely sealed.','false','',3,'1'),\
+             (1,2,2,'Upholstered and wicker furniture shall be place right side up on all legs and covered in plastic, shrink wrap, or paper and secured with tape','false',NULL,1,'1'),\
+             (1,2,2,'All rugs, rug pads, and carpets shall be properly rolled (not folded) and protected.','false','',2,'1'),\
+             (1,3,2,'All firearms shall be stored with the bulk of the lot.','false','',1,'1'),\
+             (1,3,2,'All articles shall be removed from chest of drawers, bureaus, clothes hampers and other similar items and packed.','false','',2,'1'),\
+             (1,3,2,'Nothing shall be packed in washer, dryers, refrigerators, or other major appliances.','false','',3,'1'),\
+             (1,3,2,'All power-driven equipment shall be drained of all gasoline and batteries removed.','false','',4,'1'),\
+             (1,3,2,'Uncrated power-driven equipment and motorcycles shall be placed upright, fully covered, and wrapped in protective material.','false',NULL,5,'1');\
+            COMMIT;"];
+        }
         
         [self completed];
     }
