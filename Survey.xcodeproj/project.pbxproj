@@ -675,6 +675,7 @@
 		46E15C6923BAA0CF000D3C1D /* PVOActionItemsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E15C6823BAA0CF000D3C1D /* PVOActionItemsController.m */; };
 		46E15C7123BAB125000D3C1D /* PVOActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E15C6F23BAB125000D3C1D /* PVOActionCell.m */; };
 		46E15C7223BAB125000D3C1D /* PVOActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E15C7023BAB125000D3C1D /* PVOActionCell.xib */; };
+		46E15C7F23BF976D000D3C1D /* UIViewController+SwizzlePresent.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E15C7E23BF976D000D3C1D /* UIViewController+SwizzlePresent.m */; };
 		570ADD671BACA10B005DB84A /* insert_cn_civ.sql in Resources */ = {isa = PBXBuildFile; fileRef = 570ADD651BACA10B005DB84A /* insert_cn_civ.sql */; };
 		570ADD681BACA10B005DB84A /* insert_cn_civ.sql in Resources */ = {isa = PBXBuildFile; fileRef = 570ADD651BACA10B005DB84A /* insert_cn_civ.sql */; };
 		570ADD691BACA10B005DB84A /* insert_cn_gov.sql in Resources */ = {isa = PBXBuildFile; fileRef = 570ADD661BACA10B005DB84A /* insert_cn_gov.sql */; };
@@ -4516,6 +4517,8 @@
 		46E15C6E23BAB125000D3C1D /* PVOActionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PVOActionCell.h; sourceTree = "<group>"; };
 		46E15C6F23BAB125000D3C1D /* PVOActionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PVOActionCell.m; sourceTree = "<group>"; };
 		46E15C7023BAB125000D3C1D /* PVOActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PVOActionCell.xib; path = Classes/PVOActionCell.xib; sourceTree = "<group>"; };
+		46E15C7D23BF976D000D3C1D /* UIViewController+SwizzlePresent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SwizzlePresent.h"; sourceTree = "<group>"; };
+		46E15C7E23BF976D000D3C1D /* UIViewController+SwizzlePresent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SwizzlePresent.m"; sourceTree = "<group>"; };
 		4EC1069FE02620AC9009D8A9 /* Pods-Mobile Mover.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover.release.xcconfig"; sourceTree = "<group>"; };
 		570ADD651BACA10B005DB84A /* insert_cn_civ.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_civ.sql; sourceTree = "<group>"; };
 		570ADD661BACA10B005DB84A /* insert_cn_gov.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_gov.sql; sourceTree = "<group>"; };
@@ -6208,6 +6211,8 @@
 				BF9ED03C103F223A00FD8AC8 /* Locations */,
 				BF9ED03D103F226C00FD8AC8 /* Survey */,
 				BF059C5B104C6142009D8055 /* Information */,
+				46E15C7D23BF976D000D3C1D /* UIViewController+SwizzlePresent.h */,
+				46E15C7E23BF976D000D3C1D /* UIViewController+SwizzlePresent.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -10217,6 +10222,7 @@
 				6338C62318C6326300E3A7EF /* PVOBarcodeValidation.m in Sources */,
 				6338C62418C6326300E3A7EF /* DoubleSwitchCell.m in Sources */,
 				94CABAF31C10886E009D7902 /* EnterCredentialsController.m in Sources */,
+				46E15C7F23BF976D000D3C1D /* UIViewController+SwizzlePresent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11953,6 +11959,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 366;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -11998,6 +12005,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 366;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12041,6 +12049,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 366;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";

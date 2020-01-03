@@ -256,6 +256,7 @@
                 pvoDownload = [[PVOSyncController alloc] initWithStyle:UITableViewStyleGrouped];
             pvoDownload.title = @"Download";
             navController = [[PortraitNavController alloc] initWithRootViewController:pvoDownload];
+           
             [self presentViewController:navController animated:YES completion:nil];
         }
     }
