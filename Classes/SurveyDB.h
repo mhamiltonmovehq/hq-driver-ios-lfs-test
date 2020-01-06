@@ -673,6 +673,7 @@
 // PVO Action Times
 -(void)savePVOActionTime:(PVOActionTimes*)actionTimes;
 -(PVOActionTimes*)getPVOActionTime:(int)customerId;
+-(void)deletePVOActionTime:(int)customerId;
 
 @end
 

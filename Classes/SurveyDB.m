@@ -1146,6 +1146,8 @@
     [self updateDB:cmd];
     
     
+    [self deletePVOActionTime:cID];
+    
     CubeSheet *cs = [self openCubeSheet:cID];
     
     if(cs != nil)
@@ -11255,6 +11257,12 @@
     }
     
     return retval;
+}
+
+-(void)deletePVOActionTime:(int)customerId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"DELETE FROM PVOActionTimes WHERE CustomerId = %d", customerId];
+    [self updateDB:cmd];
 }
 
 //CREATE TABLE IF NOT EXISTS PVOActionTimes (CustomerId INTEGER, OrigStarted REAL, OrigArrived REAL, DestStarted REAL, DestArrived REAL)
