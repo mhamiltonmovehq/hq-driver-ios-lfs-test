@@ -15,7 +15,13 @@ enum JOB_STATUS {
 	BOOKED,
 	LOST,
 	CLOSED,
-	OA
+	OA,
+    PACKED,
+    LOAD,
+    IN_TRANSIT,
+    IN_STORAGE,
+    OUT_FOR_DELIVERY,
+    DELIVERED
 };
 
 enum ESTIMATE_TYPE {
