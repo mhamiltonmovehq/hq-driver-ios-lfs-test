@@ -70,5 +70,6 @@ enum ESTIMATE_TYPE {
 @property (nonatomic, retain) NSString *gblNumber;
 
 -(void)flushToXML:(XMLWriter*)xml;
++ (NSString*) getStatusString:(int)statusVal;
 
 @end

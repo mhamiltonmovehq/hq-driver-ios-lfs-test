@@ -75,4 +75,25 @@
 //        [xml writeElementString:@"is_fastrac" withData: @"true"];
 }
 
++ (NSString*) getStatusString:(int)statusVal
+{
+    switch (statusVal)
+    {
+        case PACKED:
+            return @"Pack";
+        case LOAD:
+            return @"Load";
+        case IN_TRANSIT:
+            return @"In Transit";
+        case IN_STORAGE:
+            return @"In Storage";
+        case OUT_FOR_DELIVERY:
+            return @"Out for Delivery";
+        case DELIVERED:
+            return @"Delivered";
+        default:
+            return @"";
+    }
+}
+
 @end

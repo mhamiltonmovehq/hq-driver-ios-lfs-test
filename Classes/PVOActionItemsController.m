@@ -101,7 +101,9 @@
         [del.surveyDB updateCustomerSync:custSync];
         
         PVOSync* sync = [[PVOSync alloc] init];
-        sync.syncAction = PVO_SYNC_ACTION_UPLOAD_INVENTORIES;
+        sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+        sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+        sync.orderNumber = info.orderNumber;
         [del.operationQueue addOperation:sync];
     }
     else
@@ -115,7 +117,9 @@
         [del.surveyDB updateCustomerSync:custSync];
         
         PVOSync* sync = [[PVOSync alloc] init];
-        sync.syncAction = PVO_SYNC_ACTION_UPLOAD_INVENTORIES;
+        sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+        sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+        sync.orderNumber = info.orderNumber;
         [del.operationQueue addOperation:sync];
     }
     
