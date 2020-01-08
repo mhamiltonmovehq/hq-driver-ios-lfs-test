@@ -203,6 +203,9 @@
             case PVO_SYNC_ACTION_GET_DATA_WITH_ORDER_REQUEST:
                 success = [self downloadExternalDataWithRequest];
                 break;
+            case PVO_SYNC_ACTION_UPDATE_ORDER_STATUS:
+                success = [self updateOrderStatus];
+                break;
             default:
                 break;
         }
@@ -1206,6 +1209,26 @@ exit:
                 break;
             }
             
+            
+            XMLWriter *settings = [self getStatusUpdateSettingsXML];
+            WCFDataParam *requestParm2 = [[WCFDataParam alloc] init];
+            requestParm2.contents = settings.file;
+            
+            NSDictionary* dict2 = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                      orderNumber, [ShipmentInfo getStatusString:info.status], requestParm2, nil]
+            forKeys:[NSArray arrayWithObjects:@"orderNumber", @"orderStatus", @"settings", nil]];
+            
+            
+            req.functionName = @"UpdateOrderStatus";
+            
+            success = [req getData:&result
+            withArguments:dict2
+             needsDecoded:YES
+                  withSSL:ssl
+              flushToFile:nil];
+            
+            
+            
             [self updateProgress:[[NSString alloc] initWithFormat:@"%@ uploaded successfully.", item.name]
                      withPercent:1];
             
@@ -1216,6 +1239,36 @@ exit:
     
     _appDelegate.customerID = origDelCustID;
         
+    return success;
+}
+
+-(BOOL)updateOrderStatus
+{
+    BOOL success = TRUE;
+    NSString* result;
+    
+    XMLWriter *reloSettings = [self getStatusUpdateSettingsXML];
+    WCFDataParam *requestParm = [[WCFDataParam alloc] init];
+    requestParm.contents = reloSettings.file;
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                              orderNumber, _orderStatus,
+             requestParm,
+             nil]
+    forKeys:[NSArray arrayWithObjects:@"orderNumber", @"orderStatus", @"settings", nil]];
+    
+    
+    req.functionName = @"UpdateOrderStatus";
+    
+    success = [req getData:&result
+    withArguments:dict
+     needsDecoded:YES
+          withSSL:ssl
+      flushToFile:nil];
+    
+    
+    // We're not parsing anything. For demo we will not display error messages.
+    
     return success;
 }
 
@@ -2243,6 +2296,45 @@ exit:
         [writer writeEndDocument];
     } else {
         [writer writeStartElement:@"reloSettings"];
+        //        [writer writeAttribute:@"i:nil" withData:@"true"];
+        [writer writeEndElement];
+    }
+    
+    return writer;
+}
+
+-(XMLWriter*)getStatusUpdateSettingsXML
+{
+    //
+    //    NSString *deviceID = nil;
+    //    deviceID = [OpenUDID value];
+    
+    XMLWriter *writer = [[XMLWriter alloc] init];
+    
+    if ([AppFunctionality enableMoveHQSettings])
+    {
+        [writer writeStartElement:@"settings"];
+        [writer writeAttribute:@"z:Id" withData:@"i1"];
+        [writer writeAttribute:@"xmlns:a" withData:@"http://schemas.datacontract.org/2004/07/AISync.Model.Order"];
+        [writer writeAttribute:@"xmlns:i" withData:@"http://www.w3.org/2001/XMLSchema-instance"];
+        [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
+        
+        //password
+        [writer writeElementString:@"a:Password" withData:_driverData.crmPassword];
+        
+        //crm url
+        [writer writeElementString:@"a:SyncAddress" withData:[self getReloCRMSyncURL]];
+        
+        //username
+        [writer writeElementString:@"a:Username" withData:_driverData.crmUsername];
+        
+        //end reloCRMSettings
+        [writer writeEndElement];
+        
+        //end document
+        [writer writeEndDocument];
+    } else {
+        [writer writeStartElement:@"settings"];
         //        [writer writeAttribute:@"i:nil" withData:@"true"];
         [writer writeEndElement];
     }

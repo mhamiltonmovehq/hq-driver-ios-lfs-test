@@ -27,6 +27,7 @@
 #define PVO_SYNC_ACTION_SYNC_CANADA 13
 #define PVO_SYNC_ACTION_GET_DATA 16
 #define PVO_SYNC_ACTION_GET_DATA_WITH_ORDER_REQUEST 17
+#define PVO_SYNC_ACTION_UPDATE_ORDER_STATUS 18
 
 @class PVOSync;
 @protocol PVOSyncDelegate <NSObject>
@@ -100,6 +101,7 @@
 @property (nonatomic, strong) NSObject<PVOSyncDelegate> *delegate;
 
 @property (nonatomic) BOOL isDelivery;
+@property (nonatomic) NSString* orderStatus;
 
 // added for generic report/data download
 @property (nonatomic, strong) NSString *functionName;
@@ -132,6 +134,7 @@
 -(BOOL)downloadMMLocationImages;
 
 -(BOOL)updateActualDates;
+-(BOOL)updateOrderStatus;
 
 -(XMLWriter*)getRequestXML;
 

@@ -420,6 +420,15 @@
     self.printController.noSignatureAllowed = hideSignButton;
     self.printController.pdfPath = nil;
 
+    if(selectedItem.reportTypeID == 3066)
+    {
+        SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+        // 1850 as Dest
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_STORAGE;
+        [del.surveyDB updateShipInfo:info];
+    }
+    
     [self.navigationController pushViewController:self.printController animated:YES];
 }
 

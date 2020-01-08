@@ -1829,6 +1829,21 @@
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature
 {
     [self signatureView:sigController confirmedSignature:signature withPrintedName:signatureName];
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    // Set Load status for next sync
+    if(self.pvoItem.reportTypeID == INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = LOAD;
+        [del.surveyDB updateShipInfo:info];
+    }
+    else if(self.pvoItem.reportTypeID == DELIVERY_INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = DELIVERED;
+        [del.surveyDB updateShipInfo:info];
+    }
 }
 
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature withPrintedName:(NSString*)printedName
