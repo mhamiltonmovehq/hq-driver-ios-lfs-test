@@ -1844,6 +1844,12 @@
         info.status = DELIVERED;
         [del.surveyDB updateShipInfo:info];
     }
+    else if(self.pvoItem.reportTypeID == 3073)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_TRANSIT;
+        [del.surveyDB updateShipInfo:info];
+    }
 }
 
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature withPrintedName:(NSString*)printedName
