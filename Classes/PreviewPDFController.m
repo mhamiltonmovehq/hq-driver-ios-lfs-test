@@ -1401,6 +1401,14 @@
     
     [docsToUpload removeObjectAtIndex:0];
     
+    ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+    
+    PVOSync* sync = [[PVOSync alloc] init];
+    sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+    sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+    sync.orderNumber = info.orderNumber;
+    [del.operationQueue addOperation:sync];
+    
     [self uploadNextDoc];
     //[self done:nil];
 }
@@ -1842,6 +1850,12 @@
     {
         ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
         info.status = DELIVERED;
+        [del.surveyDB updateShipInfo:info];
+    }
+    else if(self.pvoItem.reportTypeID == 3073)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_TRANSIT;
         [del.surveyDB updateShipInfo:info];
     }
 }

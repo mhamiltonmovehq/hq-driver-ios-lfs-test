@@ -844,8 +844,7 @@
 +(BOOL)uploadReportAfterSigning
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    return ([del.pricingDB vanline] == ARPIN || [del.pricingDB vanline] == SIRVA) &&
-            [SurveyAppDelegate hasInternetConnection] &&
+    return [SurveyAppDelegate hasInternetConnection] &&
             [[del.surveyDB getCustomer:del.customerID] pricingMode] != LOCAL;
 }
 
