@@ -1401,6 +1401,14 @@
     
     [docsToUpload removeObjectAtIndex:0];
     
+    ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+    
+    PVOSync* sync = [[PVOSync alloc] init];
+    sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+    sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+    sync.orderNumber = info.orderNumber;
+    [del.operationQueue addOperation:sync];
+    
     [self uploadNextDoc];
     //[self done:nil];
 }
@@ -1829,6 +1837,27 @@
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature
 {
     [self signatureView:sigController confirmedSignature:signature withPrintedName:signatureName];
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    // Set Load status for next sync
+    if(self.pvoItem.reportTypeID == INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = LOAD;
+        [del.surveyDB updateShipInfo:info];
+    }
+    else if(self.pvoItem.reportTypeID == DELIVERY_INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = DELIVERED;
+        [del.surveyDB updateShipInfo:info];
+    }
+    else if(self.pvoItem.reportTypeID == 3073)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_TRANSIT;
+        [del.surveyDB updateShipInfo:info];
+    }
 }
 
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature withPrintedName:(NSString*)printedName

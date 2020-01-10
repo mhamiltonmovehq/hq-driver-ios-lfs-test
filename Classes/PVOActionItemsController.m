@@ -7,6 +7,7 @@
 
 #import "PVOActionItemsController.h"
 #import "PVOActionCell.h"
+#import "PVOSync.h"
 
 @interface PVOActionItemsController ()
 
@@ -86,6 +87,42 @@
     }
     
     [del.surveyDB savePVOActionTime:_actionTimes];
+    
+    
+    if(_isOrigin)
+    {
+        // After save, set Pack status and sync up
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = PACKED;
+        [del.surveyDB updateShipInfo:info];
+        
+        SurveyCustomerSync *custSync = [del.surveyDB getCustomerSync:del.customerID];
+        custSync.syncToPVO = YES;
+        [del.surveyDB updateCustomerSync:custSync];
+        
+        PVOSync* sync = [[PVOSync alloc] init];
+        sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+        sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+        sync.orderNumber = info.orderNumber;
+        [del.operationQueue addOperation:sync];
+    }
+    else
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = OUT_FOR_DELIVERY;
+        [del.surveyDB updateShipInfo:info];
+        
+        SurveyCustomerSync *custSync = [del.surveyDB getCustomerSync:del.customerID];
+        custSync.syncToPVO = YES;
+        [del.surveyDB updateCustomerSync:custSync];
+        
+        PVOSync* sync = [[PVOSync alloc] init];
+        sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+        sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+        sync.orderNumber = info.orderNumber;
+        [del.operationQueue addOperation:sync];
+    }
+    
     [self.tableView reloadData];
 }
 

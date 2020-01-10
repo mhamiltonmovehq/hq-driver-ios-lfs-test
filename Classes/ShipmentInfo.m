@@ -41,6 +41,24 @@
 			case OA:
 				[xml writeElementString:@"job_status" withData:@"OA"];
 				break;
+            case PACKED:
+                [xml writeElementString:@"job_status" withData:@"Pack"];
+                break;
+            case LOAD:
+                [xml writeElementString:@"job_status" withData:@"Load"];
+                break;
+            case IN_TRANSIT:
+                [xml writeElementString:@"job_status" withData:@"In Transit"];
+                break;
+            case IN_STORAGE:
+                [xml writeElementString:@"job_status" withData:@"In Storage"];
+                break;
+            case OUT_FOR_DELIVERY:
+                [xml writeElementString:@"job_status" withData:@"Out for Delivery"];
+                break;
+            case DELIVERED:
+                [xml writeElementString:@"job_status" withData:@"Delivered"];
+                break;
 		}
 	}
 	
@@ -55,6 +73,27 @@
     
 //    if (isAtlasFastrac) //don't need this in the XML right now so i'm not including it. Only using it in the document upload method
 //        [xml writeElementString:@"is_fastrac" withData: @"true"];
+}
+
++ (NSString*) getStatusString:(int)statusVal
+{
+    switch (statusVal)
+    {
+        case PACKED:
+            return @"Pack";
+        case LOAD:
+            return @"Load";
+        case IN_TRANSIT:
+            return @"In Transit";
+        case IN_STORAGE:
+            return @"In Storage";
+        case OUT_FOR_DELIVERY:
+            return @"Out for Delivery";
+        case DELIVERED:
+            return @"Delivered";
+        default:
+            return @"";
+    }
 }
 
 @end
