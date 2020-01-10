@@ -428,6 +428,14 @@
         info.status = IN_STORAGE;
         [del.surveyDB updateShipInfo:info];
     }
+    else if(selectedItem.reportTypeID == 3073)
+    {
+        SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+        // 1850 as Dest
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_TRANSIT;
+        [del.surveyDB updateShipInfo:info];
+    }
     
     [self.navigationController pushViewController:self.printController animated:YES];
 }
