@@ -1209,24 +1209,25 @@ exit:
                 break;
             }
             
-            
-            XMLWriter *settings = [self getStatusUpdateSettingsXML];
-            WCFDataParam *requestParm2 = [[WCFDataParam alloc] init];
-            requestParm2.contents = settings.file;
-            
-            NSDictionary* dict2 = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                      orderNumber, [ShipmentInfo getStatusString:info.status], requestParm2, nil]
-            forKeys:[NSArray arrayWithObjects:@"orderNumber", @"orderStatus", @"settings", nil]];
-            
-            
-            req.functionName = @"UpdateOrderStatus";
-            
-            success = [req getData:&result
-            withArguments:dict2
-             needsDecoded:YES
-                  withSSL:ssl
-              flushToFile:nil];
-            
+            if ([[ShipmentInfo getStatusString:info.status] isEqualToString:@""])
+            {
+                XMLWriter *settings = [self getStatusUpdateSettingsXML];
+                WCFDataParam *requestParm2 = [[WCFDataParam alloc] init];
+                requestParm2.contents = settings.file;
+                
+                NSDictionary* dict2 = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                          orderNumber, [ShipmentInfo getStatusString:info.status], requestParm2, nil]
+                forKeys:[NSArray arrayWithObjects:@"orderNumber", @"orderStatus", @"settings", nil]];
+                
+                
+                req.functionName = @"UpdateOrderStatus";
+                
+                success = [req getData:&result
+                withArguments:dict2
+                 needsDecoded:YES
+                      withSSL:ssl
+                  flushToFile:nil];
+            }
             
             
             [self updateProgress:[[NSString alloc] initWithFormat:@"%@ uploaded successfully.", item.name]
