@@ -11959,7 +11959,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 369;
+				MARKETING_VERSION = 373;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12005,7 +12005,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 369;
+				MARKETING_VERSION = 373;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12049,7 +12049,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 369;
+				MARKETING_VERSION = 373;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";

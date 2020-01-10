@@ -954,7 +954,7 @@ exit:
     [self downloadMMLocationImages];
     
     //download the premove checklist for auto inventory. Per tony we're doing this in the order download, but its a separate call because we'll probably separate this out from order download in the future
-    [self downloadPreShipCheckList];
+    //[self downloadPreShipCheckList];
     
     [self updateProgress:[NSString stringWithFormat:@"Downloaded Customer: %@, %@",
                           downloadParser.customer.lastName == nil ? @"" : downloadParser.customer.lastName,

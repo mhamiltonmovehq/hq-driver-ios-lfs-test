@@ -655,7 +655,7 @@
 +(NSString*) getHighValueDescription
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSString *value = ([del.pricingDB vanline] == ARPIN) ?  @"Extraordinary Value" : @"High Value";
+    NSString *value = ([del.pricingDB vanline] == ARPIN) ?  @"Extraordinary Value" : @"HomeSafe Care";
     
     return value;
 }
