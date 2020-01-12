@@ -774,11 +774,22 @@
             [self.navigationController pushViewController:bulkyInventoryController animated:YES];
             break;
         case PVO_CREW:
+            
+            if(crewController == nil)
+                crewController = [[CrewViewController alloc] init];
+            
+            crewController.title = @"Crew";
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:crewController animated:YES];
+            
             break;
         case PVO_ACTIONS:
             
             if(actionsController == nil)
                 actionsController = [[PVOActionItemsController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            actionsController.title = @"Actions";
             
             actionsController.isOrigin = selectedItem.itemCategory == 1;
             
