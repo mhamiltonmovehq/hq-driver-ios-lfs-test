@@ -29,6 +29,7 @@
 #import "PVOAutoinventorySignController.h"
 #import "PVOBulkyInventoryController.h"
 #import "PVOActionItemsController.h"
+#import "CrewViewController.h"
 
 #define PVO_DONE 0
 
@@ -73,6 +74,7 @@ UIAlertViewDelegate, PVOUploadReportViewDelegate, PVOSyncDelegate, HTMLReportGen
     PVOBulkyInventoryController *bulkyInventoryController;
     PVOChecklistController *checklistController;
     PVOActionItemsController *actionsController;
+    CrewViewController *crewController;
     DownloadFile *htmlDownloader;
     HTMLReportGenerator *htmlGenerator;
     

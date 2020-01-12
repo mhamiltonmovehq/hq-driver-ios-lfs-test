@@ -666,6 +666,10 @@
 		3E956FBE2017A30E00E89659 /* ImagePickerAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */; };
 		3EE3F3662023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */; };
 		3EE3F3672023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */; };
+		4613FB1523CBAA1900B289FB /* CrewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4613FB1323CBAA1900B289FB /* CrewViewController.m */; };
+		4613FB1623CBAA1900B289FB /* CrewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB1423CBAA1900B289FB /* CrewViewController.xib */; };
+		4613FB1A23CBB73000B289FB /* CrewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4613FB1823CBB73000B289FB /* CrewCell.m */; };
+		4613FB1B23CBB73000B289FB /* CrewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB1923CBB73000B289FB /* CrewCell.xib */; };
 		4676AFF123ABE07400C3F9F3 /* OpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFEF23ABE07400C3F9F3 /* OpList.m */; };
 		4676AFFA23ABE35700C3F9F3 /* OLQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFF223ABE35600C3F9F3 /* OLQuestion.m */; };
 		4676AFFB23ABE35700C3F9F3 /* OLAppliedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFF323ABE35600C3F9F3 /* OLAppliedItem.m */; };
@@ -4500,6 +4504,12 @@
 		3E956FB82017984F00E89659 /* Mobile Mover Enterprise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mobile Mover Enterprise-Bridging-Header.h"; sourceTree = "<group>"; };
 		3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerAdapterController.swift; sourceTree = "<group>"; };
 		3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightboxAdapterController.swift; sourceTree = "<group>"; };
+		4613FB1223CBAA1900B289FB /* CrewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrewViewController.h; sourceTree = "<group>"; };
+		4613FB1323CBAA1900B289FB /* CrewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrewViewController.m; sourceTree = "<group>"; };
+		4613FB1423CBAA1900B289FB /* CrewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CrewViewController.xib; path = Classes/CrewViewController.xib; sourceTree = "<group>"; };
+		4613FB1723CBB73000B289FB /* CrewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrewCell.h; sourceTree = "<group>"; };
+		4613FB1823CBB73000B289FB /* CrewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrewCell.m; sourceTree = "<group>"; };
+		4613FB1923CBB73000B289FB /* CrewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CrewCell.xib; path = Classes/CrewCell.xib; sourceTree = "<group>"; };
 		4676AFEF23ABE07400C3F9F3 /* OpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpList.m; sourceTree = "<group>"; };
 		4676AFF023ABE07400C3F9F3 /* OpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpList.h; sourceTree = "<group>"; };
 		4676AFF223ABE35600C3F9F3 /* OLQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLQuestion.m; sourceTree = "<group>"; };
@@ -6544,6 +6554,8 @@
 				94E5B6CD1D357BB00077152C /* PVOBulkyInventorySignController.m */,
 				D51F38401F6B0D27005EA12C /* ScanbotWeightTicketController.h */,
 				D51F38411F6B0D47005EA12C /* ScanbotWeightTicketController.m */,
+				4613FB1223CBAA1900B289FB /* CrewViewController.h */,
+				4613FB1323CBAA1900B289FB /* CrewViewController.m */,
 			);
 			name = "PVO General";
 			sourceTree = "<group>";
@@ -6716,6 +6728,8 @@
 		BF9ED03B103F221C00FD8AC8 /* Reusable Cells */ = {
 			isa = PBXGroup;
 			children = (
+				4613FB1723CBB73000B289FB /* CrewCell.h */,
+				4613FB1823CBB73000B289FB /* CrewCell.m */,
 				BF98E36C1045B87C00B763F4 /* OrigDestCell.h */,
 				BF98E36D1045B87C00B763F4 /* OrigDestCell.m */,
 				BF9F74221033429D0031F123 /* SwitchCell.h */,
@@ -6818,6 +6832,7 @@
 		BF9ED092103F239600FD8AC8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4613FB1423CBAA1900B289FB /* CrewViewController.xib */,
 				94BAC37A1C752252000490AB /* AutoSizeLabelCell.xib */,
 				BF9BE91A10430F3300E68FAB /* AboutView.xib */,
 				BFA1153110B6FE84000FC51D /* ActivationErrorView.xib */,
@@ -6907,6 +6922,7 @@
 		BF9ED094103F23A000FD8AC8 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				4613FB1923CBB73000B289FB /* CrewCell.xib */,
 				46E15C7023BAB125000D3C1D /* PVOActionCell.xib */,
 				BCFAFA980FB9CC94008A400E /* TextCell.xib */,
 				94F54FF81C0CD388005E878E /* FloatingLabelTextCell.xib */,
@@ -7882,6 +7898,7 @@
 				358786511936130400E7A6A0 /* tile_destination.png in Resources */,
 				6338C4C518C6326300E3A7EF /* fb_pack_crate_summary.png in Resources */,
 				6338C4C618C6326300E3A7EF /* fb_price_summary.png in Resources */,
+				4613FB1B23CBB73000B289FB /* CrewCell.xib in Resources */,
 				6338C4C718C6326300E3A7EF /* fb_pricing.png in Resources */,
 				35A365191A8BAE27002DD77D /* bst213ad.ptd in Resources */,
 				6338C4C818C6326300E3A7EF /* fb_survey.png in Resources */,
@@ -7956,6 +7973,7 @@
 				3587863D1936130400E7A6A0 /* info.fla in Resources */,
 				6338C4F018C6326300E3A7EF /* whiteButton.png in Resources */,
 				6338C4F118C6326300E3A7EF /* blueButton.png in Resources */,
+				4613FB1623CBAA1900B289FB /* CrewViewController.xib in Resources */,
 				6338C4F218C6326300E3A7EF /* insert_carton_contents.sql in Resources */,
 				1C1E58AB1B9F1A98004FDDE4 /* Checkbox_clear.png in Resources */,
 				6338C4F318C6326300E3A7EF /* PVOCartonContentsView.xib in Resources */,
@@ -9989,6 +10007,7 @@
 				6338C58018C6326300E3A7EF /* XMLWriter.m in Sources */,
 				6338C58118C6326300E3A7EF /* SurveyDownloadXMLParser.m in Sources */,
 				6338C58218C6326300E3A7EF /* AddressXMLParser.m in Sources */,
+				4613FB1A23CBB73000B289FB /* CrewCell.m in Sources */,
 				6338C58318C6326300E3A7EF /* AgentXMLParser.m in Sources */,
 				6338C58418C6326300E3A7EF /* SwitchCell.m in Sources */,
 				6338C58518C6326300E3A7EF /* SurveyCustomerSync.m in Sources */,
@@ -10095,6 +10114,7 @@
 				35F32BFA1961B84800C9CD6F /* TextEditViewController.m in Sources */,
 				6338C5CF18C6326300E3A7EF /* PVOPrintController.m in Sources */,
 				35F32C0B1961D4BA00C9CD6F /* DebugController.m in Sources */,
+				4613FB1523CBAA1900B289FB /* CrewViewController.m in Sources */,
 				94F03A031C00AB4900883672 /* BrotherPrinterChecker.m in Sources */,
 				6338C5D018C6326300E3A7EF /* PVOSignatureController.m in Sources */,
 				6338C5D118C6326300E3A7EF /* PVOReweighController.m in Sources */,
