@@ -136,6 +136,7 @@
 @property (nonatomic) int reportTypeID;
 @property (nonatomic, strong) NSString *signatureIDs;
 @property (nonatomic) int itemCategory;
+@property (nonatomic) int enabledOverride; //0 no override, 1 = enabled, -1 = disabled
 
 +(int)reportIDForNavID:(int)navID;
 +(NSString*)signatureIDForNavID:(int)navID;

@@ -10,6 +10,7 @@
 #import "SurveyAppDelegate.h"
 #import "PVOSignature.h"
 #import "PVOPrintController.h"
+#import "PVOActionTimes.h"
 
 @implementation PVONavigationListItem
 
@@ -261,6 +262,15 @@
             }
     }
     
+    if (_enabledOverride == 1)
+    {
+        return YES;
+    }
+    else if (_enabledOverride == -1)
+    {
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -343,7 +353,8 @@
     PVOInventory *data = [del.surveyDB getPVOData:cust.custID];
     DriverData *driverData = [del.surveyDB getDriverData];
     int loadType = data.loadType;
-
+    PVOActionTimes* actionTimes = [del.surveyDB getPVOActionTime:del.customerID];
+    
     switch (navItemID)
     {
         /*case PVO_ENTER_TARE_WEIGHT:
@@ -420,6 +431,23 @@
             break;
         case PVO_AUTO_INVENTORY_REPORT_DEST:
             retval = [PVOVehicle verifyAllVehiclesAreSigned:del.customerID withIsOrigin:NO];
+            break;
+        case PVO_ACTIONS:
+            if(_itemCategory == 1)
+            {
+                if(actionTimes.origArrived != nil && ![actionTimes.origArrived isEqualToDate:[NSDate dateWithTimeIntervalSince1970:0]] && actionTimes.origStarted != nil && ![actionTimes.origStarted isEqualToDate:[NSDate dateWithTimeIntervalSince1970:0]])
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(actionTimes.destArrived != nil && ![actionTimes.destArrived isEqualToDate:[NSDate dateWithTimeIntervalSince1970:0]] && actionTimes.destStarted != nil && ![actionTimes.destStarted isEqualToDate:[NSDate dateWithTimeIntervalSince1970:0]])
+                {
+                    return true;
+                }
+            }
+            return false;
             break;
         case PVO_CHECKLIST:
             retval = [del.surveyDB areAllQuestionsAnsweredWithCustomerID:del.customerID withVehicleID:_itemCategory];

@@ -480,6 +480,20 @@
     [rows addObject:actions];
     [rows addObject:checklist];
     
+    
+    for (NSNumber* cat in allNavItems)
+    {
+        _checklistCompleted = [del.surveyDB areAllQuestionsAnsweredWithCustomerID:del.customerID withVehicleID:[cat intValue]];
+        
+        if (!_checklistCompleted)
+        {
+            for (PVONavigationListItem* item in allNavItems[cat])
+            {
+                item.enabledOverride = -1;
+            }
+        }
+    }
+    
     [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
     
     //set up all completed, enabled, required... should be driven from DB?
@@ -1324,6 +1338,7 @@
             }
         }
     }
+    
     return cell;
 }
 
