@@ -132,6 +132,8 @@ UIAlertViewDelegate, PVOUploadReportViewDelegate, PVOSyncDelegate, HTMLReportGen
 
 @property (nonatomic, retain) PVOAttachDocController *attachDocController;
 
+@property (nonatomic) BOOL checklistCompleted;
+
 -(IBAction)previous:(id)sender;
 -(IBAction)next:(id)sender;
 -(IBAction)done:(id)sender;
