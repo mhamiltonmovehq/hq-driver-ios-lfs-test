@@ -35,20 +35,28 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CrewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+    UIImage *imgAlf = [UIImage imageNamed:@"alf"];
+    UIImage *imgClint = [UIImage imageNamed:@"clinton"];
+    UIImage *imgJgriff = [UIImage imageNamed:@"jgriff"];
     
     switch (indexPath.row) {
         case 0:
             cell.labelName.text = @"Bill Edison";
             cell.labelType.text = @"Packer";
+            
+            cell.image.image = imgAlf;
             break;
         case 1:
             cell.labelName.text = @"Joe Smith";
             cell.labelType.text = @"Driver";
+            
+            cell.image.image = imgClint;
             break;
         case 2:
             cell.labelName.text = @"Neil Dobbs";
             cell.labelType.text = @"Helper";
+            
+            cell.image.image = imgJgriff;
             break;
         default:
             break;

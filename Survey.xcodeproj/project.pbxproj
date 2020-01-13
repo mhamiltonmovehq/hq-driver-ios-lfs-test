@@ -670,6 +670,9 @@
 		4613FB1623CBAA1900B289FB /* CrewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB1423CBAA1900B289FB /* CrewViewController.xib */; };
 		4613FB1A23CBB73000B289FB /* CrewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4613FB1823CBB73000B289FB /* CrewCell.m */; };
 		4613FB1B23CBB73000B289FB /* CrewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB1923CBB73000B289FB /* CrewCell.xib */; };
+		4613FB2523CCBEC100B289FB /* alf.png in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB2223CCBEC000B289FB /* alf.png */; };
+		4613FB2623CCBEC100B289FB /* clinton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB2323CCBEC100B289FB /* clinton.png */; };
+		4613FB2723CCBEC100B289FB /* jgriff.png in Resources */ = {isa = PBXBuildFile; fileRef = 4613FB2423CCBEC100B289FB /* jgriff.png */; };
 		4676AFF123ABE07400C3F9F3 /* OpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFEF23ABE07400C3F9F3 /* OpList.m */; };
 		4676AFFA23ABE35700C3F9F3 /* OLQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFF223ABE35600C3F9F3 /* OLQuestion.m */; };
 		4676AFFB23ABE35700C3F9F3 /* OLAppliedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4676AFF323ABE35600C3F9F3 /* OLAppliedItem.m */; };
@@ -4510,6 +4513,9 @@
 		4613FB1723CBB73000B289FB /* CrewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrewCell.h; sourceTree = "<group>"; };
 		4613FB1823CBB73000B289FB /* CrewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrewCell.m; sourceTree = "<group>"; };
 		4613FB1923CBB73000B289FB /* CrewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CrewCell.xib; path = Classes/CrewCell.xib; sourceTree = "<group>"; };
+		4613FB2223CCBEC000B289FB /* alf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alf.png; sourceTree = "<group>"; };
+		4613FB2323CCBEC100B289FB /* clinton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clinton.png; sourceTree = "<group>"; };
+		4613FB2423CCBEC100B289FB /* jgriff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jgriff.png; sourceTree = "<group>"; };
 		4676AFEF23ABE07400C3F9F3 /* OpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpList.m; sourceTree = "<group>"; };
 		4676AFF023ABE07400C3F9F3 /* OpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpList.h; sourceTree = "<group>"; };
 		4676AFF223ABE35600C3F9F3 /* OLQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLQuestion.m; sourceTree = "<group>"; };
@@ -6885,6 +6891,9 @@
 		BF9ED093103F239B00FD8AC8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4613FB2223CCBEC000B289FB /* alf.png */,
+				4613FB2323CCBEC100B289FB /* clinton.png */,
+				4613FB2423CCBEC100B289FB /* jgriff.png */,
 				942D916E1C879F4A000F3E65 /* upload_accessory.png */,
 				942D916F1C879F4A000F3E65 /* upload_accessory@2x.png */,
 				1C1E58A91B9F1A98004FDDE4 /* Checkbox_clear.png */,
@@ -7906,6 +7915,7 @@
 				6338C4CA18C6326300E3A7EF /* DownloadView.xib in Resources */,
 				6338C4CB18C6326300E3A7EF /* check.png in Resources */,
 				D70030EC1C5A65F800F7266B /* demosurvey1.xml in Resources */,
+				4613FB2523CCBEC100B289FB /* alf.png in Resources */,
 				9456BA661C6D1F2F00CA4CED /* car_top.png in Resources */,
 				35A9431519464FA200A2BC8B /* PartsHardwareInventory.pdf in Resources */,
 				1C1E58AD1B9F1A98004FDDE4 /* CheckMark_blue.png in Resources */,
@@ -7913,6 +7923,7 @@
 				35A9430F19464FA200A2BC8B /* MILDDForm619.pdf in Resources */,
 				3587864D1936130400E7A6A0 /* tile_basic_info.png in Resources */,
 				35A9430719464FA200A2BC8B /* DriverStmntServicesPerformed.pdf in Resources */,
+				4613FB2723CCBEC100B289FB /* jgriff.png in Resources */,
 				6338C4CC18C6326300E3A7EF /* van_operator.png in Resources */,
 				6338C4CD18C6326300E3A7EF /* WebPrintView.xib in Resources */,
 				6338C4CE18C6326300E3A7EF /* Entitlements.plist in Resources */,
@@ -7937,6 +7948,7 @@
 				6338C4DD18C6326300E3A7EF /* fb_price_summary@2x.png in Resources */,
 				35A3650B1A8BAE27002DD77D /* bspp75ad.ptd in Resources */,
 				6338C4DE18C6326300E3A7EF /* fb_pricing@2x.png in Resources */,
+				4613FB2623CCBEC100B289FB /* clinton.png in Resources */,
 				35F32BFD1961BEDC00C9CD6F /* TextEditViewController.xib in Resources */,
 				9456BA941C6D1F5600CA4CED /* truck_rear.png in Resources */,
 				6338C4DF18C6326300E3A7EF /* fb_survey@2x.png in Resources */,
@@ -11979,7 +11991,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 373;
+				MARKETING_VERSION = 376;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12025,7 +12037,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 373;
+				MARKETING_VERSION = 376;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12069,7 +12081,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 373;
+				MARKETING_VERSION = 376;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
