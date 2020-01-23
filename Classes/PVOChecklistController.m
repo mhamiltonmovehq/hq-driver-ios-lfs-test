@@ -76,8 +76,12 @@
         return;
     }
     
+    
     [self.tableView reloadData];
-    [self.tableView setContentOffset:CGPointZero animated:YES];
+    if([self.tableView numberOfSections] > 0 && [self.tableView numberOfRowsInSection:0] > 0)
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    //[self.tableView setContentOffset:CGPointZero animated:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -85,7 +89,7 @@
     //disabled, user will need to check mark every item whenever the enter an item JL
     //    SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
     //    [del.surveyDB saveVehicleCheckList:checklist];
-    [self saveOpListResponses];
+    
     
     [super viewWillDisappear:animated];
 }
@@ -111,7 +115,7 @@
 {
     if(![self verifyFieldsAreComplete])
         return;
-    
+    [self saveOpListResponses];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -2628,6 +2628,15 @@
              (1,3,2,'All power-driven equipment shall be drained of all gasoline and batteries removed.','false','',4,'1'),\
              (1,3,2,'Uncrated power-driven equipment and motorcycles shall be placed upright, fully covered, and wrapped in protective material.','false',NULL,5,'1');\
             COMMIT;"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        if (maj < ++ver)
+        {
+            [db updateDB:@"INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,3,2,'All crew in uniform','false','',6,'1')"];
+            [db updateDB:@"INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,3,2,'No smoking within 50ft of Service Member residence','false','',6,'1')"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         
         [self completed];
