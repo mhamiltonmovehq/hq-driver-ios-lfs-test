@@ -126,8 +126,8 @@
 
 +(BOOL)iPad
 {
-	return FALSE;
-	//return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+	//return FALSE;
+	return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
 }
 
 +(BOOL)iOS7OrNewer
@@ -146,7 +146,7 @@
     BOOL isRetinaHeight = rect.size.height == 568 || rect.size.height == 812;
     CGFloat scale = [[UIScreen mainScreen] scale];
     BOOL isRetinaScale = scale == 2 || scale == 3;
-	return  isRetinaHeight && isRetinaScale ;
+	return  isRetinaHeight && isRetinaScale;
 }
 
 +(NSString*)getLastTwoPathComponents:(NSString*)filePath
@@ -842,7 +842,7 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	    
-    if([SurveyAppDelegate isRetina4])
+    if([SurveyAppDelegate isRetina4] || [SurveyAppDelegate iPad])
         [window setFrame:[[UIScreen mainScreen] bounds]];
     
     window.backgroundColor = [UIColor blackColor];
