@@ -283,7 +283,9 @@ open class LightboxController: UIViewController {
     headerView.frame = CGRect(x: 0, y: 16, width: bounds.width, height: headerViewHeight)
     footerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 70)
 
-    [headerView, footerView].forEach { ($0 as AnyObject).configureLayout() }
+    [headerView, footerView].forEach { view in
+        (view as! LayoutConfigurable).configureLayout()
+    }
 
     footerView.frame.origin.y = bounds.height - footerView.frame.height
 

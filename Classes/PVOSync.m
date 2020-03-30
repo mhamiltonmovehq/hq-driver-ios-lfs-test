@@ -1969,7 +1969,7 @@ exit:
     }
     
     if(sigDate == nil) {
-        return;
+        return false;
     }
     
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];

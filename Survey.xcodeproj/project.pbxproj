@@ -3778,11 +3778,9 @@
 		94B25BDC1CB43FE7004366D4 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF132B2E14A1358F00E98F60 /* libiconv.dylib */; };
 		94B25BDD1CB43FE7004366D4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2CE6B913EB27740021F192 /* SystemConfiguration.framework */; };
 		94B25BDE1CB43FE7004366D4 /* libePrintLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5EC081AC1B52300C772EB /* libePrintLib.a */; };
-		94B25BDF1CB43FE7004366D4 /* libdtdev-device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076A1AC0ADDA00247946 /* libdtdev-device.a */; };
 		94B25BE01CB43FE7004366D4 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076D1AC0ADE100247946 /* libdtdev-sim.a */; };
 		94B25BE11CB43FE7004366D4 /* libScanApi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFECA7911507D6F9002ECF6C /* libScanApi.a */; };
 		94B25BE21CB43FE7004366D4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF00FB714153212006E49D8 /* AudioToolbox.framework */; };
-		94B25BE31CB43FE7004366D4 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A3652D1A8BB8B8002DD77D /* libzbar.a */; };
 		94B25BE41CB43FE7004366D4 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359C28A91A8BD28B005803F1 /* CoreBluetooth.framework */; };
 		94B25BE51CB43FE7004366D4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC3FAE711D3EEBE00B61D2C /* UIKit.framework */; };
 		94B25BE61CB43FE7004366D4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC3FAEB11D3EEC600B61D2C /* Foundation.framework */; };
@@ -4158,7 +4156,6 @@
 		D53B2D6B1EF4365B00817B51 /* Mobile Mover Enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B25D101CB43FE9004366D4 /* Mobile Mover Enterprise-Info.plist */; };
 		D55736911F6AE1D200C6027B /* ScanbotSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55736901F6AE1D200C6027B /* ScanbotSDK.framework */; };
 		D55736921F6AE1D200C6027B /* ScanbotSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D55736901F6AE1D200C6027B /* ScanbotSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D5581396223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5581395223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework */; };
 		D59EAEBA2098EE440038DE68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D59EAEB92098EE430038DE68 /* Security.framework */; };
 		D59EAEBB2098EE440038DE68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D59EAEB92098EE430038DE68 /* Security.framework */; };
 		D59EAEBC2098EE440038DE68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D59EAEB92098EE430038DE68 /* Security.framework */; };
@@ -5282,7 +5279,6 @@
 		D51F38401F6B0D27005EA12C /* ScanbotWeightTicketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanbotWeightTicketController.h; sourceTree = "<group>"; };
 		D51F38411F6B0D47005EA12C /* ScanbotWeightTicketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanbotWeightTicketController.m; sourceTree = "<group>"; };
 		D55736901F6AE1D200C6027B /* ScanbotSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScanbotSDK.framework; path = ScanbotSDK/ScanbotSDK.framework; sourceTree = "<group>"; };
-		D5581395223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Mobile_Mover_Enterprise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D59EAEB92098EE430038DE68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D5DC5F1D1F6AC7F1002ED529 /* ScanbotSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScanbotSDK.framework; path = ScanbotSDK/ScanbotSDK.framework; sourceTree = "<group>"; };
 		D5DC5F221F6AD706002ED529 /* ScanbotSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ScanbotSDK; sourceTree = "<group>"; };
@@ -5344,7 +5340,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5581396223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */,
 				6338C62A18C6326300E3A7EF /* AVFoundation.framework in Frameworks */,
 				9456B91A1C6CFEE200CA4CED /* BRPtouchPrinterKit.framework in Frameworks */,
 				6338C62B18C6326300E3A7EF /* CoreMedia.framework in Frameworks */,
@@ -5537,12 +5532,10 @@
 				94B25BDD1CB43FE7004366D4 /* SystemConfiguration.framework in Frameworks */,
 				BA0C0FC41F3A03A700B33699 /* Fabric.framework in Frameworks */,
 				94B25BDE1CB43FE7004366D4 /* libePrintLib.a in Frameworks */,
-				94B25BDF1CB43FE7004366D4 /* libdtdev-device.a in Frameworks */,
 				94B25BE01CB43FE7004366D4 /* libdtdev-sim.a in Frameworks */,
 				94B25BE11CB43FE7004366D4 /* libScanApi.a in Frameworks */,
 				94B25BE21CB43FE7004366D4 /* AudioToolbox.framework in Frameworks */,
 				94ACF35A1CD79022007FB551 /* ExternalAccessory.framework in Frameworks */,
-				94B25BE31CB43FE7004366D4 /* libzbar.a in Frameworks */,
 				94B25BE41CB43FE7004366D4 /* CoreBluetooth.framework in Frameworks */,
 				D59EAEBB2098EE440038DE68 /* Security.framework in Frameworks */,
 				94B25BE51CB43FE7004366D4 /* UIKit.framework in Frameworks */,
@@ -5678,7 +5671,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				D5142D1B200424A20009FC53 /* Security.framework */,
@@ -5751,7 +5744,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D5581395223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework */,
 				7B4584B91F82DD820069E1CD /* OpenGLES.framework */,
 				D5DC5F241F6AD71E002ED529 /* ScanbotSDK.bundle */,
 				D5DC5F221F6AD706002ED529 /* ScanbotSDK */,
@@ -7447,7 +7439,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -9506,17 +9498,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
@@ -9524,7 +9512,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F8D58DA0CEC6EA93C0FE5BF8 /* [CP] Embed Pods Frameworks */ = {
@@ -9533,7 +9521,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
@@ -9546,7 +9534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

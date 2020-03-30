@@ -7,9 +7,9 @@ open class LightboxConfig {
 
   public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
 
-  open static var hideStatusBar = true
+  public static var hideStatusBar = true
 
-  open static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ completion: LoadImageCompletion?) -> Void = {
+  public static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ completion: LoadImageCompletion?) -> Void = {
     imageView, URL, completion in
     let imageRequest: URLRequest = URLRequest(url: URL)
 
@@ -24,7 +24,7 @@ open class LightboxConfig {
     })
   }
 
-  open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
+  public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
     videoController.player = AVPlayer(url: videoURL)
 

@@ -49,13 +49,13 @@ open class InfoLabel: UILabel {
     }
 
     while numberOfLines(truncatedText) > numberOfVisibleLines * 2 {
-        truncatedText = String(truncatedText.characters.prefix(truncatedText.characters.count / 2))
+        truncatedText = String(truncatedText.prefix(truncatedText.count / 2))
     }
 
     truncatedText += ellipsis
 
-    let start = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
-    let end = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
+    let start = truncatedText.index(truncatedText.endIndex, offsetBy: -(ellipsis.count + 1))
+    let end = truncatedText.index(truncatedText.endIndex, offsetBy: -ellipsis.count)
     var range = start..<end
 
     while numberOfLines(truncatedText) > numberOfVisibleLines {

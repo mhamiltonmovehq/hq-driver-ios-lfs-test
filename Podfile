@@ -13,18 +13,20 @@ def mm_pods
 end
 
 target 'Mobile Mover Enterprise' do
+    project 'Survey'
     mm_pods
 end
 
 target 'Mobile Mover' do
+    project 'Survey'
     mm_pods
 end
 
 # Make sure every pod is set to the latest SWIFT_VERSION
-#post_install do |installer|
-#    installer.pods_project.targets.each do |target|
-#        target.build_configurations.each do |config|
-#            config.build_settings['SWIFT_VERSION'] = '4.2'
-#        end
-#    end
-#end
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '5.0'
+        end
+    end
+end

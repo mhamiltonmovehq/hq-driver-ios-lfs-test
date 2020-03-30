@@ -9,7 +9,7 @@ DEPENDENCIES:
   - Lightbox
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Hue
     - ImagePicker
     - Lightbox
@@ -19,6 +19,6 @@ SPEC CHECKSUMS:
   ImagePicker: 81175d36c2852cb543cb4f5d6c19e28f3e8d90eb
   Lightbox: 1b53bd364077474fcb217a22266c95a72fc00faa
 
-PODFILE CHECKSUM: 4170befa903e0d0e36680ace3ac415d53b5194e0
+PODFILE CHECKSUM: 7b27fa091adaacf4ea5a458b8d0b1fd5fba542b3
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4
