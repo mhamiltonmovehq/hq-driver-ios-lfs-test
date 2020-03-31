@@ -1106,7 +1106,7 @@
         [syncView addSubview:lastSaveDateLabel];
     }
     
-    syncButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 3, 80, 44)];
+    syncButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 90, 3, 80, 44)]; // 90 = 80width + 10 buffer from regname
     
     [syncButton addTarget:self action:@selector(sync:) forControlEvents:UIControlEventTouchUpInside];
     

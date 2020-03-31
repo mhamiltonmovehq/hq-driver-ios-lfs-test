@@ -1075,6 +1075,12 @@
 		63F04B9218C6718D0023C0F5 /* insert_rooms.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9118C6718D0023C0F5 /* insert_rooms.sql */; };
 		63F04B9418C671A70023C0F5 /* insert_items.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9318C671A70023C0F5 /* insert_items.sql */; };
 		63F04B9818C671F20023C0F5 /* insert_mil.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9718C671F20023C0F5 /* insert_mil.sql */; };
+		6A03317424328D9100CFD063 /* EmailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317124328D9100CFD063 /* EmailCell.xib */; };
+		6A0331772432923E00CFD063 /* EmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0331762432923D00CFD063 /* EmailTableViewCell.m */; };
+		6A033179243297BA00CFD063 /* EmailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317124328D9100CFD063 /* EmailCell.xib */; };
+		6A03317A243297CC00CFD063 /* EmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0331762432923D00CFD063 /* EmailTableViewCell.m */; };
+		6A03317C2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
+		6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
@@ -4169,7 +4175,7 @@
 		D5AA998520041A7D0023AD3F /* FavoriteContentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D5DC21FFD65880065BEA4 /* FavoriteContentsController.m */; };
 		D5AA998720041A830023AD3F /* FavoriteItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D5DB91FFD56370065BEA4 /* FavoriteItemController.m */; };
 		D5AA998820041A830023AD3F /* FavoriteItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D5DB91FFD56370065BEA4 /* FavoriteItemController.m */; };
-		D5BF1B3039FC5CD76E5E6FF0 /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5581395223AA216003ACD74 /* Pods_Mobile_Mover_Enterprise.framework */; };
+		D5BF1B3039FC5CD76E5E6FF0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D5D87B1120E2932E00E86E19 /* ScanbotSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55736901F6AE1D200C6027B /* ScanbotSDK.framework */; };
 		D5D87B1220E2932F00E86E19 /* ScanbotSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D55736901F6AE1D200C6027B /* ScanbotSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5E9673720644E8F00ED9D66 /* ScanbotSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55736901F6AE1D200C6027B /* ScanbotSDK.framework */; };
@@ -4515,6 +4521,10 @@
 		63F04B9718C671F20023C0F5 /* insert_mil.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_mil.sql; sourceTree = "<group>"; };
 		63F6BA0118884C6900392665 /* SurveyDBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDBUpdater.h; sourceTree = "<group>"; };
 		63F6BA0218884C6900392665 /* SurveyDBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyDBUpdater.m; sourceTree = "<group>"; };
+		6A03317124328D9100CFD063 /* EmailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailCell.xib; sourceTree = SOURCE_ROOT; };
+		6A0331762432923D00CFD063 /* EmailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		6A0331782432928F00CFD063 /* EmailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CustomerOptionsView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
@@ -5553,7 +5563,7 @@
 				94B25BEF1CB43FE7004366D4 /* MapKit.framework in Frameworks */,
 				94B25BF01CB43FE7004366D4 /* libsqlite3.dylib in Frameworks */,
 				6F0D93B62D61074FB486389E /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */,
-				D5BF1B3039FC5CD76E5E6FF0 /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */,
+				D5BF1B3039FC5CD76E5E6FF0 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5671,7 +5681,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				D5142D1B200424A20009FC53 /* Security.framework */,
@@ -6195,6 +6205,8 @@
 		BF059CB8104C7F7D009D8055 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A0331782432928F00CFD063 /* EmailTableViewCell.h */,
+				6A0331762432923D00CFD063 /* EmailTableViewCell.m */,
 				9456B8041C6CFCD300CA4CED /* AutoSizeLabelCell.h */,
 				9456B8051C6CFCD300CA4CED /* AutoSizeLabelCell.m */,
 				9456B7DC1C6CFC5D00CA4CED /* PVOChecklistController.h */,
@@ -6770,6 +6782,7 @@
 		BF9ED092103F239600FD8AC8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */,
 				6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */,
 				6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */,
 				94BAC37A1C752252000490AB /* AutoSizeLabelCell.xib */,
@@ -6861,6 +6874,7 @@
 		BF9ED094103F23A000FD8AC8 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6A03317124328D9100CFD063 /* EmailCell.xib */,
 				BCFAFA980FB9CC94008A400E /* TextCell.xib */,
 				94F54FF81C0CD388005E878E /* FloatingLabelTextCell.xib */,
 				BC2E58790FBCA65C00CD010E /* AddressSummaryCell.xib */,
@@ -7439,7 +7453,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -7775,6 +7789,7 @@
 				9456BA911C6D1F5600CA4CED /* truck_left.png in Resources */,
 				6338C49F18C6326300E3A7EF /* ExistingImagesView.xib in Resources */,
 				6338C4A018C6326300E3A7EF /* EditDateView.xib in Resources */,
+				6A03317C2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */,
 				6338C4A118C6326300E3A7EF /* DateRangeCell.xib in Resources */,
 				6338C4A218C6326300E3A7EF /* SingleDateCell.xib in Resources */,
 				9456BA571C6D1F2F00CA4CED /* car_all.png in Resources */,
@@ -7858,6 +7873,7 @@
 				6338C4D318C6326300E3A7EF /* fb_agents@2x.png in Resources */,
 				6338C4D418C6326300E3A7EF /* fb_basic_info@2x.png in Resources */,
 				57B99DFD1BBC12BA00EDD653 /* insert_cn_item_damages.sql in Resources */,
+				6A03317424328D9100CFD063 /* EmailCell.xib in Resources */,
 				6338C4D518C6326300E3A7EF /* fb_dates@2x.png in Resources */,
 				6338C4D618C6326300E3A7EF /* fb_destination@2x.png in Resources */,
 				35A9431619464FA200A2BC8B /* PianoConditionReport.pdf in Resources */,
@@ -9241,6 +9257,7 @@
 				94B25C8F1CB43FE7004366D4 /* bsr404ad.ptd in Resources */,
 				94B25C901CB43FE7004366D4 /* PVOHighValueView.xib in Resources */,
 				94B25C911CB43FE7004366D4 /* pvo_house_dest.png in Resources */,
+				6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */,
 				6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */,
 				94B25C921CB43FE7004366D4 /* pvo_house_origin.png in Resources */,
 				94B25C931CB43FE7004366D4 /* pvo_truck.png in Resources */,
@@ -9295,6 +9312,7 @@
 				94B25CC21CB43FE7004366D4 /* pvo_logo.png in Resources */,
 				94B25CC31CB43FE7004366D4 /* MotorVehicleInventory.pdf in Resources */,
 				94B25CC41CB43FE7004366D4 /* demosurvey2.xml in Resources */,
+				6A033179243297BA00CFD063 /* EmailCell.xib in Resources */,
 				94B25CC51CB43FE7004366D4 /* car_left.png in Resources */,
 				94B25CC61CB43FE7004366D4 /* pvo_splash.png in Resources */,
 				94B25CC71CB43FE7004366D4 /* pvo_splash@2x.png in Resources */,
@@ -9911,6 +9929,7 @@
 				94F550061C0CD476005E878E /* RPFloatingPlaceholderTextField.m in Sources */,
 				35F05A2C195DDF9E0083969B /* PVOSkipItemNumberController.m in Sources */,
 				1C167A981BBACCBE00501FA5 /* PVOItemComment.m in Sources */,
+				6A0331772432923E00CFD063 /* EmailTableViewCell.m in Sources */,
 				6338C56F18C6326300E3A7EF /* EditDateController.m in Sources */,
 				6338C57018C6326300E3A7EF /* SurveyDatesController.m in Sources */,
 				9456B7E31C6CFC5D00CA4CED /* PVOCheckListItem.m in Sources */,
@@ -11432,6 +11451,7 @@
 				94B25ACD1CB43FE7004366D4 /* SingleFieldController.m in Sources */,
 				94B25ACE1CB43FE7004366D4 /* NewRoomController.m in Sources */,
 				94B25ACF1CB43FE7004366D4 /* SurveySummaryController.m in Sources */,
+				6A03317A243297CC00CFD063 /* EmailTableViewCell.m in Sources */,
 				94B25AD01CB43FE7004366D4 /* Room.m in Sources */,
 				94B25AD11CB43FE7004366D4 /* AddRoomController.m in Sources */,
 				94B25AD21CB43FE7004366D4 /* ItemViewController.m in Sources */,
