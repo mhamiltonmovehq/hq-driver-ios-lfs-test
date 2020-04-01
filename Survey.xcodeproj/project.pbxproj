@@ -1081,6 +1081,8 @@
 		6A03317A243297CC00CFD063 /* EmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0331762432923D00CFD063 /* EmailTableViewCell.m */; };
 		6A03317C2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
+		6A0331832433EF6000CFD063 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
+		6A0331852433EF7100CFD063 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
@@ -3784,7 +3786,6 @@
 		94B25BDC1CB43FE7004366D4 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF132B2E14A1358F00E98F60 /* libiconv.dylib */; };
 		94B25BDD1CB43FE7004366D4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2CE6B913EB27740021F192 /* SystemConfiguration.framework */; };
 		94B25BDE1CB43FE7004366D4 /* libePrintLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5EC081AC1B52300C772EB /* libePrintLib.a */; };
-		94B25BE01CB43FE7004366D4 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076D1AC0ADE100247946 /* libdtdev-sim.a */; };
 		94B25BE11CB43FE7004366D4 /* libScanApi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFECA7911507D6F9002ECF6C /* libScanApi.a */; };
 		94B25BE21CB43FE7004366D4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF00FB714153212006E49D8 /* AudioToolbox.framework */; };
 		94B25BE41CB43FE7004366D4 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359C28A91A8BD28B005803F1 /* CoreBluetooth.framework */; };
@@ -3795,7 +3796,6 @@
 		94B25BE91CB43FE7004366D4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359C289D1A8BBF8D005803F1 /* CFNetwork.framework */; };
 		94B25BEA1CB43FE7004366D4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA76C9A1541A50800E91AC6 /* MessageUI.framework */; };
 		94B25BEB1CB43FE7004366D4 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF27C331456037500F8496E /* libz.1.2.5.dylib */; };
-		94B25BEC1CB43FE7004366D4 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A365311A8BB8BF002DD77D /* libzbar-sim.a */; };
 		94B25BEE1CB43FE7004366D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5AC4351210A82500BFE39B /* CoreLocation.framework */; };
 		94B25BEF1CB43FE7004366D4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB7638E12088D73008395E7 /* MapKit.framework */; };
 		94B25BF01CB43FE7004366D4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC6BF82110F26B700A32E84 /* libsqlite3.dylib */; };
@@ -4525,6 +4525,10 @@
 		6A0331762432923D00CFD063 /* EmailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		6A0331782432928F00CFD063 /* EmailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CustomerOptionsView~ipad.xib"; sourceTree = "<group>"; };
+		6A03317E2433EE3B00CFD063 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = ZBarSDK/iOS/libzbar.a; sourceTree = "<group>"; };
+		6A0331802433EE5A00CFD063 /* libdtdev-device.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libdtdev-device.a"; path = "Linea/libdtdev-device.a"; sourceTree = "<group>"; };
+		6A0331822433EF5E00CFD063 /* libdtdev-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libdtdev-sim.a"; path = "Linea/libdtdev-sim.a"; sourceTree = "<group>"; };
+		6A0331842433EF6600CFD063 /* libzbar-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzbar-sim.a"; path = "ZBarSDK/Simulator/libzbar-sim.a"; sourceTree = "<group>"; };
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
@@ -5542,7 +5546,6 @@
 				94B25BDD1CB43FE7004366D4 /* SystemConfiguration.framework in Frameworks */,
 				BA0C0FC41F3A03A700B33699 /* Fabric.framework in Frameworks */,
 				94B25BDE1CB43FE7004366D4 /* libePrintLib.a in Frameworks */,
-				94B25BE01CB43FE7004366D4 /* libdtdev-sim.a in Frameworks */,
 				94B25BE11CB43FE7004366D4 /* libScanApi.a in Frameworks */,
 				94B25BE21CB43FE7004366D4 /* AudioToolbox.framework in Frameworks */,
 				94ACF35A1CD79022007FB551 /* ExternalAccessory.framework in Frameworks */,
@@ -5551,12 +5554,12 @@
 				94B25BE51CB43FE7004366D4 /* UIKit.framework in Frameworks */,
 				94B25BE61CB43FE7004366D4 /* Foundation.framework in Frameworks */,
 				94B25BE71CB43FE7004366D4 /* CoreGraphics.framework in Frameworks */,
+				6A0331832433EF6000CFD063 /* libdtdev-sim.a in Frameworks */,
 				94B25BE81CB43FE7004366D4 /* MobileCoreServices.framework in Frameworks */,
 				BA0C0FBD1F3A03A700B33699 /* Crashlytics.framework in Frameworks */,
 				94B25BE91CB43FE7004366D4 /* CFNetwork.framework in Frameworks */,
 				94B25BEA1CB43FE7004366D4 /* MessageUI.framework in Frameworks */,
 				94B25BEB1CB43FE7004366D4 /* libz.1.2.5.dylib in Frameworks */,
-				94B25BEC1CB43FE7004366D4 /* libzbar-sim.a in Frameworks */,
 				D5D87B1120E2932E00E86E19 /* ScanbotSDK.framework in Frameworks */,
 				94B25BEE1CB43FE7004366D4 /* CoreLocation.framework in Frameworks */,
 				D5AA997620040BEA0023AD3F /* ScanbotSDK.framework in Frameworks */,
@@ -5564,6 +5567,7 @@
 				94B25BF01CB43FE7004366D4 /* libsqlite3.dylib in Frameworks */,
 				6F0D93B62D61074FB486389E /* Pods_Mobile_Mover_Enterprise.framework in Frameworks */,
 				D5BF1B3039FC5CD76E5E6FF0 /* (null) in Frameworks */,
+				6A0331852433EF7100CFD063 /* libzbar-sim.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5754,6 +5758,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A0331842433EF6600CFD063 /* libzbar-sim.a */,
+				6A0331822433EF5E00CFD063 /* libdtdev-sim.a */,
+				6A0331802433EE5A00CFD063 /* libdtdev-device.a */,
+				6A03317E2433EE3B00CFD063 /* libzbar.a */,
 				7B4584B91F82DD820069E1CD /* OpenGLES.framework */,
 				D5DC5F241F6AD71E002ED529 /* ScanbotSDK.bundle */,
 				D5DC5F221F6AD706002ED529 /* ScanbotSDK */,
@@ -11929,7 +11937,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 i386 arm64";
 			};
 			name = Debug;
@@ -11973,7 +11981,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/Mobile Mover-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 i386 arm64";
 			};
 			name = Release;
@@ -12016,7 +12024,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/Mobile Mover-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 i386 arm64";
 			};
 			name = Distribution;
@@ -12481,6 +12489,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
+					"$(PROJECT_DIR)/ZBarSDK/iOS",
+					"$(PROJECT_DIR)/Linea",
+					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
@@ -12528,6 +12539,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
+					"$(PROJECT_DIR)/ZBarSDK/iOS",
+					"$(PROJECT_DIR)/Linea",
+					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
@@ -12572,6 +12586,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
+					"$(PROJECT_DIR)/ZBarSDK/iOS",
+					"$(PROJECT_DIR)/Linea",
+					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
