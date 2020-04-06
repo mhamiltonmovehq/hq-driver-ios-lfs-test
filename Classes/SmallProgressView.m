@@ -37,12 +37,14 @@
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     UIWindow *window = del.window;
-    float y = (window.bounds.size.height - self.bounds.size.height)/2;
     
-    self = [self initWithFrame:CGRectMake(0, y, 320, 120) withWaitLabel:waitLabel andProgressBar:showProgressBar];
-    if (self) {
-        // Initialization code
-    }
+    int width = 320;
+    int height = 120;
+    float x = (window.frame.size.width - width) / 2.0;
+    float y = (window.frame.size.height - height) / 2.0;
+
+
+    self = [self initWithFrame:CGRectMake(x, y, width, height) withWaitLabel:waitLabel andProgressBar:showProgressBar];
     return self;
 }
 

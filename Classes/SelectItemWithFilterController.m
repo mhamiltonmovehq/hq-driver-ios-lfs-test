@@ -473,18 +473,19 @@
 
 -(IBAction)cmdSearchClick:(id)sender
 {
+    CGRect frame = self.view.frame;
     searching = YES;
-    
+
     if([self.view viewWithTag:99] == nil)
     {
-        UIView *viewLoading = [[UIView alloc] initWithFrame:self.view.frame];
+        UIView *viewLoading = [[UIView alloc] initWithFrame:frame];
         viewLoading.backgroundColor = [UIColor blackColor];
         viewLoading.alpha = .75;
         viewLoading.tag = 99;
         [self.view addSubview:viewLoading];
     }
     
-    UISearchBar *newSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, 320, 44)];
+    UISearchBar *newSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, frame.size.width, 44)];
     newSearchBar.showsCancelButton = NO;
     newSearchBar.delegate = self;
     newSearchBar.placeholder = @"Search";
@@ -496,7 +497,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:0.3f];
-    newSearchBar.frame = CGRectMake(0, 20, 320, 44);
+    newSearchBar.frame = CGRectMake(0, 20, frame.size.width, 44);
     [UIView commitAnimations];
     
     [self performSelector:@selector(shrinkViewForKeyboard) withObject:nil afterDelay:.3f];
@@ -619,7 +620,7 @@
         {
             cell.labelNotShip.hidden = YES;
             cell.labelShip.hidden = YES;
-            cell.labelCube.frame = CGRectMake(238, 10, 44, 22);
+            cell.labelCube.frame = CGRectMake(self.view.frame.size.width - 88, 10, 44, 22); // 55 = 44x2 buffer
         }
         
         NSString *cubeString = [item cubeString];

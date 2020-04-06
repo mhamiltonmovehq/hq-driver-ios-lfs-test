@@ -36,6 +36,7 @@
 	return self;
 }
 
+#pragma mark Lifecycle Methods
 
 - (void)viewDidLoad
 {
@@ -67,6 +68,86 @@
     NSLog(@"Beta password: %@", [Prefs betaPassword]);
     NSLog(@"Reports password: %@", [Prefs reportsPassword]);
 #endif
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    //make sure pricing and mileage is open
+    [del openPricingDB];
+//    [del openMilesDB];
+    
+    self.customers = [del.surveyDB getCustomerList:filters];
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                    target:nil
+                                                                    action:nil]];
+    
+    if (![AppFunctionality disableDocumentsLibrary])
+    {
+        [array addObject:[[UIBarButtonItem alloc]
+                           initWithTitle:@"Docs" style:UIBarButtonItemStylePlain
+                           target:self
+                           action:@selector(cmdDocuments_Click:)]];
+    }
+    
+    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
+    //                                                       style:UIBarButtonItemStylePlain
+    //                                                      target:self
+    //                                                      action:@selector(cmdSort_Click:)]];
+    
+    
+    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
+    //                                                       style:UIBarButtonItemStylePlain
+    //                                                      target:self
+    //                                                      action:@selector(cmdSync_Click:)]];
+    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(cmdMaintenance_Click:)]];
+    
+    DriverData *data = [del.surveyDB getDriverData];
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithTitle:(data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver")
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(cmdDriver_Click:)]];
+    
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                    target:nil
+                                                                    action:nil]];
+    
+    [toolbarOptions setItems:array];
+    [self.view bringSubviewToFront:toolbarOptions];
+    [self.tblView reloadData];
+    
+//    [del setTitleForDriverOrPackerNavigationItem:self.navigationItem forTitle:@"Customers"];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //check for auto backup stuff...
+    AutoBackup *backup = [[AutoBackup alloc] init];
+    backup.caller = self;
+    backup.finishedBackup = @selector(finishedBackup);
+    [backup beginBackup];
+}
+
+#pragma mark Instance Methods
+
+-(void)reloadTableViewData {
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    self.customers = [del.surveyDB getCustomerList:filters];
+    [tblView reloadData];
 }
 
 - (IBAction)cmdDocuments_Click:(id)sender
@@ -177,7 +258,6 @@
     [action showInView:self.view];
 }
 
-
 -(void)createNewCustomer
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -187,6 +267,8 @@
         addController.newCustomerView = YES;
     //recreate it each time...
     navController = [[PortraitNavController alloc] initWithRootViewController:addController];
+    navController.dismissDelegate = self;
+    navController.dismissCallback = @selector(reloadTableViewData);
     
     [del.navController presentViewController:navController animated:YES completion:nil];
 }
@@ -256,69 +338,12 @@
                 pvoDownload = [[PVOSyncController alloc] initWithStyle:UITableViewStyleGrouped];
             pvoDownload.title = @"Download";
             navController = [[PortraitNavController alloc] initWithRootViewController:pvoDownload];
+            navController.dismissDelegate = self;
+            navController.dismissCallback = @selector(reloadTableViewData);
+            
             [self presentViewController:navController animated:YES completion:nil];
         }
     }
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-	
-	//make sure pricing and mileage is open
-	[del openPricingDB];
-//	[del openMilesDB];
-	
-	self.customers = [del.surveyDB getCustomerList:filters];
-    
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                    target:nil
-                                                                    action:nil]];
-    
-    if (![AppFunctionality disableDocumentsLibrary])
-    {
-        [array addObject:[[UIBarButtonItem alloc]
-                           initWithTitle:@"Docs" style:UIBarButtonItemStylePlain
-                           target:self
-                           action:@selector(cmdDocuments_Click:)]];
-    }
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSort_Click:)]];
-    
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSync_Click:)]];
-    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
-                                                       style:UIBarButtonItemStylePlain
-                                                      target:self
-                                                      action:@selector(cmdMaintenance_Click:)]];
-    
-    DriverData *data = [del.surveyDB getDriverData];
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithTitle:(data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver")
-                                                       style:UIBarButtonItemStylePlain
-                                                      target:self
-                                                      action:@selector(cmdDriver_Click:)]];
-    
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                    target:nil
-                                                                    action:nil]];
-    
-    [toolbarOptions setItems:array];
-    [self.view bringSubviewToFront:toolbarOptions];
-	[self.tblView reloadData];
-    
-//    [del setTitleForDriverOrPackerNavigationItem:self.navigationItem forTitle:@"Customers"];
 }
 
 -(IBAction) cmdPackers_Click:(id)sender
@@ -329,17 +354,6 @@
     packerInitialController.isModal = YES;
     UINavigationController *newNav = [[UINavigationController alloc] initWithRootViewController:packerInitialController];
     [self presentViewController:newNav animated:YES completion:nil];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //check for auto backup stuff...
-    AutoBackup *backup = [[AutoBackup alloc] init];
-    backup.caller = self;
-    backup.finishedBackup = @selector(finishedBackup);
-    [backup beginBackup];
 }
 
 -(void)finishedBackup
@@ -430,30 +444,9 @@
     }
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-/*
- Implement loadView if you want to create a view hierarchy programmatically
- - (void)loadView {
- }
- */
-
-/*
- */
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// Return YES for supported orientations
 	return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
-}
-
-
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
 }
 
 -(void)setupProgressView

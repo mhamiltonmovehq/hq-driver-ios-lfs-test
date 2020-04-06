@@ -300,7 +300,6 @@
         if(menuOptions != nil && [menuOptions count] > 1)
         {
             UISegmentedControl *barButtonItem = [[UISegmentedControl alloc] initWithItems:menuOptions];
-            barButtonItem.segmentedControlStyle = UISegmentedControlStyleBar;
             barButtonItem.momentary = YES;
             barButtonItem.selectedSegmentIndex = -1;
             [barButtonItem addTarget:self
@@ -902,7 +901,7 @@
             [buttonsCell setButtonReciever:self withSelector:@selector(handleEntryClick:)];
             
             if ([SurveyAppDelegate iOS7OrNewer])
-                [buttonsCell setNormalColor:[UIColor grayColor]];
+                [buttonsCell setNormalColor:[UIColor lightGrayColor]];
             else
             {
                 UIImage *buttonBackground = [[UIImage imageNamed:@"whiteButton.png"] stretchableImageWithLeftCapWidth:12. topCapHeight:0.];
@@ -932,17 +931,19 @@
             dict = conditions;
             allKeys = [[conditions allKeys] sortedArrayUsingSelector:@selector(compare:)];
         }
+        buttonsCell.cmd1.tag = indexPath.row * 4;
+        buttonsCell.cmd2.tag = (indexPath.row * 4) + 1;
+        buttonsCell.cmd3.tag = (indexPath.row * 4) + 2;
+        buttonsCell.cmd4.tag = (indexPath.row * 4) + 3;
         
         NSString *description, *code;
         
-        buttonsCell.cmd1.tag = indexPath.row * 4;
         code = [allKeys objectAtIndex:buttonsCell.cmd1.tag];
         description = [dict objectForKey:code];
         
         [self setupPluralRemoveButtonText:&code withDescription:&description];
         [buttonsCell setupDualView:1 withTopText:code andSubText:description];
         
-        buttonsCell.cmd2.tag = (indexPath.row * 4) + 1;
         if([allKeys count] > buttonsCell.cmd2.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd2.tag];
@@ -956,7 +957,6 @@
             buttonsCell.cmd2.tag = -1;
         }
         
-        buttonsCell.cmd3.tag = (indexPath.row * 4) + 2;
         if([allKeys count] > buttonsCell.cmd3.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd3.tag];
@@ -970,7 +970,6 @@
             buttonsCell.cmd3.tag = -1;
         }
         
-        buttonsCell.cmd4.tag = (indexPath.row * 4) + 3;
         if([allKeys count] > buttonsCell.cmd4.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd4.tag];

@@ -215,15 +215,15 @@
         picker.allowsEditing = NO;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-        if([SurveyAppDelegate iPad])
-        {
-            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-            [popoverController presentPopoverFromRect:ipadFrame
-                                     inView:ipadPresentView
-                   permittedArrowDirections:UIPopoverArrowDirectionAny 
-                                   animated:YES];
-        }
-        else
+//        if([SurveyAppDelegate iPad])
+//        {
+//            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
+//            [popoverController presentPopoverFromRect:ipadFrame
+//                                     inView:ipadPresentView
+//                   permittedArrowDirections:UIPopoverArrowDirectionAny
+//                                   animated:YES];
+//        }
+//        else
             [viewController presentViewController:picker animated:YES completion:nil];
         
     }
@@ -304,21 +304,21 @@
     
     [self addPhotoToList:(newImage != nil ? newImage : image)];
     
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
+//    if([SurveyAppDelegate iPad])
+//    {
+//        [popoverController dismissPopoverAnimated:YES];
+//    }
+//    else
         [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController*)imagePicker
 {
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
+//    if([SurveyAppDelegate iPad])
+//    {
+//        [popoverController dismissPopoverAnimated:YES];
+//    }
+//    else
         [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 

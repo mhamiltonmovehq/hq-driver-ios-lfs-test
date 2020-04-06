@@ -45,9 +45,9 @@
 //        CGRect window = CGRectMake(0, 0, 320, 416);
         UIWindow *appwindow = [[UIApplication sharedApplication] keyWindow];
         
-        UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, appwindow.frame.size.height - 64)];
+        UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, appwindow.frame.size.width, appwindow.frame.size.height - 64)];
         
-        tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, appwindow.frame.size.height - 64) style:style];
+        tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, appwindow.frame.size.width, appwindow.frame.size.height - 64) style:style];
         tableView.dataSource = self;
         tableView.delegate = self;
         [tableView setBackgroundColor:[UIColor whiteColor]];

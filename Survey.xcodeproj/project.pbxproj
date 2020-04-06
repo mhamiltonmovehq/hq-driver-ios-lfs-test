@@ -1083,6 +1083,7 @@
 		6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A0331832433EF6000CFD063 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
 		6A0331852433EF7100CFD063 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
+		6A0331862434E69400CFD063 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
@@ -7958,6 +7959,7 @@
 				6338C50218C6326300E3A7EF /* pvo_house_dest@2x.png in Resources */,
 				355D522F195478BD00A57D77 /* MobileMover_152.png in Resources */,
 				942D91701C879F4A000F3E65 /* upload_accessory.png in Resources */,
+				6A0331862434E69400CFD063 /* ActivationErrorView~ipad.xib in Resources */,
 				6338C50318C6326300E3A7EF /* pvo_house_origin@2x.png in Resources */,
 				35A365091A8BAE27002DD77D /* bspe55ad.ptd in Resources */,
 				6338C50418C6326300E3A7EF /* pvo_truck@2x.png in Resources */,

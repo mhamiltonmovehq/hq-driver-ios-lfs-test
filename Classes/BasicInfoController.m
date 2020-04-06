@@ -285,9 +285,9 @@
             [popover.delegate popoverControllerDidDismissPopover:popover];
         }
         
-        if(newCustomerView == YES)
+        if(newCustomerView == YES) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        else
+        } else
             [del.navController popViewControllerAnimated:YES];
         
         
