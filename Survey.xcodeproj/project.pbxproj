@@ -549,7 +549,6 @@
 		35A3652F1A8BB8B9002DD77D /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A3652D1A8BB8B8002DD77D /* libzbar.a */; };
 		35A5076B1AC0ADDA00247946 /* libdtdev-device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076A1AC0ADDA00247946 /* libdtdev-device.a */; };
 		35A5076C1AC0ADDA00247946 /* libdtdev-device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076A1AC0ADDA00247946 /* libdtdev-device.a */; };
-		35A5076E1AC0ADE100247946 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076D1AC0ADE100247946 /* libdtdev-sim.a */; };
 		35A5076F1AC0ADE100247946 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5076D1AC0ADE100247946 /* libdtdev-sim.a */; };
 		35A5EC041AC1B48D00C772EB /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA6E77E10C71CE100303262 /* ZipArchive.mm */; };
 		35A5EC051AC1B48F00C772EB /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA6E77E10C71CE100303262 /* ZipArchive.mm */; };
@@ -557,7 +556,6 @@
 		35A5EC071AC1B49400C772EB /* DownloadFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA6E68210C6E55600303262 /* DownloadFile.mm */; };
 		35A5EC091AC1B52300C772EB /* libePrintLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5EC081AC1B52300C772EB /* libePrintLib.a */; };
 		35A5EC0A1AC1B52300C772EB /* libePrintLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5EC081AC1B52300C772EB /* libePrintLib.a */; };
-		35A5EC0B1AC1BD4D00C772EB /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A365311A8BB8BF002DD77D /* libzbar-sim.a */; };
 		35A5EC0C1AC1BD4E00C772EB /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A365311A8BB8BF002DD77D /* libzbar-sim.a */; };
 		35A942D8194636F400A2BC8B /* DocumentLibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A942D7194636F400A2BC8B /* DocumentLibraryController.m */; };
 		35A942D9194636F400A2BC8B /* DocumentLibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A942D7194636F400A2BC8B /* DocumentLibraryController.m */; };
@@ -5365,7 +5363,6 @@
 				BA0C0FC31F3A03A700B33699 /* Fabric.framework in Frameworks */,
 				35A5EC091AC1B52300C772EB /* libePrintLib.a in Frameworks */,
 				35A5076B1AC0ADDA00247946 /* libdtdev-device.a in Frameworks */,
-				35A5076E1AC0ADE100247946 /* libdtdev-sim.a in Frameworks */,
 				35A3651E1A8BB546002DD77D /* libScanApi.a in Frameworks */,
 				9456B91B1C6CFEE200CA4CED /* AudioToolbox.framework in Frameworks */,
 				942DF6AD1CD299F40054D900 /* ExternalAccessory.framework in Frameworks */,
@@ -5380,7 +5377,6 @@
 				9456B91D1C6CFEE200CA4CED /* CFNetwork.framework in Frameworks */,
 				6338C62918C6326300E3A7EF /* MessageUI.framework in Frameworks */,
 				6338C62E18C6326300E3A7EF /* libz.1.2.5.dylib in Frameworks */,
-				35A5EC0B1AC1BD4D00C772EB /* libzbar-sim.a in Frameworks */,
 				6338C63218C6326300E3A7EF /* CoreLocation.framework in Frameworks */,
 				6338C63318C6326300E3A7EF /* MapKit.framework in Frameworks */,
 				6338C63818C6326300E3A7EF /* libsqlite3.dylib in Frameworks */,
@@ -7371,9 +7367,9 @@
 			productReference = 94ACF5B61CDBEC8F007FB551 /* Mobile Mover GVL.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94B25AB51CB43FE7004366D4 /* Mobile Mover Enterprise */ = {
+		94B25AB51CB43FE7004366D4 /* Mobile Mover Simulator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Enterprise" */;
+			buildConfigurationList = 94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Simulator" */;
 			buildPhases = (
 				ADD99A0C87CDCF1BEE80F97B /* [CP] Check Pods Manifest.lock */,
 				94B25AB61CB43FE7004366D4 /* Sources */,
@@ -7387,7 +7383,7 @@
 			);
 			dependencies = (
 			);
-			name = "Mobile Mover Enterprise";
+			name = "Mobile Mover Simulator";
 			productName = Survey;
 			productReference = 94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */;
 			productType = "com.apple.product-type.application";
@@ -7474,7 +7470,7 @@
 			projectRoot = "";
 			targets = (
 				6338C49218C6326300E3A7EF /* Mobile Mover */,
-				94B25AB51CB43FE7004366D4 /* Mobile Mover Enterprise */,
+				94B25AB51CB43FE7004366D4 /* Mobile Mover Simulator */,
 				945174621C73784B0095C5B3 /* Mobile Mover Auto */,
 				350A116E193536C8001D8EF2 /* AtlasNet */,
 				947D51BC1CCE9DC7007A0AB4 /* AtlasNet Enterprise */,
@@ -11909,9 +11905,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Mobile Mover/Mobile Mover.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rafael IGC (WU8SMJSFT5)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEVELOPMENT_TEAM = 7329GTUM27;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -11929,6 +11927,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -11954,9 +11953,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Mobile Mover/Mobile Mover.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEVELOPMENT_TEAM = 7329GTUM27;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -11974,6 +11975,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -11998,9 +12000,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Mobile Mover/Mobile Mover.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEVELOPMENT_TEAM = 7329GTUM27;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -12017,6 +12021,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12474,6 +12479,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -12495,6 +12501,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12524,6 +12531,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -12545,6 +12553,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12572,6 +12581,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 4.0.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -12592,6 +12602,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
+				MARKETING_VERSION = 381;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -12638,7 +12649,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Distribution;
@@ -12681,7 +12692,7 @@
 				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 i386 arm64";
 			};
 			name = Debug;
@@ -12718,7 +12729,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;
@@ -12786,7 +12797,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Enterprise" */ = {
+		94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Simulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94B25D0C1CB43FE7004366D4 /* Debug */,
