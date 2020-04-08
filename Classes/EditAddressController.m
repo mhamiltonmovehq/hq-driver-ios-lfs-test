@@ -179,9 +179,8 @@
     
 }
 
--(void)theyWantToGoToAddress:(id)sender
+-(void)theyWantToGoToAddress
 {
-    
     //make sure address is complete, confirm move, save, send to maps
     
     if(tboxCurrent != nil)
@@ -201,7 +200,7 @@
     {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:
                                 [NSString stringWithFormat:@"WARNING: This action will launch the external Maps application for this location. "
-                                " %@ is not responsible for any directions provided which may not account for truck routes.", @"Mobile Mover"]
+                                " %@ is not responsible for any directions provided which may not account for truck routes.", @"MobileMover"]
                                                            delegate:self 
                                                   cancelButtonTitle:@"Cancel"
                                              destructiveButtonTitle:@"Continue" 
@@ -476,7 +475,7 @@
             
             buttonCell.accessoryType = UITableViewCellAccessoryNone;
             buttonCell.caller = self;
-            buttonCell.callback = @selector(theyWantToGoToAddress:);
+            buttonCell.callback = @selector(theyWantToGoToAddress);
         }
         
         [buttonCell.cmdButton setTitle:@"Take Me Here" forState:UIControlStateNormal];
