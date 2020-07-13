@@ -10,9 +10,10 @@ def mm_pods
     # Pods for Mobile Mover Enterprise
     pod 'ImagePicker'
     pod 'Lightbox'
+#    pod 'AFNetworking', '~> 3.2.1' #4.0+ requires min of iOS 9
 end
 
-target 'Mobile Mover Enterprise' do
+target 'Mobile Mover Simulator' do
     project 'Survey'
     mm_pods
 end

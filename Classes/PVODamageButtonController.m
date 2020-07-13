@@ -712,8 +712,10 @@
         //if height is smaller than a normal row set it to the normal cell height, otherwise return the bigger dynamic height.
         return (rect.size.height < rowHeight ? rowHeight : rect.size.height);
     }
-    else
-        return 44;
+    else {
+        int rowHeight = 44;
+        return [SurveyAppDelegate iPad] ? rowHeight * 2.4 : rowHeight;
+    }
 }
 
 -(IBAction)handleEntryClick:(id)sender

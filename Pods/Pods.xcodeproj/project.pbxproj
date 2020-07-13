@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00EB6B467EB81D36B262442D65451C39 /* Hue-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C594BCF6D25174EE5EB8DFAAE44B9E4 /* Hue-dummy.m */; };
+		0FD44C5991ACB50734A8F367156E15F6 /* Pods-Mobile Mover Simulator-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E280E2BCE71DE6659868830B95BF697 /* Pods-Mobile Mover Simulator-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10F189813B704407C86141329F146077 /* BottomContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2720A69287812707856CEC74EBB7BFA /* BottomContainerView.swift */; };
 		160F90B6366E7E14A8F85CC7EC5BE62C /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980D2569806FEFD9F64F09592C75113 /* LightboxTransition.swift */; };
 		164DFBEAC45C53E052D65E648F3735E2 /* ON@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DE6ED45BB4B14F00AF68BBDAD547904 /* ON@3x.png */; };
@@ -24,17 +25,16 @@
 		37597B02E328CA64C5B71E08D96195D7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E8822DDE12FB6CC1EF6D309FA063B4 /* AVFoundation.framework */; };
 		3935C6E6AC0C8E543BBE40F1C9290FC2 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79AC3AB561DD40B2615370DB30F8FFC /* ImagePickerController.swift */; };
 		423F00725FB97A00ADB63BB1CDC3BA05 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1565BF338A21C843088FF0EB04B3D9 /* AssetManager.swift */; };
-		4614DD1B3EE408EA42221ABA4504EBA4 /* Pods-Mobile Mover Enterprise-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A54EAFD8FEF723B9765E009CB75036 /* Pods-Mobile Mover Enterprise-dummy.m */; };
 		4D0EC3B8E4FE794CB7ADD9D88B41EEA9 /* ImageGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A67EA6680C51965A69B2C6DD3BB884E /* ImageGalleryView.swift */; };
 		4F5CEB2399B90992B35B479CAC5F77A1 /* OFF@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B814EE06843B76D6D7440EDB8EBC52C /* OFF@3x.png */; };
 		5B544AC89ABA0C6499A6A05DEC247326 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D775E72A76695F2602239BFB52A681 /* CameraView.swift */; };
 		5D7CD62463A774EBFD3BA64FB95FD297 /* CameraMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15618729F4B99A0516D6FB8723DC6895 /* CameraMan.swift */; };
 		5E4E2F52079F8744462871787A4C1F2C /* UIView+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13A7C29C7E58DCFD700F63643C379F0 /* UIView+Gradient.swift */; };
-		6652CD2C5470B121A0D450D53F8FCDDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63775FE0158D6BB5D4BEE47AA915314D /* Foundation.framework */; };
 		6B74662DA5F4A6B1419ED99B529AF9FE /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B855D0D07A802C7596EBA6032E72EC /* Hue.framework */; };
 		7575402E98A6D2225191806244EE9462 /* ImageGalleryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE95BB1FE6F76A9F45F000FA8FC49FAA /* ImageGalleryViewCell.swift */; };
 		7692BFBAFA254782F6A985372061D813 /* UIColor+Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECF9C949E7443604F8F40B2B1DE9A49 /* UIColor+Hue.swift */; };
 		79880F0872BDD7E446054457856EFAC4 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71A96F898157A7E9D1D77B142EA5BD /* LightboxImage.swift */; };
+		7ADF1D1DC44894198DBA0795E85D12D8 /* Pods-Mobile Mover Simulator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D078A913C0A888C72AC3E7F6225A7A7 /* Pods-Mobile Mover Simulator-dummy.m */; };
 		85209A2587ACFD8997A5345D504C238D /* selectedImageGallery@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B485FC6B4F3C49C9632D944D387EA40D /* selectedImageGallery@3x.png */; };
 		898D0E5F7B9F1C10B68A525D1AFEBF7C /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D138608B4F6D71BF67D9A744533E2 /* TopView.swift */; };
 		8CE7B41BFC4C4D2E8A8E362281FE51C7 /* Lightbox-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 096DDC284BBDB5DF787422EFF2B2294C /* Lightbox-dummy.m */; };
@@ -42,7 +42,8 @@
 		93ADDE169480D55217DCB9ED40A77687 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5281335FCD41DC0DCD9894E2BEB012C /* UIKit.framework */; };
 		94007A30215BE6846195C50143075598 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63775FE0158D6BB5D4BEE47AA915314D /* Foundation.framework */; };
 		A2131FC2BF86B3EC756DFF45F75E9B7E /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F5B8526146B770F91DCDE4552B7FA6 /* LoadingIndicator.swift */; };
-		A49DE5F1B718BCFDB462DB9F3D5D6152 /* Pods-Mobile Mover-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76431D3DA8A3F42E3B2A1B76A1E3DAE0 /* Pods-Mobile Mover-dummy.m */; };
+		A49DE5F1B718BCFDB462DB9F3D5D6152 /* Pods-Mobile Mover-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C44B5CE5612E657FA626D5BB8FA23E28 /* Pods-Mobile Mover-dummy.m */; };
+		A52F373D612E3F47FE3F77011FA579C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63775FE0158D6BB5D4BEE47AA915314D /* Foundation.framework */; };
 		A558E0796AFEFA4DDF6FD7D6A70B2D05 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B307526CE12497CF175728B2FD98DCE /* PageView.swift */; };
 		B175871C4CD21AD8560D7129883D5297 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259193B9B941640B29DEF5427B66B818 /* Lightbox.bundle */; };
 		B85F8FF60A54733BBFF8DCF65C205705 /* cameraIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A042B0769B803A3B61352CB1C9D4AD /* cameraIcon@3x.png */; };
@@ -55,12 +56,11 @@
 		C8485038D07C3C780E1B4D7507179565 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E8822DDE12FB6CC1EF6D309FA063B4 /* AVFoundation.framework */; };
 		C94133869F21D01DBD3C960113B199BB /* ImageGalleryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECE463CA78B3F463C8F863913B3819E /* ImageGalleryLayout.swift */; };
 		CEC28863F8E236729C012D2A46226D1A /* ImagePicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2613FE894AD0FCF29AC2CF6AF91D5661 /* ImagePicker-dummy.m */; };
-		D38EA4EB68116AF19EECE52C736CC13A /* Pods-Mobile Mover Enterprise-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB4136E7E963FB810F02ED288ACDBFC /* Pods-Mobile Mover Enterprise-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7902E942F2FEBC0703F32C7879E6A9C /* ImageGalleryViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E34EB9FE6B8021E3D243E5EE8AFE3E /* ImageGalleryViewDataSource.swift */; };
 		DA36F0FF6ECB5A594683C623353C8C6E /* ConstraintsSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A0CCB4EFB55ECE5E60CDB32EC5B71 /* ConstraintsSetup.swift */; };
 		DB2132FF9650A2D6A5867D43D04A5112 /* UIImage+Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FD88C0C3498745781CF6251A5EF8F /* UIImage+Hue.swift */; };
 		DB8D1E1E97F4565DE5894F55701EC982 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63775FE0158D6BB5D4BEE47AA915314D /* Foundation.framework */; };
-		DF22FBC2E82FD9BEFFC7DC9CA0A2A3D2 /* Pods-Mobile Mover-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E0C9C0AD0960374D2B3AA872C6D0C26 /* Pods-Mobile Mover-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DF22FBC2E82FD9BEFFC7DC9CA0A2A3D2 /* Pods-Mobile Mover-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F26A05236536767350108BD0C78A0944 /* Pods-Mobile Mover-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF5E986D6604BAD0D8DACE4FB4D3E97F /* LayoutConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84A4139EC09DE9A47ED84A8FD2BFB64 /* LayoutConfigurable.swift */; };
 		EAFE98AD8D4FBE10C89EC08C9C77C9DE /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694AA80504230D19062B142BFC9F91E /* FooterView.swift */; };
 		EE2578B1307765C2B3F3BAF4FB610E21 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0983B539081655B477C1AC8714F27A /* LocationManager.swift */; };
@@ -70,12 +70,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		113BCA994CE8DEEB315649D8941D56F2 /* PBXContainerItemProxy */ = {
+		3B95E5CDC47DFF3498DAE055230B9B17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 01CB8D6098C21E12CE735619344DE81E;
-			remoteInfo = ImagePicker;
+			remoteGlobalIDString = 2FF67131BF0A388437610695C3724017;
+			remoteInfo = Lightbox;
 		};
 		6ACF8FA0E3254F635612F89DB8A22BF5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -105,13 +105,6 @@
 			remoteGlobalIDString = 2FF67131BF0A388437610695C3724017;
 			remoteInfo = Lightbox;
 		};
-		9456952085E35E2B720D7521CF2C6ECA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2FF67131BF0A388437610695C3724017;
-			remoteInfo = Lightbox;
-		};
 		A6276EFB94CA798170BADE98FFCF3BA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -119,7 +112,14 @@
 			remoteGlobalIDString = 00D9B51B84230E50370AC70ADCF7F8AA;
 			remoteInfo = Hue;
 		};
-		B1119E96FA608CCABC195DF7A1ED1CF2 /* PBXContainerItemProxy */ = {
+		E057AE89D0489A136C50CD24FBEA6431 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01CB8D6098C21E12CE735619344DE81E;
+			remoteInfo = ImagePicker;
+		};
+		FCF9E8463913DD0DDFDAF8C0B0017A57 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -130,9 +130,7 @@
 
 /* Begin PBXFileReference section */
 		049FD88C0C3498745781CF6251A5EF8F /* UIImage+Hue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Hue.swift"; path = "Source/iOS/UIImage+Hue.swift"; sourceTree = "<group>"; };
-		0738E25711AF0BD7016A0A928947D1E9 /* Pods-Mobile Mover.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Mobile Mover.modulemap"; sourceTree = "<group>"; };
 		096DDC284BBDB5DF787422EFF2B2294C /* Lightbox-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Lightbox-dummy.m"; sourceTree = "<group>"; };
-		0E421B0CFB13EBFBD4387E51C736CA12 /* Pods-Mobile Mover Enterprise-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Mobile Mover Enterprise-acknowledgements.markdown"; sourceTree = "<group>"; };
 		0FE6C87395E17CE45296E8741E0CB7E8 /* StackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StackView.swift; path = Source/BottomView/StackView.swift; sourceTree = "<group>"; };
 		102F09B5AB0A5A467C18973759E658A1 /* Helper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = Source/Helper.swift; sourceTree = "<group>"; };
 		11652F8FA9775A9C435D4433D19E24A9 /* Hue.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Hue.xcconfig; sourceTree = "<group>"; };
@@ -147,61 +145,64 @@
 		239834633166347D977B958F7B3352B9 /* Hue.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Hue.modulemap; sourceTree = "<group>"; };
 		259193B9B941640B29DEF5427B66B818 /* Lightbox.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = Lightbox.bundle; path = Resources/Lightbox.bundle; sourceTree = "<group>"; };
 		2613FE894AD0FCF29AC2CF6AF91D5661 /* ImagePicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ImagePicker-dummy.m"; sourceTree = "<group>"; };
+		26902C818C9512E48109EA4B3E0222A3 /* Pods-Mobile Mover Simulator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Simulator.release.xcconfig"; sourceTree = "<group>"; };
 		28CD5135388903631EEEE86F3021968B /* ImagePicker-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ImagePicker-umbrella.h"; sourceTree = "<group>"; };
 		32F5B8526146B770F91DCDE4552B7FA6 /* LoadingIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoadingIndicator.swift; path = Source/Views/LoadingIndicator.swift; sourceTree = "<group>"; };
 		38ED716EF79C53F036946586BFCAE33D /* ResourceBundle-ImagePicker-ImagePicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-ImagePicker-ImagePicker-Info.plist"; sourceTree = "<group>"; };
 		3A67EA6680C51965A69B2C6DD3BB884E /* ImageGalleryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGalleryView.swift; path = Source/ImageGallery/ImageGalleryView.swift; sourceTree = "<group>"; };
-		3C28EA1181E968DFAA4B215157BF2830 /* Pods-Mobile Mover Enterprise-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mobile Mover Enterprise-frameworks.sh"; sourceTree = "<group>"; };
-		3CB4136E7E963FB810F02ED288ACDBFC /* Pods-Mobile Mover Enterprise-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Mobile Mover Enterprise-umbrella.h"; sourceTree = "<group>"; };
 		3D71E63D8B2DB8712A0A10BA48958128 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Source/Configuration.swift; sourceTree = "<group>"; };
 		3ECE463CA78B3F463C8F863913B3819E /* ImageGalleryLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGalleryLayout.swift; path = Source/ImageGallery/ImageGalleryLayout.swift; sourceTree = "<group>"; };
 		41FFE51267BA40D73C51F6D5B2FF508C /* ImagePicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ImagePicker-prefix.pch"; sourceTree = "<group>"; };
 		42D9B2CE7098328CCDB9F2D8CA3645ED /* ButtonPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ButtonPicker.swift; path = Source/BottomView/ButtonPicker.swift; sourceTree = "<group>"; };
-		44FE3F01070F9A85B47FD1B4D40689AF /* Pods-Mobile Mover-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Mobile Mover-acknowledgements.markdown"; sourceTree = "<group>"; };
+		44681628FEFA701CBB9BACEA2DA4EEEC /* Pods-Mobile Mover Simulator.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Simulator.distribution.xcconfig"; sourceTree = "<group>"; };
+		45CE4FC1F167F25FD80A8D634AC7AFE8 /* Pods-Mobile Mover Simulator-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover Simulator-acknowledgements.plist"; sourceTree = "<group>"; };
 		46D775E72A76695F2602239BFB52A681 /* CameraView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = Source/CameraView/CameraView.swift; sourceTree = "<group>"; };
-		4839ACA053EFB6CF25272430B180126B /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4839ACA053EFB6CF25272430B180126B /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Lightbox.framework; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B307526CE12497CF175728B2FD98DCE /* PageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageView.swift; path = Source/Views/PageView.swift; sourceTree = "<group>"; };
-		4D083205BDBF09C485257677B2306C4E /* Pods-Mobile Mover Enterprise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Enterprise.debug.xcconfig"; sourceTree = "<group>"; };
+		4D078A913C0A888C72AC3E7F6225A7A7 /* Pods-Mobile Mover Simulator-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Mobile Mover Simulator-dummy.m"; sourceTree = "<group>"; };
 		4D703D19BAB5D983CAEED087353DD0F8 /* ImageStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageStack.swift; path = Source/BottomView/ImageStack.swift; sourceTree = "<group>"; };
-		52464AF590FC73D0154935569CBBF759 /* Pods-Mobile Mover-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover-acknowledgements.plist"; sourceTree = "<group>"; };
+		4FDF6B6D2970B5A209C0BB71F998EFCD /* Pods-Mobile Mover-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Mobile Mover-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5B7B4CD59D14C49ED4CA39D6091FE1AF /* Pods-Mobile Mover.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.release.xcconfig"; sourceTree = "<group>"; };
 		5B814EE06843B76D6D7440EDB8EBC52C /* OFF@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "OFF@3x.png"; path = "Images/OFF@3x.png"; sourceTree = "<group>"; };
 		5C7A0CCB4EFB55ECE5E60CDB32EC5B71 /* ConstraintsSetup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintsSetup.swift; path = Source/Extensions/ConstraintsSetup.swift; sourceTree = "<group>"; };
-		63184EF277D7F5E0C07C25E09BB1CEAE /* Pods-Mobile Mover.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.debug.xcconfig"; sourceTree = "<group>"; };
+		5D54487E9C1DAA8BE17F7894990B494D /* Pods-Mobile Mover.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.debug.xcconfig"; sourceTree = "<group>"; };
+		5E280E2BCE71DE6659868830B95BF697 /* Pods-Mobile Mover Simulator-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Mobile Mover Simulator-umbrella.h"; sourceTree = "<group>"; };
+		62271A7B69C9488D8660A625B193E1C9 /* Pods-Mobile Mover-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mobile Mover-frameworks.sh"; sourceTree = "<group>"; };
 		63775FE0158D6BB5D4BEE47AA915314D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		6C252B16A490B34A3D295075D1968AD2 /* Lightbox.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Lightbox.modulemap; sourceTree = "<group>"; };
-		70FD3F8AA231BB4C014277C2D329C50B /* Pods-Mobile Mover-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mobile Mover-frameworks.sh"; sourceTree = "<group>"; };
-		76431D3DA8A3F42E3B2A1B76A1E3DAE0 /* Pods-Mobile Mover-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Mobile Mover-dummy.m"; sourceTree = "<group>"; };
 		76FED42642A4380690AEE3D23A1DF0A7 /* Lightbox.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Lightbox.xcconfig; sourceTree = "<group>"; };
 		77C79F770D8F26C6F498F5E384542A7B /* ImagePicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ImagePicker-Info.plist"; sourceTree = "<group>"; };
 		7DE6ED45BB4B14F00AF68BBDAD547904 /* ON@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ON@3x.png"; path = "Images/ON@3x.png"; sourceTree = "<group>"; };
-		8E0C9C0AD0960374D2B3AA872C6D0C26 /* Pods-Mobile Mover-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Mobile Mover-umbrella.h"; sourceTree = "<group>"; };
+		83DFD4B654F876212134A2909DF30646 /* Pods-Mobile Mover Simulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Simulator.debug.xcconfig"; sourceTree = "<group>"; };
+		84C92CED4223D16AB6174268B9066086 /* Pods-Mobile Mover Simulator-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Mobile Mover Simulator-acknowledgements.markdown"; sourceTree = "<group>"; };
+		85CBC1917E8E7F8FEFCF6AD0DEB2E7C0 /* Pods-Mobile Mover Simulator-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mobile Mover Simulator-frameworks.sh"; sourceTree = "<group>"; };
 		92E8822DDE12FB6CC1EF6D309FA063B4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		9781B043CDB834B97916F16BA8A04338 /* ImagePicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ImagePicker.xcconfig; sourceTree = "<group>"; };
-		97AA160F23F0CBEDDAF212103E762FC7 /* ImagePicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePicker.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		987CD19BC0CE18F2E00B0AD5ABF8670D /* ImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AA160F23F0CBEDDAF212103E762FC7 /* ImagePicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ImagePicker.bundle; path = "ImagePicker-ImagePicker.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		987CD19BC0CE18F2E00B0AD5ABF8670D /* ImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ImagePicker.framework; path = ImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99962B23094335D536AE0B1CED74796C /* LightboxController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LightboxController.swift; path = Source/LightboxController.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A2DBD46E793B9F5BC806153388ACC40A /* Pods_Mobile_Mover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mobile_Mover.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3B9017440BF6211054FE81F7F78BC76 /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AB72816E5B0D55135ED6C8CBB01B6EE /* Pods-Mobile Mover Simulator-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover Simulator-Info.plist"; sourceTree = "<group>"; };
+		9B2A3915F08B6CC37903B3287DB73267 /* Pods-Mobile Mover-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover-Info.plist"; sourceTree = "<group>"; };
+		9BE97E98A766C0B03FD208BAD2FDB3BC /* Pods_Mobile_Mover_Simulator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Mobile_Mover_Simulator.framework; path = "Pods-Mobile Mover Simulator.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A2DBD46E793B9F5BC806153388ACC40A /* Pods_Mobile_Mover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Mobile_Mover.framework; path = "Pods-Mobile Mover.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3B9017440BF6211054FE81F7F78BC76 /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Hue.framework; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A694AA80504230D19062B142BFC9F91E /* FooterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FooterView.swift; path = Source/Views/FooterView.swift; sourceTree = "<group>"; };
 		A79AC3AB561DD40B2615370DB30F8FFC /* ImagePickerController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePickerController.swift; path = Source/ImagePickerController.swift; sourceTree = "<group>"; };
 		AC5D138608B4F6D71BF67D9A744533E2 /* TopView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TopView.swift; path = Source/TopView/TopView.swift; sourceTree = "<group>"; };
+		B021D3AA41C41E447730E0ED7A8730A4 /* Pods-Mobile Mover Simulator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Mobile Mover Simulator.modulemap"; sourceTree = "<group>"; };
 		B2720A69287812707856CEC74EBB7BFA /* BottomContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BottomContainerView.swift; path = Source/BottomView/BottomContainerView.swift; sourceTree = "<group>"; };
 		B485FC6B4F3C49C9632D944D387EA40D /* selectedImageGallery@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "selectedImageGallery@3x.png"; path = "Images/selectedImageGallery@3x.png"; sourceTree = "<group>"; };
-		B93745383742291138758DC31989A1D8 /* Pods-Mobile Mover Enterprise.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Mobile Mover Enterprise.modulemap"; sourceTree = "<group>"; };
 		B9474C036D3C98188C376F127492049A /* InfoLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InfoLabel.swift; path = Source/Views/InfoLabel.swift; sourceTree = "<group>"; };
-		B94EE17A817BB306A4C3197AD02E9C02 /* Pods-Mobile Mover.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.distribution.xcconfig"; sourceTree = "<group>"; };
 		BC4AAEC417B5F868C528B7DCB81ADF5F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
 		BD55150FBE37FDFA107110A7A8E729BB /* Lightbox-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Lightbox-umbrella.h"; sourceTree = "<group>"; };
 		BECF9C949E7443604F8F40B2B1DE9A49 /* UIColor+Hue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIColor+Hue.swift"; path = "Source/iOS/UIColor+Hue.swift"; sourceTree = "<group>"; };
-		BF42DC351F9DFCF829D6CD62C614D230 /* Pods-Mobile Mover Enterprise.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Enterprise.distribution.xcconfig"; sourceTree = "<group>"; };
-		C09B6481EEF459B084540C46186D5E2B /* Pods-Mobile Mover Enterprise-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover Enterprise-acknowledgements.plist"; sourceTree = "<group>"; };
 		C32356C4C3444160F3DECA8C727CDB6F /* Hue-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Hue-prefix.pch"; sourceTree = "<group>"; };
+		C44B5CE5612E657FA626D5BB8FA23E28 /* Pods-Mobile Mover-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Mobile Mover-dummy.m"; sourceTree = "<group>"; };
 		C84A4139EC09DE9A47ED84A8FD2BFB64 /* LayoutConfigurable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConfigurable.swift; path = Source/Library/LayoutConfigurable.swift; sourceTree = "<group>"; };
 		C980D2569806FEFD9F64F09592C75113 /* LightboxTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LightboxTransition.swift; path = Source/Library/LightboxTransition.swift; sourceTree = "<group>"; };
 		CE95BB1FE6F76A9F45F000FA8FC49FAA /* ImageGalleryViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGalleryViewCell.swift; path = Source/ImageGallery/ImageGalleryViewCell.swift; sourceTree = "<group>"; };
-		CEBFA86F84DBC011F6CF6D6DD9F68792 /* Pods-Mobile Mover.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.release.xcconfig"; sourceTree = "<group>"; };
-		CFAABABE2F673EDABC0048897FE47D23 /* Pods-Mobile Mover-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover-Info.plist"; sourceTree = "<group>"; };
+		D39CF1DB0E310A40D12A565220192496 /* Pods-Mobile Mover.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Mobile Mover.modulemap"; sourceTree = "<group>"; };
 		D4E34EB9FE6B8021E3D243E5EE8AFE3E /* ImageGalleryViewDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageGalleryViewDataSource.swift; path = Source/ImageGallery/ImageGalleryViewDataSource.swift; sourceTree = "<group>"; };
 		D4E352680B1D6366810BC799DB8DA8CB /* Lightbox-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Lightbox-prefix.pch"; sourceTree = "<group>"; };
 		D5281335FCD41DC0DCD9894E2BEB012C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -210,13 +211,12 @@
 		DC085D0855ADCDA49656110A531B7F18 /* LightboxConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LightboxConfig.swift; path = Source/LightboxConfig.swift; sourceTree = "<group>"; };
 		E13A7C29C7E58DCFD700F63643C379F0 /* UIView+Gradient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Gradient.swift"; path = "Source/Library/UIView+Gradient.swift"; sourceTree = "<group>"; };
 		E40DA4758E34A084E8876472ACBD8327 /* HeaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HeaderView.swift; path = Source/Views/HeaderView.swift; sourceTree = "<group>"; };
-		E4A54EAFD8FEF723B9765E009CB75036 /* Pods-Mobile Mover Enterprise-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Mobile Mover Enterprise-dummy.m"; sourceTree = "<group>"; };
 		E71835EB8B2352B333088032471232DE /* focusIcon@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "focusIcon@3x.png"; path = "Images/focusIcon@3x.png"; sourceTree = "<group>"; };
 		E8A042B0769B803A3B61352CB1C9D4AD /* cameraIcon@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "cameraIcon@3x.png"; path = "Images/cameraIcon@3x.png"; sourceTree = "<group>"; };
-		F0FA4FAD6F98950BE78787034D07188F /* Pods-Mobile Mover Enterprise-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover Enterprise-Info.plist"; sourceTree = "<group>"; };
-		F2E851197E3BD38AA3F43BEEC566B337 /* Pods-Mobile Mover Enterprise.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover Enterprise.release.xcconfig"; sourceTree = "<group>"; };
+		F057F9A33DB66B5C7B997A22394B2B9A /* Pods-Mobile Mover-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Mobile Mover-acknowledgements.plist"; sourceTree = "<group>"; };
+		F26A05236536767350108BD0C78A0944 /* Pods-Mobile Mover-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Mobile Mover-umbrella.h"; sourceTree = "<group>"; };
+		F3F88D8D69B77BFD5D1776DAB4854B16 /* Pods-Mobile Mover.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Mobile Mover.distribution.xcconfig"; sourceTree = "<group>"; };
 		F6F87710446EF5D9EFAD61A7B3F13492 /* ImagePicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ImagePicker.modulemap; sourceTree = "<group>"; };
-		F8B4D2CF44D82DA26E75701973798174 /* Pods_Mobile_Mover_Enterprise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mobile_Mover_Enterprise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B855D0D07A802C7596EBA6032E72EC /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -242,20 +242,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7CCF5C92065AA19FD450D6C8E6AAD464 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6652CD2C5470B121A0D450D53F8FCDDA /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7FF6A1EFACAF5465043378BB8FFA67DB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				37597B02E328CA64C5B71E08D96195D7 /* AVFoundation.framework in Frameworks */,
 				94007A30215BE6846195C50143075598 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9BB3AEAE6371D63975C1FC5BF154335 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A52F373D612E3F47FE3F77011FA579C1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,25 +313,8 @@
 				04FE863A96DAB2D7CA86EAD553DA2A1D /* Resources */,
 				DEB5AB94B3E412CFAFC58C3EEF536AE2 /* Support Files */,
 			);
+			name = Lightbox;
 			path = Lightbox;
-			sourceTree = "<group>";
-		};
-		35D14A8F15D540A9EF103D8854F8A925 /* Pods-Mobile Mover Enterprise */ = {
-			isa = PBXGroup;
-			children = (
-				B93745383742291138758DC31989A1D8 /* Pods-Mobile Mover Enterprise.modulemap */,
-				0E421B0CFB13EBFBD4387E51C736CA12 /* Pods-Mobile Mover Enterprise-acknowledgements.markdown */,
-				C09B6481EEF459B084540C46186D5E2B /* Pods-Mobile Mover Enterprise-acknowledgements.plist */,
-				E4A54EAFD8FEF723B9765E009CB75036 /* Pods-Mobile Mover Enterprise-dummy.m */,
-				3C28EA1181E968DFAA4B215157BF2830 /* Pods-Mobile Mover Enterprise-frameworks.sh */,
-				F0FA4FAD6F98950BE78787034D07188F /* Pods-Mobile Mover Enterprise-Info.plist */,
-				3CB4136E7E963FB810F02ED288ACDBFC /* Pods-Mobile Mover Enterprise-umbrella.h */,
-				4D083205BDBF09C485257677B2306C4E /* Pods-Mobile Mover Enterprise.debug.xcconfig */,
-				BF42DC351F9DFCF829D6CD62C614D230 /* Pods-Mobile Mover Enterprise.distribution.xcconfig */,
-				F2E851197E3BD38AA3F43BEEC566B337 /* Pods-Mobile Mover Enterprise.release.xcconfig */,
-			);
-			name = "Pods-Mobile Mover Enterprise";
-			path = "Target Support Files/Pods-Mobile Mover Enterprise";
 			sourceTree = "<group>";
 		};
 		39ABF4A4664D2F66AB3A57B22B10BEE1 /* Frameworks */ = {
@@ -341,6 +324,19 @@
 				7AC462643E7B6D19200C9DC7C886CDE0 /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79186C1BD23E2FF0089F29F67DF5B572 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3B9017440BF6211054FE81F7F78BC76 /* Hue.framework */,
+				97AA160F23F0CBEDDAF212103E762FC7 /* ImagePicker.bundle */,
+				987CD19BC0CE18F2E00B0AD5ABF8670D /* ImagePicker.framework */,
+				4839ACA053EFB6CF25272430B180126B /* Lightbox.framework */,
+				A2DBD46E793B9F5BC806153388ACC40A /* Pods_Mobile_Mover.framework */,
+				9BE97E98A766C0B03FD208BAD2FDB3BC /* Pods_Mobile_Mover_Simulator.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7AC462643E7B6D19200C9DC7C886CDE0 /* iOS */ = {
@@ -354,33 +350,6 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		8474C0884468303C9F50DAABCAF4C9A2 /* Pods-Mobile Mover */ = {
-			isa = PBXGroup;
-			children = (
-				0738E25711AF0BD7016A0A928947D1E9 /* Pods-Mobile Mover.modulemap */,
-				44FE3F01070F9A85B47FD1B4D40689AF /* Pods-Mobile Mover-acknowledgements.markdown */,
-				52464AF590FC73D0154935569CBBF759 /* Pods-Mobile Mover-acknowledgements.plist */,
-				76431D3DA8A3F42E3B2A1B76A1E3DAE0 /* Pods-Mobile Mover-dummy.m */,
-				70FD3F8AA231BB4C014277C2D329C50B /* Pods-Mobile Mover-frameworks.sh */,
-				CFAABABE2F673EDABC0048897FE47D23 /* Pods-Mobile Mover-Info.plist */,
-				8E0C9C0AD0960374D2B3AA872C6D0C26 /* Pods-Mobile Mover-umbrella.h */,
-				63184EF277D7F5E0C07C25E09BB1CEAE /* Pods-Mobile Mover.debug.xcconfig */,
-				B94EE17A817BB306A4C3197AD02E9C02 /* Pods-Mobile Mover.distribution.xcconfig */,
-				CEBFA86F84DBC011F6CF6D6DD9F68792 /* Pods-Mobile Mover.release.xcconfig */,
-			);
-			name = "Pods-Mobile Mover";
-			path = "Target Support Files/Pods-Mobile Mover";
-			sourceTree = "<group>";
-		};
-		8570835C18D4DEB718D0E394929185D0 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				8474C0884468303C9F50DAABCAF4C9A2 /* Pods-Mobile Mover */,
-				35D14A8F15D540A9EF103D8854F8A925 /* Pods-Mobile Mover Enterprise */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
 		8C31744F1B45574B6C47065DFFCA66F1 /* Hue */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +357,7 @@
 				049FD88C0C3498745781CF6251A5EF8F /* UIImage+Hue.swift */,
 				DCE00D6C2AA179A2C0830318D68A89F5 /* Support Files */,
 			);
+			name = Hue;
 			path = Hue;
 			sourceTree = "<group>";
 		};
@@ -414,6 +384,7 @@
 				A8A86270B30F0DD27470A4335A6D303E /* Resources */,
 				DB50CF28E3C218E7AF5D4C00334AF34C /* Support Files */,
 			);
+			name = ImagePicker;
 			path = ImagePicker;
 			sourceTree = "<group>";
 		};
@@ -430,15 +401,60 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		B23606F8C0F143839ECEA840F38DA9E5 /* Pods-Mobile Mover */ = {
+			isa = PBXGroup;
+			children = (
+				D39CF1DB0E310A40D12A565220192496 /* Pods-Mobile Mover.modulemap */,
+				4FDF6B6D2970B5A209C0BB71F998EFCD /* Pods-Mobile Mover-acknowledgements.markdown */,
+				F057F9A33DB66B5C7B997A22394B2B9A /* Pods-Mobile Mover-acknowledgements.plist */,
+				C44B5CE5612E657FA626D5BB8FA23E28 /* Pods-Mobile Mover-dummy.m */,
+				62271A7B69C9488D8660A625B193E1C9 /* Pods-Mobile Mover-frameworks.sh */,
+				9B2A3915F08B6CC37903B3287DB73267 /* Pods-Mobile Mover-Info.plist */,
+				F26A05236536767350108BD0C78A0944 /* Pods-Mobile Mover-umbrella.h */,
+				5D54487E9C1DAA8BE17F7894990B494D /* Pods-Mobile Mover.debug.xcconfig */,
+				F3F88D8D69B77BFD5D1776DAB4854B16 /* Pods-Mobile Mover.distribution.xcconfig */,
+				5B7B4CD59D14C49ED4CA39D6091FE1AF /* Pods-Mobile Mover.release.xcconfig */,
+			);
+			name = "Pods-Mobile Mover";
+			path = "Target Support Files/Pods-Mobile Mover";
+			sourceTree = "<group>";
+		};
+		B2E7DBAD609CFB744B3176A3D0A170DC /* Pods-Mobile Mover Simulator */ = {
+			isa = PBXGroup;
+			children = (
+				B021D3AA41C41E447730E0ED7A8730A4 /* Pods-Mobile Mover Simulator.modulemap */,
+				84C92CED4223D16AB6174268B9066086 /* Pods-Mobile Mover Simulator-acknowledgements.markdown */,
+				45CE4FC1F167F25FD80A8D634AC7AFE8 /* Pods-Mobile Mover Simulator-acknowledgements.plist */,
+				4D078A913C0A888C72AC3E7F6225A7A7 /* Pods-Mobile Mover Simulator-dummy.m */,
+				85CBC1917E8E7F8FEFCF6AD0DEB2E7C0 /* Pods-Mobile Mover Simulator-frameworks.sh */,
+				9AB72816E5B0D55135ED6C8CBB01B6EE /* Pods-Mobile Mover Simulator-Info.plist */,
+				5E280E2BCE71DE6659868830B95BF697 /* Pods-Mobile Mover Simulator-umbrella.h */,
+				83DFD4B654F876212134A2909DF30646 /* Pods-Mobile Mover Simulator.debug.xcconfig */,
+				44681628FEFA701CBB9BACEA2DA4EEEC /* Pods-Mobile Mover Simulator.distribution.xcconfig */,
+				26902C818C9512E48109EA4B3E0222A3 /* Pods-Mobile Mover Simulator.release.xcconfig */,
+			);
+			name = "Pods-Mobile Mover Simulator";
+			path = "Target Support Files/Pods-Mobile Mover Simulator";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				39ABF4A4664D2F66AB3A57B22B10BEE1 /* Frameworks */,
 				01118E8A4F2999EA44CE16B4C2416660 /* Pods */,
-				F1A9AEB98B9315BB2F90EBE0B9EDF343 /* Products */,
-				8570835C18D4DEB718D0E394929185D0 /* Targets Support Files */,
+				79186C1BD23E2FF0089F29F67DF5B572 /* Products */,
+				DAAB2667D7FE4797224347F759FC9EBE /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		DAAB2667D7FE4797224347F759FC9EBE /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B23606F8C0F143839ECEA840F38DA9E5 /* Pods-Mobile Mover */,
+				B2E7DBAD609CFB744B3176A3D0A170DC /* Pods-Mobile Mover Simulator */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		DB50CF28E3C218E7AF5D4C00334AF34C /* Support Files */ = {
@@ -484,19 +500,6 @@
 			path = "../Target Support Files/Lightbox";
 			sourceTree = "<group>";
 		};
-		F1A9AEB98B9315BB2F90EBE0B9EDF343 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A3B9017440BF6211054FE81F7F78BC76 /* Hue.framework */,
-				97AA160F23F0CBEDDAF212103E762FC7 /* ImagePicker.bundle */,
-				987CD19BC0CE18F2E00B0AD5ABF8670D /* ImagePicker.framework */,
-				4839ACA053EFB6CF25272430B180126B /* Lightbox.framework */,
-				A2DBD46E793B9F5BC806153388ACC40A /* Pods_Mobile_Mover.framework */,
-				F8B4D2CF44D82DA26E75701973798174 /* Pods_Mobile_Mover_Enterprise.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -524,19 +527,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		551522A1D10B871BA78C39AD999AA286 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FD44C5991ACB50734A8F367156E15F6 /* Pods-Mobile Mover Simulator-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		685B5F19E761A60476CE90844EC6518E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FF183173E1183ADAF07A278935EFAE99 /* Lightbox-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC31C8AFAD19892CC7FC1410D56D6CD1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D38EA4EB68116AF19EECE52C736CC13A /* Pods-Mobile Mover Enterprise-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,27 +583,6 @@
 			productReference = 987CD19BC0CE18F2E00B0AD5ABF8670D /* ImagePicker.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		1AEE95B73B202BB62D10EFC6373168F1 /* Pods-Mobile Mover Enterprise */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 71358D700E5AFD68B20AA7E57F8FB6AC /* Build configuration list for PBXNativeTarget "Pods-Mobile Mover Enterprise" */;
-			buildPhases = (
-				CC31C8AFAD19892CC7FC1410D56D6CD1 /* Headers */,
-				20B41F27698BC6C5740B2C55004126F6 /* Sources */,
-				7CCF5C92065AA19FD450D6C8E6AAD464 /* Frameworks */,
-				C2A75766930B109824C58DF8504A6E51 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6ACE744F467F4DD7E485FF397BEA980 /* PBXTargetDependency */,
-				C776116982278BDA5FD6C5DA4B81C65A /* PBXTargetDependency */,
-				66CD694F7040B10DAE165D76B23087DA /* PBXTargetDependency */,
-			);
-			name = "Pods-Mobile Mover Enterprise";
-			productName = "Pods-Mobile Mover Enterprise";
-			productReference = F8B4D2CF44D82DA26E75701973798174 /* Pods_Mobile_Mover_Enterprise.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		2FF67131BF0A388437610695C3724017 /* Lightbox */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA1F7B34E9EEE3DE5AD88524A428B32E /* Build configuration list for PBXNativeTarget "Lightbox" */;
@@ -637,6 +619,27 @@
 			productReference = 97AA160F23F0CBEDDAF212103E762FC7 /* ImagePicker.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
+		E5A1202DC8907E8C9335846ABA3462C2 /* Pods-Mobile Mover Simulator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 186CB9C4194DCBA1ACC1B7D5407C13E5 /* Build configuration list for PBXNativeTarget "Pods-Mobile Mover Simulator" */;
+			buildPhases = (
+				551522A1D10B871BA78C39AD999AA286 /* Headers */,
+				981F6231B116E9AB29464AF505E5DFA0 /* Sources */,
+				D9BB3AEAE6371D63975C1FC5BF154335 /* Frameworks */,
+				981CD0E064DEBBE3E6BAA7C41B319F7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44B59AF63C72DC3E81978C04FAA377B6 /* PBXTargetDependency */,
+				611780AF0E4F4AF7EB7BE266F637CFF8 /* PBXTargetDependency */,
+				62A806A34C7A7FBA7785BFC6EC743917 /* PBXTargetDependency */,
+			);
+			name = "Pods-Mobile Mover Simulator";
+			productName = "Pods-Mobile Mover Simulator";
+			productReference = 9BE97E98A766C0B03FD208BAD2FDB3BC /* Pods_Mobile_Mover_Simulator.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		E6ADEF1BEB6428B57DE475F58BA29EEA /* Pods-Mobile Mover */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E8DC5B7CF5F23C10EC6D3EF124CBFA1 /* Build configuration list for PBXNativeTarget "Pods-Mobile Mover" */;
@@ -666,17 +669,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
-				TargetAttributes = {
-					00D9B51B84230E50370AC70ADCF7F8AA = {
-						LastSwiftMigration = 1140;
-					};
-					01CB8D6098C21E12CE735619344DE81E = {
-						LastSwiftMigration = 1140;
-					};
-					2FF67131BF0A388437610695C3724017 = {
-						LastSwiftMigration = 1140;
-					};
-				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 8.0";
@@ -687,7 +679,7 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = F1A9AEB98B9315BB2F90EBE0B9EDF343 /* Products */;
+			productRefGroup = 79186C1BD23E2FF0089F29F67DF5B572 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -696,12 +688,19 @@
 				614D1818852890AC7D3CDF68D512C370 /* ImagePicker-ImagePicker */,
 				2FF67131BF0A388437610695C3724017 /* Lightbox */,
 				E6ADEF1BEB6428B57DE475F58BA29EEA /* Pods-Mobile Mover */,
-				1AEE95B73B202BB62D10EFC6373168F1 /* Pods-Mobile Mover Enterprise */,
+				E5A1202DC8907E8C9335846ABA3462C2 /* Pods-Mobile Mover Simulator */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		981CD0E064DEBBE3E6BAA7C41B319F7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9840E10D82FBA82755DBB09BF505A7C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -738,13 +737,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C2A75766930B109824C58DF8504A6E51 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CCD74038F0823A2B377A5283FBCD8615 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -775,11 +767,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		20B41F27698BC6C5740B2C55004126F6 /* Sources */ = {
+		981F6231B116E9AB29464AF505E5DFA0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4614DD1B3EE408EA42221ABA4504EBA4 /* Pods-Mobile Mover Enterprise-dummy.m in Sources */,
+				7ADF1D1DC44894198DBA0795E85D12D8 /* Pods-Mobile Mover Simulator-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,11 +834,23 @@
 			target = 00D9B51B84230E50370AC70ADCF7F8AA /* Hue */;
 			targetProxy = A6276EFB94CA798170BADE98FFCF3BA3 /* PBXContainerItemProxy */;
 		};
-		66CD694F7040B10DAE165D76B23087DA /* PBXTargetDependency */ = {
+		44B59AF63C72DC3E81978C04FAA377B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Hue;
+			target = 00D9B51B84230E50370AC70ADCF7F8AA /* Hue */;
+			targetProxy = FCF9E8463913DD0DDFDAF8C0B0017A57 /* PBXContainerItemProxy */;
+		};
+		611780AF0E4F4AF7EB7BE266F637CFF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ImagePicker;
+			target = 01CB8D6098C21E12CE735619344DE81E /* ImagePicker */;
+			targetProxy = E057AE89D0489A136C50CD24FBEA6431 /* PBXContainerItemProxy */;
+		};
+		62A806A34C7A7FBA7785BFC6EC743917 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Lightbox;
 			target = 2FF67131BF0A388437610695C3724017 /* Lightbox */;
-			targetProxy = 9456952085E35E2B720D7521CF2C6ECA /* PBXContainerItemProxy */;
+			targetProxy = 3B95E5CDC47DFF3498DAE055230B9B17 /* PBXContainerItemProxy */;
 		};
 		91CF07DEFA1CD02BC0524284B438C3FC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -866,18 +870,6 @@
 			target = 2FF67131BF0A388437610695C3724017 /* Lightbox */;
 			targetProxy = 92C71FB8ECB5EE27EBD72CE333308EDC /* PBXContainerItemProxy */;
 		};
-		B6ACE744F467F4DD7E485FF397BEA980 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Hue;
-			target = 00D9B51B84230E50370AC70ADCF7F8AA /* Hue */;
-			targetProxy = B1119E96FA608CCABC195DF7A1ED1CF2 /* PBXContainerItemProxy */;
-		};
-		C776116982278BDA5FD6C5DA4B81C65A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ImagePicker;
-			target = 01CB8D6098C21E12CE735619344DE81E /* ImagePicker */;
-			targetProxy = 113BCA994CE8DEEB315649D8941D56F2 /* PBXContainerItemProxy */;
-		};
 		C7AC5B7194288A5A91CB3F6A40B3EA2E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ImagePicker;
@@ -889,7 +881,7 @@
 /* Begin XCBuildConfiguration section */
 		11DF3118B1FD77F79B2C94DD1B77B280 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEBFA86F84DBC011F6CF6D6DD9F68792 /* Pods-Mobile Mover.release.xcconfig */;
+			baseConfigurationReference = 5B7B4CD59D14C49ED4CA39D6091FE1AF /* Pods-Mobile Mover.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -915,7 +907,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1106,7 +1098,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1165,7 +1158,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1232,41 +1226,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
-		817D9BCDD056A7E0E4E71929A3DC9ECE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D083205BDBF09C485257677B2306C4E /* Pods-Mobile Mover Enterprise.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1413,7 +1372,7 @@
 				PRODUCT_NAME = ImagePicker;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1432,7 +1391,7 @@
 				PRODUCT_NAME = ImagePicker;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -1440,7 +1399,7 @@
 		};
 		C2169C5EED275C38B8DC86A309C4B696 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 63184EF277D7F5E0C07C25E09BB1CEAE /* Pods-Mobile Mover.debug.xcconfig */;
+			baseConfigurationReference = 5D54487E9C1DAA8BE17F7894990B494D /* Pods-Mobile Mover.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1466,7 +1425,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1475,7 +1434,7 @@
 		};
 		C5CFBB8BE0299AB38D942AF9827E3AF3 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B94EE17A817BB306A4C3197AD02E9C02 /* Pods-Mobile Mover.distribution.xcconfig */;
+			baseConfigurationReference = F3F88D8D69B77BFD5D1776DAB4854B16 /* Pods-Mobile Mover.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1501,13 +1460,120 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Distribution;
+		};
+		CB9CC0BFF6394C4CCF9E9826B6937258 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83DFD4B654F876212134A2909DF30646 /* Pods-Mobile Mover Simulator.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D2A5CADFC2C74ECD3D764C622F0E84D0 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 44681628FEFA701CBB9BACEA2DA4EEEC /* Pods-Mobile Mover Simulator.distribution.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Distribution;
+		};
+		ECE3698E01FF65BAA5723DAB8A16D67E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26902C818C9512E48109EA4B3E0222A3 /* Pods-Mobile Mover Simulator.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		F2BF15FCEDE005036A555484742BE185 /* Distribution */ = {
 			isa = XCBuildConfiguration;
@@ -1542,42 +1608,6 @@
 			};
 			name = Distribution;
 		};
-		F753728A81170D6ED79FEF85EFF7A472 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2E851197E3BD38AA3F43BEEC566B337 /* Pods-Mobile Mover Enterprise.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		F89CFC5B0AF4EE7FAD4484773D862587 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9781B043CDB834B97916F16BA8A04338 /* ImagePicker.xcconfig */;
@@ -1590,67 +1620,31 @@
 				PRODUCT_NAME = ImagePicker;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
-		FA6907C8BDCD77898D8384DBDC2D7024 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF42DC351F9DFCF829D6CD62C614D230 /* Pods-Mobile Mover Enterprise.distribution.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Distribution;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		186CB9C4194DCBA1ACC1B7D5407C13E5 /* Build configuration list for PBXNativeTarget "Pods-Mobile Mover Simulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB9CC0BFF6394C4CCF9E9826B6937258 /* Debug */,
+				D2A5CADFC2C74ECD3D764C622F0E84D0 /* Distribution */,
+				ECE3698E01FF65BAA5723DAB8A16D67E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EF7227D9B20A1D549000096ACCB23D7 /* Debug */,
 				3FECB6FC4130D08F34E392CD250EA033 /* Distribution */,
 				4BE66A09A74FD25164AAB3C2645B9B93 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		71358D700E5AFD68B20AA7E57F8FB6AC /* Build configuration list for PBXNativeTarget "Pods-Mobile Mover Enterprise" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				817D9BCDD056A7E0E4E71929A3DC9ECE /* Debug */,
-				FA6907C8BDCD77898D8384DBDC2D7024 /* Distribution */,
-				F753728A81170D6ED79FEF85EFF7A472 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

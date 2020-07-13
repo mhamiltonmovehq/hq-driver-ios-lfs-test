@@ -785,8 +785,12 @@
     NSData *pdfData = [NSData dataWithContentsOfFile:self.pdfPath];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[pdfData] applicationActivities:nil];
     //    activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard];
-    
+    if ([SurveyAppDelegate iPad]) {
+        activityViewController.popoverPresentationController.barButtonItem = (UIBarButtonItem*)sender;
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+    }
     [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+
     //[self presentViewController:activityViewController animated:YES completion:nil];
     //[self presentViewController:activityViewController animated:YES completion:nil];
 }
@@ -1057,8 +1061,10 @@
     }
     
     sigNav = [[LandscapeNavController alloc] initWithRootViewController:signatureController];
+    sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:sigNav animated:YES completion:nil];
+    //[self.navigationController pushViewController:sigNav animated:YES];
     
 }
 

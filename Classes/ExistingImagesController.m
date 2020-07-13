@@ -350,6 +350,8 @@
             singleDamage = [[PVODamageSingleController alloc] initWithNibName:@"PVODamageSingleView" bundle:nil];
         
         LandscapeNavController *navCtl = [[LandscapeNavController alloc] initWithRootViewController:singleDamage];
+        navCtl.modalPresentationStyle = UIModalPresentationFullScreen;
+
         //navCtl.navigationBar.barStyle = UIBarStyleBlack;
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
         

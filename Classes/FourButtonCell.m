@@ -132,13 +132,12 @@
     int padding = 3;
     UILabel *topLabel = (UILabel*)[self viewWithTag:FOUR_BUTTON_TOP_LABEL + (buttonTag * 10)];
     CGSize size = cmd.bounds.size;
-    int width = [SurveyAppDelegate iPad] ? size.width * 2.4 : size.width; // cmd.bounds.size is pulling from the interface builder predefined size, as this method is being called from cellForRowAt.  Need to multiply the width by a factor of 2.4 for larger screen sizes to accommodate.  An ideal solution is probably to add text labels to the buttons themselves.
+    float iPadModifier = [SurveyAppDelegate iPad] ? 2.4 : 1;// cmd.bounds.size is pulling from the interface builder predefined size, as this method is being called from cellForRowAt.  Need to multiply the width by a factor of 2.4 for larger screen sizes to accommodate.  An ideal solution is probably to add text labels to the buttons themselves.
+    int width = size.width * iPadModifier;
+    int height = size.height * iPadModifier;
     if(topLabel == nil)
     {
-        topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                             padding, 
-                                                             width,
-                                                             (size.height - (padding * 2)) / 2.0)];
+        topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height)];
 
         if (imageButtons)
             topLabel.textColor = [UIColor blackColor];
@@ -155,9 +154,9 @@
     if(bottomLabel == nil)
     {
         bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                (size.height - (padding * 2)) / 2.0,
+                                                                (size.height - padding * 2) / 2.0,
                                                                 width,
-                                                                (size.height - (padding * 2)) / 2.0)];
+                                                                height)];
 
         bottomLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize] - 2];
         if (imageButtons)

@@ -172,6 +172,8 @@
     damageSingle.imageId = -1;
     
     LandscapeNavController *navCtl = [[LandscapeNavController alloc] initWithRootViewController:damageSingle];
+    navCtl.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     
 //    damageSingle.vehicle = vehicle;

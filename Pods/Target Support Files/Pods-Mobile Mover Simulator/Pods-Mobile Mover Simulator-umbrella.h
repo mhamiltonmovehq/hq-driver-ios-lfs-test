@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Mobile_Mover_EnterpriseVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Mobile_Mover_EnterpriseVersionString[];
+FOUNDATION_EXPORT double Pods_Mobile_Mover_SimulatorVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Mobile_Mover_SimulatorVersionString[];
 

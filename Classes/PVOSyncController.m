@@ -76,6 +76,7 @@
 -(IBAction)cancel:(id)sender
 {
     [sync cancel];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

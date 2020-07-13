@@ -830,7 +830,8 @@
         sigView.saveBeforeDismiss = NO;
 
         sigNav = [[LandscapeNavController alloc] initWithRootViewController:sigView];
-        
+        sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
+
         [self presentViewController:sigNav animated:YES completion:nil];
     }
     else if (row == DRIVER_DATA_PACKER_INITIALS)

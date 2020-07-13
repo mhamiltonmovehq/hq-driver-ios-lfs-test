@@ -421,9 +421,11 @@
 	}
 	else 
 	{
+       dispatch_async(dispatch_get_main_queue(), ^{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
 		[alert show];
+       });
 	}
 
 }
@@ -833,11 +835,9 @@
     
 }
 
-//used to show alerts from a separate thread... idx 0 is message, 1 is title
--(void)showAlertFromDelegate:(NSArray*)alertdata
-{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:[alertdata objectAtIndex:1] message:[alertdata objectAtIndex:0] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [av show];
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+  supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -900,6 +900,13 @@
 //    [lines release];
     
     return YES;
+}
+
+//used to show alerts from a separate thread... idx 0 is message, 1 is title
+-(void)showAlertFromDelegate:(NSArray*)alertdata
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:[alertdata objectAtIndex:1] message:[alertdata objectAtIndex:0] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [av show];
 }
 
 +(void)setupScanbot {

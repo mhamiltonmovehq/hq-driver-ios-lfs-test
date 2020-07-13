@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+               BlueprintIdentifier = "6338C49218C6326300E3A7EF"
                BuildableName = "Mobile Mover.app"
-               BlueprintName = "Mobile Mover Simulator"
+               BlueprintName = "Mobile Mover"
                ReferencedContainer = "container:Survey.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+            BlueprintIdentifier = "6338C49218C6326300E3A7EF"
             BuildableName = "Mobile Mover.app"
-            BlueprintName = "Mobile Mover Simulator"
+            BlueprintName = "Mobile Mover"
             ReferencedContainer = "container:Survey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+            BlueprintIdentifier = "6338C49218C6326300E3A7EF"
             BuildableName = "Mobile Mover.app"
-            BlueprintName = "Mobile Mover Simulator"
+            BlueprintName = "Mobile Mover"
             ReferencedContainer = "container:Survey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
