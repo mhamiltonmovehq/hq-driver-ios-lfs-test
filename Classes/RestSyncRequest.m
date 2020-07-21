@@ -1,0 +1,69 @@
+//
+//  RestSyncRequest.m
+//  Survey
+//
+//  Created by Bob Boatwright on 7/13/20.
+//
+
+#import <Foundation/Foundation.h>
+#import "RestSyncRequest.h"
+#import "Base64.h"
+
+@implementation RestSyncRequest
+@synthesize scheme, host, basePath, methodPath;
+
+-(NSString*)executeHttpRequest:(NSString*) httpMethod withQueryParameters:(NSDictionary*) queryParams andBodyData:(NSData*) bodyData andError:(NSError**) error shouldDecode:(BOOL) shouldDecode {
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", scheme, host, basePath, methodPath];
+    NSURL *url = [self url:urlString withQueryParameters:queryParams];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request.timeoutInterval = 30.0;
+
+    [request setHTTPMethod:httpMethod];
+    [request setURL:url];
+    [request setValue:@"text/json" forHTTPHeaderField:@"Content-Type"];
+    if (bodyData != nil) {
+        [request setHTTPBody:bodyData];
+        
+        NSLog(@"Request Body: %@", [NSString stringWithFormat:@"%@", [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding]]);
+    }
+    
+    NSString *responseString = [self executeRequest:request withError:error shouldDecode:shouldDecode];
+    NSLog(@"RequestResponse: %@", responseString);
+    
+    return responseString;
+}
+
+-(NSString*)executeRequest:(NSURLRequest*) request withError:(NSError**) error shouldDecode:(BOOL) shouldDecode {
+    NSHTTPURLResponse *urlResponse = nil;
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:error];
+    NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+    
+    if ([urlResponse statusCode] == 200) {
+        if (shouldDecode) {
+            return [[NSString alloc] initWithData:[Base64 decode64:responseString] encoding:NSUTF8StringEncoding];
+        }
+        return responseString;
+    } else {
+        NSMutableDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:response options:kNilOptions error:error];
+        
+        *error = [[NSError alloc] initWithDomain:@"MobileMover" code:[urlResponse statusCode] userInfo:@{@"Error": [jsonDict valueForKey:@"ExceptionMessage"]}];
+        return nil;
+    }
+}
+
+-(NSURL*)url:(NSString*)url withQueryParameters:(NSDictionary<NSString*, NSString*>*) queryDictionary {
+    NSMutableArray<NSURLQueryItem*> *queryParams = [NSMutableArray array];
+    for (NSString *key in queryDictionary) {
+        NSURLQueryItem *queryItem = [NSURLQueryItem queryItemWithName:key value:queryDictionary[key]];
+        [queryParams addObject:queryItem];
+    }
+    
+    NSURLComponents *components = [NSURLComponents componentsWithURL:[NSURL URLWithString:url] resolvingAgainstBaseURL:NO];
+    if ([queryParams count] > 0) {
+        components.queryItems = [queryParams copy];
+    }
+    
+    return components.URL;
+}
+@end

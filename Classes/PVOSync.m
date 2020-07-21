@@ -9,6 +9,7 @@
 //#import <AdSupport/ASIdentifierManager.h>
 #import "PVOSync.h"
 #import "WebSyncRequest.h"
+#import "RestSyncRequest.h"
 #import "Prefs.h"
 #import "XMLWriter.h"
 #import "Base64.h"
@@ -38,6 +39,7 @@
 
 @property (nonatomic, weak) SurveyAppDelegate *appDelegate;
 @property (nonatomic, strong) DriverData *driverData;
+@property (nonatomic) int vanlineId;
 
 @end
 
@@ -51,16 +53,21 @@
 @synthesize delegate;
 @synthesize uploadPhotosWithInventory;
 @synthesize isDelivery;
+@synthesize appDelegate, driverData, vanlineId, restRequest;
+
 
 -(id)init
 {
     self = [super init];
     if(self)
     {
-        _appDelegate = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.driverData = [_appDelegate.surveyDB getDriverData];
+        appDelegate = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+        vanlineId = [appDelegate.pricingDB vanline];
+        driverData = [appDelegate.surveyDB getDriverData];
         
         req = [[WebSyncRequest alloc] init];
+        restRequest = [[RestSyncRequest alloc] init];
+
         uploadPhotosWithInventory = YES;
         
         if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"add:"].location != NSNotFound)
@@ -79,7 +86,7 @@
 
 -(void)dealloc
 {
-    _appDelegate = nil;
+    appDelegate = nil;
     
 }
 
@@ -88,13 +95,13 @@
     BOOL success = YES;
     //NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    _appDelegate.surveyDB.runningOnSeparateThread = YES;
+    appDelegate.surveyDB.runningOnSeparateThread = YES;
     @try
     {
         ssl = FALSE;
         
         
-        switch ([_appDelegate.pricingDB vanline]) {
+        switch (vanlineId) {
 #ifdef ATLASNET
             case ATLAS:
                 if (syncAction == PVO_SYNC_ACTION_SYNC_CANADA)
@@ -150,13 +157,21 @@
                 req.serverAddress = @"dev.mobilemover.com";
                 req.port = 80;
                 req.type = PVO_SYNC;
+                
+                restRequest.scheme = SCHEME;
+                restRequest.host = HOST;
+                restRequest.basePath = AICLOUD_PATH;
+                
 #else
                 ssl = YES;
                 req.serverAddress = PVO_WCF_ADDRESS;
                 req.port = 443;
                 req.type = PVO_SYNC;
+                
+                restRequest.scheme = SCHEME;
+                restRequest.host = HOST;
+                restRequest.basePath = AICLOUD_PATH;
 #endif
-                break;
         }
         
         if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"add:"].location != NSNotFound)
@@ -199,9 +214,6 @@
             case PVO_SYNC_ACTION_DOWNLOAD_BOL:
                 success = [self downloadBOL];
                 break;
-            case PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES:
-                success = [self updateActualDates];
-                break;
             case PVO_SYNC_ACTION_GET_DATA:
                 success = [self downloadExternalData];
                 break;
@@ -242,7 +254,7 @@
         [self updateProgress:[NSString stringWithFormat:@"Exception on Download Thread: %@", [e description]] withPercent:1.0];
         
     }
-    _appDelegate.surveyDB.runningOnSeparateThread = NO;
+    appDelegate.surveyDB.runningOnSeparateThread = NO;
     
 exit:
     
@@ -331,7 +343,7 @@ exit:
 
 -(BOOL)downloadExternalDataWithRequest
 {
-    SurveyCustomer *cust = [_appDelegate.surveyDB getCustomer:_appDelegate.customerID];
+    SurveyCustomer *cust = [appDelegate.surveyDB getCustomer:appDelegate.customerID];
     self.downloadRequestType = cust.pricingMode;
     
     XMLWriter *ordRequest = [self getRequestXML];
@@ -376,7 +388,7 @@ exit:
     return NO;
 #endif
     
-    if ([_appDelegate.pricingDB vanline] != ATLAS)
+    if (vanlineId != ATLAS)
         return NO;
     
     BOOL success = TRUE;
@@ -404,7 +416,7 @@ exit:
         NSData *reportData = [[NSData alloc] initWithContentsOfFile:
                                [[SurveyAppDelegate getDocsDirectory] stringByAppendingPathComponent:@"temp.pdf"]];
         
-        NSDictionary *temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, _driverData.haulingAgent, orderNumber,
+        NSDictionary *temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:driverData.driverNumber, driverData.haulingAgent, orderNumber,
                                                                   [Base64 encode64WithData:reportData], nil]
                                                          forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"fileContents", nil]];
         
@@ -435,7 +447,7 @@ exit:
     return NO;
 #endif
     
-    if ([_appDelegate.pricingDB vanline] != ATLAS)
+    if (vanlineId != ATLAS)
         return NO;
     
     BOOL success = TRUE;
@@ -454,7 +466,7 @@ exit:
     BOOL showEstCharges = [additionalParamInfo boolValue];
     
     success = [req getData:&result
-             withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, orderNumber, _driverData.haulingAgent,
+             withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:driverData.driverNumber, orderNumber, driverData.haulingAgent,
                                                                 showEstCharges ? @"false" : @"true", nil]
                                                        forKeys:[NSArray arrayWithObjects:@"driverNumber", @"orderNumber", @"agencyCode", @"showEstimatedCharges", nil]]
               needsDecoded:YES
@@ -514,155 +526,51 @@ exit:
 
 -(BOOL)uploadCurrentDoc
 {
-    BOOL success = TRUE;
     NSString *result = nil;
+    NSError *error = nil;
+    BOOL success = TRUE;
+    
     
     NSData *reportData = [[NSData alloc] initWithContentsOfFile:
                           [[SurveyAppDelegate getDocsDirectory] stringByAppendingPathComponent:@"temp.pdf"]];
     
     NSDictionary *temp = nil;
     
-    SurveyCustomer *cust = [_appDelegate.surveyDB getCustomer:_appDelegate.customerID];
+    SurveyCustomer *cust = [appDelegate.surveyDB getCustomer:appDelegate.customerID];
     self.downloadRequestType = cust.pricingMode;
     
     if(![AppFunctionality isDemoOrder:self.orderNumber])
     {
-        if ([_appDelegate.pricingDB vanline] == ATLAS)
-        {
-            if (syncAction == PVO_SYNC_ACTION_UPLOAD_DOCUMENT_WITH_REPORTTYPEID)
-            {
-                //New method to accept any report type without needing a device update to upload new docs everytime a new report is added to the pricing db. service will cast the reporttype id into a doc type and save as usual
-                req.functionName = @"UploadDocumentWithAgencyForReportType";
-                
-                temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent,
-                                                            orderNumber, [NSString stringWithFormat:@"%d",self.pvoReportID], [Base64 encode64WithData:reportData], nil]
-                                                   forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"pvoReportTypeID", @"fileContents", nil]];
-                
-            }
-            else if (syncAction == PVO_SYNC_ACTION_UPLOAD_BOL)
-            {
-                int pvoNavItemID = [self.additionalParamInfo intValue];
-                //origin = 0, sit = 1, destination = 2
-                int bolDocTypeID = pvoNavItemID == PVO_BOL_ORIGIN ? 0 : pvoNavItemID == PVO_BOL_SIT ? 1 : 2;
-                
-                ShipmentInfo *info = [_appDelegate.surveyDB getShipInfo:_appDelegate.customerID];
-                req.functionName = @"UploadBOLDocumentWithBOLType";
-                
-                temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent,
-                                                            orderNumber, [Base64 encode64WithData:reportData], @"false" /*info.isAtlasFastrac ? @"true" : @"false"*/, [NSNumber numberWithInt:bolDocTypeID], nil]
-                                                   forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"fileContents", @"isFastrac", @"bolDocTypeID", nil]];
-                
-            }
-            else if (syncAction == PVO_SYNC_ACTION_SYNC_CANADA)
-            {
-                req.functionName = @"UploadAtlasCanadaDocumentWithAgency";
-                req.type = ATLAS_SYNC_CANADA;
-                temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent,
-                                                            orderNumber, [Base64 encode64WithData:reportData], [NSString stringWithFormat:@"%d",self.pvoReportID], nil]
-                                                   forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"fileContents", @"docType", nil]];
-                
-            }
-            else
-            {
-                if(syncAction == PVO_SYNC_ACTION_UPLOAD_INVENTORY)
-                    req.functionName = @"UploadInventoryDocumentWithAgency";
-                else if(syncAction == PVO_SYNC_ACTION_UPLOAD_DEL_HVI)
-                    req.functionName = @"UploadHighValueInventoryDocumentWithAgency";
-                else if(syncAction == PVO_SYNC_ACTION_UPLOAD_PPI)
-                    req.functionName = @"UploadPPIDocumentWithAgency";
-                else if(syncAction == PVO_SYNC_ACTION_UPLOAD_WEIGHT_TICKET)
-                    req.functionName = @"UploadWeightTicketWithAgency";
-                else if(syncAction == PVO_SYNC_ACTION_UPLOAD_PACK_SERVICES)
-                    req.functionName = @"UploadPackServicesDocWithAgency";
-                temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber, _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent,
-                                                            orderNumber, [Base64 encode64WithData:reportData], nil]
-                                                   forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"fileContents", nil]];
-                
-                
-            }
-            success = [req getData:&result withArguments:temp needsDecoded:YES];
-        }
-        else
-        {
-            XMLWriter *ordRequest = [self getRequestXML];
-            WCFDataParam *requestParm = [[WCFDataParam alloc] init];
-            requestParm.contents = ordRequest.file;
-            
-            req.functionName = @"UploadReportByRequest";
-            
-            temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:requestParm,
-                                                        [NSString stringWithFormat:@"%d", pvoReportID], [Base64 encode64WithData:reportData], nil]
-                                               forKeys:[NSArray arrayWithObjects:@"request", @"docType", @"reportData", nil]];
-            
-            success = [req getData:&result withArguments:temp needsDecoded:NO withSSL:ssl flushToFile:nil
-                         withOrder:[NSArray arrayWithObjects:@"request", @"docType", @"reportData", nil]];
-            
-            SurveyCustomer *cust = [_appDelegate.surveyDB getCustomer:_appDelegate.customerID];
-            if ([_appDelegate.pricingDB vanline] == ARPIN && cust.pricingMode == INTERSTATE)
-            {
-                if([result rangeOfString:[NSString stringWithFormat:@"<%@Result>", req.functionName]].location != NSNotFound &&
-                   [result rangeOfString:[NSString stringWithFormat:@"</%@Result>", req.functionName]].location != NSNotFound)
-                {
-                    NSString *returnCode = [result substringWithRange:NSMakeRange([NSString stringWithFormat:@"<%@Result>", req.functionName].length,
-                                                                                  [result rangeOfString:[NSString stringWithFormat:@"</%@Result>", req.functionName]].location -
-                                                                                  [NSString stringWithFormat:@"<%@Result>", req.functionName].length)];
-                    if(![returnCode isEqualToString:@"0"])
-                    {
-                        success = false;
-                        //                        [result release];
-                        result = [NSString stringWithFormat:@"Error returned from Report Upload: %@", returnCode];
-                    }
-                }
-            }
-            else if (!success && [result rangeOfString:@"Unable to load Order for Order Number provided."].location != NSNotFound)
+        restRequest.methodPath = REPORTS_PATH;
+        
+        NSDictionary *queryParameters = @{@"docType" : [NSString stringWithFormat:@"%d", pvoReportID],
+                                          @"actualDate" : @"",
+                                          @"isOrigin" : @""
+        };
+        NSDictionary *bodyDictionary = @{@"Report" : [Base64 encode64WithData:reportData],
+                                         @"Request" : [self getOrderRequestJson:&error]
+        };
+        
+        NSData * bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+
+        result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
+        
+        if (result == nil || result.length == 0) {
+            NSString *errorMessage = [[error userInfo] valueForKey:@"Error"];
+            if ([errorMessage rangeOfString:@"Unable to load Order for Order Number provided."].location != NSNotFound)
             {
                 //clean up error message for the device.  tell them they need to sync first.
-                NSString *syncTitle = @"Save To Server";
-#ifdef ATLASNET
-                syncTitle = @"Save To Atlas";
-#endif
-                result = [result stringByAppendingFormat:@"  Please synchronize first by selecting \"%@\" from the Inventory screen.", syncTitle];
+                result = @"Please synchronize first by selecting \"Save To Server\" from the Inventory screen.";
+            } else {
+                result = errorMessage;
             }
-        }
-        
-        if(!success)
-        {
             //error with message...
             [self updateProgress:result withPercent:1];
+            
+            return FALSE;
         }
-        else
-        {
-#ifdef ATLASNET
-            NSXMLParser *parser = nil;
-            SuccessParser *successParser = nil;
-            
-            //check for errors from the Atlas sync
-            parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            successParser = [[SuccessParser alloc] init];
-            parser.delegate = successParser;
-            [parser parse];
-            
-            if(!successParser.success)
-            {
-                //error with message...
-                [self updateProgress:successParser.errorString withPercent:1];
-                [successParser release];
-                return FALSE;
-            }
-            
-            [parser release];
-            [successParser release];
-            
-            [self updateProgress:[NSString stringWithFormat:@"Document Successfully Uploaded."] withPercent:1];
-#else
-            //success
-            [self updateProgress:@"Document Uploaded Successfully!" withPercent:1];
-#endif
-        }
-        
-        //        [result release];
-        
+        //success
+        [self updateProgress:@"Document Uploaded Successfully!" withPercent:1];
     }
     
     return success;
@@ -671,7 +579,7 @@ exit:
 -(BOOL)downloadPreShipCheckList
 {
     //username
-    if ([_driverData.crmUsername length] == 0 || [_driverData.crmPassword length] == 0 || [[self getReloCRMSyncURL] length] == 0)
+    if ([driverData.crmUsername length] == 0 || [driverData.crmPassword length] == 0 || [[self getReloCRMSyncURL] length] == 0)
     {
         return false;
     }
@@ -681,7 +589,7 @@ exit:
     PVOPreShipChecklistParser *checkListParser = nil;
     NSString *result = nil;
     
-    if (_driverData.haulingAgent == nil || [_driverData.haulingAgent isEqualToString:@""])
+    if (driverData.haulingAgent == nil || [driverData.haulingAgent isEqualToString:@""])
         return NO;
     
     XMLWriter *reloSettings = [self getReloCRMSettingsXML];
@@ -692,7 +600,7 @@ exit:
     
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                               requestParm,
-                                                              (_driverData == nil || _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent),
+                                                              (driverData == nil || driverData.haulingAgent == nil ? @"" : driverData.haulingAgent),
                                                               nil]
                                                      forKeys:[NSArray arrayWithObjects:@"reloSettings", @"agencyCode", nil]];
     
@@ -726,7 +634,7 @@ exit:
     [parser parse];
     
     //save all of the checklist items to the db, wipes out the old items per hauling agent code
-    [_appDelegate.surveyDB savePVOVehicleCheckListForAgency:checkListParser.checkListItems withAgencyCode:_driverData.haulingAgent];
+    [appDelegate.surveyDB savePVOVehicleCheckListForAgency:checkListParser.checkListItems withAgencyCode:driverData.haulingAgent];
     
     return success;
     
@@ -734,12 +642,13 @@ exit:
 
 -(BOOL)downloadSurvey
 {
-    BOOL success = TRUE;
+    NSError *error = nil;
+    NSString *result = nil;
     NSXMLParser *parser = nil;
     SurveyDownloadXMLParser *downloadParser = nil;
     
-    NSString *result = nil;
-    
+    BOOL success = TRUE;
+
     //check for a demo request...
     if(self.downloadRequestType == 0 && [AppFunctionality isDemoOrder:self.orderNumber])
     {
@@ -751,80 +660,32 @@ exit:
     //no demo found
     if(result == nil)
     {
-        if ([_appDelegate.pricingDB vanline] == ATLAS)
-        {
-            req.functionName = @"DownloadSurveyByOrderNumberWithAgency";
-            success = [req getData:&result
-                     withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber == nil ? @"" : _driverData.driverNumber,
-                                                                        orderNumber == nil ? @"" : orderNumber,
-                                                                        _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent, nil]
-                                                               forKeys:[NSArray arrayWithObjects:@"driverNumber", @"orderNumber", @"agencyCode", nil]]
-                      needsDecoded:YES
-                           withSSL:ssl
-                       flushToFile:nil
-                         withOrder:[NSArray arrayWithObjects:@"driverNumber", @"orderNumber", @"agencyCode", nil]] ;
-        }
-        else
-        {
-            
-            
-            req.functionName = @"GetIGCSyncOrderByRequest";
-            
-            XMLWriter *writer = [self getRequestXML];
-            
-            WCFDataParam *parm = [[WCFDataParam alloc] init];
-            parm.contents = writer.file;
-            
-            
-            NSLog(@"REQ.ServerAddress: %@", [NSString stringWithFormat:@"%@", req.serverAddress]);
-            NSLog(@"REQ.FunctionName: %@", [NSString stringWithFormat:@"%@", req.functionName]);
-            NSLog(@"REQ.RequestXML: %@", [NSString stringWithFormat:@"%@", writer.file]);
-            
-            
-            success = [req getData:&result
-                     withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                        parm,
-                                                                        nil]
-                                                               forKeys:[NSArray arrayWithObjects:@"request", nil]]
-                      needsDecoded:YES withSSL:ssl
-                       flushToFile:nil
-                         withOrder:[NSArray arrayWithObjects:@"request", nil]];
-        }
+        restRequest.methodPath = ORDERS_PATH;
+        NSData *bodyData = [self getBodyDataForDictionary:[self getOrderRequestJson: &error] error:&error];
+        result = [restRequest executeHttpRequest:@"POST" withQueryParameters:nil andBodyData:bodyData andError:&error shouldDecode:YES];
     }
     
     if([self isCancelled])
         return FALSE;
-    
-    NSLog(@"REQ.result: %@", result);
-    
-    if([result rangeOfString:@"Sync Error:"].location == 0)
-    {
+        
+    if(result == nil || result.length == 0) {
         //error with message...
-        [self updateProgress:result withPercent:1];
-        //        [result release];
+        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
         return FALSE;
     }
     
     //parse the survey, and demo data
     parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-    downloadParser = [[SurveyDownloadXMLParser alloc] initWithAppDelegate:_appDelegate];
-    downloadParser.atlasSync = ([_appDelegate.pricingDB vanline] == ATLAS);
+    downloadParser = [[SurveyDownloadXMLParser alloc] initWithAppDelegate:appDelegate];
+    downloadParser.atlasSync = (vanlineId == ATLAS);
     parser.delegate = downloadParser;
     [parser parse];
     
     //parse the inventory data.
-    PVOInventoryParser *inventoryParser = nil;
-#ifndef ATLASNET
+    PVOInventoryParser *inventoryParser = [[PVOInventoryParser alloc] init];
     parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-    inventoryParser = [[PVOInventoryParser alloc] init];
     parser.delegate = inventoryParser;
     [parser parse];
-#endif
-    
-#if defined(ATLASNET)
-    PVOSTGBOLParser *stgBolParser = [[PVOSTGBOLParser alloc] init];
-    [stgBolParser parseXml:result];
-#endif
     
     if([self isCancelled])
         return FALSE;
@@ -848,97 +709,41 @@ exit:
     
     downloadParser.info.orderNumber = orderNumber;
     
-#ifdef ATLASNET
-    //flag the first Phone number as the Primary
-    if (downloadParser.locations != nil && [downloadParser.locations count] > 0)
-    {
-        for (int i=0;i<[downloadParser.locations count];i++)
-        {
-            SurveyLocation *loc = [downloadParser.locations objectAtIndex:i];
-            if (loc != nil && loc.locationType != -1 && loc.isOrigin)
-            {
-                if (loc.phones != nil && [loc.phones count] > 0)
-                {
-                    downloadParser.primaryPhone = [loc.phones objectAtIndex:0];
-                    [loc.phones removeObject:downloadParser.primaryPhone];
-                    break;
-                }
-            }
-        }
-    }
-#endif
-    
     if (mergeCustomer)
     {
-        [SyncGlobals mergeCustomerToDB:downloadParser appDelegate:_appDelegate];
+        [SyncGlobals mergeCustomerToDB:downloadParser appDelegate:appDelegate];
     }
     else
     {
-        [SyncGlobals flushCustomerToDB:downloadParser appDelegate:_appDelegate];
+        [SyncGlobals flushCustomerToDB:downloadParser appDelegate:appDelegate];
     }
-    
-#if defined(ATLASNET)
-    if ([stgBolParser.stgBolXml length] > 0)
-    {
-        NSInteger customerID = downloadParser.customer.custID;
-        [stgBolParser writeXmlToFile:customerID];
-    }
-#endif
-    
-#ifdef ATLASNET
-    if ([AppFunctionality getPvoReceiveType] & PVO_RECEIVE_ON_DOWNLOAD)
-        [self receiveInventory:YES];
-#endif
     
     // save or update Inventory data
-    PVOInventory *invData = [_appDelegate.surveyDB getPVOData:downloadParser.customer.custID];
+    PVOInventory *invData = [appDelegate.surveyDB getPVOData:downloadParser.customer.custID];
     
-#ifdef ATLASNET
-    invData.loadType = self.loadType;
-    invData.mproWeight = self.mproWeight;
-    invData.sproWeight = self.sproWeight;
-    //consweight here?
-#else
     invData.loadType = inventoryParser.loadType;
     invData.mproWeight = inventoryParser.mproWeight;
     invData.sproWeight = inventoryParser.sproWeight;
     invData.consWeight = inventoryParser.consWeight;
-#endif
-    
-    
     invData.lockLoadType = [AppFunctionality lockInventoryLoadTypeOnDownload:downloadParser.customer.pricingMode];
-    [_appDelegate.surveyDB updatePVOData:invData];
-    
+    [appDelegate.surveyDB updatePVOData:invData];
     
     if ([AppFunctionality getPvoReceiveType] & PVO_RECEIVE_ON_DOWNLOAD)
     {
-#ifdef ATLASNET
-        if (self.receivedType != PACKER_INVENTORY || ![AppFunctionality disablePackersInventory])
-        {
-            if (self.inventoryItemEntries != nil && self.inventoryItemEntries.count > 0)
-            {
-                [_appDelegate.surveyDB savePVOReceivableItems:self.inventoryItemEntries forCustomer:downloadParser.customer.custID ignoreIfInventoried:mergeCustomer];
-                [_appDelegate.surveyDB setPVOReceivedItemsType:self.receivedType forCustomer:downloadParser.customer.custID];
-                [_appDelegate.surveyDB setPVOReceivedItemsUnloadType:self.receivedUnloadType forCustomer:downloadParser.customer.custID];
-            }
-        }
-#else
         if (inventoryParser.receivedType != PACKER_INVENTORY || ![AppFunctionality disablePackersInventory])
         {
             //per defect 91, save with merge and new ... save the inventory too
             if(inventoryParser.entries != nil && inventoryParser.entries.count > 0)
             {
-                [_appDelegate.surveyDB savePVOReceivableItems:inventoryParser.entries forCustomer:downloadParser.customer.custID ignoreIfInventoried:mergeCustomer];
+                [appDelegate.surveyDB savePVOReceivableItems:inventoryParser.entries forCustomer:downloadParser.customer.custID ignoreIfInventoried:mergeCustomer];
                 if (inventoryParser.receivedFromType > 0 && inventoryParser.receivedFromType != inventoryParser.receivedType)
-                    [_appDelegate.surveyDB setPVOReceivedItemsType:inventoryParser.receivedFromType forCustomer:downloadParser.customer.custID];
+                    [appDelegate.surveyDB setPVOReceivedItemsType:inventoryParser.receivedFromType forCustomer:downloadParser.customer.custID];
                 else
-                    [_appDelegate.surveyDB setPVOReceivedItemsType:inventoryParser.receivedType forCustomer:downloadParser.customer.custID];
-                [_appDelegate.surveyDB setPVOReceivedItemsUnloadType:inventoryParser.receivedUnloadType forCustomer:downloadParser.customer.custID];
+                    [appDelegate.surveyDB setPVOReceivedItemsType:inventoryParser.receivedType forCustomer:downloadParser.customer.custID];
+                [appDelegate.surveyDB setPVOReceivedItemsUnloadType:inventoryParser.receivedUnloadType forCustomer:downloadParser.customer.custID];
             }
         }
-#endif
     }
-    
     
     //download any images...
     for (SurveyedItem *si in downloadParser.csParser.entries) {
@@ -987,7 +792,7 @@ exit:
     NSString *dest;
     ReportOption *ro = nil;
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:[NSString stringWithFormat:@"%d", [_appDelegate.pricingDB vanline]] forKey:@"vanLineId"];
+    [dict setObject:[NSString stringWithFormat:@"%d", vanlineId] forKey:@"vanLineId"];
     [dict setObject:[NSString stringWithFormat:@"%d", pvoDocID] forKey:@"reportID"];
     if (([Prefs reportsPassword] == nil || [[Prefs reportsPassword] length] == 0) && [AppFunctionality defaultReportingServiceCustomReportPass] != nil)
         [dict setObject:[AppFunctionality defaultReportingServiceCustomReportPass] forKey:@"customReportsPassword"];
@@ -1046,23 +851,20 @@ exit:
 
 -(BOOL)uploadInventories
 {
+    NSError *error = nil;
     //incoming is A[shipid],[suid]
     BOOL success = TRUE;
-    
-    //    [self updateProgress:@"Beginning Inventory Upload..." withPercent:1];
-    
-    NSMutableArray *custs = [_appDelegate.surveyDB getCustomerList:nil];
+        
+    NSMutableArray *custs = [appDelegate.surveyDB getCustomerList:nil];
     CustomerListItem *item;
     XMLWriter *writer;
     NSString *result;
-    int origDelCustID = _appDelegate.customerID;
-    
-    int vanlineID = [_appDelegate.pricingDB vanline];
-    
+    int origDelCustID = appDelegate.customerID;
+        
     for(int i = 0 ; i< [custs count]; i++)
     {
         item = [custs objectAtIndex:i];
-        SurveyCustomerSync *sync = [_appDelegate.surveyDB getCustomerSync:item.custID];
+        SurveyCustomerSync *sync = [appDelegate.surveyDB getCustomerSync:item.custID];
         if(sync.syncToPVO)
         {
             if([self isCancelled])
@@ -1071,11 +873,11 @@ exit:
                 break;
             }
             
-            _appDelegate.customerID = item.custID;
+            appDelegate.customerID = item.custID;
             
             //check for demo...
-            SurveyCustomer *cust = [_appDelegate.surveyDB getCustomer:item.custID];
-            ShipmentInfo *info = [_appDelegate.surveyDB getShipInfo:_appDelegate.customerID];
+            SurveyCustomer *cust = [appDelegate.surveyDB getCustomer:item.custID];
+            ShipmentInfo *info = [appDelegate.surveyDB getShipInfo:appDelegate.customerID];
             BOOL demo = FALSE;
             if(cust.pricingMode == INTERSTATE)
                 demo = [AppFunctionality isDemoOrder:info.orderNumber];
@@ -1086,84 +888,30 @@ exit:
             }
             else
             {
-                writer = [SyncGlobals buildCustomerXML:item.custID isAtlas:(vanlineID == ATLAS)];
+                restRequest.methodPath = ORDERS_PATH;
+                writer = [SyncGlobals buildCustomerXML:item.custID isAtlas:(vanlineId == ATLAS)];
                 
-                if (vanlineID == ATLAS)
-                {
-                    NSDictionary *dict = [NSDictionary dictionaryWithObjects:
-                                          [NSArray arrayWithObjects:
-                                           (_driverData.driverNumber == nil ? @"" : _driverData.driverNumber),
-                                           [Base64 encode64:writer.file], nil]
-                                                                     forKeys:
-                                          [NSArray arrayWithObjects:@"driverNumber", @"message", nil]];
-                    
-                    req.functionName = @"UploadInventory";
-                    //send the post request...
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil];
-                    
-                    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-                    SuccessParser *failParser = [[SuccessParser alloc] init];
-                    parser.delegate = failParser;
-                    [parser parse];
-                    
-                    success = failParser.success;
-                    
-                    @try {
-                        if(!success)
-                        {
-                            NSString *err = [NSString stringWithFormat:@"%@ failed to upload. Reason: %@", item.name, failParser.errorString];
-                            NSLog(@"Error in Atlas uploadInventories: %@", err);
-                            [self updateProgress:err withPercent:1];
-                            //set sync to falce, per defect 208
-                            sync.syncToPVO = FALSE;
-                            [_appDelegate.surveyDB updateCustomerSync:sync];
-                            //                            [result release];
-                            break;
-                        }
-                    }
-                    @finally {
-                        
-                    }
-                }
-                else
-                {
-                    XMLWriter *reloSettings = [self getReloCRMSettingsXML];
-                    WCFDataParam *requestParm = [[WCFDataParam alloc] init];
-                    requestParm.contents = reloSettings.file;
-                    
-                    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                              requestParm,
-                                                                              [Base64 encode64:writer.file],
-                                                                              (_driverData == nil || _driverData.driverNumber == nil ? @"" : _driverData.driverNumber),
-                                                                              [NSString stringWithFormat:@"%d", [_appDelegate.pricingDB vanline]],
-                                                                              (_driverData == nil || _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent),
-                                                                              nil]
-                                                                     forKeys:[NSArray arrayWithObjects:@"reloSettings", @"order", @"driverNumber", @"carrierID", @"agencyCode", nil]];
-                    
-                    req.functionName = @"SaveIGCSyncOrderWithReloCRMSettings";
-                    
-                    //send the post request...
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"reloSettings", @"order", @"driverNumber", @"carrierID", @"agencyCode", nil]];
-                    
-                    
-                    if(!success)
-                    {
-                        [self updateProgress:[NSString stringWithFormat:@"%@ failed to upload. Reason: %@", item.name, result] withPercent:1];
-                        //set sync to falce, per defect 208
-                        sync.syncToPVO = FALSE;
-                        [_appDelegate.surveyDB updateCustomerSync:sync];
-                        //                        [result release];
-                        break;
-                    }
+                NSDictionary *bodyDictionary = @{@"Order" : [Base64 encode64:writer.file],
+                                                 @"ReloSettings" : [self getReloSettings]
+                };
+                
+                NSData* body = [self getBodyDataForDictionary:bodyDictionary error:&error];
+
+                NSDictionary *queryParameters = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                          (driverData == nil || driverData.driverNumber == nil ? @"" : driverData.driverNumber),
+                                                                          (driverData == nil || driverData.haulingAgent == nil ? @"" : driverData.haulingAgent),
+                                                                          [NSString stringWithFormat:@"%d", vanlineId], nil]
+                                                                 forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"carrierID", nil]];
+                
+                result = [restRequest executeHttpRequest:@"PUT" withQueryParameters:queryParameters andBodyData:body andError:&error shouldDecode:NO];
+                
+                if(result == nil || result.length == 0) {
+                    [self updateProgress:[NSString stringWithFormat:@"%@ failed to upload. Reason: %@", item.name, [[error userInfo] valueForKey:@"Error"]] withPercent:1];
+                    //set sync to falce, per defect 208
+                    sync.syncToPVO = FALSE;
+                    [appDelegate.surveyDB updateCustomerSync:sync];
+                    //                        [result release];
+                    break;
                 }
                 
                 //upload photos for this customer.
@@ -1174,7 +922,7 @@ exit:
                     {
                         //set sync to falce, per defect 208
                         sync.syncToPVO = FALSE;
-                        [_appDelegate.surveyDB updateCustomerSync:sync];
+                        [appDelegate.surveyDB updateCustomerSync:sync];
                         break;
                     }
                 }
@@ -1184,17 +932,23 @@ exit:
                      withPercent:1];
             
             sync.syncToPVO = FALSE;
-            [_appDelegate.surveyDB updateCustomerSync:sync];
+            [appDelegate.surveyDB updateCustomerSync:sync];
         }
     }
     
-    _appDelegate.customerID = origDelCustID;
-        
+    appDelegate.customerID = origDelCustID;
+    
     return success;
+}
+
+- (NSData *)getBodyDataForDictionary:(NSDictionary *)dictionary error:(NSError **)error {
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:error];
+    return bodyData;
 }
 
 -(BOOL)uploadPhotos:(int)custID
 {
+    NSError *error = nil;
     BOOL success = TRUE;
     NSString *result;
     //first send the notification message.
@@ -1202,32 +956,18 @@ exit:
     NSString *docsDir = [SurveyAppDelegate getDocsDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    //    SurveyImage *image;
-    //    UIImage *img;
-    //    NSData *imgData;
-    // NSString *fullPath;
-    // PVOItemDetail *pvoitem;
-    
-    SurveyCustomer *cust = [_appDelegate.surveyDB getCustomer:custID];
+    SurveyCustomer *cust = [appDelegate.surveyDB getCustomer:custID];
     self.downloadRequestType = cust.pricingMode;
+    self.orderNumber = [appDelegate.surveyDB getShipInfo:custID].orderNumber;
     
-    self.orderNumber = [_appDelegate.surveyDB getShipInfo:custID].orderNumber;
-    
-    XMLWriter *ordRequest = [self getRequestXML];
-    WCFDataParam *requestParm = [[WCFDataParam alloc] init];
-    requestParm.contents = ordRequest.file;
-    
+    NSDictionary *orderRequestJson = [self getOrderRequestJson:&error];
+
     ///upload item photos first
-#ifdef ATLASNET
-    req.functionName = @"UploadImageForInventoryItemByInterstateRegNum";
-#else
-    req.functionName = @"UploadImageForInventoryItemByRequest";
-#endif
-    
+    restRequest.methodPath = ITEM_IMAGES_PATH;
     double calculatedProgress = 0, totalImagesToUpload = 0, currentProgress = 0;
     NSArray *photoTypes = @[@IMG_PVO_ITEMS, @IMG_PVO_DESTINATION_ITEMS];
     
-    NSArray *images = [_appDelegate.surveyDB getImagesList:custID withPhotoTypes:photoTypes withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
+    NSArray *images = [appDelegate.surveyDB getImagesList:custID withPhotoTypes:photoTypes withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
     if([images count] > 0)
     {
         [self resetProgressBar];
@@ -1238,73 +978,52 @@ exit:
         //upload the photos
         for(int i = 0; i < [images count]; i++)
         {
-            @autoreleasepool {
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *queryParameters = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *bodyDictionary = [[NSMutableDictionary alloc] init];
+            
+            SurveyImage *image = [images objectAtIndex:i];
+            NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
+            if([fileManager fileExistsAtPath:fullPath])
+            {
+                UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
+                NSData *imgData = [PVOSync getResizedPhotoData:img];
+                [bodyDictionary setValue:[Base64 encode64WithData:imgData] forKey:@"Image"];
+                [bodyDictionary setValue:orderRequestJson forKey:@"Request"];
+                
+                //get pvoiteminfo
+                PVOItemDetail *pvoitem = [appDelegate.surveyDB getPVOItem:image.subID];
+                [queryParameters setValue:[pvoitem displayInventoryNumber] forKey:@"barcode"];
+                [queryParameters setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
+                
+                NSData *bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+                result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
 
-                SurveyImage *image = [images objectAtIndex:i];
-                NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
-                if([fileManager fileExistsAtPath:fullPath])
+                
+                if(result == nil || result.length == 0)
                 {
-                    UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
-                    NSData *imgData = [PVOSync getResizedPhotoData:img];
-
-                    //get pvoiteminfo
-                    PVOItemDetail *pvoitem = [_appDelegate.surveyDB getPVOItem:image.subID];
-#ifdef ATLASNET
-                    [dict setValue:self.orderNumber forKey:@"interstateRegNum"];
-#else
-                    [dict setValue:requestParm forKey:@"request"];
-#endif
-                    [dict setValue:[pvoitem displayInventoryNumber] forKey:@"barcode"];
-                    [dict setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
-                    [dict setValue:[Base64 encode64WithData:imgData] forKey:@"imageDetails"];
-                    
-                    
-#ifdef ATLASNET
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"interstateRegNum", @"barcode", @"fileName", @"imageDetails", nil]];
-#else
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"request", @"barcode", @"fileName", @"imageDetails", nil]];
-#endif
-                   
-                    if(!success)
-                    {
-                        [self updateProgress:result withPercent:1];
-                        //                    [result release];
-                        break;
-                    }
-                    else
-                    {
-                        currentProgress = i + 1;
-                        calculatedProgress = currentProgress / totalImagesToUpload;
-                    }
-                    
-                    [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Item %@ Image ID %d posted...", [pvoitem displayInventoryNumber], image.imageID]
-                             withPercent:calculatedProgress];
+                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    break;
                 }
+                else
+                {
+                    currentProgress = i + 1;
+                    calculatedProgress = currentProgress / totalImagesToUpload;
+                    result = nil;
+                }
+                
+                [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Item %@ Image ID %d posted...", [pvoitem displayInventoryNumber], image.imageID]
+                         withPercent:calculatedProgress];
             }
+            
         }
     }
     
     ///now upload room photos
-#ifdef ATLASNET
-    req.functionName = @"UploadImageForRoomByInterstateRegNum";
-#else
-    req.functionName = @"UploadImageForRoomByRequest";
-#endif
-    
+    restRequest.methodPath = [NSString stringWithFormat:@"%@%@", ROOM_IMAGES_PATH, LOADS_PATH];
+
     NSArray *roomTypes = @[@IMG_PVO_ROOMS, @IMG_PVO_DESTINATION_ROOMS];
     
-    images = [_appDelegate.surveyDB getImagesList:custID withPhotoTypes:roomTypes withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
+    images = [appDelegate.surveyDB getImagesList:custID withPhotoTypes:roomTypes withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
     PVORoomConditions *conditions;
     if([images count] > 0)
     {
@@ -1317,77 +1036,61 @@ exit:
         //upload the photos
         for(int i = 0; i < [images count]; i++)
         {
-            @autoreleasepool {
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *queryParameters = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *bodyDictionary = [[NSMutableDictionary alloc] init];
+            
+            SurveyImage *image = [images objectAtIndex:i];
+            NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
+            if([fileManager fileExistsAtPath:fullPath])
+            {
+                int photoType = image.photoType;
+                if (photoType == IMG_ROOMS || photoType == IMG_PVO_ROOMS) {
+                    conditions = [appDelegate.surveyDB getPVORoomConditions:image.subID];
+                } else if (image.photoType == IMG_PVO_DESTINATION_ROOMS) {
+                    conditions = [appDelegate.surveyDB getPVODestinationRoomConditions:image.subID];
+                }
+                
+                Room *r = [appDelegate.surveyDB getRoom:conditions.roomID];
+                
+                if (![appDelegate.surveyDB roomHasPVOInventoryItems:r.roomID] && image.photoType != IMG_PVO_DESTINATION_ROOMS)
+                    continue; //skip if room has no items
+                
+                UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
+                NSData *imgData = [PVOSync getResizedPhotoData:img];
+                
+                [bodyDictionary setValue:[Base64 encode64WithData:imgData] forKey:@"Image"];
+                [bodyDictionary setValue:orderRequestJson forKey:@"Request"];
+                
+                [queryParameters setValue:[r roomName] forKey:@"roomName"];
+                [queryParameters setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
+                
+                NSData *bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+                result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
 
-                SurveyImage *image = [images objectAtIndex:i];
-                NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
-                if([fileManager fileExistsAtPath:fullPath])
+                
+                if(result == nil || result.length == 0)
                 {
-                    int photoType = image.photoType;
-                    if (photoType == IMG_ROOMS || photoType == IMG_PVO_ROOMS) {
-                        conditions = [_appDelegate.surveyDB getPVORoomConditions:image.subID];
-                    } else if (image.photoType == IMG_PVO_DESTINATION_ROOMS) {
-                        conditions = [_appDelegate.surveyDB getPVODestinationRoomConditions:image.subID];
-                    }
+                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    break;
+                }
+                else
+                {
+                    currentProgress = i + 1;
+                    calculatedProgress = currentProgress / totalImagesToUpload;
                     
-                    Room *r = [_appDelegate.surveyDB getRoom:conditions.roomID];
-                    
-                    if (![_appDelegate.surveyDB roomHasPVOInventoryItems:r.roomID] && image.photoType != IMG_PVO_DESTINATION_ROOMS)
-                        continue; //skip if room has no items
-                    
-                    UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
-                    NSData *imgData = [PVOSync getResizedPhotoData:img];
-                    
-#ifdef ATLASNET
-                    [dict setValue:self.orderNumber forKey:@"interstateRegNum"];
-#else
-                    [dict setValue:requestParm forKey:@"request"];
-#endif
-                    [dict setValue:[r roomName] forKey:@"roomName"];
-                    [dict setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
-                    [dict setValue:[Base64 encode64WithData:imgData] forKey:@"imageDetails"];
-#ifdef ATLASNET
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"interstateRegNum", @"roomName", @"fileName", @"imageDetails", nil]];
-#else
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"request", @"roomName", @"fileName", @"imageDetails", nil]];
-#endif
-                    
-                    if(!success)
-                    {
-                        [self updateProgress:result withPercent:1];
-                        break;
-                    }
-                    else
-                    {
-                        currentProgress = i + 1;
-                        calculatedProgress = currentProgress / totalImagesToUpload;
-                        
-                        [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Room %@ Image ID %d posted...", [[_appDelegate.surveyDB getRoom:conditions.roomID] roomName], image.imageID]
-                                 withPercent:calculatedProgress];
-                    }
+                    [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Room %@ Image ID %d posted...", [[appDelegate.surveyDB getRoom:conditions.roomID] roomName], image.imageID]
+                             withPercent:calculatedProgress];
+                    result = nil;
                 }
             }
+            
         }
     }
     ///now upload unload room photos
     
-#ifdef ATLASNET
-    //req.functionName = @"UploadImageForUnloadRoomByInterstateRegNum";
-#else
-    req.functionName = @"UploadImageForUnloadRoomByRequest";
-    
-    images = [_appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_PVO_DESTINATION_ROOMS withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
+    restRequest.methodPath = [NSString stringWithFormat:@"%@%@", ROOM_IMAGES_PATH, UNLOADS_PATH];
+
+    images = [appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_PVO_DESTINATION_ROOMS withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
     PVORoomConditions *unloadConditions;
     if([images count] > 0)
     {
@@ -1400,75 +1103,54 @@ exit:
         //upload the photos
         for(int i = 0; i < [images count]; i++)
         {
-            @autoreleasepool {
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *queryParameters = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *bodyDictionary = [[NSMutableDictionary alloc] init];
+            
+            SurveyImage *image = [images objectAtIndex:i];
+            NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
+            if([fileManager fileExistsAtPath:fullPath])
+            {
+                unloadConditions = [appDelegate.surveyDB getPVODestinationRoomConditions:image.subID];
+                
+                Room *r = [appDelegate.surveyDB getRoom:unloadConditions.roomID];
+                
+                //if (![del.surveyDB roomHasPVOInventoryItems:r.roomID])
+                //  continue; //skip if room has no items
+                
+                UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
+                NSData *imgData = [PVOSync getResizedPhotoData:img];
+                
+                [bodyDictionary setValue:[Base64 encode64WithData:imgData] forKey:@"Image"];
+                [bodyDictionary setValue:orderRequestJson forKey:@"Request"];
+                
+                [queryParameters setValue:[r roomName] forKey:@"roomName"];
+                [queryParameters setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
+                
+                NSData *bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+                result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
 
-                SurveyImage *image = [images objectAtIndex:i];
-                NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
-                if([fileManager fileExistsAtPath:fullPath])
+                if(result == nil || result.length == 0)
                 {
-                    unloadConditions = [_appDelegate.surveyDB getPVODestinationRoomConditions:image.subID];
+                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    break;
+                }
+                else
+                {
+                    currentProgress = i + 1;
+                    calculatedProgress = currentProgress / totalImagesToUpload;
                     
-                    Room *r = [_appDelegate.surveyDB getRoom:unloadConditions.roomID];
-                    
-                    //if (![del.surveyDB roomHasPVOInventoryItems:r.roomID])
-                    //  continue; //skip if room has no items
-                    
-                    UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
-                    NSData *imgData = [PVOSync getResizedPhotoData:img];
-                    
-#ifdef ATLASNET
-                    [dict setValue:self.orderNumber forKey:@"interstateRegNum"];
-#else
-                    [dict setValue:requestParm forKey:@"request"];
-#endif
-                    [dict setValue:[r roomName] forKey:@"roomName"];
-                    [dict setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
-                    [dict setValue:[Base64 encode64WithData:imgData] forKey:@"imageDetails"];
-                    
-#ifdef ATLASNET
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"interstateRegNum", @"roomName", @"fileName", @"imageDetails", nil]];
-#else
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"request", @"roomName", @"fileName", @"imageDetails", nil]];
-#endif
-                    
-                    if(!success)
-                    {
-                        [self updateProgress:result withPercent:1];
-                        //                    [result release];
-                        break;
-                    }
-                    else
-                    {
-                        currentProgress = i + 1;
-                        calculatedProgress = currentProgress / totalImagesToUpload;
-                        
-                        [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Room %@ Image ID %d posted...", [[_appDelegate.surveyDB getRoom:unloadConditions.roomID] roomName], image.imageID]
-                                 withPercent:calculatedProgress];
-                    }
+                    [self updateProgress:[[NSString alloc] initWithFormat:@"PVO Room %@ Image ID %d posted...", [[appDelegate.surveyDB getRoom:unloadConditions.roomID] roomName], image.imageID]
+                             withPercent:calculatedProgress];
+                    result = nil;
                 }
             }
         }
     }
-#endif
     
     ///now upload location photos
-#ifdef ATLASNET
-    req.functionName = @"UploadImageForLocationByInterstateRegNum";
-#else
-    req.functionName = @"UploadImageForLocationByRequest";
-#endif
-    images = [_appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_LOCATIONS withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
+    restRequest.methodPath = LOCATION_IMAGES_PATH;
+    
+    images = [appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_LOCATIONS withSubID:0 loadAllItems:FALSE loadAllForType:TRUE];
     SurveyLocation *loc = nil;
     if([images count] > 0)
     {
@@ -1481,92 +1163,75 @@ exit:
         //upload the photos
         for(int i = 0; i < [images count]; i++)
         {
-            @autoreleasepool {
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-
-                SurveyImage *image = [images objectAtIndex:i];
-                NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
-                if([fileManager fileExistsAtPath:fullPath])
+            NSMutableDictionary *queryParameters = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *bodyDictionary = [[NSMutableDictionary alloc] init];
+            
+            SurveyImage *image = [images objectAtIndex:i];
+            NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
+            if([fileManager fileExistsAtPath:fullPath])
+            {
+                
+                UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
+                NSData *imgData = [PVOSync getResizedPhotoData:img];
+                
+                [bodyDictionary setValue:[Base64 encode64WithData:imgData] forKey:@"Image"];
+                [bodyDictionary setValue:orderRequestJson forKey:@"Request"];
+                
+                NSString *locName = @"Origin";
+                if(image.subID == ORIGIN_LOCATION_ID)
+                    [queryParameters setValue:@"Origin" forKey:@"locType"];
+                else if(image.subID == DESTINATION_LOCATION_ID)
                 {
-                    
-                    UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
-                    NSData *imgData = [PVOSync getResizedPhotoData:img];
-                    
-                    NSString *locName = @"Origin";
-                    if(image.subID == ORIGIN_LOCATION_ID)
-                        [dict setValue:@"Origin" forKey:@"locType"];
-                    else if(image.subID == DESTINATION_LOCATION_ID)
-                    {
-                        [dict setValue:@"Destination" forKey:@"locType"];
-                        locName = @"Destination";
-                    }
+                    [queryParameters setValue:@"Destination" forKey:@"locType"];
+                    locName = @"Destination";
+                }
+                else
+                {
+                    loc = [appDelegate.surveyDB getCustomerLocation:image.subID]; //uses locationID
+                    if (loc.isOrigin)
+                        [queryParameters setValue:@"OriginExtraStop" forKey:@"locType"];
                     else
-                    {
-                        loc = [_appDelegate.surveyDB getCustomerLocation:image.subID]; //uses locationID
-                        if (loc.isOrigin)
-                            [dict setValue:@"OriginExtraStop" forKey:@"locType"];
-                        else
-                            [dict setValue:@"DestinationExtraStop" forKey:@"locType"];
-                        locName = @"Extra Stop";
-                    }
-#ifdef ATLASNET
-                    [dict setValue:self.orderNumber forKey:@"interstateRegNum"];
-#else
-                    [dict setValue:requestParm forKey:@"request"];
-#endif
-                    [dict setValue:[NSString stringWithFormat:@"%d", (loc == nil ? 0 : loc.sequence)] forKey:@"sequence"];
-                    [dict setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
-                    [dict setValue:[Base64 encode64WithData:imgData] forKey:@"imageDetails"];
+                        [queryParameters setValue:@"DestinationExtraStop" forKey:@"locType"];
+                    locName = @"Extra Stop";
+                }
+                
+                [queryParameters setValue:[NSString stringWithFormat:@"%d", (loc == nil ? 0 : loc.sequence)] forKey:@"sequence"];
+                [queryParameters setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
+                
+                NSData *bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+                result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
+
+                if(result == nil || result.length == 0)
+                {
+                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    break;
+                }
+                else
+                {
+                    currentProgress = i + 1;
+                    calculatedProgress = currentProgress / totalImagesToUpload;
                     
-#ifdef ATLASNET
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"interstateRegNum", @"locType", @"sequence", @"fileName", @"imageDetails", nil]];
-#else
-                    success = [req getData:&result
-                             withArguments:dict
-                              needsDecoded:YES
-                                   withSSL:ssl
-                               flushToFile:nil
-                                 withOrder:[NSArray arrayWithObjects:@"request", @"locType", @"sequence", @"fileName", @"imageDetails", nil]];
-#endif
-                    
-                    if(!success)
-                    {
-                        [self updateProgress:result withPercent:1];
-                        //                    [result release];
-                        break;
-                    }
-                    else
-                    {
-                        currentProgress = i + 1;
-                        calculatedProgress = currentProgress / totalImagesToUpload;
-                        
-                        [self updateProgress:[NSString stringWithFormat:@"%@ Location Image ID %d posted...", locName, image.imageID]
-                                 withPercent:calculatedProgress];
-                    }
+                    [self updateProgress:[NSString stringWithFormat:@"%@ Location Image ID %d posted...", locName, image.imageID]
+                             withPercent:calculatedProgress];
+                    result = nil;
                 }
             }
         }
     }
-        
+    
     if ([AppFunctionality disableWeightTickets])
     {
         return success;
     }
     
-    
     ///now upload po d tickets - atlasnet has a separate upload for them, not part of sync process
-    req.functionName = @"UploadWeightTicketByRequest";
-    
-    NSArray *tickets = [_appDelegate.surveyDB getPVOWeightTickets:custID];
+    restRequest.methodPath = WEIGHT_TICKET_PATH;
+
+    NSArray *tickets = [appDelegate.surveyDB getPVOWeightTickets:custID];
     for (PVOWeightTicket *ticket in tickets) {
         
-        images = [_appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_PVO_WEIGHT_TICKET withSubID:ticket.weightTicketID
-                                         loadAllItems:FALSE loadAllForType:FALSE];
+        images = [appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_PVO_WEIGHT_TICKET withSubID:ticket.weightTicketID
+                                        loadAllItems:FALSE loadAllForType:FALSE];
         if([images count] > 0)
         {
             //progress doesn't change when you send a zero, just starting it off at .001
@@ -1578,42 +1243,38 @@ exit:
             //upload the photos
             for(int i = 0; i < [images count]; i++)
             {
-                @autoreleasepool {
-                    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                NSMutableDictionary *queryParameters = [[NSMutableDictionary alloc] init];
+                NSMutableDictionary *bodyDictionary = [[NSMutableDictionary alloc] init];
+                
+                SurveyImage *image = [images objectAtIndex:i];
+                NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
+                if([fileManager fileExistsAtPath:fullPath])
+                {
+                    UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
+                    NSData *imgData = [PVOSync getResizedPhotoData:img];
+                    
+                    [bodyDictionary setValue:[Base64 encode64:[ticket xmlFile].file] forKey:@"WeightTicket"];
+                    [bodyDictionary setValue:[Base64 encode64WithData:imgData] forKey:@"Image"];
+                    [bodyDictionary setValue:orderRequestJson forKey:@"Request"];
+                    
+                    [queryParameters setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
+                    
+                    NSData * bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
+                    result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
 
-                    SurveyImage *image = [images objectAtIndex:i];
-                    NSString *fullPath = [docsDir stringByAppendingPathComponent:image.path];
-                    if([fileManager fileExistsAtPath:fullPath])
+                    if(result == nil || result.length == 0)
                     {
-                        UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
-                        NSData *imgData = [PVOSync getResizedPhotoData:img];
+                        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                        break;
+                    }
+                    else
+                    {
+                        currentProgress = i + 1;
+                        calculatedProgress = currentProgress / totalImagesToUpload;
                         
-                        [dict setValue:requestParm forKey:@"request"];
-                        
-                        [dict setValue:[Base64 encode64:[ticket xmlFile].file] forKey:@"weightTicketData"];
-                        [dict setValue:[XMLWriter formatString:image.path] forKey:@"fileName"];
-                        [dict setValue:[Base64 encode64WithData:imgData] forKey:@"imageDetails"];
-                        success = [req getData:&result
-                                 withArguments:dict
-                                  needsDecoded:YES
-                                       withSSL:ssl
-                                   flushToFile:nil
-                                     withOrder:[NSArray arrayWithObjects:@"request", @"weightTicketData", @"fileName", @"imageDetails", nil]];
-                        
-                        if(!success)
-                        {
-                            [self updateProgress:result withPercent:1];
-                            //                        [result release];
-                            break;
-                        }
-                        else
-                        {
-                            currentProgress = i + 1;
-                            calculatedProgress = currentProgress / totalImagesToUpload;
-                            
-                            [self updateProgress:[NSString stringWithFormat:@"Weight ticket %@ posted...", ticket.description]
-                                     withPercent:calculatedProgress];
-                        }
+                        [self updateProgress:[NSString stringWithFormat:@"Weight ticket %@ posted...", ticket.description]
+                                 withPercent:calculatedProgress];
+                        result = nil;
                     }
                 }
             }
@@ -1652,54 +1313,37 @@ exit:
 
 -(BOOL)downloadMMItemImages:(int)imageID forSurveyedItemID:(int)siID
 {
+    NSError *error = nil;
     BOOL success = TRUE;
-    NSXMLParser *parser = nil;
-    PVOImageParser *imageParser = nil;
     
     NSString *result = nil;
     
-    imageParser = [[PVOImageParser alloc] init];
     
-    if ([_appDelegate.pricingDB vanline] == ATLAS)
-    {
-        req.functionName = @"DownloadSurveyImages";
-        success = [req getData:&result
-                 withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", imageID],
-                                                                    orderNumber, @"SURVEY_ITEM", nil]
-                                                           forKeys:[NSArray arrayWithObjects:@"relatedRecordID",
-                                                                    @"orderNumber", @"type", nil]]
-                  needsDecoded:YES withSSL:ssl
-                   flushToFile:nil];
-        imageParser.isWCF = NO;
-    }
-    else
-    {
-        req.functionName = @"GetIGCSyncItemImages";
-        success = [req getData:&result
-                 withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:orderNumber, [NSString stringWithFormat:@"%d", imageID], _driverData.haulingAgent, self.downloadRequestType == 0 ? @"true" : @"false", nil]
-                                                           forKeys:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]]
-                  needsDecoded:NO withSSL:ssl
-                   flushToFile:nil
-                     withOrder:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]];
-    }
+    restRequest.methodPath = ITEM_IMAGES_PATH;
     
-    if(!success)
+    NSDictionary *queryParameters = [NSDictionary dictionaryWithObjects:
+                                [NSArray arrayWithObjects:orderNumber,
+                                 [NSString stringWithFormat:@"%d", imageID],
+                                 driverData.haulingAgent,
+                                 self.downloadRequestType == 0 ? @"true" : @"false", nil]                                                 forKeys:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]];
+    
+    result = [restRequest executeHttpRequest:@"GET" withQueryParameters:queryParameters andBodyData:nil andError:&error shouldDecode:NO];
+    
+    if(result == nil || result.length == 0)
     {
-        [self updateProgress:result withPercent:1];
+        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
         return FALSE;
     }
     
     if([self isCancelled])
         return FALSE;
     
-    parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
+    NSDictionary *images = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
     
-    
+    PVOImageParser *imageParser = [[PVOImageParser alloc] init];
     imageParser.surveyedItemID = siID;
+    [imageParser parseJson:images];
     
-    parser.delegate = imageParser;
-    
-    [parser parse];
     
     if([self isCancelled])
         return FALSE;
@@ -1707,17 +1351,12 @@ exit:
     
     //do something with the entries (should have all of the files)... probably need to flush one at a time - put the flush into the parser...
     
-    
-    //[self updateProgress:[NSString stringWithFormat:@"Downloaded Images for ID %d", imageID] withPercent:1];
-    
-    //    [result release];
-    
     return success;
 }
 
 -(BOOL)downloadMMLocationImages
 {
-    if([_appDelegate.pricingDB vanline] != ATLAS)
+    if(vanlineId != ATLAS)
         return TRUE;
     
     BOOL success = TRUE;
@@ -1791,6 +1430,7 @@ exit:
 
 -(BOOL)downloadMMRoomImages:(int)imageID forRoomID:(int)roomID
 {
+    NSError *error = nil;
     BOOL success = TRUE;
     NSXMLParser *parser = nil;
     PVOImageParser *imageParser = nil;
@@ -1799,32 +1439,19 @@ exit:
     
     imageParser = [[PVOImageParser alloc] init];
     
-    if ([_appDelegate.pricingDB vanline] == ATLAS)
-    {
-        req.functionName = @"DownloadSurveyImages";
-        success = [req getData:&result
-                 withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", imageID],
-                                                                    orderNumber, @"SURVEY_ROOM", nil]
-                                                           forKeys:[NSArray arrayWithObjects:@"relatedRecordID", @"orderNumber", @"type", nil]]
-                  needsDecoded:YES withSSL:ssl
-                   flushToFile:nil];
-        imageParser.isWCF = NO;
-    }
-    else
-    {
-        //probably need to add a withParamOrder argument into getData for this one...
-        req.functionName = @"GetIGCSyncRoomImages";
-        success = [req getData:&result
-                 withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:orderNumber, [NSString stringWithFormat:@"%d", imageID], _driverData.haulingAgent, self.downloadRequestType == 0 ? @"true" : @"false", nil]
-                                                           forKeys:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]]
-                  needsDecoded:NO withSSL:ssl
-                   flushToFile:nil
-                     withOrder:[NSArray arrayWithObjects:@"regNumber", @"imageID", nil]];
-    }
+    restRequest.methodPath = ROOM_IMAGES_PATH;
     
-    if(!success)
+    NSDictionary *queryParameters = [NSDictionary dictionaryWithObjects:
+                                [NSArray arrayWithObjects:orderNumber,
+                                 [NSString stringWithFormat:@"%d", imageID],
+                                 driverData.haulingAgent,
+                                 self.downloadRequestType == 0 ? @"true" : @"false", nil]                                                 forKeys:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]];
+    
+    result = [restRequest executeHttpRequest:@"GET" withQueryParameters:queryParameters andBodyData:nil andError:&error shouldDecode:NO];
+    
+    if(result == nil || result.length == 0)
     {
-        [self updateProgress:result withPercent:1];
+        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
         return FALSE;
     }
     
@@ -1871,10 +1498,10 @@ exit:
     success = [req getData:&result
              withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                 orderNumber,
-                                                                (_driverData.driverNumber == nil ? @"" : _driverData.driverNumber),
-                                                                (_driverData.driverPassword == nil ? @"" : _driverData.driverPassword),
-                                                                (_driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent),
-                                                                [NSString stringWithFormat:@"%d", [_appDelegate.pricingDB vanline]], nil]
+                                                                (driverData.driverNumber == nil ? @"" : driverData.driverNumber),
+                                                                (driverData.driverPassword == nil ? @"" : driverData.driverPassword),
+                                                                (driverData.haulingAgent == nil ? @"" : driverData.haulingAgent),
+                                                                [NSString stringWithFormat:@"%d", vanlineId], nil]
                                                        forKeys:[NSArray arrayWithObjects:@"regNumber", @"driverNumber", @"password", @"agencyCode", @"carrierID", nil]]
               needsDecoded:YES withSSL:ssl
                flushToFile:nil
@@ -1920,98 +1547,6 @@ exit:
     return success;
 }
 
--(BOOL)updateActualDates
-{
-    if ([_appDelegate.pricingDB vanline] != ATLAS)
-        return YES;
-    
-    BOOL success = TRUE;
-    NSXMLParser *parser = nil;
-    SuccessParser *successParser = nil;
-    NSString *result = nil;
-    
-    NSDictionary *temp = nil;
-    
-    req.functionName = @"UpdateActualDateWithSignatureDate";
-    
-    BOOL actualDateIsAtPickup = [self.additionalParamInfo boolValue];
-    
-    // Get signature number
-    SurveyAppDelegate* del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int custID = del.customerID;
-    
-    PVOInventory* p = [del.surveyDB getPVOData:custID];
-    int loadType = [p loadType];
-    int sigType = -1;
-    
-    if(loadType == SPECIAL_PRODUCTS) {
-        if(actualDateIsAtPickup) {
-            sigType = PVO_SIGNATURE_TYPE_SP_INVENTORY;
-        } else {
-            sigType = PVO_SIGNATURE_TYPE_SP_INVENTORY_DEST;
-        }
-    } else {
-        if(actualDateIsAtPickup) {
-            sigType = PVO_SIGNATURE_TYPE_ORG_INVENTORY;
-        } else {
-            sigType = PVO_SIGNATURE_TYPE_DEST_INVENTORY;
-        }
-    }
-    
-    NSArray* signatures = [del.surveyDB getPVOSignatures:custID];
-    NSDate* sigDate = nil;
-    
-    for(int i = 0; i < [signatures count]; i++) {
-        PVOSignature* currentSig = [signatures objectAtIndex:i];
-        if(currentSig.pvoSigTypeID == sigType) {
-            sigDate = currentSig.sigDate;
-        }
-    }
-    
-    if(sigDate == nil) {
-        return false;
-    }
-    
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SS"];
-    NSString* dateTime = [dateFormatter stringFromDate:sigDate];
-    
-    temp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_driverData.driverNumber,
-                                                _driverData.haulingAgent == nil ? @"" : _driverData.haulingAgent,
-                                                orderNumber,
-                                                actualDateIsAtPickup ? @"true" : @"false", dateTime, nil]
-                                       forKeys:[NSArray arrayWithObjects:@"driverNumber", @"agencyCode", @"shipmentID", @"pickup", @"date", nil]];
-    
-    success = [req getData:&result withArguments:temp needsDecoded:YES];
-    
-    if(!success)
-    {
-        //error with message...
-        [self updateProgress:result withPercent:1];
-        return FALSE;
-    }
-    
-    parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    successParser = [[SuccessParser alloc] init];
-    parser.delegate = successParser;
-    [parser parse];
-    
-    if(!successParser.success)
-    {
-        //error with message...
-        [self updateProgress:successParser.errorString withPercent:1];
-        return FALSE;
-    }
-    
-    
-    [self updateProgress:[NSString stringWithFormat:@"Actual Date Uploaded Successfully."] withPercent:1];
-    
-    //    [result release];
-    
-    return success;
-}
-
 -(XMLWriter*)getRequestXML
 {
     NSString *deviceID = nil;
@@ -2027,16 +1562,16 @@ exit:
     [writer writeAttribute:@"xmlns:i" withData:@"http://www.w3.org/2001/XMLSchema-instance"];
     [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
     
-    [writer writeElementString:@"a:AddCoverSheet" withData:_appDelegate.uploadingArpinDoc ? @"true" : @"false"];
+    [writer writeElementString:@"a:AddCoverSheet" withData:appDelegate.uploadingArpinDoc ? @"true" : @"false"];
     
     BOOL printNilBookingAgencyCode = false;
-    if (_driverData == nil || (_driverData.driverType != PVO_DRIVER_TYPE_PACKER && _driverData.haulingAgent == nil)) //no record for driver or no hauling agent code entered as driver
+    if (driverData == nil || (driverData.driverType != PVO_DRIVER_TYPE_PACKER && driverData.haulingAgent == nil)) //no record for driver or no hauling agent code entered as driver
     {
         printNilBookingAgencyCode = true;
     }
     else
     {
-        if (_driverData.driverType == PVO_DRIVER_TYPE_PACKER && [AppFunctionality showAgencyCodeOnDownload])
+        if (driverData.driverType == PVO_DRIVER_TYPE_PACKER && [AppFunctionality showAgencyCodeOnDownload])
         {
             if(self.overrideAgencyCode == nil || self.overrideAgencyCode.length == 0) //packers require a hauling agent code entered manually at download time, download screen won't allow a 0 length agency code but this handles that to prevent error
             {
@@ -2046,7 +1581,7 @@ exit:
                 [writer writeElementString:@"a:BookingAgencyCode" withData:self.overrideAgencyCode];
         }
         else
-            [writer writeElementString:@"a:BookingAgencyCode" withData:_driverData.haulingAgent];
+            [writer writeElementString:@"a:BookingAgencyCode" withData:driverData.haulingAgent];
     }
     
     if (printNilBookingAgencyCode)
@@ -2055,7 +1590,6 @@ exit:
         [writer writeAttribute:@"i:nil" withData:@"true"];
         [writer writeEndElement];
     }
-    int vanlineId = [_appDelegate.pricingDB vanline];
     [writer writeElementString:@"a:CarrierID" withIntData:vanlineId];
     
     //not going to use this, we're doing agency code instead
@@ -2073,36 +1607,36 @@ exit:
     [writer writeElementString:@"a:DeviceModel" withData:[NSString stringWithFormat:@"%@ %@", [UIDevice currentDevice].model, [UIDevice currentDevice].systemVersion]];
     [writer writeElementString:@"a:DeviceVersion" withData:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     
-    if ([_appDelegate.pricingDB vanline] == ARPIN && _driverData != nil && _driverData.syncPreference == PVO_ARPIN_SYNC_BY_DRIVER)
+    if (vanlineId == ARPIN && driverData != nil && driverData.syncPreference == PVO_ARPIN_SYNC_BY_DRIVER)
     {
-        if (_driverData == nil || _driverData.driverNumber == nil)
+        if (driverData == nil || driverData.driverNumber == nil)
         {
             [writer writeStartElement:@"a:DriverNumber"];
             [writer writeAttribute:@"i:nil" withData:@"true"];
             [writer writeEndElement];
         }
         else
-            [writer writeElementString:@"a:DriverNumber" withData:_driverData.driverNumber];
+            [writer writeElementString:@"a:DriverNumber" withData:driverData.driverNumber];
         
-        if (_driverData == nil || _driverData.driverPassword == nil)
+        if (driverData == nil || driverData.driverPassword == nil)
         {
             [writer writeStartElement:@"a:DriverPassword"];
             [writer writeAttribute:@"i:nil" withData:@"true"];
             [writer writeEndElement];
         }
         else
-            [writer writeElementString:@"a:DriverPassword" withData:_driverData.driverPassword];
+            [writer writeElementString:@"a:DriverPassword" withData:driverData.driverPassword];
     }
     else
     {
-        if (_driverData == nil || _driverData.haulingAgent == nil)
+        if (driverData == nil || driverData.haulingAgent == nil)
         {
             [writer writeStartElement:@"a:DriverNumber"];
             [writer writeAttribute:@"i:nil" withData:@"true"];
             [writer writeEndElement];
         }
         else
-            [writer writeElementString:@"a:DriverNumber" withData:_driverData.haulingAgent];
+            [writer writeElementString:@"a:DriverNumber" withData:driverData.haulingAgent];
         
         [writer writeElementString:@"a:DriverPassword" withData:@""];
     }
@@ -2131,7 +1665,7 @@ exit:
         //    [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
         
         //password
-        if (_driverData.crmPassword == nil || [_driverData.crmPassword length] <= 0)
+        if (driverData.crmPassword == nil || [driverData.crmPassword length] <= 0)
         {
             [writer writeStartElement:@"a:Password"];
             //            [writer writeAttribute:@"i:nil" withData:@"true"];
@@ -2139,7 +1673,7 @@ exit:
         }
         else
         {
-            [writer writeElementString:@"a:Password" withData:_driverData.crmPassword];
+            [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
         }
         
         //crm url
@@ -2155,7 +1689,7 @@ exit:
         }
         
         //username
-        if (_driverData.crmUsername == nil || [_driverData.crmUsername length] <= 0)
+        if (driverData.crmUsername == nil || [driverData.crmUsername length] <= 0)
         {
             [writer writeStartElement:@"a:Username"];
             //            [writer writeAttribute:@"i:nil" withData:@"true"];
@@ -2163,7 +1697,7 @@ exit:
         }
         else
         {
-            [writer writeElementString:@"a:Username" withData:_driverData.crmUsername];
+            [writer writeElementString:@"a:Username" withData:driverData.crmUsername];
         }
         
         //end reloCRMSettings
@@ -2175,7 +1709,7 @@ exit:
     
     [writer writeElementString:@"a:RequestType" withData:self.downloadRequestType == 0 ? @"Interstate" : self.downloadRequestType == 1 ? @"Local" : self.downloadRequestType == 2 ? @"CNCIV" : @"CNGOV"];
     
-    if(_driverData != nil && _driverData.driverType == PVO_DRIVER_TYPE_PACKER)
+    if(driverData != nil && driverData.driverType == PVO_DRIVER_TYPE_PACKER)
         [writer writeElementString:@"a:SystemType" withData:@"Packer"];
     else
         [writer writeElementString:@"a:SystemType" withData:@"Driver"];
@@ -2183,6 +1717,67 @@ exit:
     [writer writeEndDocument];
     
     return writer;
+}
+
+-(NSDictionary*)getOrderRequestJson:(NSError**) error {
+    NSMutableDictionary *jsonDictionary = [[NSMutableDictionary alloc] init];
+    
+    UIDevice *currentDevice = [UIDevice currentDevice];
+    NSString *agencyCode = self.overrideAgencyCode != nil && self.overrideAgencyCode.length > 0 ? self.overrideAgencyCode : driverData.haulingAgent;
+    NSString *deviceModel = [NSString stringWithFormat:@"%@ %@",
+                             currentDevice.model,
+                             currentDevice.systemVersion];
+    id deviceVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    NSString *driverNumber = [self getValueOrEmptyString:driverData.driverNumber];
+    NSString *driverPassword = [self getValueOrEmptyString:driverData.driverPassword];
+    NSString *systemType = driverData.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver";
+    
+    [jsonDictionary setObject:@NO forKey:@"AddCoverSheet"];
+    [jsonDictionary setObject:[self getValueOrEmptyString:agencyCode] forKey:@"BookingAgencyCode"];
+    [jsonDictionary setObject:[NSNumber numberWithInt:vanlineId] forKey:@"CarrierID"];
+    [jsonDictionary setObject:[self getValueOrEmptyString:[OpenUDID value]] forKey:@"DeviceID"];
+    [jsonDictionary setObject:@"Apple" forKey:@"DeviceMake"];
+    [jsonDictionary setObject:deviceModel forKey:@"DeviceModel"];
+    [jsonDictionary setObject:deviceVersion forKey:@"DeviceVersion"];
+    [jsonDictionary setObject:driverNumber forKey:@"DriverNumber"];
+    [jsonDictionary setObject:driverPassword forKey:@"DriverPassword"];
+    [jsonDictionary setObject:@"" forKey:@"OrderID"];
+    [jsonDictionary setObject:[self getValueOrEmptyString:self.orderNumber] forKey:@"OrderNumber"];
+    [jsonDictionary setObject:[self getReloSettings] forKey:@"ReloSettings"];
+    [jsonDictionary setObject:[self getPricingModeString:error] forKey:@"RequestType"];
+    [jsonDictionary setObject:systemType forKey:@"SystemType"];
+    
+    return jsonDictionary;
+}
+
+-(NSString*)getValueOrEmptyString:(NSString*) value {
+    return value == nil ? @"" : value;
+}
+
+-(NSString*)getPricingModeString:(NSError**) error {
+    switch (self.downloadRequestType) {
+        case 0:
+            return @"Interstate";
+        case 1:
+            return @"Local";
+        case 2:
+            return @"CNCIV";
+        default:
+            return @"CNGOV"; // This is how the old logic functioned. Certainly bug-prone. TODO: use proper error handling
+    }
+}
+
+-(NSDictionary*)getReloSettings {
+    NSMutableDictionary *reloSettings = [[NSMutableDictionary alloc] init];
+    
+    if (driverData != nil) {
+        if ([AppFunctionality enableMoveHQSettings]) {
+            [reloSettings setObject:[self getValueOrEmptyString:driverData.crmUsername] forKey:@"Username"];
+            [reloSettings setObject:[self getValueOrEmptyString:driverData.crmPassword] forKey:@"Password"];
+            [reloSettings setObject:[self getValueOrEmptyString:[self getReloCRMSyncURL]] forKey:@"SyncAddress"];
+        }
+    }
+    return reloSettings;
 }
 
 -(XMLWriter*)getReloCRMSettingsXML
@@ -2202,13 +1797,13 @@ exit:
         [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
         
         //password
-        [writer writeElementString:@"a:Password" withData:_driverData.crmPassword];
+        [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
         
         //crm url
         [writer writeElementString:@"a:SyncAddress" withData:[self getReloCRMSyncURL]];
         
         //username
-        [writer writeElementString:@"a:Username" withData:_driverData.crmUsername];
+        [writer writeElementString:@"a:Username" withData:driverData.crmUsername];
         
         //end reloCRMSettings
         [writer writeEndElement];
@@ -2226,9 +1821,6 @@ exit:
 
 -(NSString*)getReloCRMSyncURL
 {
-    int vanlineID = [_appDelegate.pricingDB vanline];
-    
-    
     //until we move this url into the pricing db or web config of the service, need a aquick way to override
     if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"relourl:"].location != NSNotFound)
     {//override the default virtual directory
@@ -2242,7 +1834,7 @@ exit:
         return reloURL;
     }
     
-    NSString *retval = [_appDelegate.pricingDB getCRMSyncAddress:vanlineID withEnvironment:_driverData.crmEnvironment];
+    NSString *retval = [appDelegate.pricingDB getCRMSyncAddress:vanlineId withEnvironment:driverData.crmEnvironment];
     
     return retval;
 }

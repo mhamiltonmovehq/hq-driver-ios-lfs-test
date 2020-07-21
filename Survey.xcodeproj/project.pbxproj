@@ -558,6 +558,8 @@
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
+		6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
+		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		7B3218CF1DAEA3BF00F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		82770273C1459C6282A477BB /* Pods_Mobile_Mover_Simulator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D7AD4CDF552EC70D58B853 /* Pods_Mobile_Mover_Simulator.framework */; };
@@ -1560,6 +1562,8 @@
 		6A0331842433EF6600CFD063 /* libzbar-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzbar-sim.a"; path = "ZBarSDK/Simulator/libzbar-sim.a"; sourceTree = "<group>"; };
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
+		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
+		6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestSyncRequest.h; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
 		7B13181E1F967C1200E6CC6A /* PVOSTGBOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOL.m; sourceTree = "<group>"; };
 		7B13936D1FBB7986003F2F39 /* CNGOVSignatureValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNGOVSignatureValidation.h; sourceTree = "<group>"; };
@@ -2518,7 +2522,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				D5142D1B200424A20009FC53 /* Security.framework */,
@@ -4068,6 +4072,8 @@
 				BFF9A3EB1022196000E7B9FB /* Base64.m */,
 				BFF9A48E1022461400E7B9FB /* WebSyncRequest.h */,
 				BFF9A48F1022461400E7B9FB /* WebSyncRequest.m */,
+				6AB496E824C681CD00A94F24 /* RestSyncRequest.m */,
+				6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */,
 				BFA74C9F102758C600534980 /* ProcessSync.h */,
 				BFA74CA0102758C600534980 /* ProcessSync.m */,
 				BFA3E033108D00C600DCEEA5 /* SyncGlobals.h */,
@@ -4175,7 +4181,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -5127,6 +5133,7 @@
 				6338C5DA18C6326300E3A7EF /* PVOCartonContent.m in Sources */,
 				6338C5DB18C6326300E3A7EF /* PVOCartonContentsSummaryController.m in Sources */,
 				6338C5DC18C6326300E3A7EF /* PVOSelectCartonContentsController.m in Sources */,
+				6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */,
 				63BEDB531934DFCB002DBC55 /* MBProgressHUD.m in Sources */,
 				6338C5DD18C6326300E3A7EF /* PVONewCartonContentsController.m in Sources */,
 				6338C5DE18C6326300E3A7EF /* PVODeleteCCController.m in Sources */,
@@ -5457,6 +5464,7 @@
 				94B25B831CB43FE7004366D4 /* MoveItemsController.m in Sources */,
 				94B25B841CB43FE7004366D4 /* PVOSync.m in Sources */,
 				94B25B851CB43FE7004366D4 /* PVOSyncController.m in Sources */,
+				6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */,
 				94B25B861CB43FE7004366D4 /* PVORoomConditions.m in Sources */,
 				3E81DEF721305F840024823D /* AddFavoriteItemRoomController.m in Sources */,
 				94B25B871CB43FE7004366D4 /* PVORoomConditionsController.m in Sources */,
@@ -5606,7 +5614,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 385;
+				MARKETING_VERSION = 386;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5654,7 +5662,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 385;
+				MARKETING_VERSION = 386;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5700,7 +5708,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 385;
+				MARKETING_VERSION = 386;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
