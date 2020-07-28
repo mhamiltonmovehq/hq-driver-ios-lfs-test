@@ -236,6 +236,7 @@
 
 -(void)addPhotoToList:(UIImage *)image
 {
+    NSError *error = nil;
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSData *data = UIImageJPEGRepresentation(image, 1.0f);
@@ -248,6 +249,9 @@
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:inDocsPath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:&error];
+    }
     
     if (![fileManager createFileAtPath:filePath contents:data attributes:nil]) 
         [SurveyAppDelegate showAlert:filePath withTitle:@"Error Creating File"];

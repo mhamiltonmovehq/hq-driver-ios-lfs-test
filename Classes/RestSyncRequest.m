@@ -17,7 +17,7 @@
     NSURL *url = [self url:urlString withQueryParameters:queryParams];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    request.timeoutInterval = 30.0;
+    request.timeoutInterval = 120.0;
 
     [request setHTTPMethod:httpMethod];
     [request setURL:url];
