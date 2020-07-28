@@ -84,10 +84,10 @@
     //Add driver section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
     
-    if (!isDriverTypePacker) {
-        //add hauling agent section
-        [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
-    }
+  
+    //add hauling agent section
+    [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
+    
     
     //add app customerization section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_APPLICATION_OPTIONS]];
@@ -125,14 +125,16 @@
 
         }
     }
+    // For both driver and packer
+    if ([AppFunctionality enableMoveHQSettings])
+    {
+        //Enter relo settings screen
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_MOVE_HQ_SETTINGS]];
+    }
     
     if (!isDriverTypePacker)
     {
-        if ([AppFunctionality enableMoveHQSettings])
-        {
-            //Enter relo settings screen
-            [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_MOVE_HQ_SETTINGS]];
-        }
+
         //Enter Driver Signature
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SIGNATURE]];
         
@@ -163,16 +165,21 @@
         //Driver Email Type: OFF/CC/BCC
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_DRIVER_EMAIL_CC_BCC]];
     }
+    // Packer fields
+    if(isDriverTypePacker) {
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_NAME]];
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL]];
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL_CC_BCC]];
+    }
+    
     //add all rows to driver / packer section
     [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
-    
+    currentRows = [[NSMutableArray alloc] init];
+
     if (!isDriverTypePacker)
     {
         /********************/
         //HAULING AGENT SECTION
-        currentRows = [[NSMutableArray alloc] init];
-        
-        
         if ([AppFunctionality showTractorTrailerOptional])
             [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SHOW_TRACTOR_TRAILER]];
         
@@ -193,18 +200,12 @@
         
         //Hauling Email Type: OFF/CC/BCC
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_HAULING_EMAIL_CC_BCC]];
-        
-        [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
-        
-        
+    } else {
+        //Hauling Agt #
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_HAULING_AGENT]];
     }
     
-    // Packer fields
-    if(isDriverTypePacker) {
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_NAME]];
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL]];
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL_CC_BCC]];
-    }
+    [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
     
     //APP CUSTOMIZATION
     currentRows = [[NSMutableArray alloc] init];
