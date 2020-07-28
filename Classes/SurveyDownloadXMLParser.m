@@ -314,7 +314,7 @@
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"last_name"]){
         customer.lastName = temp;
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"company_name"]){
-        customer.companyName = temp;
+        customer.account = temp;
     }else if(storingType == XML_ROOT && ([elementName isEqualToString:@"email_address"] || [elementName isEqualToString:@"email"])){
         if(customer.email == nil || [customer.email length] == 0)
             customer.email = temp;

@@ -1767,7 +1767,7 @@
             SurveyCustomer *newCust = [[SurveyCustomer alloc] init];
             newCust.lastName = customerLastName;
             newCust.firstName = customerFirstName;
-            newCust.companyName = customerCompanyName;
+            newCust.account = customerCompanyName;
             newCust.email = customerEmail;
             newCust.estimatedWeight = [customerWeight intValue];
             newCust.pricingMode = ([pricingMode isEqualToString:@"Interstate"] || [pricingMode isEqualToString:@"0"] ? 0 : 1);

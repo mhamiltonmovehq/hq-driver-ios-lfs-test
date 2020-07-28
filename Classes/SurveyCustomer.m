@@ -11,7 +11,7 @@
 
 
 @implementation SurveyCustomer
-@synthesize custID, lastName, firstName, companyName, email, estimatedWeight, pricingMode, cancelled, inventoryType, lastSaveToServerDate, originCompletionDate, destinationCompletionDate;
+@synthesize custID, lastName, firstName, account, email, estimatedWeight, pricingMode, cancelled, inventoryType, lastSaveToServerDate, originCompletionDate, destinationCompletionDate;
 
 -(NSString *)getFormattedLastSaveToServerDate:(BOOL)withTime
 {
@@ -33,7 +33,7 @@
 {
 	[xml writeElementString:@"first_name" withData:firstName];
 	[xml writeElementString:@"last_name" withData:lastName];
-    [xml writeElementString:@"company_name" withData:companyName];
+    [xml writeElementString:@"company_name" withData:account];
 	[xml writeElementString:@"email" withData:email];
 	[xml writeElementString:@"weight_override" withIntData:estimatedWeight];
     [xml writeElementString:@"origin_completion_date" withData:originCompletionDate];

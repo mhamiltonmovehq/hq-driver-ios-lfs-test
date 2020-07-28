@@ -930,7 +930,7 @@
                      "WHERE CustomerID = %d",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.estimatedWeight, cust.pricingMode, cust.cancelled, cust.inventoryType,
                      cust.lastSaveToServerDate == nil ? @"" : [cust.lastSaveToServerDate stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
@@ -1042,7 +1042,7 @@
             cust.estimatedWeight = sqlite3_column_int(stmnt, 4);
             cust.pricingMode = sqlite3_column_int(stmnt, 5);
             cust.cancelled = sqlite3_column_int(stmnt, 6);
-            cust.companyName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
+            cust.account = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             cust.inventoryType = sqlite3_column_int(stmnt, 8);
             cust.lastSaveToServerDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             cust.originCompletionDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -1796,7 +1796,7 @@
                      "Weight,PricingMode,Cancelled, InventoryType, OriginCompletionDate, DestinationCompletionDate) VALUES('%@','%@','%@','%@',%d,%d,0, %d, '', '');",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.estimatedWeight, cust.pricingMode, cust.inventoryType];
     
