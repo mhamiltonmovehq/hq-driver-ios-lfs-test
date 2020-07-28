@@ -23,7 +23,6 @@
 	NSString *state;
 	NSString *zip;
 	NSString *phone;
-	NSString *fax;
 	NSString *email;
 	NSString *contact;
 }
@@ -38,7 +37,6 @@
 @property (nonatomic, retain) NSString *state;
 @property (nonatomic, retain) NSString *zip;
 @property (nonatomic, retain) NSString *phone;
-@property (nonatomic, retain) NSString *fax;
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *contact;
 

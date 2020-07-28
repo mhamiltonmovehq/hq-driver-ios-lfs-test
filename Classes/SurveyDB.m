@@ -2461,7 +2461,6 @@
             item.state = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 4)];
             item.zip = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 5)];
             item.phone = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 6)];
-            item.fax = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             item.email = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 8)];
             item.code = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             item.contact = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -2484,7 +2483,7 @@
                      agent.state == nil ? @"" : [agent.state stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.zip == nil ? @"" : [agent.zip stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.phone == nil ? @"" : [agent.phone stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     agent.fax == nil ? @"" : [agent.fax stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     @"", // Former Fax (Removed with TEG-617)
                      agent.email == nil ? @"" : [agent.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.code == nil ? @"" : [agent.code stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.contact == nil ? @"" : [agent.contact stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
