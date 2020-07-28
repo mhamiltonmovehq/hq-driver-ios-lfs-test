@@ -28,8 +28,8 @@
 	RoomSummary *rs = [CustomerUtilities getTotalSurveyedSummary];
 	SurveyCustomer *cust = [del.surveyDB getCustomer:del.customerID];
 	int weight = 0;
-	if(cust.weight > 0)
-		weight = cust.weight;
+	if(cust.estimatedWeight > 0)
+		weight = cust.estimatedWeight;
 	else
 		weight = rs.weight;
 		

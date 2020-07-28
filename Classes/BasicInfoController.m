@@ -332,11 +332,11 @@
         case BASIC_INFO_WEIGHT:
             @try
             {
-                cust.weight = [fld.text intValue];
+                cust.estimatedWeight = [fld.text intValue];
             }
             @catch(NSException *exc)
             {
-                cust.weight = 0;
+                cust.estimatedWeight = 0;
             }
             break;
     }
@@ -510,11 +510,11 @@
                     cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
                     break;
                 case BASIC_INFO_WEIGHT:
-                    if(cust.weight == 0)
+                    if(cust.estimatedWeight == 0)
                         cell.tboxValue.text = @"";
                     else
-                        cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.weight];
-                    cell.tboxValue.placeholder = @"Weight";
+                        cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.estimatedWeight];
+                    cell.tboxValue.placeholder = @"Estimated Weight";
                     cell.tboxValue.tag = BASIC_INFO_WEIGHT;
                     cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
                     cell.tboxValue.clearsOnBeginEditing = NO;

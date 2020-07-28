@@ -325,7 +325,7 @@
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"weight_factor"]){
         //no need as wf will always be 7
     }else if (storingType == XML_ROOT && ([elementName isEqualToString:@"total_weight"] || [elementName isEqualToString:@"weight_override"])) {
-        customer.weight = [temp integerValue];
+        customer.estimatedWeight = [temp integerValue];
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"pricing_mode"]){
 		if([temp isEqualToString:@"Local"])
 			customer.pricingMode = LOCAL;
