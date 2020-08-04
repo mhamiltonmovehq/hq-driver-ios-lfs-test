@@ -27,4 +27,7 @@
 @property (nonatomic) int roomID;
 @property (nonatomic) int locationID;
 
+-(void) parseJson:(NSDictionary*) jsonDictionary;
+
+
 @end

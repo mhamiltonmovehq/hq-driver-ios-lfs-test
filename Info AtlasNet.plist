@@ -54,7 +54,7 @@
 	<key>CFBundleIconName</key>
 	<string>AppIcon-2</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.atlasworldgroup.atlasnet</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -122,19 +122,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>502c6ca45fd7e6fb15e71cd83e395758a71c5df8</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-</dict>
-		</array>
-	</dict>
 </dict>
 </plist>

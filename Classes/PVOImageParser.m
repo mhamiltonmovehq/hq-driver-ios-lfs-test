@@ -103,5 +103,36 @@
 	@throw parseError;
     // Handle errors as appropriate for your application.
 }
+#pragma mark JSON Parsing
+-(void) parseJson:(NSDictionary*) jsonDictionary {
+        SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+        SurveyImageViewer *imageSaver = [[SurveyImageViewer alloc] init];
+        imageSaver.customerID = del.customerID;
+        
+        //write out the image...
+        if(surveyedItemID != 0)
+        {
+            imageSaver.photosType = IMG_SURVEYED_ITEMS;
+            imageSaver.subID = surveyedItemID;
+        }
+        else if(roomID != 0)
+        {
+            imageSaver.photosType = IMG_ROOMS;
+            imageSaver.subID = roomID;
+        }
+        else if(locationID != 0)
+        {
+            imageSaver.photosType = IMG_LOCATIONS;
+            imageSaver.subID = locationID;
+        }
+    
+    for (NSDictionary *imageRecord in jsonDictionary) {
+        NSString *encodedImage = [imageRecord valueForKey:@"ImageData"];
+        //save with the imageSaver...
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:encodedImage options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        UIImage *image = [UIImage imageWithData:imageData];
+        [imageSaver addPhotoToList:image];
+    }
+}
 
 @end

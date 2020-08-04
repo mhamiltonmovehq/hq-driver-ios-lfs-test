@@ -32,5 +32,7 @@
 -(void)setupDualView:(int)buttonTag withTopText:(NSString*)topText andSubText:(NSString*)bottomText;
 
 -(void)setButtonBackgroundColor:(UIColor*)color;
+-(void)redrawRect;
+
 
 @end

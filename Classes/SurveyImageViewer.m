@@ -215,15 +215,15 @@
         picker.allowsEditing = NO;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-        if([SurveyAppDelegate iPad])
-        {
-            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-            [popoverController presentPopoverFromRect:ipadFrame
-                                     inView:ipadPresentView
-                   permittedArrowDirections:UIPopoverArrowDirectionAny 
-                                   animated:YES];
-        }
-        else
+//        if([SurveyAppDelegate iPad])
+//        {
+//            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
+//            [popoverController presentPopoverFromRect:ipadFrame
+//                                     inView:ipadPresentView
+//                   permittedArrowDirections:UIPopoverArrowDirectionAny
+//                                   animated:YES];
+//        }
+//        else
             [viewController presentViewController:picker animated:YES completion:nil];
         
     }
@@ -236,6 +236,7 @@
 
 -(void)addPhotoToList:(UIImage *)image
 {
+    NSError *error = nil;
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSData *data = UIImageJPEGRepresentation(image, 1.0f);
@@ -248,6 +249,9 @@
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:inDocsPath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:&error];
+    }
     
     if (![fileManager createFileAtPath:filePath contents:data attributes:nil]) 
         [SurveyAppDelegate showAlert:filePath withTitle:@"Error Creating File"];
@@ -304,21 +308,21 @@
     
     [self addPhotoToList:(newImage != nil ? newImage : image)];
     
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
+//    if([SurveyAppDelegate iPad])
+//    {
+//        [popoverController dismissPopoverAnimated:YES];
+//    }
+//    else
         [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController*)imagePicker
 {
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
+//    if([SurveyAppDelegate iPad])
+//    {
+//        [popoverController dismissPopoverAnimated:YES];
+//    }
+//    else
         [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 

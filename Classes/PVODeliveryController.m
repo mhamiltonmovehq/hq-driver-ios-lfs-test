@@ -625,6 +625,8 @@
     }
     
     sigNav = [[LandscapeNavController alloc] initWithRootViewController:signatureController];
+    sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
+
     //sigNav.navigationBarHidden = YES;
     
     [self presentViewController:sigNav animated:YES completion:nil];

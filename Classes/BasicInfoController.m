@@ -17,6 +17,8 @@
 #import "AppFunctionality.h"
 #import "LabelTextCell.h"
 #import "FloatingLabelTextCell.h"
+#import "EmailTableViewCell.h"
+
 
 @implementation BasicInfoController
 
@@ -283,9 +285,9 @@
             [popover.delegate popoverControllerDidDismissPopover:popover];
         }
         
-        if(newCustomerView == YES)
+        if(newCustomerView == YES) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        else
+        } else
             [del.navController popViewControllerAnimated:YES];
         
         
@@ -362,6 +364,7 @@
     //TextCell *cell = nil;
     FloatingLabelTextCell* cell = nil;
     SwitchCell *switchCell = nil;
+    EmailTableViewCell *emailCell = nil;
     UITableViewCell *simpleCell = nil;
     
     //@try
@@ -435,39 +438,30 @@
         }
         else if(row == BASIC_INFO_EMAIL)
         {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EmailCell" owner:self options:nil];
+            emailCell = [nib objectAtIndex:0];
             
-            cell.tboxValue.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
+            emailCell.emailInput.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
             
-            [cell.tboxValue setDelegate:self];
-            cell.tboxValue.returnKeyType = UIReturnKeyDone;
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            [emailCell.emailInput setDelegate:self];
+            emailCell.emailInput.returnKeyType = UIReturnKeyDone;
+            emailCell.accessoryType = UITableViewCellAccessoryNone;
             
-            [cell.tboxValue addTarget:self 
+            [emailCell.emailInput addTarget:self
                                action:@selector(textFieldDoneEditing:) 
                      forControlEvents:UIControlEventEditingDidEndOnExit];
-            CGRect rect = cell.tboxValue.frame;
-            rect.size.width -= 31;
-            cell.tboxValue.frame = rect;
-            rect.origin.x += rect.size.width;
-            rect.size.width = 31;
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.frame = rect;
-            [btn setImage:[SurveyAppDelegate resizeImage:[UIImage imageNamed:@"mail_button.PNG"] withNewSize:rect.size]
-                 forState:UIControlStateNormal];
-            [btn addTarget:self action:@selector(emailSelected:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:btn];
+
+            [emailCell.sendEmailBtn addTarget:self action:@selector(emailSelected:) forControlEvents:UIControlEventTouchUpInside];
             
-            cell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
-            cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
-            cell.tboxValue.text = cust.email;
-            cell.tboxValue.textAlignment = NSTextAlignmentLeft;
-            cell.tboxValue.tag = BASIC_INFO_EMAIL;
-            cell.tboxValue.placeholder = @"Email";
-            cell.tboxValue.keyboardType = UIKeyboardTypeEmailAddress;
+            emailCell.emailInput.autocorrectionType = UITextAutocorrectionTypeNo;
+            emailCell.emailInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            emailCell.emailInput.text = cust.email;
+            emailCell.emailInput.textAlignment = NSTextAlignmentLeft;
+            emailCell.emailInput.tag = BASIC_INFO_EMAIL;
+            emailCell.emailInput.placeholder = @"Email";
+            emailCell.emailInput.keyboardType = UIKeyboardTypeEmailAddress;
             
-            if(tboxCurrent == cell.tboxValue)
+            if(tboxCurrent == emailCell.emailInput)
                 self.tboxCurrent = nil;
         }
 
@@ -565,8 +559,16 @@
     //    [SurveyAppDelegate handleException:exc];
     //}
     
-    
-    return cell != nil ? (UITableViewCell*)cell : switchCell != nil ? (UITableViewCell*)switchCell : simpleCell;
+    UITableViewCell *returnCell;
+    if (cell != nil)
+        returnCell = cell;
+    else if(switchCell != nil)
+        returnCell = switchCell;
+    else if(emailCell != nil)
+        returnCell = emailCell;
+    else
+        returnCell = simpleCell;
+    return returnCell;
 }
 
 

@@ -156,7 +156,8 @@
     sigView.saveBeforeDismiss = NO;
 
     sigNav = [[LandscapeNavController alloc] initWithRootViewController:sigView];
-    
+    sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
+
     [self presentViewController:sigNav animated:YES completion:nil];
 }
 

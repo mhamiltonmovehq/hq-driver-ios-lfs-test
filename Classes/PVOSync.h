@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WebSyncRequest.h"
+#import "RestSyncRequest.h"
 #import "XMLWriter.h"
 #import "SurveyDownloadXMLParser.h"
 
@@ -21,12 +22,26 @@
 #define PVO_SYNC_ACTION_UPLOAD_PPI 7
 #define PVO_SYNC_ACTION_UPLOAD_WEIGHT_TICKET 8
 #define PVO_SYNC_ACTION_UPLOAD_PACK_SERVICES 9
-#define PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES 10
+#define PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES 10  // TODO: Atlas logic. Dead in this repo. Remove.
 #define PVO_SYNC_ACTION_UPLOAD_BOL 11
 #define PVO_SYNC_ACTION_UPLOAD_DOCUMENT_WITH_REPORTTYPEID 12
 #define PVO_SYNC_ACTION_SYNC_CANADA 13
 #define PVO_SYNC_ACTION_GET_DATA 16
 #define PVO_SYNC_ACTION_GET_DATA_WITH_ORDER_REQUEST 17
+
+#define SCHEME @"https://"
+#define HOST @"basesync-qa.movehq.com/"
+#define AICLOUD_PATH @"moveCRMSync/api/aicloud"
+
+#define UNLOADS_PATH @"/unloads"
+#define LOADS_PATH @"/loads"
+#define ORDERS_PATH @"/orders"
+#define REPORTS_PATH @"/reports"
+#define WEIGHT_TICKET_PATH @"/weightTickets"
+#define INVENTORY_ACTIVITY_PATH @"/inventoryActivity"
+#define ITEM_IMAGES_PATH @"/images/items"
+#define ROOM_IMAGES_PATH @"/images/rooms"
+#define LOCATION_IMAGES_PATH @"/images/locations"
 
 @class PVOSync;
 @protocol PVOSyncDelegate <NSObject>
@@ -72,7 +87,6 @@
     
     BOOL ssl;
 }
-
 @property (nonatomic) SEL updateCallback;
 @property (nonatomic) SEL completedCallback;
 @property (nonatomic) SEL errorCallback;
@@ -89,6 +103,8 @@
 @property (nonatomic) int mproWeight;
 @property (nonatomic) int sproWeight;
 @property (nonatomic) int consWeight;
+
+@property (nonatomic, strong) RestSyncRequest *restRequest;
 
 @property (nonatomic, strong) NSObject *updateWindow;
 @property (nonatomic, strong) NSString *orderNumber;
@@ -131,8 +147,7 @@
 -(BOOL)downloadMMRoomImages:(int)imageID forRoomID:(int)roomID;
 -(BOOL)downloadMMLocationImages;
 
--(BOOL)updateActualDates;
-
 -(XMLWriter*)getRequestXML;
+-(NSDictionary*)getOrderRequestJson:(NSError**) error;
 
 @end

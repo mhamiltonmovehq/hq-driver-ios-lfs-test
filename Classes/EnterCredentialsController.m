@@ -259,7 +259,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *footerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     
     UILabel *footerText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [footerText setTextAlignment:NSTextAlignmentCenter];
@@ -281,6 +281,16 @@
     [footerView addSubview:privacyPolicy];
 
     return footerView;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    int height = 20;
+    for (UIView *subview in footer.subviews) {
+        subview.center = CGPointMake(self.view.frame.size.width / 2, height);
+        height += 60;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
