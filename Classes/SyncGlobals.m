@@ -63,7 +63,6 @@
         if (parser.primaryPhone.type == nil)
         {
             parser.primaryPhone.type = [[PhoneType alloc] init];
-//            parser.primaryPhone.type.name = @"Primary";
         }
         [del.surveyDB insertPhone:parser.primaryPhone];
         hasPrimaryPhone = YES;
@@ -73,10 +72,9 @@
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
         if(location.locationType == -1)
-        {//thi sis an ex stop
+        {//this is an ex stop
             //locid and seq generated automatically...
-            if ([AppFunctionality downloadExtraStops:parser.customer.pricingMode])
-                [del.surveyDB insertLocation:location];
+            [del.surveyDB insertLocation:location];
         }
         else
         {
@@ -90,7 +88,6 @@
                 if (location.locationType == ORIGIN_LOCATION_ID && [phone.type.name isEqualToString:@"Home"])
                 {
                     phone.locationID = -1; //primary phone
-//                    phone.type.name = @"Primary";
                     if (hasPrimaryPhone)
                     {
                         [del.surveyDB updatePhone:phone];
@@ -217,10 +214,9 @@
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
         if(location.locationType == -1)
-        {//thi sis an ex stop
+        {//this is an ex stop
             //locid and seq generated automatically...
-            if ([AppFunctionality downloadExtraStops:parser.customer.pricingMode])
-                [del.surveyDB insertLocation:location];
+            [del.surveyDB insertLocation:location];
         }
         else
         {
@@ -232,8 +228,6 @@
                 SurveyPhone *phone = [location.phones objectAtIndex:j];
                 phone.custID = parser.customer.custID;
                 phone.locationID = location.locationType;
-//                if (location.locationType == ORIGIN_LOCATION_ID && [phone.type.name isEqualToString:@"Home"])
-//                    phone.locationID = -1; //primary phone
                 [del.surveyDB addPhone:phone withTypeString:phone.type.name];
             }
         }
