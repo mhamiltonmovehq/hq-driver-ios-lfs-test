@@ -27,16 +27,17 @@
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *) qualifiedName attributes:(NSDictionary *)attributeDict {
     if([elementName isEqualToString:@"code"] || 
-			[elementName isEqualToString:@"name"] || 
-			[elementName isEqualToString:@"add1"] || 
-			[elementName isEqualToString:@"add2"] || 
-			[elementName isEqualToString:@"city"] || 
-			[elementName isEqualToString:@"state"] || 
-			[elementName isEqualToString:@"zip"] || 
-			[elementName isEqualToString:@"phone"] || 
-			[elementName isEqualToString:@"contact"])
-	{
-		//all root data
+       [elementName isEqualToString:@"name"] ||
+       [elementName isEqualToString:@"add1"] ||
+       [elementName isEqualToString:@"add2"] ||
+       [elementName isEqualToString:@"city"] ||
+       [elementName isEqualToString:@"state"] ||
+       [elementName isEqualToString:@"zip"] ||
+       [elementName isEqualToString:@"phone"] ||
+       [elementName isEqualToString:@"email"] ||
+       [elementName isEqualToString:@"contact"])
+    {
+        //all root data
 		storingData = YES;
         [currentString setString:@""];
     }
@@ -60,23 +61,25 @@
 		[parser setDelegate:parent];
 	}
 	else if(storingData && [elementName isEqualToString:@"code"]){
-		agent.code = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"name"]){
-		agent.name = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"add1"]){
-		agent.address = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"add2"]){
-		agent.address = [agent.address stringByAppendingFormat:@" %@", currentString];
-	}else if(storingData && [elementName isEqualToString:@"city"]){
-		agent.city = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"state"]){
-		agent.state = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"zip"]){
-		agent.zip = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"phone"]){
-		agent.phone = [NSString stringWithString:currentString];
-	}else if(storingData && [elementName isEqualToString:@"contact"]){
-		agent.contact = [NSString stringWithString:currentString];
+        agent.code = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"name"]){
+        agent.name = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"add1"]){
+        agent.address = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"add2"]){
+        agent.address = [agent.address stringByAppendingFormat:@" %@", currentString];
+    }else if(storingData && [elementName isEqualToString:@"city"]){
+        agent.city = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"state"]){
+        agent.state = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"zip"]){
+        agent.zip = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"phone"]){
+        agent.phone = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"email"]){
+        agent.email = [NSString stringWithString:currentString];
+    }else if(storingData && [elementName isEqualToString:@"contact"]){
+        agent.contact = [NSString stringWithString:currentString];
 	}
 	
 	storingData = NO;

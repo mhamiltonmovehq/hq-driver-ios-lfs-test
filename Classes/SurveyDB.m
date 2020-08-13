@@ -930,9 +930,9 @@
                      "WHERE CustomerID = %d",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.weight, cust.pricingMode, cust.cancelled, cust.inventoryType,
+                     cust.estimatedWeight, cust.pricingMode, cust.cancelled, cust.inventoryType,
                      cust.lastSaveToServerDate == nil ? @"" : [cust.lastSaveToServerDate stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.custID];
     
@@ -1039,10 +1039,10 @@
             cust.lastName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
             cust.firstName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 2)];
             cust.email = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 3)];
-            cust.weight = sqlite3_column_int(stmnt, 4);
+            cust.estimatedWeight = sqlite3_column_int(stmnt, 4);
             cust.pricingMode = sqlite3_column_int(stmnt, 5);
             cust.cancelled = sqlite3_column_int(stmnt, 6);
-            cust.companyName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
+            cust.account = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             cust.inventoryType = sqlite3_column_int(stmnt, 8);
             cust.lastSaveToServerDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             cust.originCompletionDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -1796,9 +1796,9 @@
                      "Weight,PricingMode,Cancelled, InventoryType, OriginCompletionDate, DestinationCompletionDate) VALUES('%@','%@','%@','%@',%d,%d,0, %d, '', '');",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.weight, cust.pricingMode, cust.inventoryType];
+                     cust.estimatedWeight, cust.pricingMode, cust.inventoryType];
     
     [self updateDB:cmd];
     
@@ -2461,7 +2461,6 @@
             item.state = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 4)];
             item.zip = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 5)];
             item.phone = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 6)];
-            item.fax = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             item.email = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 8)];
             item.code = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             item.contact = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -2484,7 +2483,7 @@
                      agent.state == nil ? @"" : [agent.state stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.zip == nil ? @"" : [agent.zip stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.phone == nil ? @"" : [agent.phone stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     agent.fax == nil ? @"" : [agent.fax stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     @"", // Former Fax (Removed with TEG-617)
                      agent.email == nil ? @"" : [agent.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.code == nil ? @"" : [agent.code stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.contact == nil ? @"" : [agent.contact stringByReplacingOccurrencesOfString:@"'" withString:@"''"],

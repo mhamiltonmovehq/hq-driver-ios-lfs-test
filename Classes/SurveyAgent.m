@@ -11,7 +11,7 @@
 
 @implementation SurveyAgent
 
-@synthesize itemID, name, code, address, city, state, zip, email, contact, fax, phone, agencyID;
+@synthesize itemID, name, code, address, city, state, zip, email, contact, phone, agencyID;
 
 -(void)flushToXML:(XMLWriter*)xml
 {
@@ -37,7 +37,7 @@
 	[xml writeElementString:@"zip" withData:zip];
 	[xml writeElementString:@"phone" withData:phone];
 	[xml writeElementString:@"contact" withData:contact];
-	[xml writeElementString:@"fax" withData:fax];
+	[xml writeElementString:@"fax" withData:@""];
 	[xml writeElementString:@"email" withData:email];
 	
 	[xml writeEndElement];

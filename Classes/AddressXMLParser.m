@@ -27,19 +27,19 @@
 
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *) qualifiedName attributes:(NSDictionary *)attributeDict {
-    if([elementName isEqualToString:@"add1"] || 
-			[elementName isEqualToString:@"add2"] || 
-	   [elementName isEqualToString:@"city"] || 
-	   [elementName isEqualToString:@"state"] ||
-	   [elementName isEqualToString:@"county"] || 
-			[elementName isEqualToString:@"zip"] || 
-			[elementName isEqualToString:@"home_phone"] || 
-			[elementName isEqualToString:@"work_phone"] || 
-			[elementName isEqualToString:@"mobile_phone"] || 
-			[elementName isEqualToString:@"other_phone"] || 
-		   [elementName isEqualToString:@"loc_note"] || 
-		   [elementName isEqualToString:@"id"] || 
-		   [elementName isEqualToString:@"orig_dest"] || 
+    if([elementName isEqualToString:@"add1"] ||
+       [elementName isEqualToString:@"add2"] ||
+       [elementName isEqualToString:@"city"] ||
+       [elementName isEqualToString:@"state"] ||
+       [elementName isEqualToString:@"county"] ||
+       [elementName isEqualToString:@"zip"] ||
+       [elementName isEqualToString:@"home_phone"] ||
+       [elementName isEqualToString:@"work_phone"] ||
+       [elementName isEqualToString:@"mobile_phone"] ||
+       [elementName isEqualToString:@"other_phone"] ||
+       [elementName isEqualToString:@"loc_note"] ||
+       [elementName isEqualToString:@"id"] ||
+       [elementName isEqualToString:@"orig_dest"] ||
        [elementName isEqualToString:@"sequence"] ||
        [elementName isEqualToString:@"first_name"] ||
        [elementName isEqualToString:@"last_name"] ||

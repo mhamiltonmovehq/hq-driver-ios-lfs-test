@@ -33,11 +33,11 @@
     
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_LAST_NAME]];
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_FIRST_NAME]];
-    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_COMPANY_NAME]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ACCOUNT]];
     
     if (data.driverType != PVO_DRIVER_TYPE_PACKER)
         [rows addObject:[NSNumber numberWithInt:BASIC_INFO_EMAIL]];
-    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_WEIGHT]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ESTIMATED_WEIGHT]];
     
     if(del.viewType == OPTIONS_PVO_VIEW)
     {
@@ -311,8 +311,8 @@
     
     switch (fld.tag) 
     {
-        case BASIC_INFO_COMPANY_NAME:
-            cust.companyName = fld.text;
+        case BASIC_INFO_ACCOUNT:
+            cust.account = fld.text;
             break;
         case BASIC_INFO_LAST_NAME:
             cust.lastName = fld.text;
@@ -329,14 +329,14 @@
         case BASIC_INFO_GBL_NUMBER:
             info.gblNumber = fld.text;
             break;
-        case BASIC_INFO_WEIGHT:
+        case BASIC_INFO_ESTIMATED_WEIGHT:
             @try
             {
-                cust.weight = [fld.text intValue];
+                cust.estimatedWeight = [fld.text intValue];
             }
             @catch(NSException *exc)
             {
-                cust.weight = 0;
+                cust.estimatedWeight = 0;
             }
             break;
     }
@@ -487,11 +487,11 @@
             
             //if it wasn't created yet, go ahead and load the data to it now.
             switch (row) {
-                case BASIC_INFO_COMPANY_NAME:
+                case BASIC_INFO_ACCOUNT:
                     cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                    cell.tboxValue.text = cust.companyName;
-                    cell.tboxValue.placeholder = @"Company Name";
-                    cell.tboxValue.tag = BASIC_INFO_COMPANY_NAME;
+                    cell.tboxValue.text = cust.account;
+                    cell.tboxValue.placeholder = @"Account";
+                    cell.tboxValue.tag = BASIC_INFO_ACCOUNT;
                     cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
                     break;
                     break;
@@ -509,13 +509,13 @@
                     cell.tboxValue.tag = BASIC_INFO_LAST_NAME;
                     cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
                     break;
-                case BASIC_INFO_WEIGHT:
-                    if(cust.weight == 0)
+                case BASIC_INFO_ESTIMATED_WEIGHT:
+                    if(cust.estimatedWeight == 0)
                         cell.tboxValue.text = @"";
                     else
-                        cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.weight];
-                    cell.tboxValue.placeholder = @"Weight";
-                    cell.tboxValue.tag = BASIC_INFO_WEIGHT;
+                        cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.estimatedWeight];
+                    cell.tboxValue.placeholder = @"Estimated Weight";
+                    cell.tboxValue.tag = BASIC_INFO_ESTIMATED_WEIGHT;
                     cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
                     cell.tboxValue.clearsOnBeginEditing = NO;
                     break;

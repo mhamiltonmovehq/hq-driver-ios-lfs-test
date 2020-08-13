@@ -261,8 +261,6 @@ success:
             if(temp)
                 item.phone = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 7);
-            if(temp)
-                item.fax = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 8);
             if(temp)
                 item.email = [NSString stringWithUTF8String:temp];
@@ -310,8 +308,6 @@ success:
             if(temp)
                 item.phone = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 7);
-            if(temp)
-                item.fax = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 8);
             if(temp)
                 item.email = [NSString stringWithUTF8String:temp];
@@ -344,7 +340,6 @@ success:
                         current.state == nil ? @"" : [current.state stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.zip    == nil ? @"" : [current.zip stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.phone == nil ? @"" : [current.phone stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                        current.fax == nil ? @"" : [current.fax stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.email == nil ? @"" : [current.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.code == nil ? @"" : [current.code stringByReplacingOccurrencesOfString:@"'" withString:@"''"]]];
     }

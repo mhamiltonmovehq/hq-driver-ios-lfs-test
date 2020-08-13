@@ -130,9 +130,6 @@
 		case AGENT_PHONE_ROW:
 			agent.phone = newValue;
 			break;
-		case AGENT_FAX_ROW:
-			agent.fax = newValue;
-			break;
 		case AGENT_EMAIL_ROW:
 			agent.email = newValue;
 			break;
@@ -265,10 +262,6 @@
 				cell.labelHeader.text = @"Phone";
 				cell.labelText.text = agent.phone;
 				break;
-			case AGENT_FAX_ROW:
-				cell.labelHeader.text = @"Fax";
-				cell.labelText.text = agent.fax;
-				break;
 			case AGENT_EMAIL_ROW:
 				cell.labelHeader.text = @"Email";
 				cell.labelText.text = agent.email;
@@ -357,9 +350,6 @@
 				break;
 			case AGENT_PHONE_ROW:
 				editController.destString = agent.phone;
-				break;
-			case AGENT_FAX_ROW:
-				editController.destString = agent.fax;
 				break;
 			case AGENT_EMAIL_ROW:
 				editController.destString = agent.email;

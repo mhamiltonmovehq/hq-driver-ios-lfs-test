@@ -25,27 +25,13 @@
         return -1;
 }
 
-+(BOOL)downloadExtraStops:(enum PRICING_MODE_TYPE)pricingMode
-{
-    if (pricingMode == INTERSTATE)
-        return NO;
-    else
-        return YES;
-}
-
 +(int)maxNotesLengh:(enum PRICING_MODE_TYPE)pricingMode
 {
-    if (pricingMode == INTERSTATE)
-        return -1;
-    else
         return -1;
 }
 
 +(BOOL)supportIndividualBlankDates:(enum PRICING_MODE_TYPE)pricingMode
 {
-    if (pricingMode == INTERSTATE)
-        return NO;
-    else
         return NO;
 }
 
@@ -53,19 +39,6 @@
 {
     //always allow per defect 541
     return NO;
-//    if (pricingMode == INTERSTATE)
-//    {
-//        switch (driverType) {
-//            case PVO_DRIVER_TYPE_PACKER:
-//                return YES;
-//            default:
-//                return NO;
-//        }
-//    }
-//    else
-//    {
-//        return NO;
-//    }
 }
 
 +(BOOL)disableTractorTrailer:(enum PRICING_MODE_TYPE)pricingMode withDriverType:(int)driverType
