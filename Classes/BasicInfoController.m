@@ -42,9 +42,12 @@
     if(del.viewType == OPTIONS_PVO_VIEW)
     {
         [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ORDER_NUMBER]];
-        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_GBL_NUMBER]];
+        
+        PVOInventory *inventory = [del.surveyDB getPVOData:del.customerID];
+        if (inventory != nil && inventory.loadType == MILITARY) {
+            [rows addObject:[NSNumber numberWithInt:BASIC_INFO_GBL_NUMBER]];
+        }
     }
-    
     
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PRICING_MODE]];
     

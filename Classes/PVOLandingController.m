@@ -676,8 +676,7 @@
                     ltCell.tboxValue.text = [NSString stringWithFormat:@"%d", mproWeight];
                 else
                     ltCell.tboxValue.text = @"0";
-                ltCell.tboxValue.enabled = [AppFunctionality enableMilitaryWeightEntryOnLandingController];
-                //ltCell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                ltCell.tboxValue.enabled = NO;
                 
                 break;
             case PVO_LAND_ROW_SPRO_WEIGHT:
@@ -687,8 +686,8 @@
                     ltCell.tboxValue.text = [NSString stringWithFormat:@"%d", sproWeight];
                 else
                     ltCell.tboxValue.text = @"0";
-                ltCell.tboxValue.enabled = [AppFunctionality enableMilitaryWeightEntryOnLandingController];
-                //ltCell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                ltCell.tboxValue.enabled = NO;
+
                 break;
             case PVO_LAND_ROW_CONS_WEIGHT:
                 ltCell.labelHeader.text = @"CONS Weight";
@@ -697,8 +696,8 @@
                     ltCell.tboxValue.text = [NSString stringWithFormat:@"%d", consWeight];
                 else
                     ltCell.tboxValue.text = @"0";
-                ltCell.tboxValue.enabled = [AppFunctionality enableMilitaryWeightEntryOnLandingController];
-                //ltCell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                ltCell.tboxValue.enabled = NO;
+
                 break;
         }
     }

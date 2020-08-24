@@ -39,6 +39,7 @@
        [elementName isEqualToString:@"other_phone"] ||
        [elementName isEqualToString:@"loc_note"] ||
        [elementName isEqualToString:@"id"] ||
+       [elementName isEqualToString:@"name"] ||
        [elementName isEqualToString:@"orig_dest"] ||
        [elementName isEqualToString:@"sequence"] ||
        [elementName isEqualToString:@"first_name"] ||
@@ -124,7 +125,7 @@
 	}
     else if(storingData && [elementName isEqualToString:@"loc_note"]){
 		//no note yet...
-	}else if(storingData && [elementName isEqualToString:@"id"]){
+	}else if(storingData && [elementName isEqualToString:@"name"]){
 		location.name = [NSString stringWithString:currentString];
 	}else if(storingData && [elementName isEqualToString:@"orig_dest"]){
 		location.isOrigin = [currentString isEqualToString:@"Origin"];

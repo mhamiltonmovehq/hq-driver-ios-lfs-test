@@ -384,17 +384,6 @@
     
 }
 
-+(BOOL)enableMilitaryWeightEntryOnLandingController
-{
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanlineID = [del.pricingDB vanline];
-    if (vanlineID == ARPIN)
-        return NO;
-    else
-        return YES;
-    
-}
-
 +(BOOL)showCPProvided
 {
 #ifdef ATLASNET

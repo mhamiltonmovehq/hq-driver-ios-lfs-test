@@ -604,11 +604,6 @@
                 [del.surveyDB savePVOItemComment:self.pvoItemComment.comment withPVOItemID:pvoItem.pvoItemID withCommentType:COMMENT_TYPE_LOADING];
             }
             
-//            if (![AppFunctionality enableMilitaryWeightEntryOnLandingController])
-//            {//for arpin, the item weights are automatically calculated based on item weights, need to update this after each item is added/deleted
-//                [del.surveyDB autoCalculateInventoryMilitaryWeights:del.customerID];
-//            }
-            
             discardChangesAndDelete = FALSE;
         }
     }

@@ -63,7 +63,6 @@ enum PVO_RECEIVE_TYPE {
 
 +(BOOL)removeSignatureOnNavigateIntoCompletedInv;
 +(BOOL)showCubeAndWeight:(PVOInventory*)inventory;
-+(BOOL)enableMilitaryWeightEntryOnLandingController;
 +(BOOL)showCPProvided;
 +(BOOL)showPackOptions;
 +(BOOL)allowAnyLoadOnAnyUnload;

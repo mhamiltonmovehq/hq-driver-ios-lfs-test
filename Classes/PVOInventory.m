@@ -47,53 +47,21 @@
 -(int)getInventoryMPROWeight
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    if ([AppFunctionality enableMilitaryWeightEntryOnLandingController])
-    {
-        // if vanline is not arpin, return user defined mpro weight
-        return mproWeight;
-    }
-    else
-    {
-        // if vanline is arpin, calculate mpro weight based on items in DB
-        return [del.surveyDB getPVOItemWeightMpro:custID];
-    }
+    return [del.surveyDB getPVOItemWeightMpro:custID];
 }
 
 
 -(int)getInventorySPROWeight
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    if ([AppFunctionality enableMilitaryWeightEntryOnLandingController])
-    {
-        // if vanline is not arpin, return user defined spro weight
-        return sproWeight;
-    }
-    else
-    {
-        // if vanline is arpin, calculate spro weight based on items in DB
-        return [del.surveyDB getPVOItemWeightSpro:custID];
-    }
+    return [del.surveyDB getPVOItemWeightSpro:custID];
 }
 
 -(int)getInventoryConsWeight
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    if ([AppFunctionality enableMilitaryWeightEntryOnLandingController])
-    {
-        // if vanline is not arpin, return user defined cons weight
-        return consWeight;
-    }
-    else
-    {
-        // if vanline is arpin, calculate cons weight based on items in DB
-        
-        return [del.surveyDB getPVOItemWeightCons:custID];
-    }
+    return [del.surveyDB getPVOItemWeightCons:custID];
 }
-
 
 
 -(void)dealloc
