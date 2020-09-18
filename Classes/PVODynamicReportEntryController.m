@@ -265,6 +265,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.text = [NSString stringWithFormat:@"%@:", thisEntry.entryName];
     }
     else if(thisEntry.entryDataType == RDT_MULTIPLE_CHOICE)
@@ -282,10 +283,12 @@
     {
         cell = [tableView dequeueReusableCellWithIdentifier:DateCellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:DateCellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DateCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.textColor = [[self view] tintColor];
         cell.textLabel.text = thisEntry.entryName;
         
         NSDate *myDate = thisData.dateValue;

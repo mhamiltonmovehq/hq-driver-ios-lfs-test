@@ -88,11 +88,7 @@
 }
 */
 - (IBAction)goToPrivacyPolicy:(id)sender {
-#ifdef ATLASNET
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.atlasvanlines.com/privacy-policy"]];
-#else
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.movehq.com/privacy-policy"]];
-#endif
 }
 
 - (void)didReceiveMemoryWarning {

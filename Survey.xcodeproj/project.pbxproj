@@ -552,12 +552,12 @@
 		6A03317A243297CC00CFD063 /* EmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0331762432923D00CFD063 /* EmailTableViewCell.m */; };
 		6A03317C2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
-		6A0331832433EF6000CFD063 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
-		6A0331852433EF7100CFD063 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
 		6A0331862434E69400CFD063 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
+		6A75C88425150A410049161E /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A03317E2433EE3B00CFD063 /* libzbar.a */; };
+		6A75C88525150A570049161E /* libdtdev-device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331802433EE5A00CFD063 /* libdtdev-device.a */; };
 		6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
@@ -2391,13 +2391,13 @@
 				94B25BDE1CB43FE7004366D4 /* libePrintLib.a in Frameworks */,
 				94B25BE11CB43FE7004366D4 /* libScanApi.a in Frameworks */,
 				94B25BE21CB43FE7004366D4 /* AudioToolbox.framework in Frameworks */,
+				6A75C88525150A570049161E /* libdtdev-device.a in Frameworks */,
 				94ACF35A1CD79022007FB551 /* ExternalAccessory.framework in Frameworks */,
 				94B25BE41CB43FE7004366D4 /* CoreBluetooth.framework in Frameworks */,
 				D59EAEBB2098EE440038DE68 /* Security.framework in Frameworks */,
 				94B25BE51CB43FE7004366D4 /* UIKit.framework in Frameworks */,
 				94B25BE61CB43FE7004366D4 /* Foundation.framework in Frameworks */,
 				94B25BE71CB43FE7004366D4 /* CoreGraphics.framework in Frameworks */,
-				6A0331832433EF6000CFD063 /* libdtdev-sim.a in Frameworks */,
 				94B25BE81CB43FE7004366D4 /* MobileCoreServices.framework in Frameworks */,
 				BA0C0FBD1F3A03A700B33699 /* Crashlytics.framework in Frameworks */,
 				94B25BE91CB43FE7004366D4 /* CFNetwork.framework in Frameworks */,
@@ -2405,10 +2405,10 @@
 				94B25BEB1CB43FE7004366D4 /* libz.1.2.5.dylib in Frameworks */,
 				D5D87B1120E2932E00E86E19 /* ScanbotSDK.framework in Frameworks */,
 				94B25BEE1CB43FE7004366D4 /* CoreLocation.framework in Frameworks */,
+				6A75C88425150A410049161E /* libzbar.a in Frameworks */,
 				D5AA997620040BEA0023AD3F /* ScanbotSDK.framework in Frameworks */,
 				94B25BEF1CB43FE7004366D4 /* MapKit.framework in Frameworks */,
 				94B25BF01CB43FE7004366D4 /* libsqlite3.dylib in Frameworks */,
-				6A0331852433EF7100CFD063 /* libzbar-sim.a in Frameworks */,
 				82770273C1459C6282A477BB /* Pods_Mobile_Mover_Simulator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5614,7 +5614,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 392;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5662,7 +5662,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 392;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5708,7 +5708,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/eprint/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 392;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5758,7 +5758,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 391;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5810,7 +5810,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 391;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5859,7 +5859,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 391;
+				MARKETING_VERSION = 394;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5877,7 +5877,7 @@
 		BCCEAB320FB7A9F50015BC92 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				COMPRESS_PNG_FILES = YES;
 				ENABLE_BITCODE = NO;
@@ -5914,7 +5914,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				COPY_PHASE_STRIP = NO;
@@ -5957,7 +5957,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

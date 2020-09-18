@@ -9222,10 +9222,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);
@@ -9247,10 +9244,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);
@@ -9272,10 +9266,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);
