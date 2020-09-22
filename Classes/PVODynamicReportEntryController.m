@@ -9,6 +9,7 @@
 @end
 
 @implementation PVODynamicReportEntryController
+@synthesize entries, data, section, editingEntry, currentTextBox;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -24,6 +25,8 @@
     [super viewDidLoad];
     
     self.editingEntry = nil;
+    self.entries = nil;
+    self.data = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -147,8 +150,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     
-    if(self.currentTextBox != nil)
+    if(self.currentTextBox != nil) {
         [self updateValueWithField:self.currentTextBox];
+        self.currentTextBox = nil;
+    }
     
     if(self.editingEntry == nil)
     {
