@@ -531,25 +531,7 @@
         [SurveyAppDelegate showAlert:[NSString stringWithFormat:@"Ditto unavailable with %@ Items.", [AppFunctionality getHighValueDescription]] withTitle:@"Ditto Unavailable"];
         return;
     }
-    
-    //ditto function - prompt for quantity
-    /*UIAlertView* dialog = [[UIAlertView alloc] init];
-     [dialog setDelegate:self];
-     [dialog setTitle:@"Enter Ditto (copy) Quantity"];
-     [dialog setMessage:@" "];
-     [dialog addButtonWithTitle:@"Cancel"];
-     [dialog addButtonWithTitle:@"OK"];
-     dialog.delegate = self;
-     UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(20.0, 45.0, 245.0, 25.0)];
-     [nameField setBackgroundColor:[UIColor whiteColor]];
-     nameField.keyboardType = UIKeyboardTypeNumberPad;
-     nameField.tag = DAMAGE_DITTO_QUANTITY_FIELD;
-     [dialog addSubview:nameField];
-     [dialog show];
-     [dialog release];
-     [nameField becomeFirstResponder];
-     [nameField release];*/
-    
+
     //commit any record entered.
     if(![currentDamage isEmpty])
     {

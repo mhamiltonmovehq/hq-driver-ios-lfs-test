@@ -788,12 +788,14 @@
     return NO; //([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"wireframe"].location == NSNotFound); //disable if beta password not present
 }
 
-+(BOOL)disableHiddenReports
++(BOOL)hideHiddenReports
 {
 #if DEBUG
+    // show all reports (including those flagged as hidden)
     return NO;
 #else
-    return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"allreports"].location == NSNotFound); //disable if beta password not present
+    //hide reports flagged as hidden if beta password not present
+    return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"allreports"].location == NSNotFound);
 #endif
 }
 
@@ -820,5 +822,4 @@
     }
     return false;
 }
-
 @end

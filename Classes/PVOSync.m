@@ -159,7 +159,7 @@
                 req.type = PVO_SYNC;
                 
                 restRequest.scheme = SCHEME;
-                restRequest.host = HOST;
+                restRequest.host = [self getRestHost];
                 restRequest.basePath = AICLOUD_PATH;
                 
 #else
@@ -169,7 +169,7 @@
                 req.type = PVO_SYNC;
                 
                 restRequest.scheme = SCHEME;
-                restRequest.host = HOST;
+                restRequest.host = [self getRestHost];
                 restRequest.basePath = AICLOUD_PATH;
 #endif
         }
@@ -1837,6 +1837,23 @@ exit:
     NSString *retval = [appDelegate.pricingDB getCRMSyncAddress:vanlineId withEnvironment:driverData.crmEnvironment];
     
     return retval;
+}
+
+-(NSString*)getRestHost {
+    if ([[Prefs betaPassword] rangeOfString:@"crmenv:"].location != NSNotFound)
+    {
+        NSRange addpre = [[Prefs betaPassword] rangeOfString:@"crmenv:"];
+        NSString *envStr = [[Prefs betaPassword] substringFromIndex:addpre.location + addpre.length];
+        addpre = [envStr rangeOfString:@" "];
+        if (addpre.location != NSNotFound)
+            envStr = [envStr substringToIndex:addpre.location];
+        if ([[envStr lowercaseString] isEqualToString:@"qa"]) {
+            return QA_HOST;
+        } else if ([[envStr lowercaseString] isEqualToString:@"uat"]) {
+            return UAT_HOST;
+        }
+    }
+    return PROD_HOST;
 }
 
 @end

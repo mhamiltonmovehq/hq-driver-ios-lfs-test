@@ -109,7 +109,7 @@ enum PVO_RECEIVE_TYPE {
 +(BOOL)enableAddSettingsToBackupEmail;
 
 +(BOOL)enableWireframeExceptionsForItems;
-+(BOOL)disableHiddenReports;
++(BOOL)hideHiddenReports;
 
 +(BOOL)includeSecuritySealRowInItemDetails;
 +(BOOL)uploadReportAfterSigning;

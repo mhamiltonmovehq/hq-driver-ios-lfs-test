@@ -13,28 +13,18 @@
 
 @implementation ActivationErrorController
 
-@synthesize imgLogo;
-
 @synthesize tv, tboxMessage, message;
 
-- (void)viewWillAppear:(BOOL)animated {
+#pragma mark - Lifecycle
+
+-(void)viewWillAppear:(BOOL)animated {
 	
 	if(message != nil)
 		tboxMessage.text = message;
     
-//    if ([SurveyAppDelegate iOS8OrNewer])
-//    {
-//        [_btnEnter_Credentials.layer setBorderWidth:1.0];
-//        [_btnEnter_Credentials.layer setBackgroundColor:[[SurveyAppDelegate getiOSBlueButtonColor] CGColor]];
-//        [_btnEnter_Credentials.layer setBorderColor:[[UIColor grayColor] CGColor]];
-//        [_btnEnter_Credentials.layer setCornerRadius:3.0];
-//        _btnEnter_Credentials.hidden = NO;
-//    }
-//    else
-//    {
-//        _btnEnter_Credentials.hidden = YES;
-//    }
+    tboxMessage.attributedText = [self replaceTextWithLink:tboxMessage.attributedText textToReplace:@"MoveHQ Privacy Policy" linkToAdd:@"https://www.movehq.com/privacy-policy"];
     
+    tboxMessage.attributedText = [self replaceTextWithLink:tboxMessage.attributedText textToReplace:@"MoveHQ Master Service Agreement" linkToAdd:@"https://www.movehq.com/msa"];
     
     if ([SurveyAppDelegate iOS7OrNewer])
     {
@@ -56,52 +46,11 @@
     [super viewWillAppear:animated];
 }
 
--(void)setSyncButtonHighlighted
-{
-    _btnEnter_Credentials.alpha = 0.3f;
-}
-
--(void)setSyncButtonUnhighlighted
-{
-    _btnEnter_Credentials.alpha = 1.f;
-}
-
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"Activation";
-    
-#ifdef ATLASNET
-    [imgLogo setImage:[UIImage imageNamed:@"AtlasLogo.png"]];
-#endif
 }
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -110,14 +59,7 @@
 	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-    [self setBtnEnter_Credentials:nil];
-    imgLogo = nil;
-    [self setImgLogo:nil];
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
+#pragma mark - IBActions
 - (IBAction)cmdEnter_Credentials:(id)sender {
     if ([SurveyAppDelegate iOS7OrNewer])
         [self setSyncButtonUnhighlighted];
@@ -130,7 +72,7 @@
 }
 
 
-#pragma mark Table view methods
+#pragma mark - Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -183,47 +125,30 @@
 	
 }
 
+#pragma mark - Helpers
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
+-(NSMutableAttributedString*)replaceTextWithLink:(NSAttributedString*)textBlock
+                                   textToReplace:(NSString*) textToReplace
+                                       linkToAdd:(NSString*) linkToAdd {
+    
+    NSMutableAttributedString *attribText = [[NSMutableAttributedString alloc]
+                                             initWithAttributedString: textBlock];
+    
+    NSRange range = [attribText.mutableString rangeOfString:textToReplace];
+    if (range.location != NSNotFound) {
+        [attribText addAttribute:NSLinkAttributeName value:linkToAdd range:range];
+    }
+    return attribText;
+}
 
+-(void)setSyncButtonHighlighted
+{
+    _btnEnter_Credentials.alpha = 0.3f;
+}
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- 
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-- (IBAction)goToPrivacyPolicy:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.movehq.com/privacy-policy"]];
+-(void)setSyncButtonUnhighlighted
+{
+    _btnEnter_Credentials.alpha = 1.f;
 }
 
 @end

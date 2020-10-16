@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivationErrorController">
             <connections>
                 <outlet property="btnEnter_Credentials" destination="sOj-Uh-eFN" id="8ja-6x-l1d"/>
-                <outlet property="imgLogo" destination="12" id="15"/>
                 <outlet property="tboxMessage" destination="5" id="13"/>
                 <outlet property="view" destination="1" id="8"/>
             </connections>
@@ -19,8 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="323" height="498"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOj-Uh-eFN">
-                    <rect key="frame" x="89" y="432" width="146" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOj-Uh-eFN">
+                    <rect key="frame" x="89" y="431" width="146" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                     <state key="normal" title="Enter Credentials"/>
@@ -28,30 +28,35 @@
                         <action selector="cmdEnter_Credentials:" destination="-1" eventType="touchUpInside" id="hzZ-zP-NT0"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKT-yn-F3F">
-                    <rect key="frame" x="89" y="392" width="146" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="View Privacy Policy">
-                        <color key="titleColor" red="0.81176470590000005" green="0.035294117649999998" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="goToPrivacyPolicy:" destination="-1" eventType="touchUpInside" id="thv-Wl-KQb"/>
-                    </connections>
-                </button>
-                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="You must enter a Username and Password to continue.  This information can be entered in the Settings Application." translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                    <rect key="frame" x="20" y="263" width="283" height="128"/>
+                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                    <rect key="frame" x="10" y="251" width="305" height="176"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <accessibility key="accessibilityConfiguration">
                         <bool key="isElement" value="NO"/>
                     </accessibility>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <attributedString key="attributedText">
+                        <fragment>
+                            <mutableString key="content" base64-UTF8="YES">
+WW91IG11c3QgZW50ZXIgYSBVc2VybmFtZSBhbmQgUGFzc3dvcmQgdG8gY29udGludWUuIFRoaXMgaW5m
+b3JtYXRpb24gY2FuIGJlIGVudGVyZWQgaW4gdGhlIFNldHRpbmdzIEFwcGxpY2F0aW9uLiDigKjigKhC
+eSBsb2dnaW5nIGluLCB5b3UgYWdyZWUgdG8gdGhlIHRlcm1zLCBjb25kaXRpb25zLCBwb2xpY2llcywg
+YW5kIGd1aWRlbGluZXMgb2YgdGhlIE1vdmVIUSBQcml2YWN5IFBvbGljeSBhbmQgTW92ZUhRIE1hc3Rl
+ciBTZXJ2aWNlIEFncmVlbWVudAMuA
+</mutableString>
+                            <attributes>
+                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" metaFont="menu" size="14"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="7"/>
                     </connections>
                 </textView>
                 <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="pvo_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                    <rect key="frame" x="30" y="44" width="263" height="220"/>
+                    <rect key="frame" x="16" y="25" width="291" height="220"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>

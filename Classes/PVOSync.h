@@ -30,7 +30,10 @@
 #define PVO_SYNC_ACTION_GET_DATA_WITH_ORDER_REQUEST 17
 
 #define SCHEME @"https://"
-#define HOST @"basesync-qa.movehq.com/"
+#define QA_HOST @"basesync-qa.movehq.com/"
+#define UAT_HOST @"basesync-uat.movehq.com/"
+#define PROD_HOST @"basesync.movecrm.com/"
+
 #define AICLOUD_PATH @"moveCRMSync/api/aicloud"
 
 #define UNLOADS_PATH @"/unloads"

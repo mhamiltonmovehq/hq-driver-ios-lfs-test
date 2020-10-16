@@ -733,7 +733,7 @@ success:
                        " %@ "
                        " AND COALESCE(vpm.PricingMode,%d) = %d AND COALESCE(vpm.LoadType,%d) = %d %@ "
                        " AND i.DriverType IN (0,%d) ",
-                       vanlineID, ([AppFunctionality disableHiddenReports ] ? @" AND vpm.Hidden = 0" : @""), pricingMode, pricingMode,
+                       vanlineID, ([AppFunctionality hideHiddenReports ] ? @" AND vpm.Hidden = 0" : @""), pricingMode, pricingMode,
                        loadType, loadType, intraStateQuery, driverType];
     
     cmd = [NSString stringWithFormat:@"%@ UNION %@ ORDER BY Category, i.SortKey ASC", part2, part3];
@@ -1196,12 +1196,14 @@ success:
         return @"";
     
     NSString *syncAddressColumn;
-    if (selectedEnvironment == 1) {
+    if (selectedEnvironment == 0) {
+        syncAddressColumn = @"DevSyncAddress";
+    } else if (selectedEnvironment == 1) {
         syncAddressColumn = @"QASyncAddress";
     } else if (selectedEnvironment == 2) {
         syncAddressColumn = @"ProdSyncAddress";
     } else {
-        syncAddressColumn = @"DevSyncAddress";
+        syncAddressColumn = @"UATSyncAddress";
     }
     
     NSString *cmd = [NSString stringWithFormat:@"SELECT %@ FROM CRMSettings s WHERE VanlineID = %d", syncAddressColumn, vanlineID];
@@ -1390,7 +1392,7 @@ success:
                        " WHERE RequiredSignatures IS NOT NULL AND IncludedPVOItem = %d AND VanlineID IN(0,%d) "
                        " %@ "
                        " AND COALESCE(PricingMode,%d) = %d AND COALESCE(LoadType,%d) = %d AND COALESCE(ItemCategory,%d) = %d AND COALESCE(HaulingAgentCode,'%@') = '%@' ",
-                       navItemID, [del.pricingDB vanline], ([AppFunctionality disableHiddenReports ] ? @" AND Hidden = 0" : @""), pricingMode, pricingMode,
+                       navItemID, [del.pricingDB vanline], ([AppFunctionality hideHiddenReports ] ? @" AND Hidden = 0" : @""), pricingMode, pricingMode,
                        loadType, loadType, itemCategory, itemCategory, haulingAgentCode, haulingAgentCode];
 
     sqlite3_stmt *stmnt;

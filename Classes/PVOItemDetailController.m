@@ -1497,6 +1497,8 @@
                 highValueController.pvoItem = pvoItem;
                 
                 portraitNavController = [[PortraitNavController alloc] initWithRootViewController:highValueController];
+                portraitNavController.modalPresentationStyle = UIModalPresentationFullScreen;
+
                 [self.navigationController presentViewController:portraitNavController animated:YES completion:nil];
             }
             else

@@ -138,7 +138,7 @@
     if(topLabel == nil)
     {
         topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-
+        topLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 15] : [UIFont systemFontOfSize:[UIFont systemFontSize]];
         if (imageButtons)
             topLabel.textColor = [UIColor blackColor];
         else
@@ -153,12 +153,13 @@
     UILabel *bottomLabel = (UILabel*)[self viewWithTag:FOUR_BUTTON_BOTTOM_LABEL + (buttonTag * 10)];
     if(bottomLabel == nil)
     {
+        int spacing = [SurveyAppDelegate iPad] ? 5 : 0;
         bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                (size.height - padding * 2) / 2.0,
+                                                                ((size.height - padding * 2) / 2.0) + spacing,
                                                                 width,
                                                                 height)];
 
-        bottomLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize] - 2];
+        bottomLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 5] : [UIFont systemFontOfSize:[UIFont systemFontSize] - 2];
         if (imageButtons)
             bottomLabel.textColor = [UIColor blackColor];
         else

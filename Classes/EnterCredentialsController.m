@@ -43,9 +43,10 @@
                                                                                            target:self
                                                                                            action:@selector(cmdDoneClick:)];
     
-    self.environments = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:@"Dev", @"QA", @"PROD", nil]
+    self.environments = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:@"Dev", @"QA", @"UAT", @"PROD", nil]
                                                         forKeys:[NSArray arrayWithObjects:[NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_DEV],
                                                                  [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_QA],
+                                                                 [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_UAT],
                                                                  [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_PROD], nil]];
     
     // Change title based on version of application being run
@@ -106,7 +107,9 @@
     {
         [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMUSERNAME]];
         [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMPASSWORD]];
-        [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMENVIRONMENT]];
+        if ([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"crmenv"].location != NSNotFound) {
+            [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMENVIRONMENT]];
+        }
     }
     else
     {
