@@ -871,49 +871,6 @@
     
 }
 
--(int)getPhoneTypeIDFromName:(NSString*)name
-{
-    int retval = -1;
-    
-    sqlite3_stmt *stmnt;
-    
-    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PhoneTypeID FROM PhoneTypes WHERE Name = '%@'", name];
-    if([self prepareStatement:cmd withStatement:&stmnt])
-    {
-        if(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
-            retval = sqlite3_column_int(stmnt, 0);
-        }
-    }
-    sqlite3_finalize(stmnt);
-    
-    
-    
-    return retval;
-}
-
--(NSMutableArray*)getPhoneTypeList
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    PhoneType *item;
-    
-    sqlite3_stmt *stmnt;
-    if([self prepareStatement:@"SELECT PhoneTypeID,Name FROM PhoneTypes WHERE COALESCE(IsHidden,0) = 0 ORDER BY Name COLLATE NOCASE ASC" withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
-            item = [[PhoneType alloc] init];
-            item.phoneTypeID = sqlite3_column_int(stmnt, 0);
-            item.name = [[NSString alloc] initWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
-            [array addObject:item];
-            
-        }
-    }
-    sqlite3_finalize(stmnt);
-    
-    return array;
-}
-
 -(void)updateCustomer:(SurveyCustomer*) cust
 {
     
@@ -2293,19 +2250,71 @@
     return sqlite3_last_insert_rowid(db);
 }
 
--(NSString*)getCustomerPhone:(int)cID withLocationID:(int)locationID andPhoneType:(NSString*)type
+-(int)getPhoneTypeIDFromName:(NSString*)name
 {
-    NSArray *phones = [self getCustomerPhones:cID withLocationID:locationID];
+    int retval = -1;
     
-    NSString *retval = [[NSString alloc] initWithString:@""];
+    sqlite3_stmt *stmnt;
     
-    SurveyPhone *current;
-    for(int i = 0; i < [phones count]; i++)
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PhoneTypeID FROM PhoneTypes WHERE Name = '%@'", name];
+    if([self prepareStatement:cmd withStatement:&stmnt])
     {
-        current = [phones objectAtIndex:i];
-        if([current.type.name isEqualToString:type])
+        if(sqlite3_step(stmnt) == SQLITE_ROW)
         {
+            retval = sqlite3_column_int(stmnt, 0);
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    
+    
+    return retval;
+}
+
+
+-(NSString*)getPhoneTypeNameFromId:(int)phoneTypeId {
+    NSString *retval = nil;
+    sqlite3_stmt *stmnt;
+    
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT Name FROM PhoneTypes WHERE PhoneTypeID = '%d'", phoneTypeId];
+    if([self prepareStatement:cmd withStatement:&stmnt]) {
+        if(sqlite3_step(stmnt) == SQLITE_ROW) {
+            retval = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 0)];
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    return retval;
+}
+
+-(NSMutableArray*)getPhoneTypeList
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    PhoneType *item;
+    
+    sqlite3_stmt *stmnt;
+    if([self prepareStatement:@"SELECT PhoneTypeID,Name FROM PhoneTypes WHERE COALESCE(IsHidden,0) = 0 ORDER BY Name COLLATE NOCASE ASC" withStatement:&stmnt])
+    {
+        while(sqlite3_step(stmnt) == SQLITE_ROW)
+        {
+            item = [[PhoneType alloc] init];
+            item.phoneTypeID = sqlite3_column_int(stmnt, 0);
+            item.name = [[NSString alloc] initWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
+            [array addObject:item];
             
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    return array;
+}
+
+-(NSString*)getCustomerPhone:(int)cID withLocationID:(int)locationID andPhoneType:(NSString*)type {
+    NSArray *phones = [self getCustomerPhones:cID withLocationID:locationID];
+    NSString *retval = nil;
+    
+    for(SurveyPhone *current in phones) {
+        if([current.type.name isEqualToString:type]) {
             retval = [[NSString alloc] initWithString:current.number];
         }
     }
@@ -2313,25 +2322,15 @@
     return retval;
 }
 
--(NSMutableArray*)getCustomerPhones:(int) cID withLocationID:(int)locID
-{
+-(NSMutableArray*)getCustomerPhones:(int) cID withLocationID:(int)locID {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     SurveyPhone *item;
-    
     sqlite3_stmt *stmnt;
     
-    NSString *cmd = nil;
-    // this portion no longer needed.
-    //if(locID == -1)//location -1 is for the primary phone, which is not associated with a location
-    //cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,p.Number FROM Phones p WHERE p.CustomerID = %d AND p.LocationID = %d", cID, locID];
-    //else
-    // added isPrimary 3/22/16
-    cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,t.PhoneTypeID,t.Name,p.Number, p.IsPrimary FROM Phones p,PhoneTypes t WHERE p.CustomerID = %d AND p.LocationID = %d AND p.TypeID = t.PhoneTypeID AND IsPrimary = 0", cID, locID];
+    NSString *cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,t.PhoneTypeID,t.Name,p.Number, p.IsPrimary FROM Phones p,PhoneTypes t WHERE p.CustomerID = %d AND p.LocationID = %d AND p.TypeID = t.PhoneTypeID AND IsPrimary = 0", cID, locID];
     
-    if([self prepareStatement:cmd withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
+    if([self prepareStatement:cmd withStatement:&stmnt]) {
+        while(sqlite3_step(stmnt) == SQLITE_ROW) {
             item = [[SurveyPhone alloc] init];
             item.type = [[PhoneType alloc] init];
             
@@ -2347,14 +2346,9 @@
             item.isPrimary = isPrimary;
             
             [array addObject:item];
-            
         }
     }
-    
-    
     sqlite3_finalize(stmnt);
-    
-    
     
     return array;
 }
