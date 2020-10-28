@@ -459,11 +459,13 @@
     if ([driverSection count] == 0)
         return nil;
     
+    BOOL isPacker = data.driverType == PVO_DRIVER_TYPE_PACKER;
+
     switch ([key intValue]) {
         case DRIVER_DATA_SECTION_DRIVERPACKER:
-            return data.driverType == PVO_DRIVER_TYPE_PACKER? @"Packer Options" : @"Driver Options";
+            return isPacker ? @"Packer Options" : @"Driver Options";
         case DRIVER_DATA_SECTION_HAULINGAGENT:
-            return @"Hauling Agent Options";
+            return isPacker ? @"Agent Options" : @"Hauling Agent Options";
         case DRIVER_DATA_SECTION_APPLICATION_OPTIONS:
             return @"Application Customization";
     }
@@ -654,17 +656,6 @@
     }
     else
     {
-//        ltCell = (LabelTextCell*)[tableView dequeueReusableCellWithIdentifier:LabelTextCellIdentifier];
-//        if (ltCell == nil) {
-//            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LabelTextCell" owner:self options:nil];
-//            ltCell = [nib objectAtIndex:0];
-//            [ltCell setPVOView];
-//            [ltCell.tboxValue addTarget:self 
-//                                 action:@selector(textFieldDoneEditing:) 
-//                       forControlEvents:UIControlEventEditingDidEndOnExit];
-//            ltCell.tboxValue.delegate = self;
-//        }
-        
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
         ltCell = [nib objectAtIndex:0];
         [ltCell.tboxValue setDelegate:self];
@@ -682,7 +673,7 @@
         switch (row) {
             case DRIVER_DATA_HAULING_AGENT:
                 ltCell.tboxValue.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-                ltCell.tboxValue.placeholder = @"Hauling Agt #";
+                ltCell.tboxValue.placeholder = data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Agent #" : @"Hauling Agt #";
                 ltCell.tboxValue.text = data.haulingAgent;
                 break;
             case DRIVER_DATA_SAFETY_NUMBER:

@@ -60,19 +60,7 @@
 
 +(BOOL)disablePackersInventory
 {
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanline = [del.pricingDB vanline];
-    switch (vanline) {
-        case 155:
-        case ARPIN:
-        case GRAEBEL:
-        case ALLIED:
-        case NORTH_AMERICAN:
-        case SIRVA:
-            return NO;
-        default:
-            return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"packer"].location == NSNotFound); //disable if beta password not present
-    }
+    return NO; //always show option for base users per Kim 10/27/2020 (TEG-1135)
 }
 
 +(BOOL)showAgencyCodeOnDownload
