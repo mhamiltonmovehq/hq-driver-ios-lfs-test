@@ -78,9 +78,6 @@
 {
     [_sections removeAllObjects];
     
-    BOOL isDriverTypePacker = (data != nil && data.driverType == PVO_DRIVER_TYPE_PACKER);
-    
-    
     //Add driver section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
     
@@ -104,8 +101,6 @@
     
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     int vanlineID = [del.pricingDB vanline];
-    
-    
     
     NSMutableArray *currentRows = [[NSMutableArray alloc] init];
     
