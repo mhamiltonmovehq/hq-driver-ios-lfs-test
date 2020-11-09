@@ -1096,7 +1096,7 @@
     
     // OT 2582 - last sync date feature
     if(date != nil && date.length > 0) {
-        UILabel *lastSaveDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 310, 15)];
+        UILabel *lastSaveDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width - 10, 15)];
         lastSaveDateLabel.numberOfLines = 1;
         [lastSaveDateLabel setBackgroundColor:[UIColor clearColor]];
         lastSaveDateLabel.text = date;

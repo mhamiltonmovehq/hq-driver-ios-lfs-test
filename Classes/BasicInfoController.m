@@ -734,7 +734,7 @@ SurveyPhone *selectedPhoneForAccessory;
         officePhone.number = newString;
     } else if(tag == BASIC_INFO_MOBILE_PHONE) {
         mobilePhone.number = newString;
-    } else if(tag != BASIC_INFO_HOME_PHONE) {
+    } else if(tag == BASIC_INFO_HOME_PHONE) {
         homePhone.number = newString;
     }
     

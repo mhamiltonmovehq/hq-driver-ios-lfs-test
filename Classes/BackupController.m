@@ -370,10 +370,8 @@
                         
                         [zipper UnzipCloseFile];
                     }
-                    
-                    
-                    
-                    
+                    zipper = nil;
+          
                     NSData *fileData = [NSData dataWithContentsOfFile:zipPath];
                     [mailer addAttachmentData:fileData mimeType:@"application/zip" fileName:@"inventory.zip"];
                     

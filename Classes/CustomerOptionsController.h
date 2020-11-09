@@ -45,7 +45,6 @@
 
 @interface CustomerOptionsController : UIViewController <UIActionSheetDelegate, UIAlertViewDelegate> {
 	CustomerListItem *selectedItem;
-	LocationController *locationController;
 	SurveySummaryController *surveySummaryController;
 	SurveyDatesController *datesController;
 	SurveyAgentsController *agentsController;
@@ -92,7 +91,6 @@
 @property (nonatomic, retain) UIButton *cmd_PackCrateSummary;
 
 @property (nonatomic, retain) CustomerListItem *selectedItem;
-@property (nonatomic, retain) LocationController *locationController;
 @property (nonatomic, retain) SurveySummaryController *surveySummaryController;
 @property (nonatomic, retain) SurveyDatesController *datesController;
 @property (nonatomic, retain) SurveyAgentsController *agentsController;
