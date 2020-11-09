@@ -36,7 +36,7 @@
 	return self;
 }
 
-#pragma mark Lifecycle Methods
+#pragma mark - Lifecycle Methods -
 
 - (void)viewDidLoad
 {
@@ -78,7 +78,6 @@
     
     //make sure pricing and mileage is open
     [del openPricingDB];
-//    [del openMilesDB];
     
     self.customers = [del.surveyDB getCustomerList:filters];
     
@@ -141,7 +140,7 @@
     [backup beginBackup];
 }
 
-#pragma mark Instance Methods
+#pragma mark - Instance Methods -
 
 -(void)reloadTableViewData {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -192,8 +191,22 @@
     DriverDataController *drv = [[DriverDataController alloc] initWithStyle:UITableViewStyleGrouped];
     drv.title = [NSString stringWithFormat:@"%@ Data", driverData == nil || driverData.driverType != PVO_DRIVER_TYPE_PACKER ? @"Driver" : @"Packer"];
     
-    self.navController = [[PortraitNavController alloc] initWithRootViewController:drv];
+    navController = [[PortraitNavController alloc] initWithRootViewController:drv];
+    navController.dismissDelegate = self;
+    navController.dismissCallback = @selector(updateDriverButton);
+
     [del.navController presentViewController:navController animated:YES completion:nil];
+}
+
+-(void) updateDriverButton {
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    for (UIBarButtonItem *item in toolbarOptions.items) {
+        if ([item.title isEqualToString:@"Driver"] || [item.title isEqualToString:@"Packer"]) {
+            DriverData *data = [del.surveyDB getDriverData];
+            item.title = data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver";
+        }
+    }
 }
 
 -(IBAction) cmdMaintenance_Click:(id)sender;
@@ -472,7 +485,7 @@
     }
 }
 
-#pragma mark Table Data Source Methods
+#pragma mark - Table Data Source Methods -
 
 -(NSInteger)tableView: (UITableView *)thisTableView numberOfRowsInSection: (NSInteger)section
 {
@@ -550,7 +563,7 @@
 	
 }
 
-#pragma mark - Table View Delegate Methods
+#pragma mark - Table View Delegate Methods -
 
 -(void)tableView:(UITableView *)thisTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -646,7 +659,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark action sheet stuff
+#pragma mark - action sheet stuff -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -859,7 +872,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
 }
 
-#pragma mark - Brother PJ-673 settings
+#pragma mark - Brother PJ-673 settings -
 
 - (void)showBrotherPJ673Settings
 {
