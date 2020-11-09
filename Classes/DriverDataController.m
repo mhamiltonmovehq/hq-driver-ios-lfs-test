@@ -78,9 +78,6 @@
 {
     [_sections removeAllObjects];
     
-    BOOL isDriverTypePacker = (data != nil && data.driverType == PVO_DRIVER_TYPE_PACKER);
-    
-    
     //Add driver section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
     
@@ -104,8 +101,6 @@
     
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     int vanlineID = [del.pricingDB vanline];
-    
-    
     
     NSMutableArray *currentRows = [[NSMutableArray alloc] init];
     
@@ -227,8 +222,8 @@
     [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_USE_SCANNER]];
     
     //Save Images to Camera Roll
-    [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SAVE_TO_CAM_ROLL]];
-    
+    // [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SAVE_TO_CAM_ROLL]];
+    //  only temporarily hiding this for TEG-1146.  Will need to investigate new libraries and/or other solutions to resolve TEG-1109 (which was the original ticket).
     
     [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_APPLICATION_OPTIONS]];
 

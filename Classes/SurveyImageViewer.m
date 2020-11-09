@@ -133,34 +133,6 @@
         return;
     }
     
-#if defined(ATLASNET)
-    if (photosType == IMG_PVO_WEIGHT_TICKET)
-    {
-        if(![ScanbotSDK isLicenseValid]) {
-            // Scanbot license has expired, show the user a message and do not allow them to continue, unless we are able to grab another one now that works from the web
-            [SurveyAppDelegate setupScanbot];
-            
-            if(![ScanbotSDK isLicenseValid]) {
-                NSString* expStr = @"The license for the weight ticket scanning software is no longer valid and a new license was unable to be downloaded. Please contact support for assistance.";
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"License Expired"
-                                                                message:expStr
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-                return;
-            }
-        }
-        
-        PVOScanbotViewController *controller = [[PVOScanbotViewController alloc] init];
-        controller.delegate = self;
-        [viewController presentViewController:controller animated:YES completion:nil];
-        [controller release];
-        
-        return;
-    }
-#endif
-    
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // Let user take multiple pictures at once
@@ -215,16 +187,7 @@
         picker.allowsEditing = NO;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-//        if([SurveyAppDelegate iPad])
-//        {
-//            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-//            [popoverController presentPopoverFromRect:ipadFrame
-//                                     inView:ipadPresentView
-//                   permittedArrowDirections:UIPopoverArrowDirectionAny
-//                                   animated:YES];
-//        }
-//        else
-            [viewController presentViewController:picker animated:YES completion:nil];
+        [viewController presentViewController:picker animated:YES completion:nil];
         
     }
     else
@@ -308,22 +271,12 @@
     
     [self addPhotoToList:(newImage != nil ? newImage : image)];
     
-//    if([SurveyAppDelegate iPad])
-//    {
-//        [popoverController dismissPopoverAnimated:YES];
-//    }
-//    else
-        [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController*)imagePicker
 {
-//    if([SurveyAppDelegate iPad])
-//    {
-//        [popoverController dismissPopoverAnimated:YES];
-//    }
-//    else
-        [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark UIActionSheet methods
