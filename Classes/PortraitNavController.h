@@ -12,7 +12,7 @@
     SEL dismissCallback;
 }
 
-@property (nonatomic) NSObject *dismissDelegate;
+@property (nonatomic, strong) NSObject *dismissDelegate;
 @property (nonatomic) SEL dismissCallback;
 
 @end

@@ -11,7 +11,6 @@ import ImagePicker
 import Lightbox
 
 @objc class ImagePickerAdapterController : UIViewController {
-    var goBackToMenu = false
     @objc var callingController : ImagePickerDelegate?
     
     @objc func setCallingController (controller:ImagePickerDelegate) {
@@ -19,22 +18,16 @@ import Lightbox
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidLoad()
+        super.viewDidAppear(animated)
         
-        if(goBackToMenu) {
-            // Have returned from the camera view
-            dismiss(animated: true, completion: nil)
-        } else {
-            // Create controller
-            let imagePickerController = ImagePickerController()
-            imagePickerController.delegate = callingController
-            
-            // Instruct this placeholder controller to exit the next time it is shown
-            goBackToMenu = true
-            
-            // Present the controller
-            present(imagePickerController, animated: true, completion: nil)
-        }
+        // Create controller
+        let imagePickerController = ImagePickerController()
+        imagePickerController.delegate = callingController
+        
+        // Present the controller and dismiss the adapter
+        dismiss(animated: false, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
+        
     }
 }
 

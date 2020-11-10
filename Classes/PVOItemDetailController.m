@@ -180,8 +180,8 @@
         
         [self setupContinueButton];
         [self initializeIncludedRows];
-        [self.tableView reloadData];
-        
+        [self reloadData];
+
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
                               atScrollPosition:UITableViewScrollPositionTop 
                                       animated:YES];
@@ -199,7 +199,7 @@
         else
             self.navigationItem.prompt = nil;
         
-        [self.tableView reloadData];
+        [self reloadData];
         grabbingBarcodeImage = NO;
     }
     
@@ -767,7 +767,7 @@
     {
         pvoItem.hasDimensions = sw.on;
         [self initializeIncludedRows];
-        [self.tableView reloadData];
+        [self reloadData];
     }
     else if(sw.tag == PVO_ITEM_DETAIL_NO_EXC)
     {
@@ -794,21 +794,21 @@
         pvoItem.itemIsMPRO = sw.on;
         pvoItem.itemIsSPRO = FALSE;
         pvoItem.itemIsCONS = FALSE;
-        [self.tableView reloadData];
+        [self reloadData];
     }
     else if(sw.tag == PVO_ITEM_DETAIL_SPRO)
     {//Item can only be either MPRO or SPRO per defect 1037
         pvoItem.itemIsSPRO = sw.on;
         pvoItem.itemIsMPRO = FALSE;
         pvoItem.itemIsCONS = FALSE;
-        [self.tableView reloadData];
+        [self reloadData];
     }
     else if (sw.tag == PVO_ITEM_DETAIL_CONS)
     {
         pvoItem.itemIsCONS = sw.on;
         pvoItem.itemIsMPRO = FALSE;
         pvoItem.itemIsSPRO = FALSE;
-        [self.tableView reloadData];
+        [self reloadData];
     }
 }
 
@@ -854,7 +854,7 @@
             if (pvoItem.weightType == PVO_ITEM_DETAIL_WEIGHT_TYPE_CONSTRUCTIVE)
             {
                 pvoItem.weight = pvoItem.cube * inventory.weightFactor;
-                [self.tableView reloadData];
+                [self reloadData];
             }
             break;
         case PVO_ITEM_DETAIL_WEIGHT:
@@ -1421,6 +1421,8 @@
             imageViewer.caller = self.view;
             
             imageViewer.viewController = self;
+            imageViewer.dismissDelegate = self;
+            imageViewer.dismissCallback = @selector(reloadData);
             
             [imageViewer loadPhotos];
         }
@@ -1643,7 +1645,7 @@
     {
         pvoItem.cube = cube;
         pvoItem.weight = weight;
-        [self.tableView reloadData];
+        [self reloadData];
     }
 }
 
@@ -1796,7 +1798,7 @@
                     pvoItem.lotNumber = @"";
                 
                 pvoItem.itemNumber = @"";
-                [self.tableView reloadData];
+                [self reloadData];
             }
             else if (buttonIndex == PVO_ITEM_DUPLICATE_GO_TO_ITEM)
             {
@@ -1815,7 +1817,7 @@
                     self.room = [del.surveyDB getRoom:pvoItem.roomID WithCustomerID:del.customerID];
                     [self setupContinueButton];
                     [self initializeIncludedRows];
-                    [self.tableView reloadData];
+                    [self reloadData];
                     discardChangesAndDelete = NO;
                 }
             }
@@ -1888,7 +1890,7 @@
         {
             pvoItem.lotNumber = [data substringToIndex:[data length]-3];
             pvoItem.itemNumber = [data substringFromIndex:[data length]-3];
-            [self.tableView reloadData];
+            [self reloadData];
             [self checkForDuplicate];
         }
     }
@@ -1976,7 +1978,7 @@
         {
             pvoItem.lotNumber = [barcode substringToIndex:[barcode length]-3];
             pvoItem.itemNumber = [barcode substringFromIndex:[barcode length]-3];
-            [self.tableView reloadData];
+            [self reloadData];
             [self checkForDuplicate];
         }
     }
@@ -2025,7 +2027,7 @@
         {
             pvoItem.lotNumber = [data substringToIndex:[data length]-3];
             pvoItem.itemNumber = [data substringFromIndex:[data length]-3];
-            [self.tableView reloadData];
+            [self reloadData];
             [self checkForDuplicate];
         }
     }

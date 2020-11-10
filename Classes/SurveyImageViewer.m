@@ -25,7 +25,7 @@
 
 @implementation SurveyImageViewer
 
-@synthesize caller, picker, customerID, subID, photosType, existingImagesController, viewController, ipadFrame, ipadPresentView, maxPhotos, wireframeItemID;
+@synthesize caller, picker, customerID, subID, photosType, existingImagesController, viewController, ipadFrame, ipadPresentView, maxPhotos, wireframeItemID, dismissDelegate, dismissCallback;
 
 
 //load image if it has one.
@@ -105,6 +105,9 @@
     existingImagesController.wireframeItemID = wireframeItemID;
     
     PortraitNavController *nav = [[PortraitNavController alloc] initWithRootViewController:existingImagesController];
+    nav.dismissDelegate = dismissDelegate;
+    nav.dismissCallback = dismissCallback;
+    
     [viewController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -138,7 +141,7 @@
         // Let user take multiple pictures at once
         ImagePickerAdapterController *ipac = [ImagePickerAdapterController new];
         [ipac setCallingController:self];
-        [viewController presentViewController:ipac animated:true completion:nil];
+        [viewController presentViewController:ipac animated:false completion:nil];
         
         /* Old single image picker code:
         if(picker == nil)
@@ -231,7 +234,13 @@
     
 }
 
-#pragma mark UIImagePickerController methods
+- (void)executeDismissCallback {
+    if (dismissDelegate != nil && [dismissDelegate respondsToSelector:dismissCallback]) {
+        [dismissDelegate performSelectorOnMainThread:dismissCallback withObject:nil waitUntilDone:NO];
+    }
+}
+
+#pragma mark - UIImagePickerController methods -
 
 -(void)imagePickerController:(UIImagePickerController*)imagePicker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo
 {
@@ -271,6 +280,7 @@
     
     [self addPhotoToList:(newImage != nil ? newImage : image)];
     
+    [self executeDismissCallback];
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -279,7 +289,7 @@
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark UIActionSheet methods
+#pragma mark - UIActionSheet methods -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -404,7 +414,7 @@
     }
 }
 
-#pragma mark - PVOScanbotViewControllerDelegate
+#pragma mark - PVOScanbotViewControllerDelegate -
 
 - (void)documentImageCaptured:(UIImage *)documentImage
 {
@@ -485,7 +495,7 @@
         else
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    
+    [self executeDismissCallback];
     [self addPhotoToList:(newImage != nil ? newImage : image)];
 }
 

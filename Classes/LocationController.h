@@ -31,7 +31,7 @@
 #define DESTINATION_PHONE_1 7
 #define DESTINATION_PHONE_2 8
 
-@interface LocationController : UITableViewController <UIActionSheetDelegate, UITextFieldDelegate> {
+@interface LocationController : PVOBaseTableViewController <UIActionSheetDelegate, UITextFieldDelegate> {
 	int imagesCount;
 	UIImage *locationImage;
 	BOOL goingToLocation;

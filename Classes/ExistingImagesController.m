@@ -26,7 +26,7 @@
 -(IBAction)finishedEditing:(id)sender
 {
 	if(oneImageView.hidden)
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	else
 	{// First create a CATransition object to describe the transition
 		CATransition *transition = [CATransition animation];

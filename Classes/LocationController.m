@@ -77,7 +77,7 @@
 	
     [super viewWillAppear:animated];
 	
-	[self.tableView reloadData];
+    [self reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -321,10 +321,10 @@
             imageViewer.photosType = IMG_LOCATIONS;
             imageViewer.customerID = custID;
             imageViewer.subID = locationType;
-            
             imageViewer.caller = self.view;
-            
             imageViewer.viewController = self;
+            imageViewer.dismissDelegate = self;
+            imageViewer.dismissCallback = @selector(reloadData);
             
             [imageViewer loadPhotos];
             
