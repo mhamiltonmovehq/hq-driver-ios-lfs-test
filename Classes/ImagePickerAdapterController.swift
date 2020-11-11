@@ -11,10 +11,8 @@ import ImagePicker
 import Lightbox
 
 @objc class ImagePickerAdapterController : ImagePickerController {
-    @objc var callingController : ImagePickerDelegate?
-    
-    @objc func setCallingController (controller:ImagePickerDelegate) {
-        self.delegate = controller
+    @objc func setDelegate (_ delegate:ImagePickerDelegate) {
+        self.delegate = delegate
     }
 }
 
