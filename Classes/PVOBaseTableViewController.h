@@ -10,6 +10,8 @@
 
 @interface PVOBaseTableViewController : UITableViewController
 
+
+-(void)reloadData;
 -(BOOL)viewHasCriticalDataToSave;
 
 @end

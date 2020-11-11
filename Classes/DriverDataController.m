@@ -373,7 +373,7 @@
     
     [del.surveyDB updateDriverData:data];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - View lifecycle

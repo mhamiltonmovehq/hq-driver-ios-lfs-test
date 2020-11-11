@@ -61,10 +61,15 @@
 @property (nonatomic) int customerID;
 @property (nonatomic) int subID;
 @property (nonatomic) int photosType;
-@property (nonatomic) int maxPhotos;
 @property (nonatomic) CGRect ipadFrame;
 @property (nonatomic) int pVOItemID;
+//added for PVO Weight tickets - only one image per customer.  <= 0 means unlimited...
+@property (nonatomic) int maxPhotos;
 @property (nonatomic) int wireframeItemID;
+
+@property (nonatomic) NSObject *dismissDelegate;
+@property (nonatomic) SEL dismissCallback;
+
 
 +(UIImage*)getDefaultImage:(int)imgType forItem:(int)subid;
 
