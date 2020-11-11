@@ -141,7 +141,7 @@
         // Let user take multiple pictures at once
         ImagePickerAdapterController *ipac = [ImagePickerAdapterController new];
         [ipac setCallingController:self];
-        [viewController presentViewController:ipac animated:false completion:nil];
+        [viewController presentViewController:ipac animated:true completion:nil];
         
         /* Old single image picker code:
         if(picker == nil)
