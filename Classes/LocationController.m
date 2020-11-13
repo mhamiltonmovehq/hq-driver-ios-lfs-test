@@ -241,7 +241,7 @@
         
         for (SurveyPhone *phone in loc.phones) {
             if(phone.type.phoneTypeID == phoneTypeId) {
-                fCell.tboxValue.text = phone.number;
+                fCell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)phone.number];
             }
         }
         fCell.tboxValue.placeholder = [del.surveyDB getPhoneTypeNameFromId:phoneTypeId];

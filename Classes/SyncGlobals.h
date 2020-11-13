@@ -18,9 +18,7 @@
 +(BOOL)mergeCustomerToDB:(SurveyDownloadXMLParser*)parser appDelegate:(SurveyAppDelegate *)del;
 +(XMLWriter*)buildCustomerXML:(int)custID isAtlas:(BOOL)atlas;
 +(XMLWriter*)buildCustomerXML:(int)custID withNavItemID:(int)navItemID isAtlas:(BOOL)atlas;
-+(void)getInterstateInfo:(XMLWriter*)xml withCustomerID:(int)custID;
 +(void)getPVOInfo:(XMLWriter*)retval navItemID:(int)navItemID;
-+(void)getLocalInfo:(XMLWriter*)xml withCustomerID:(int)custID;
 +(UIImage*)removeUnusedImageSpace:(UIImage*)source;
 
 @end

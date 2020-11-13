@@ -1914,27 +1914,7 @@
     return cust.custID;
 }
 
-
-//TODO: update to use type property in phone when adding...
--(BOOL)addPhone:(SurveyPhone*)phone withTypeString:(NSString*)type
-{
-    int typeID = [self getPhoneTypeIDFromName:type];
-    if(typeID == -1)
-    {
-        [self insertNewPhoneType:type];
-        typeID = [self getPhoneTypeIDFromName:type];
-    }
-    
-    phone.type = [[PhoneType alloc] init];
-    phone.type.phoneTypeID = typeID;
-    
-    [self insertPhone:phone];
-    
-    return YES;
-}
-
--(void)insertPhone:(SurveyPhone*) phone
-{
+-(void)insertPhone:(SurveyPhone*) phone {
     NSString *cmd = [[NSString alloc] initWithFormat:@"INSERT INTO Phones(CustomerID,LocationID,TypeID,Number,isPrimary) VALUES(%ld,%ld,%ld,'%@',%d);",
                      phone.custID,
                      phone.locationID,
@@ -1948,9 +1928,7 @@
     
 }
 
--(void)updatePhone:(SurveyPhone*) phone
-{
-    
+-(void)updatePhone:(SurveyPhone*) phone {
     NSString *cmd = [[NSString alloc] initWithFormat:@"UPDATE Phones SET Number = '%@', isPrimary = %d WHERE CustomerID = %ld AND LocationID = %ld AND TypeID = %ld;",
                      phone.number == nil ? @"" : [phone.number stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      phone.isPrimary,

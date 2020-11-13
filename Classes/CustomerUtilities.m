@@ -589,4 +589,57 @@ exit:
     }
 }
 
++(SurveyPhone*)setupContactPhone:(SurveyPhone*)phone withPhoneTypeId:(NSInteger)typeId {
+    if (phone == nil) {
+        phone = [[SurveyPhone alloc] init];
+        phone.number = @"";
+        phone.locationID = ORIGIN_LOCATION_ID;
+        phone.isPrimary = 0;
+        phone.type.phoneTypeID = typeId;
+    }
+    return phone;
+}
+
++(NSMutableString *)formatPhoneString:(NSMutableString *)str {
+    NSMutableString *newString = [[NSMutableString alloc] init];
+    if ([str length] > 10) {
+        //do nothing
+        [newString appendString:str];
+    } else if ([str length] > 7) {//(xxx) xxx-xxxx format
+        [newString appendString:@"("];
+        
+        for (int i = 0; i < 3; i++) {
+            [newString appendFormat:@"%C", [str characterAtIndex:i]];
+        }
+        
+        [newString appendString:@") "];
+        
+        for (int i = 3; i < 6; i++) {
+            [newString appendFormat:@"%C", [str characterAtIndex:i]];
+        }
+        
+        [newString appendString:@"-"];
+        
+        for (int i = 6; i < [str length]; i++) {
+            [newString appendFormat:@"%C", [str characterAtIndex:i]];
+        }
+    } else {//xxx-xxxx format
+        for (int i = 0; i < 3; i++) {
+            if([str length] > i) {
+                [newString appendFormat:@"%C", [str characterAtIndex:i]];
+            }
+        }
+        
+        if ([str length] > 3) {
+            [newString appendString:@"-"];
+        }
+        
+        for (int i = 3; i < [str length]; i++) {
+            [newString appendFormat:@"%C", [str characterAtIndex:i]];
+        }
+    }
+    return newString;
+}
+
+
 @end
