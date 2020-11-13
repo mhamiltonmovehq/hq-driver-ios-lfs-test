@@ -303,8 +303,27 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
+- (void)callOrTextPhone: (SurveyPhone*) phone{
+    if([phone.number length] == 0)
+        [SurveyAppDelegate showAlert:@"You must have a phone number entered to call or text." withTitle:@"Number Required"];
+    else
+    {
+        if(tboxCurrent != nil)
+        {
+            [self updateCustomerValueWithField:tboxCurrent];
+            [tboxCurrent resignFirstResponder];
+        }
+        
+        //ask them to perform actions - call/sms
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"What action would you like to take for this phone number?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"Call", @"SMS Message", nil];
+        [sheet showInView:self.view];
+    }
+}
 #pragma mark - Table view data source and delegate -
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -514,27 +533,6 @@ SurveyPhone *selectedPhoneForAccessory;
         return indexPath;
     else
         return nil;
-}
-
-- (void)callOrTextPhone: (SurveyPhone*) phone{
-    if([phone.number length] == 0)
-        [SurveyAppDelegate showAlert:@"You must have a phone number entered to call or text." withTitle:@"Number Required"];
-    else
-    {
-        if(tboxCurrent != nil)
-        {
-            [self updateCustomerValueWithField:tboxCurrent];
-            [tboxCurrent resignFirstResponder];
-        }
-        
-        //ask them to perform actions - call/sms
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"What action would you like to take for this phone number?"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Cancel"
-                                             destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"Call", @"SMS Message", nil];
-        [sheet showInView:self.view];
-    }
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
