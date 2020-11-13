@@ -1250,17 +1250,16 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    if([del.pricingDB vanline] == ARPIN){
-        if(item.isReportOption){
-            if(!item.hasRequiredSignatures){
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            } else if(![item getReportWasUploaded:del.customerID]) {
-                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
-            } else {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
+    if(item.isReportOption){
+        if(!item.hasRequiredSignatures){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if(![item getReportWasUploaded:del.customerID]) {
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
+    
     return cell;
 }
 

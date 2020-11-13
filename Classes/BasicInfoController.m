@@ -294,17 +294,6 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
-- (SurveyPhone*)setupPhone:(SurveyPhone*)phone withPhoneTypeId:(NSInteger)typeId {
-    if (phone == nil) {
-        phone = [[SurveyPhone alloc] init];
-        phone.number = @"";
-        phone.locationID = ORIGIN_LOCATION_ID;
-        phone.isPrimary = 0;
-        phone.type.phoneTypeID = typeId;
-    }
-    return phone;
-}
-
 -(void)insertOrUpdatePhone:(SurveyPhone*)phone {
     if(phone.custID <= 0) {
         phone.custID = cust.custID;
@@ -314,7 +303,7 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
-#pragma mark - Table view data source and delegate
+#pragma mark - Table view data source and delegate -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -471,33 +460,24 @@ SurveyPhone *selectedPhoneForAccessory;
                 cell.tboxValue.clearsOnBeginEditing = NO;
                 break;
             case BASIC_INFO_OFFICE_PHONE:
-                cell.tboxValue.text = officePhone.number;
-                if ([SurveyAppDelegate iOS7OrNewer])
-                    cell.accessoryType = UITableViewCellAccessoryDetailButton;
-                else
-                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)officePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
                 cell.tboxValue.placeholder = @"Office Phone";
                 cell.tboxValue.tag = BASIC_INFO_OFFICE_PHONE;
                 cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
                 cell.tboxValue.clearsOnBeginEditing = NO;
                 break;
             case BASIC_INFO_MOBILE_PHONE:
-                cell.tboxValue.text = mobilePhone.number;
-                if ([SurveyAppDelegate iOS7OrNewer])
-                    cell.accessoryType = UITableViewCellAccessoryDetailButton;
-                else
-                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)mobilePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
                 cell.tboxValue.placeholder = @"Mobile Phone";
                 cell.tboxValue.tag = BASIC_INFO_MOBILE_PHONE;
                 cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
                 cell.tboxValue.clearsOnBeginEditing = NO;
                 break;
             case BASIC_INFO_HOME_PHONE:
-                cell.tboxValue.text = homePhone.number;
-                if ([SurveyAppDelegate iOS7OrNewer])
-                    cell.accessoryType = UITableViewCellAccessoryDetailButton;
-                else
-                    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)homePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
                 cell.tboxValue.placeholder = @"Home Phone";
                 cell.tboxValue.tag = BASIC_INFO_HOME_PHONE;
                 cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
@@ -642,7 +622,7 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextFieldDelegate -
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -686,50 +666,12 @@ SurveyPhone *selectedPhoneForAccessory;
     //insert string
     [str replaceCharactersInRange:range withString:string];
     
-    
     [str replaceOccurrencesOfString:@"(" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@")" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     
-    NSMutableString *newString = [[NSMutableString alloc] init];
-    if([str length] > 10)
-    {
-        //do nothing
-        [newString appendString:str];
-    }
-    else if([str length] > 7)
-    {//(xxx) xxx-xxxx format
-        [newString appendString:@"("];
-        for(int i = 0; i < 3; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        [newString appendString:@") "];
-        for(int i = 3; i < 6; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        [newString appendString:@"-"];
-        for(int i = 6; i < [str length]; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-    }
-    else
-    {//xxx-xxxx format
-        for(int i = 0; i < 3; i++)
-        {
-            if([str length] > i)
-                [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        if([str length] > 3)
-            [newString appendString:@"-"];
-        for(int i = 3; i < [str length]; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-    }
+    NSMutableString * newString = [CustomerUtilities formatPhoneString:str];
     if(tag == BASIC_INFO_OFFICE_PHONE) {
         officePhone.number = newString;
     } else if(tag == BASIC_INFO_MOBILE_PHONE) {
@@ -748,7 +690,7 @@ SurveyPhone *selectedPhoneForAccessory;
     [sender resignFirstResponder];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - UIAlertViewDelegate -
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -775,7 +717,7 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark - UIActionSheetDelegate -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -804,7 +746,7 @@ SurveyPhone *selectedPhoneForAccessory;
     }
 }
 
-#pragma mark - View lifecycle
+#pragma mark - View lifecycle -
 
 - (void)viewDidLoad
 {
@@ -874,9 +816,9 @@ SurveyPhone *selectedPhoneForAccessory;
     }
     
     // Initializes phones if null after attempting to load
-    self.officePhone = [self setupPhone:officePhone withPhoneTypeId:3];
-    self.mobilePhone = [self setupPhone:mobilePhone withPhoneTypeId:1];
-    self.homePhone = [self setupPhone:homePhone withPhoneTypeId:2];
+    self.officePhone = [CustomerUtilities setupContactPhone:officePhone withPhoneTypeId:3];
+    self.mobilePhone = [CustomerUtilities setupContactPhone:mobilePhone withPhoneTypeId:1];
+    self.homePhone = [CustomerUtilities setupContactPhone:homePhone withPhoneTypeId:2];
     
     originalPricingMode = cust.pricingMode;
     originalLanguage = info.language;

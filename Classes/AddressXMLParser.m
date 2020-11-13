@@ -22,6 +22,13 @@
 	return self;
 }
 
+- (SurveyPhone *)getNewPhone {
+    SurveyPhone *phone = [[SurveyPhone alloc] init];
+    phone.number = [NSString stringWithString:currentString];
+    phone.locationID = location.isOrigin ? ORIGIN_LOCATION_ID : DESTINATION_LOCATION_ID;
+    phone.isPrimary = 0;
+    return phone;
+}
 
 #pragma mark NSXMLParser Parsing Callbacks
 
@@ -33,10 +40,8 @@
        [elementName isEqualToString:@"state"] ||
        [elementName isEqualToString:@"county"] ||
        [elementName isEqualToString:@"zip"] ||
-       [elementName isEqualToString:@"home_phone"] ||
-       [elementName isEqualToString:@"work_phone"] ||
-       [elementName isEqualToString:@"mobile_phone"] ||
-       [elementName isEqualToString:@"other_phone"] ||
+       [elementName isEqualToString:@"phone_1"] ||
+       [elementName isEqualToString:@"phone_2"] ||
        [elementName isEqualToString:@"loc_note"] ||
        [elementName isEqualToString:@"id"] ||
        [elementName isEqualToString:@"name"] ||
@@ -92,34 +97,17 @@
 	}else if(storingData && [elementName isEqualToString:@"zip"]){
 		location.zip = [NSString stringWithString:currentString];
 	}
-    else if(storingData && [elementName isEqualToString:@"home_phone"])
+    else if(storingData && [elementName isEqualToString:@"phone_1"])
     {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Home";
+        SurveyPhone * phone = [self getNewPhone];
+        phone.type.phoneTypeID = location.isOrigin ? 5 : 7;
         [location.phones addObject:phone];
         
 	}
-    else if(storingData && [elementName isEqualToString:@"work_phone"])
+    else if(storingData && [elementName isEqualToString:@"phone_2"])
     {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Work";
-        [location.phones addObject:phone];
-        
-	}
-    else if(storingData && [elementName isEqualToString:@"mobile_phone"])
-    {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Mobile";
-        [location.phones addObject:phone];
-        
-	}else if(storingData && [elementName isEqualToString:@"other_phone"])
-    {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Other";
+        SurveyPhone * phone = [self getNewPhone];
+        phone.type.phoneTypeID = location.isOrigin ? 6 : 8;
         [location.phones addObject:phone];
         
 	}

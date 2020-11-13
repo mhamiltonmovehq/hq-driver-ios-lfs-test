@@ -61,7 +61,8 @@
 +(NSMutableDictionary*)arpinSyncPreferences;
 +(BOOL)customerSourcedFromServer;
 +(int)customerPricingMode;
-
++(SurveyPhone*)setupContactPhone:(SurveyPhone*)phone withPhoneTypeId:(NSInteger)typeId;
++(NSMutableString*)formatPhoneString:(NSMutableString *)str;
 // date utilities
 +(NSDate*)dateFromString:(NSString*)dateString;
 

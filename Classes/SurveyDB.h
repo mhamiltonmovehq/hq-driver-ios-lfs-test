@@ -157,7 +157,6 @@
 -(SurveyDates*)getDates:(int) cID;
 -(void)updateDates:(SurveyDates*) dates;
 -(NSMutableArray*)getPhoneTypeList;
--(BOOL)addPhone:(SurveyPhone*)phone withTypeString:(NSString*)type;
 -(int)getPhoneTypeIDFromName:(NSString*)name;
 -(NSString*)getPhoneTypeNameFromId:(int)phoneTypeId;-(NSMutableArray*)getCustomerPhones:(int) cID withLocationID:(int) locationID;
 -(NSString*)getCustomerPhone:(int)cID withLocationID:(int)locationID andPhoneType:(NSString*)type;

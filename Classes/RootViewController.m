@@ -534,30 +534,29 @@
     
     cell.labelDate.text = labelDateText;
     
-    if([del.pricingDB vanline] == ARPIN){
-        BOOL noAccessory = true;
-        NSArray *d = [del.surveyDB getUploadTrackingRecordsForCustomer:item.custID];
-        for(NSNumber *n in d){
-            PVONavigationListItem *p = [[PVONavigationListItem alloc] init];
-            p.navItemID = n.intValue;
-            p.custID = item.custID;
-            if(p.hasRequiredSignatures){
-                noAccessory = false;
-                break;
-            }
-        }
-        
-        if(!noAccessory){
-            if([[del.surveyDB getAllDirtyReportsForCustomer:item.custID] count] > 0){
-                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
-            } else {
-                cell.accessoryView = nil;
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    BOOL noAccessory = true;
+    NSArray *d = [del.surveyDB getUploadTrackingRecordsForCustomer:item.custID];
+    for(NSNumber *n in d){
+        PVONavigationListItem *p = [[PVONavigationListItem alloc] init];
+        p.navItemID = n.intValue;
+        p.custID = item.custID;
+        if(p.hasRequiredSignatures){
+            noAccessory = false;
+            break;
         }
     }
+    
+    if(!noAccessory){
+        if([[del.surveyDB getAllDirtyReportsForCustomer:item.custID] count] > 0){
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
+        } else {
+            cell.accessoryView = nil;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
     
 	return (UITableViewCell*)cell;
 	
@@ -637,21 +636,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     // If row is deleted, remove it from the list.
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		
 		@try {
-			
-			deleteIndex = indexPath;
-			CustomerListItem *item = [customers objectAtIndex:[deleteIndex row]];
-			
-			UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Are you sure you would like to delete record for %@?", item.name]
-															   delegate:self
-													  cancelButtonTitle:@"No"
-												 destructiveButtonTitle:@"Yes"
-													  otherButtonTitles:nil];
-			sheet.tag = ACTION_SHEET_DELETE;
-			[sheet showInView:self.view];
+            CustomerListItem *item = [customers objectAtIndex:[indexPath row]];
+            NSString *message = [NSString stringWithFormat:@"Are you sure you would like to delete record for %@?", item.name];
+            UIAlertController *alert =
+                [UIAlertController alertControllerWithTitle:@"Delete Customer"
+                                                    message:message
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        
+            [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+                SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+                [del.surveyDB deleteCustomer:item.custID];
+                
+                [self.customers removeObject:item];
+                // Animate the deletion from the table.
+                [self.tblView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                                    withRowAnimation:UITableViewRowAnimationFade];
+                }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
             
-		}
+        }
 		@catch (NSException * e) {
 			[SurveyAppDelegate handleException:e];
 		}
@@ -666,22 +671,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
 	if(buttonIndex != [actionSheet cancelButtonIndex])
 	{
-		if(actionSheet.tag == ACTION_SHEET_DELETE)
-		{
-			
-			
-			CustomerListItem *item = [customers objectAtIndex:[deleteIndex row]];
-			
-			[del.surveyDB deleteCustomer:item.custID];
-			
-			[self.customers removeObject:item];
-			
-			// Animate the deletion from the table.
-			[self.tblView deleteRowsAtIndexPaths:[NSArray arrayWithObject:deleteIndex]
-								withRowAnimation:UITableViewRowAnimationFade];
-			
-		}
-        else if(actionSheet.tag == ACTION_SHEET_CREATE)
+		if(actionSheet.tag == ACTION_SHEET_CREATE)
         {
             if(buttonIndex == 0)
                 [self createNewCustomer];
@@ -863,12 +853,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 				[del.navController presentViewController:navController animated:YES completion:nil];
 			}
 		}
-	}
-	
-	
-	if(deleteIndex != nil)
-	{
-		deleteIndex = nil;
 	}
 }
 

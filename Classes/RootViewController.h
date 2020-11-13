@@ -68,9 +68,6 @@
     PVOFavoriteCartonContentsController *favoritesCartonContents;
     
     IBOutlet UIToolbar *toolbarOptions;
-    
-    NSIndexPath *deleteIndex;
-    
     PVOVerifyHolder *verifyHolder;
     
     PackerInitialsController *packerInitialController;
