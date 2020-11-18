@@ -63,7 +63,7 @@
         vehicles = [[NSMutableArray alloc] init];
         
         primaryPhone = [[SurveyPhone alloc] init];
-        primaryPhone.locationID = ORIGIN_LOCATION_ID;
+        primaryPhone.locationTypeId = ORIGIN_LOCATION_ID;
         primaryPhone.type = [[PhoneType alloc] init];
         primaryPhone.type.name = @"Primary";
         

@@ -593,7 +593,7 @@ exit:
     if (phone == nil) {
         phone = [[SurveyPhone alloc] init];
         phone.number = @"";
-        phone.locationID = ORIGIN_LOCATION_ID;
+        phone.locationTypeId = ORIGIN_LOCATION_ID;
         phone.isPrimary = 0;
         phone.type.phoneTypeID = typeId;
     }

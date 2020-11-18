@@ -1872,7 +1872,7 @@
                     phone.number = primaryPhone;
                     phone.type = [[PhoneType alloc] init];
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = -1;
+                    phone.locationTypeId = -1;
                     [originPhones addObject:phone];
                 }
                 
@@ -1883,7 +1883,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Home";
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1894,7 +1894,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Mobile";
                     phone.type.phoneTypeID = 1;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1905,7 +1905,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Work";
                     phone.type.phoneTypeID = 3;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1916,7 +1916,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Other";
                     phone.type.phoneTypeID = 4;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1953,7 +1953,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Home";
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1964,7 +1964,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Mobile";
                     phone.type.phoneTypeID = 1;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1975,7 +1975,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Work";
                     phone.type.phoneTypeID = 3;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1986,7 +1986,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Other";
                     phone.type.phoneTypeID = 4;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 

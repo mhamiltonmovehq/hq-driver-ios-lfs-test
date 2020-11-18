@@ -20,7 +20,7 @@
 
 @implementation LocationController
 
-@synthesize custID, locationID, locations, editAddressController, phoneController, imageViewer, dirty, addRows, lockFields, originPhone1, originPhone2, destPhone1, destPhone2;
+@synthesize custID, locationID, locations, editAddressController, phoneController, imageViewer, dirty, addRows, lockFields, phone1, phone2;
 
 #pragma mark - Lifecycle -
 - (void)viewDidLoad {
@@ -49,21 +49,15 @@
     l.phones = [del.surveyDB getCustomerPhones:custID withLocationID:locationID];
     for(SurveyPhone *phone in l.phones) {
         NSInteger typeId = phone.type.phoneTypeID;
-        if (typeId == ORIGIN_PHONE_1) {
-            if (originPhone1 == nil) originPhone1 = phone;
-        } else if (typeId == ORIGIN_PHONE_2) {
-            if (originPhone2 == nil) originPhone2 = phone;
-        } else if (typeId == DESTINATION_PHONE_1) {
-            if (destPhone1 == nil) destPhone1 = phone;
-        } else if (typeId == DESTINATION_PHONE_2) {
-            if (destPhone2 == nil) destPhone2 = phone;
+        if (typeId == PHONE_1) {
+            if (phone1 == nil) phone1 = phone;
+        } else if (typeId == PHONE_2) {
+            if (phone2 == nil) phone2 = phone;
         }
     }
     // Initializes phones if null after attempting to load
-    self.originPhone1 = [self setupPhone:originPhone1 withPhoneTypeId:ORIGIN_PHONE_1];
-    self.originPhone2 = [self setupPhone:originPhone2 withPhoneTypeId:ORIGIN_PHONE_2];
-    self.destPhone1 = [self setupPhone:destPhone1 withPhoneTypeId:DESTINATION_PHONE_1];
-    self.destPhone2 = [self setupPhone:destPhone2 withPhoneTypeId:DESTINATION_PHONE_2];
+    self.phone1 = [self setupPhone:phone1 withPhoneTypeId:PHONE_1];
+    self.phone2 = [self setupPhone:phone2 withPhoneTypeId:PHONE_2];
 	
 	if(editAddressController != nil)
 	{
@@ -231,11 +225,11 @@
         [fCell.tboxValue setDelegate:self];
         
         int phoneTypeId;
-        if ([indexPath row] == PHONE_1) {
-            phoneTypeId = [self isOrigin] ? ORIGIN_PHONE_1 : DESTINATION_PHONE_1;
+        if ([indexPath row] == PHONE_1_ROW) {
+            phoneTypeId = PHONE_1;
             fCell.tboxValue.tag = PHONE_1;
-        } else if ([indexPath row] == PHONE_2) {
-            phoneTypeId = [self isOrigin] ? ORIGIN_PHONE_2 : DESTINATION_PHONE_2;
+        } else if ([indexPath row] == PHONE_2_ROW) {
+            phoneTypeId = PHONE_2;
             fCell.tboxValue.tag = PHONE_2;
         }
         
@@ -402,18 +396,10 @@
 {
     SurveyPhone* phone;
     if ([indexPath section] == [locations count] + 1) {
-        if (indexPath.row == PHONE_1) {
-            if ([self isOrigin]) {
-                phone = originPhone1;
-            } else {
-                phone = destPhone1;
-            }
-        } else if (indexPath.row == PHONE_2 ) {
-            if ([self isOrigin]) {
-                phone = originPhone2;
-            } else {
-                phone = destPhone2;
-            }
+        if (indexPath.row == PHONE_1_ROW) {
+            phone = phone1;
+        } else if (indexPath.row == PHONE_2_ROW) {
+            phone = phone2;
         }
         calling = phone;
         
@@ -483,19 +469,9 @@
 {
     [self updateCustomerValueWithField:textField];
     if (textField.tag == PHONE_1) {
-        if ([self isOrigin]) {
-            [self insertOrUpdatePhone:originPhone1];
-        } else {
-            [self insertOrUpdatePhone:destPhone1];
-
-        }
+        [self insertOrUpdatePhone:phone1];
     } else if (textField.tag == PHONE_2) {
-        if ([self isOrigin]) {
-            [self insertOrUpdatePhone:originPhone2];
-        } else {
-            [self insertOrUpdatePhone:destPhone2];
-
-        }
+        [self insertOrUpdatePhone:phone2];
     }
 }
 
@@ -597,17 +573,9 @@
 
 - (void)setPhoneNumberForTextField:(UITextField * _Nonnull)textField withNumber:(NSString*) number {
     if(textField.tag == PHONE_1) {
-        if ([self isOrigin]) {
-            originPhone1.number = number;
-        } else {
-            destPhone1.number = number;
-        }
+        phone1.number = number;
     } else if(textField.tag == PHONE_2) {
-        if ([self isOrigin]) {
-            originPhone2.number = number;
-        } else {
-            destPhone2.number = number;
-        }
+        phone2.number = number;
     }
 }
 
@@ -635,7 +603,7 @@
     if (phone == nil) {
         phone = [[SurveyPhone alloc] init];
         phone.number = @"";
-        phone.locationID = locationID;
+        phone.locationTypeId = locationID;
         phone.isPrimary = 0;
         phone.type.phoneTypeID = typeId;
         phone.type.name = [del.surveyDB getPhoneTypeNameFromId:typeId];
@@ -645,7 +613,7 @@
 
 -(void)insertOrUpdatePhone:(SurveyPhone*)phone {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSString *phone1 = [del.surveyDB getCustomerPhone:custID withLocationID:phone.locationID andPhoneType:phone.type.name];
+    NSString *phone1 = [del.surveyDB getCustomerPhone:custID withLocationID:phone.locationTypeId andPhoneType:phone.type.name];
     if(phone1 != nil) {
         [del.surveyDB updatePhone:phone];
     } else {

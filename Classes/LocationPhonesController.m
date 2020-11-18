@@ -183,7 +183,7 @@
         edit = [[SurveyPhone alloc] init];
         edit.type = nil;//force select
         edit.custID = custID;
-        edit.locationID = locationID;
+        edit.locationTypeId = locationID;
         edit.number = @"";
         phoneController.phone = edit;
         
