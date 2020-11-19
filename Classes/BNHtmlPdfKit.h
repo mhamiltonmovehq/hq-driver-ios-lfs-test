@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 @protocol BNHtmlPdfKitDelegate;
 
@@ -318,7 +319,7 @@ typedef enum {
  
  @param webView The webView to save as a pdf.
  */
-- (void)saveWebViewAsPdf:(UIWebView *)webView;
+- (void)saveWebViewAsPdf:(WKWebView *)webView;
 
 /**
  Saves webView content to a PDF file.
@@ -326,10 +327,10 @@ typedef enum {
  @param webView The webView to save as a pdf file.
  @param file The filename of the pdf file to save.
  */
-- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file;
+- (void)saveWebViewAsPdf:(WKWebView *)webView toFile:(NSString *)file;
 
 //added a method to accept pagesize 0 = letter 1 = legal
-- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file withPageSize:(int)pageSize;
+- (void)saveWebViewAsPdf:(WKWebView *)webView toFile:(NSString *)file withPageSize:(int)pageSize;
 /**
  Determine the preferred paper size for general printing. From Pierre Bernard.
  

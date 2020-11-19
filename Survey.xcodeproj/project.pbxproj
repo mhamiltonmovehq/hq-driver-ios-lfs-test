@@ -5608,7 +5608,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5616,7 +5616,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5661,7 +5661,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5669,7 +5669,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5712,7 +5712,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5720,7 +5720,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5762,7 +5762,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5771,7 +5771,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5813,7 +5813,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5822,7 +5822,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5862,7 +5862,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5871,7 +5871,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 404;
+				MARKETING_VERSION = 405;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5908,7 +5908,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$SRCROOT/GPUImage-master/framework/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -5949,7 +5949,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$SRCROOT/GPUImage-master/framework/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -5993,7 +5993,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$SRCROOT/GPUImage-master/framework/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",

@@ -20,6 +20,7 @@
 #import "HTMLReportGenerator.h"
 #import "PVONavigationListItem.h"
 #import "PVOSync.h"
+#import <WebKit/WebKit.h>
 
 #define PRINT_EMAIL 0
 #define PRINT_HARD_COPY 1
@@ -57,9 +58,9 @@
 -(void)printPreviewDoc:(PreviewPDFController*)pdfController;
 @end
 
-@interface PreviewPDFController : UIViewController <UIActionSheetDelegate, SignatureViewControllerDelegate, UIAlertViewDelegate, TextAlertViewControllerDelegate, HTMLReportGeneratorDelegate, ProcessReportControllerDelegate, PVOUploadReportViewDelegate, PJ673PrintSettingsDelegate, UIWebViewDelegate, PVOSyncDelegate> {
-    IBOutlet UIWebView *pdfView;
+@interface PreviewPDFController : UIViewController <UIActionSheetDelegate, SignatureViewControllerDelegate, UIAlertViewDelegate, TextAlertViewControllerDelegate, HTMLReportGeneratorDelegate, ProcessReportControllerDelegate, PVOUploadReportViewDelegate, PJ673PrintSettingsDelegate, WKNavigationDelegate, PVOSyncDelegate> {
     IBOutlet UIView *viewProgress;
+    IBOutlet WKWebView *pdfView;
     NSString *pdfPath;
     SignatureViewController *signatureController;
     ReportOption *option;
@@ -113,7 +114,7 @@
     
 }
 
-@property (nonatomic, retain) PVONavigationListItem *pvoItem;
+@property (nonatomic, strong) PVONavigationListItem *pvoItem;
 @property (nonatomic) BOOL signedReport;
 
 //added for the doc lib to restrict signature option from being displayed
@@ -123,28 +124,28 @@
 @property (nonatomic) BOOL hideActionsOptions;
 @property (nonatomic) BOOL uploadAfterSigning;
 
-@property (nonatomic, retain) SmallProgressView *uploadProgress;
+@property (nonatomic, strong) SmallProgressView *uploadProgress;
 
-@property (nonatomic, retain) UIWebView *pdfView;
-@property (nonatomic, retain) id additionalReportInfo;
-@property (nonatomic, retain) UIView *viewProgress;
-@property (nonatomic, retain) NSString *pdfPath;
-@property (nonatomic, retain) ReportOption *option;
-@property (nonatomic, retain) id disconnectedDrawer;
-@property (nonatomic, retain) SignatureViewController *signatureController;
-@property (nonatomic, retain) id<PreviewPDFControllerDelegate> delegate;
-@property (nonatomic, retain) PVOUploadReportView *uploader;
-@property (nonatomic, retain) TextAlertViewController *esignView;
-@property (nonatomic, retain) SingleFieldController *singleFieldController;
-@property (nonatomic, retain) NSString *signatureName;
-@property (nonatomic, retain) NSMutableArray *docsToUpload;
-@property (nonatomic, retain) NSMutableArray *customers;
+@property (nonatomic, strong) WKWebView *pdfView;
+@property (nonatomic, strong) id additionalReportInfo;
+@property (nonatomic, strong) UIView *viewProgress;
+@property (nonatomic, strong) NSString *pdfPath;
+@property (nonatomic, strong) ReportOption *option;
+@property (nonatomic, strong) id disconnectedDrawer;
+@property (nonatomic, strong) SignatureViewController *signatureController;
+@property (nonatomic, strong) id<PreviewPDFControllerDelegate> delegate;
+@property (nonatomic, strong) PVOUploadReportView *uploader;
+@property (nonatomic, strong) TextAlertViewController *esignView;
+@property (nonatomic, strong) SingleFieldController *singleFieldController;
+@property (nonatomic, strong) NSString *signatureName;
+@property (nonatomic, strong) NSMutableArray *docsToUpload;
+@property (nonatomic, strong) NSMutableArray *customers;
 @property (nonatomic) SEL dirtyReportUploadFinished;
 @property (nonatomic) SEL allDirtyReportsFinishedUploading;
 //used for saving to the doc library, to ge tthe report name
-@property (nonatomic, retain) NSString *navOptionText;
+@property (nonatomic, strong) NSString *navOptionText;
 
-@property (nonatomic, retain) PJ673PrintSettings *pj673PrintSettings;
+@property (nonatomic, strong) PJ673PrintSettings *pj673PrintSettings;
 @property (nonatomic) BOOL useDisconnectedReports;
 
 -(IBAction)optionsClick:(id)sender;
