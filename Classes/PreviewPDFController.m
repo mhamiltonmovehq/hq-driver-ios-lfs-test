@@ -126,8 +126,7 @@
         return;
     }
     
-    //    [self.pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-    [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+    [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
     
     UIBarButtonItem *signButton;
     if (self.noSignatureAllowed || [self.pvoItem hasSignatureType:-1])
@@ -274,10 +273,8 @@
                 supportsDisconnected = [[disconnectedDrawer availableReports] objectForKey:[NSNumber numberWithInt:reportTypeID]] != nil;
         }
         
-        //[pdfView loadRequest:nil];
-        //[pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-        [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
-        
+        [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
+
         if([del.pricingDB vanline] == ATLAS && reportTypeID == VIEW_BOL)
         {
             PVOSync *sync = [[PVOSync alloc] init];
@@ -413,9 +410,7 @@
                 [SurveyAppDelegate showAlert:@"An error occurred trying to generate online reports.  "
                  "Please verify your network connection and try again."
                                    withTitle:@"Error"];
-                //[pdfView loadRequest:nil];
-                //[pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-                [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+                [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
             }
             else if(htmlSupported && (!isAtlas || (!isInventory || !isBetween113and120)))
             //only run HTML version if not atlas, or atlas non-inventory.  Also run if Atlas Inventory, but below iOS version 11.3 or above iOS version 12.0
@@ -552,7 +547,6 @@
             [SurveyAppDelegate showAlert:@"An error occurred trying to generate online reports.  "
              "Please verify your network connection and try again."
                                withTitle:@"Error"];
-            //[SurveyAppDelegate showAlert:result withTitle:@"Get Report Error"];
         }
         else
         {

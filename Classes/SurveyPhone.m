@@ -11,7 +11,7 @@
 
 @implementation SurveyPhone
 
-@synthesize custID, locationID, type, number, isPrimary;
+@synthesize custID, locationTypeId, type, number, isPrimary;
 
 -(id)init
 {

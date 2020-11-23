@@ -66,21 +66,18 @@
     for(int i = 0; i < [parser.locations count]; i++)
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
-        if(location.locationType == -1)
-        {//this is an ex stop
+        if(location.locationType == -1) {//this is an ex stop
             //locid and seq generated automatically...
             [del.surveyDB insertLocation:location];
-        }
-        else
-        {
+        } else {
             [del.surveyDB updateLocation:location];
-            
-            for(int j = 0; j < [location.phones count]; j++)
-            {
-                SurveyPhone *phone = [location.phones objectAtIndex:j];
-                phone.custID = custId;
-                [del.surveyDB insertPhone:phone];
-            }
+        }
+        
+        for(SurveyPhone *phone in location.phones)
+        {
+            phone.custID = custId;
+            phone.locationTypeId = location.locationType;
+            [del.surveyDB insertPhone:phone];
         }
     }
     
@@ -188,23 +185,19 @@
     for(int i = 0; i < [parser.locations count]; i++)
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
-        if(location.locationType == -1)
-        {//this is an ex stop
+        if(location.locationType == -1) {//this is an ex stop
             //locid and seq generated automatically...
             [del.surveyDB insertLocation:location];
-            
-        }
-        else
-        {
+        } else {
             [del.surveyDB updateLocation:location];
-            
             [del.surveyDB deletePhones:custId withLocationID:location.locationType];
-            for(int j = 0; j < [location.phones count]; j++)
-            {
-                SurveyPhone *phone = [location.phones objectAtIndex:j];
-                phone.custID = custId;
-                [del.surveyDB insertPhone:phone];
-            }
+        }
+        
+        for(SurveyPhone *phone in location.phones)
+        {
+            phone.custID = custId;
+            phone.locationTypeId = location.locationType;
+            [del.surveyDB insertPhone:phone];
         }
     }
     

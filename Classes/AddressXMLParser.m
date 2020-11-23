@@ -7,6 +7,7 @@
 //
 
 #import "AddressXMLParser.h"
+#import "LocationController.h"
 
 
 @implementation AddressXMLParser
@@ -25,7 +26,6 @@
 - (SurveyPhone *)getNewPhone {
     SurveyPhone *phone = [[SurveyPhone alloc] init];
     phone.number = [NSString stringWithString:currentString];
-    phone.locationID = location.isOrigin ? ORIGIN_LOCATION_ID : DESTINATION_LOCATION_ID;
     phone.isPrimary = 0;
     return phone;
 }
@@ -100,14 +100,14 @@
     else if(storingData && [elementName isEqualToString:@"phone_1"])
     {
         SurveyPhone * phone = [self getNewPhone];
-        phone.type.phoneTypeID = location.isOrigin ? 5 : 7;
+        phone.type.phoneTypeID = PHONE_1;
         [location.phones addObject:phone];
         
 	}
     else if(storingData && [elementName isEqualToString:@"phone_2"])
     {
         SurveyPhone * phone = [self getNewPhone];
-        phone.type.phoneTypeID = location.isOrigin ? 6 : 8;
+        phone.type.phoneTypeID = PHONE_2;
         [location.phones addObject:phone];
         
 	}

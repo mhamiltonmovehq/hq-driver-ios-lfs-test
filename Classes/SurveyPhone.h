@@ -11,14 +11,14 @@
 
 @interface SurveyPhone : NSObject {
     NSInteger custID;
-    NSInteger locationID;
+    NSInteger locationTypeId;
     PhoneType *type;
     NSString *number;
     int isPrimary;
 }
 
 @property (nonatomic) NSInteger custID;
-@property (nonatomic) NSInteger locationID;
+@property (nonatomic) NSInteger locationTypeId;
 @property (nonatomic, strong) PhoneType *type;
 @property(nonatomic, strong) NSString *number;
 @property(nonatomic) int isPrimary;

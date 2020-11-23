@@ -23,13 +23,11 @@
 #define LOCATIONS_ADD_VAN_OP 2
 #define LOCATIONS_ADD_AK 3
 
-#define PHONE_1 0
-#define PHONE_2 1
+#define PHONE_1_ROW 0
+#define PHONE_2_ROW 1
 
-#define ORIGIN_PHONE_1 5
-#define ORIGIN_PHONE_2 6
-#define DESTINATION_PHONE_1 7
-#define DESTINATION_PHONE_2 8
+#define PHONE_1 5
+#define PHONE_2 6
 
 @interface LocationController : PVOBaseTableViewController <UIActionSheetDelegate, UITextFieldDelegate> {
 	int imagesCount;
@@ -48,10 +46,9 @@
 @property (nonatomic, strong) SurveyImageViewer *imageViewer;
 @property (nonatomic) BOOL lockFields;
 @property (nonatomic) BOOL isPacker;
-@property (nonatomic, strong) SurveyPhone *originPhone1;
-@property (nonatomic, strong) SurveyPhone *originPhone2;
-@property (nonatomic, strong) SurveyPhone *destPhone1;
-@property (nonatomic, strong) SurveyPhone *destPhone2;
+@property (nonatomic, strong) SurveyPhone *phone1;
+@property (nonatomic, strong) SurveyPhone *phone2;
+
 
 -(void)initializeAddRows;
 -(NSString*)combineStrings:(NSArray*)strings withSplitter:(NSString*)split;

@@ -2546,10 +2546,8 @@
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         if(maj < ++ver) {
-            [db updateDB: @"INSERT INTO PhoneTypes values (5, 'Origin Phone 1', 1)"];
-            [db updateDB: @"INSERT INTO PhoneTypes values (6, 'Origin Phone 2', 1)"];
-            [db updateDB: @"INSERT INTO PhoneTypes values (7, 'Destination Phone 1', 1)"];
-            [db updateDB: @"INSERT INTO PhoneTypes values (8, 'Destination Phone 2', 1)"];
+            [db updateDB: @"INSERT INTO PhoneTypes values (5, 'Phone 1', 1)"];
+            [db updateDB: @"INSERT INTO PhoneTypes values (6, 'Phone 2', 1)"];
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         

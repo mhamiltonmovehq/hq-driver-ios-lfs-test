@@ -1917,7 +1917,7 @@
 -(void)insertPhone:(SurveyPhone*) phone {
     NSString *cmd = [[NSString alloc] initWithFormat:@"INSERT INTO Phones(CustomerID,LocationID,TypeID,Number,isPrimary) VALUES(%ld,%ld,%ld,'%@',%d);",
                      phone.custID,
-                     phone.locationID,
+                     phone.locationTypeId,
                      phone.type == nil ? 0 : phone.type.phoneTypeID,
                      phone.number == nil ? @"" : [phone.number stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      phone.isPrimary];
@@ -1933,7 +1933,7 @@
                      phone.number == nil ? @"" : [phone.number stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      phone.isPrimary,
                      phone.custID,
-                     phone.locationID,
+                     phone.locationTypeId,
                      phone.type == nil ? 0 : phone.type.phoneTypeID];
     
     [self updateDB:cmd];
@@ -1946,7 +1946,7 @@
 {
     
     NSString *cmd = [[NSString alloc] initWithFormat:@"DELETE FROM Phones WHERE CustomerID = %ld AND LocationID = %ld AND TypeID = %ld;",
-                     phone.custID, phone.locationID, phone.type.phoneTypeID];
+                     phone.custID, phone.locationTypeId, phone.type.phoneTypeID];
     
     [self updateDB:cmd];
     
@@ -2313,7 +2313,7 @@
             item.type = [[PhoneType alloc] init];
             
             item.custID = sqlite3_column_int(stmnt, 0);
-            item.locationID = sqlite3_column_int(stmnt, 1);
+            item.locationTypeId = sqlite3_column_int(stmnt, 1);
             item.type.phoneTypeID = sqlite3_column_int(stmnt, 2);
             int isPrimary = sqlite3_column_int(stmnt, 5);
             if (isPrimary == 1)
@@ -2349,7 +2349,7 @@
             item.type = [[PhoneType alloc] init];
             
             item.custID = sqlite3_column_int(stmnt, 0);
-            item.locationID = sqlite3_column_int(stmnt, 1);
+            item.locationTypeId = sqlite3_column_int(stmnt, 1);
             item.type.phoneTypeID = sqlite3_column_int(stmnt, 2);
             //item.type.name = @"Primary";  // This makes it show as 'Primary' in the editphonecontroller if primary is unchecked... don't like it.
             item.type.name = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 3)];

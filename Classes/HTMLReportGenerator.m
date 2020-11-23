@@ -21,10 +21,12 @@
 {
     if(self = [super init])
     {
-        webView = [[UIWebView alloc] init];
-        htmlKit = [[BNHtmlPdfKit alloc] init];
+        WKWebViewConfiguration *webConfig = [[WKWebViewConfiguration alloc] init];
+        webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webConfig];
+        webView.navigationDelegate = self;
+        [webView.configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
         
-        webView.delegate = self;
+        htmlKit = [[BNHtmlPdfKit alloc] init];
         htmlKit.delegate = self;
     }
     
@@ -204,66 +206,40 @@
         }
     }
     
-    
-    NSString* webStringURL = [fullpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    webView.configuration.preferences.javaScriptEnabled = YES;
+    NSMutableString *str = [[NSMutableString alloc] initWithString:@"file://"];
+    NSString* webStringURL = [str stringByAppendingString:[fullpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url = [NSURL URLWithString:webStringURL];
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:requestObj];
-    [webView loadRequest:requestObj];
-    
+    NSURL *baseDir = [NSURL fileURLWithPath:[SurveyAppDelegate getDocsDirectory] isDirectory:YES];
+
+    [webView loadFileURL:url allowingReadAccessToURL:baseDir];    
 }
 
 
-#pragma mark - UIWebViewDelegate methods
+#pragma mark - WKWebView methods
 
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-}
-
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     if(self.delegate != nil && [self.delegate respondsToSelector:@selector(htmlReportGenerator:failedToGenerate:)])
         [self.delegate htmlReportGenerator:self failedToGenerate:error.description];
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)thisWebView
-{
-    
-    //    NSString *xml = [SyncGlobals buildCustomerXML:custID isAtlas:NO].file;
-    //    NSString *base64 =[Base64 encode64:xml];
-    //    NSString *jsCall = [NSString stringWithFormat:@"PopulateReport('{\"id\":\"%d\",\"xml\":\"%@\"}')", self.pvoReportTypeID, base64];
-    //
-    //    [webView stringByEvaluatingJavaScriptFromString:jsCall];
-    //
-    //
-    //    NSLog(@"save");
-    
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     NSString *documentsPath = [SurveyAppDelegate getDocsDirectory];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:@"temp.pdf"];
     
     [htmlKit saveWebViewAsPdf:webView toFile:filePath withPageSize:self.pageSize];
-    
-    //NSString *htmlDir = [SurveyAppDelegate getDocsDirectory];
-    //htmlDir = [htmlDir stringByAppendingPathComponent:HTML_REPORTS_TEMP_DIR];
-    //NSFileManager *mgr = [NSFileManager defaultManager];
-    //[mgr removeItemAtPath:htmlDir error:nil];
 }
 
 #pragma mark - BNHtmlPdfKitDelegate methods
 
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file {
-    
     if(self.delegate != nil && [self.delegate respondsToSelector:@selector(htmlReportGenerator:fileSaved:)])
         [self.delegate htmlReportGenerator:self fileSaved:file];
-    
 }
 
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error {
-    
     if(self.delegate != nil && [self.delegate respondsToSelector:@selector(htmlReportGenerator:failedToGenerate:)])
         [self.delegate htmlReportGenerator:self failedToGenerate:error.description];
-    
-    
 }
 
 @end
