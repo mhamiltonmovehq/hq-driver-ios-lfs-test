@@ -8416,7 +8416,8 @@
     sqlite3_stmt *stmnt;
     
     
-    if([self prepareStatement:[NSString stringWithFormat:@"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType "
+    if([self prepareStatement:[NSString stringWithFormat:
+                               @"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType "
                                "FROM PVOWeightTickets "
                                "WHERE CustomerID = %d ", custID]
                 withStatement:&stmnt])

@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6338C49218C6326300E3A7EF"
                BuildableName = "Mobile Mover.app"
-               BlueprintName = "Mobile Mover"
+               BlueprintName = "HQ Driver"
                ReferencedContainer = "container:Survey.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,7 +46,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6338C49218C6326300E3A7EF"
             BuildableName = "Mobile Mover.app"
-            BlueprintName = "Mobile Mover"
+            BlueprintName = "HQ Driver"
             ReferencedContainer = "container:Survey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -63,7 +63,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6338C49218C6326300E3A7EF"
             BuildableName = "Mobile Mover.app"
-            BlueprintName = "Mobile Mover"
+            BlueprintName = "HQ Driver"
             ReferencedContainer = "container:Survey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

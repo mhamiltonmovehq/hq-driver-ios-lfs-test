@@ -271,12 +271,6 @@
 		6338C51018C6326300E3A7EF /* img_claims.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2F73C414F6ED9F00910E5D /* img_claims.png */; };
 		6338C51118C6326300E3A7EF /* img_claims@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2F73C514F6ED9F00910E5D /* img_claims@2x.png */; };
 		6338C51218C6326300E3A7EF /* PVOClaimItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBC175E14F96080006BCA3F /* PVOClaimItemsView.xib */; };
-		6338C51318C6326300E3A7EF /* pvo_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C7C14FD8A870019F0F7 /* pvo_logo@2x.png */; };
-		6338C51418C6326300E3A7EF /* pvo_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C7E14FD8A910019F0F7 /* pvo_logo.png */; };
-		6338C51518C6326300E3A7EF /* pvo_splash.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C8414FD8AA80019F0F7 /* pvo_splash.png */; };
-		6338C51618C6326300E3A7EF /* pvo_splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C8614FD8AAF0019F0F7 /* pvo_splash@2x.png */; };
-		6338C51718C6326300E3A7EF /* pvo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF08F2614FE7FFD00C168D2 /* pvo_icon@2x.png */; };
-		6338C51818C6326300E3A7EF /* pvo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF08F2814FE800200C168D2 /* pvo_icon.png */; };
 		6338C51B18C6326300E3A7EF /* img_receive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A349152B6D7900270B39 /* img_receive@2x.png */; };
 		6338C51C18C6326300E3A7EF /* img_receive.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A34A152B6D7900270B39 /* img_receive.png */; };
 		6338C51D18C6326300E3A7EF /* PVOReceiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A357152B8E3F00270B39 /* PVOReceiveView.xib */; };
@@ -551,6 +545,10 @@
 		6A03317C2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A03317D2433B8B300CFD063 /* CustomerOptionsView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */; };
 		6A0331862434E69400CFD063 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
+		6A1D3C9B256C4E8C00825EFF /* driver-full.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6A1D3C99256C4E8C00825EFF /* driver-full.svg */; };
+		6A1D3C9C256C4E8D00825EFF /* driver-full.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6A1D3C99256C4E8C00825EFF /* driver-full.svg */; };
+		6A1D3C9D256C4E8D00825EFF /* driver-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A1D3C9A256C4E8C00825EFF /* driver-full.png */; };
+		6A1D3C9E256C4E8D00825EFF /* driver-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A1D3C9A256C4E8C00825EFF /* driver-full.png */; };
 		6A2E045D2429598B00172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E045E242959E900172BC5 /* SplashView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */; };
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
@@ -1143,15 +1141,9 @@
 		94B25CBE1CB43FE7004366D4 /* img_claims.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2F73C414F6ED9F00910E5D /* img_claims.png */; };
 		94B25CBF1CB43FE7004366D4 /* img_claims@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2F73C514F6ED9F00910E5D /* img_claims@2x.png */; };
 		94B25CC01CB43FE7004366D4 /* PVOClaimItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBC175E14F96080006BCA3F /* PVOClaimItemsView.xib */; };
-		94B25CC11CB43FE7004366D4 /* pvo_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C7C14FD8A870019F0F7 /* pvo_logo@2x.png */; };
-		94B25CC21CB43FE7004366D4 /* pvo_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C7E14FD8A910019F0F7 /* pvo_logo.png */; };
 		94B25CC31CB43FE7004366D4 /* MotorVehicleInventory.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 35A942FD19464FA200A2BC8B /* MotorVehicleInventory.pdf */; };
 		94B25CC41CB43FE7004366D4 /* demosurvey2.xml in Resources */ = {isa = PBXBuildFile; fileRef = D70030EB1C5A65F800F7266B /* demosurvey2.xml */; };
 		94B25CC51CB43FE7004366D4 /* car_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 9456BA531C6D1F2F00CA4CED /* car_left.png */; };
-		94B25CC61CB43FE7004366D4 /* pvo_splash.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C8414FD8AA80019F0F7 /* pvo_splash.png */; };
-		94B25CC71CB43FE7004366D4 /* pvo_splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF048C8614FD8AAF0019F0F7 /* pvo_splash@2x.png */; };
-		94B25CC81CB43FE7004366D4 /* pvo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF08F2614FE7FFD00C168D2 /* pvo_icon@2x.png */; };
-		94B25CC91CB43FE7004366D4 /* pvo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF08F2814FE800200C168D2 /* pvo_icon.png */; };
 		94B25CCA1CB43FE7004366D4 /* img_receive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A349152B6D7900270B39 /* img_receive@2x.png */; };
 		94B25CCB1CB43FE7004366D4 /* img_receive.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A34A152B6D7900270B39 /* img_receive.png */; };
 		94B25CCC1CB43FE7004366D4 /* PVOReceiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFF3A357152B8E3F00270B39 /* PVOReceiveView.xib */; };
@@ -1330,8 +1322,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Survey_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Survey_Prefix.pch; sourceTree = "<group>"; };
 		350A115719353615001D8EF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		350A131F193537E7001D8EF2 /* AtlasNetSplash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasNetSplash.png; sourceTree = "<group>"; };
-		350A1320193537E7001D8EF2 /* AtlasNetSplash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AtlasNetSplash@2x.png"; sourceTree = "<group>"; };
 		3512D0E317F0D020008AD08C /* MailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailComposeViewController.h; sourceTree = "<group>"; };
 		3512D0E417F0D020008AD08C /* MailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailComposeViewController.m; sourceTree = "<group>"; };
 		354785BB17FC6A7D00920BF6 /* AppFunctionality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFunctionality.h; sourceTree = "<group>"; };
@@ -1340,9 +1330,6 @@
 		355D5228195478BD00A57D77 /* MobileMover_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MobileMover_76.png; sourceTree = "<group>"; };
 		355D5229195478BD00A57D77 /* MobileMover_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MobileMover_120.png; sourceTree = "<group>"; };
 		355D522A195478BD00A57D77 /* MobileMover_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MobileMover_152.png; sourceTree = "<group>"; };
-		355D5231195478D300A57D77 /* AtlasNet_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasNet_76.png; sourceTree = "<group>"; };
-		355D5232195478D300A57D77 /* AtlasNet_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasNet_120.png; sourceTree = "<group>"; };
-		355D5233195478D300A57D77 /* AtlasNet_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasNet_152.png; sourceTree = "<group>"; };
 		3561FBAE1961E9DB00441DA2 /* AtlasNetPVODrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasNetPVODrawer.h; sourceTree = "<group>"; };
 		3561FBAF1961E9DB00441DA2 /* AtlasNetPVODrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AtlasNetPVODrawer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3561FBB21961EEB700441DA2 /* ArpinPVODrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArpinPVODrawer.h; sourceTree = "<group>"; };
@@ -1354,7 +1341,6 @@
 		3566E48119A3AD4700839B08 /* PVOAttachDocView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVOAttachDocView.xib; sourceTree = "<group>"; };
 		357208FB1A8CE33B00084874 /* EMVPrivateTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMVPrivateTags.h; sourceTree = "<group>"; };
 		357208FC1A8CE33B00084874 /* EMVTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMVTags.h; sourceTree = "<group>"; };
-		357D864F1951DC7B00DCC3EF /* AtlasLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasLogo.png; sourceTree = "<group>"; };
 		35878619193612A000E7A6A0 /* SurveyIcon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SurveyIcon-iPad.png"; sourceTree = "<group>"; };
 		3587861A193612A000E7A6A0 /* SurveyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SurveyIcon.png; sourceTree = "<group>"; };
 		3587861B193612A000E7A6A0 /* SurveyIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SurveyIcon@2x.png"; sourceTree = "<group>"; };
@@ -1509,7 +1495,6 @@
 		35F32C061961D49F00C9CD6F /* AutoBackupSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoBackupSettingsController.m; sourceTree = "<group>"; };
 		35F32C091961D4B900C9CD6F /* DebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugController.h; sourceTree = "<group>"; };
 		35F32C0A1961D4BA00C9CD6F /* DebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugController.m; sourceTree = "<group>"; };
-		35F72AD41A8E35F000CD79FD /* AtlasLogoBW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AtlasLogoBW.png; sourceTree = "<group>"; };
 		3E0BA9512003B69100C483E7 /* demomilitary1.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = demomilitary1.xml; sourceTree = "<group>"; };
 		3E0BA9532003B6A200C483E7 /* demomilitary2.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = demomilitary2.xml; sourceTree = "<group>"; };
 		3E4CB578213481FD003CAE17 /* AddFavoriteItemsForRoomController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddFavoriteItemsForRoomController.h; sourceTree = "<group>"; };
@@ -1559,6 +1544,8 @@
 		6A0331802433EE5A00CFD063 /* libdtdev-device.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libdtdev-device.a"; path = "Linea/libdtdev-device.a"; sourceTree = "<group>"; };
 		6A0331822433EF5E00CFD063 /* libdtdev-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libdtdev-sim.a"; path = "Linea/libdtdev-sim.a"; sourceTree = "<group>"; };
 		6A0331842433EF6600CFD063 /* libzbar-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzbar-sim.a"; path = "ZBarSDK/Simulator/libzbar-sim.a"; sourceTree = "<group>"; };
+		6A1D3C99256C4E8C00825EFF /* driver-full.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "driver-full.svg"; sourceTree = "<group>"; };
+		6A1D3C9A256C4E8C00825EFF /* driver-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "driver-full.png"; sourceTree = "<group>"; };
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
 		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
@@ -1654,10 +1641,7 @@
 		9456BA881C6D1F5600CA4CED /* truck_rear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck_rear.png; sourceTree = "<group>"; };
 		9456BA891C6D1F5600CA4CED /* truck_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck_right.png; sourceTree = "<group>"; };
 		9456BA8A1C6D1F5600CA4CED /* truck_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck_top.png; sourceTree = "<group>"; };
-		947D54031CCE9DC8007A0AB4 /* AtlasNet Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AtlasNet Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
-		947D54041CCEA2DE007A0AB4 /* AtlasNet Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AtlasNet Enterprise.entitlements"; sourceTree = "<group>"; };
 		9493D3D81BD0908700EB70D0 /* insert_mil_2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_mil_2.sql; sourceTree = "<group>"; };
-		949E1D3A1CD2952700BF8F20 /* AtlasNet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AtlasNet.entitlements; sourceTree = "<group>"; };
 		94ACF5B71CDBEC90007FB551 /* Mobile Mover GVL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Mobile Mover GVL-Info.plist"; path = "/Users/mb-dev-3/Documents/MobileMover_iOS_Trunk/Mobile Mover GVL-Info.plist"; sourceTree = "<absolute>"; };
 		94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Mover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B25D101CB43FE9004366D4 /* Mobile Mover Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mobile Mover Enterprise-Info.plist"; sourceTree = "<group>"; };
@@ -1804,10 +1788,6 @@
 		BF00A9F1143DEBEF00E63577 /* SelectLocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectLocationController.m; sourceTree = "<group>"; };
 		BF0217A3144F4CDD00BAE69A /* PVOUploadReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOUploadReportView.h; sourceTree = "<group>"; };
 		BF0217A4144F4CDD00BAE69A /* PVOUploadReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOUploadReportView.m; sourceTree = "<group>"; };
-		BF048C7C14FD8A870019F0F7 /* pvo_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pvo_logo@2x.png"; sourceTree = "<group>"; };
-		BF048C7E14FD8A910019F0F7 /* pvo_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pvo_logo.png; sourceTree = "<group>"; };
-		BF048C8414FD8AA80019F0F7 /* pvo_splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pvo_splash.png; sourceTree = "<group>"; };
-		BF048C8614FD8AAF0019F0F7 /* pvo_splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pvo_splash@2x.png"; sourceTree = "<group>"; };
 		BF059C5C104C61B4009D8055 /* InfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoController.h; sourceTree = "<group>"; };
 		BF059C5D104C61B4009D8055 /* InfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoController.m; sourceTree = "<group>"; };
 		BF059CB5104C7ED1009D8055 /* PickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickerView.xib; sourceTree = "<group>"; };
@@ -2255,8 +2235,6 @@
 		BFF00FC014167413006E49D8 /* PVOSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PVOSync.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BFF00FC514167CC4006E49D8 /* PVOSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSyncController.h; sourceTree = "<group>"; };
 		BFF00FC614167CC5006E49D8 /* PVOSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSyncController.m; sourceTree = "<group>"; };
-		BFF08F2614FE7FFD00C168D2 /* pvo_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pvo_icon@2x.png"; sourceTree = "<group>"; };
-		BFF08F2814FE800200C168D2 /* pvo_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pvo_icon.png; sourceTree = "<group>"; };
 		BFF27C331456037500F8496E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		BFF2C0631315BE790023F06B /* SurveyFAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyFAQViewController.h; sourceTree = "<group>"; };
 		BFF2C0641315BE790023F06B /* SurveyFAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyFAQViewController.m; sourceTree = "<group>"; };
@@ -2327,7 +2305,6 @@
 		D5DC5F1D1F6AC7F1002ED529 /* ScanbotSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScanbotSDK.framework; path = ScanbotSDK/ScanbotSDK.framework; sourceTree = "<group>"; };
 		D5DC5F221F6AD706002ED529 /* ScanbotSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ScanbotSDK; sourceTree = "<group>"; };
 		D5DC5F241F6AD71E002ED529 /* ScanbotSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ScanbotSDK.bundle; path = ScanbotSDK/ScanbotSDK.framework/ScanbotSDK.bundle; sourceTree = "<group>"; };
-		D5E9674020653D8700ED9D66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AtlasNet/Images.xcassets; sourceTree = "<group>"; };
 		D5EFF426200FB1FC004BB131 /* Constants-Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Constants-Defines.h"; sourceTree = "<group>"; };
 		D70030E61C5A65AA00F7266B /* demo2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = demo2.xml; sourceTree = "<group>"; };
 		D70030E81C5A65D200F7266B /* demopack2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = demopack2.xml; sourceTree = "<group>"; };
@@ -2526,8 +2503,6 @@
 				D5142D1B200424A20009FC53 /* Security.framework */,
 				7B4584AC1F82DD3E0069E1CD /* GPUImage.xcodeproj */,
 				D55736901F6AE1D200C6027B /* ScanbotSDK.framework */,
-				949E1D3A1CD2952700BF8F20 /* AtlasNet.entitlements */,
-				947D54041CCEA2DE007A0AB4 /* AtlasNet Enterprise.entitlements */,
 				94E9942D1C9C9C1F008D7861 /* Mobile Mover.entitlements */,
 				BC9D65041640B8E6003131DD /* Default-568h@2x.png */,
 				BF6676C510DFC1B8000CE503 /* eprint */,
@@ -2541,7 +2516,6 @@
 				BFB8279A10FFADF900A7D7EA /* Entitlements.plist */,
 				BFA74D9810276C2600534980 /* Settings.bundle */,
 				94B25D101CB43FE9004366D4 /* Mobile Mover Enterprise-Info.plist */,
-				947D54031CCE9DC8007A0AB4 /* AtlasNet Enterprise-Info.plist */,
 				94ACF5B71CDBEC90007FB551 /* Mobile Mover GVL-Info.plist */,
 				943E10F41CECB45D0047F26A /* Mobile Mover Auto Enterprise-Info.plist */,
 				D59EAEB92098EE430038DE68 /* Security.framework */,
@@ -2571,7 +2545,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D5E9674020653D8700ED9D66 /* Images.xcassets */,
 				94CABAF91C18BA21009D7902 /* Images-3.xcassets */,
 				35A942EC19464F4F00A2BC8B /* Arpin Docs */,
 				BC36E00617553D03002D52D2 /* Demos */,
@@ -2633,16 +2606,9 @@
 		350A131E193537B5001D8EF2 /* AtlasNet */ = {
 			isa = PBXGroup;
 			children = (
-				35F72AD41A8E35F000CD79FD /* AtlasLogoBW.png */,
-				350A131F193537E7001D8EF2 /* AtlasNetSplash.png */,
-				350A1320193537E7001D8EF2 /* AtlasNetSplash@2x.png */,
 				35878619193612A000E7A6A0 /* SurveyIcon-iPad.png */,
 				3587861A193612A000E7A6A0 /* SurveyIcon.png */,
 				3587861B193612A000E7A6A0 /* SurveyIcon@2x.png */,
-				357D864F1951DC7B00DCC3EF /* AtlasLogo.png */,
-				355D5231195478D300A57D77 /* AtlasNet_76.png */,
-				355D5232195478D300A57D77 /* AtlasNet_120.png */,
-				355D5233195478D300A57D77 /* AtlasNet_152.png */,
 			);
 			name = AtlasNet;
 			sourceTree = "<group>";
@@ -3831,6 +3797,8 @@
 		BFB30CAA13E2F7E1007A5B36 /* PVO */ = {
 			isa = PBXGroup;
 			children = (
+				6A1D3C9A256C4E8C00825EFF /* driver-full.png */,
+				6A1D3C99256C4E8C00825EFF /* driver-full.svg */,
 				000E5C191BA9F9E300F630FE /* Auto Inventory */,
 				350A131E193537B5001D8EF2 /* AtlasNet */,
 				35E7B5741AA78EB8009BFAD3 /* Arpin.png */,
@@ -3838,10 +3806,6 @@
 				9416C1AB1D30007D00E06616 /* grand_piano_all.png */,
 				9416C1AC1D30007D00E06616 /* motorcycle_all.png */,
 				9416C1BB1D30300C00E06616 /* organ_all.png */,
-				BF048C8614FD8AAF0019F0F7 /* pvo_splash@2x.png */,
-				BF048C8414FD8AA80019F0F7 /* pvo_splash.png */,
-				BF048C7E14FD8A910019F0F7 /* pvo_logo.png */,
-				BF048C7C14FD8A870019F0F7 /* pvo_logo@2x.png */,
 				BF2CE69613EADC570021F192 /* pvo_house_dest.png */,
 				BF2CE69713EADC570021F192 /* pvo_house_origin.png */,
 				BF2CE69A13EAE1CB0021F192 /* pvo_truck.png */,
@@ -3854,8 +3818,6 @@
 				BFEAE1B013F95F4900908AAC /* img_shipper_info@2x.png */,
 				BF2F73C414F6ED9F00910E5D /* img_claims.png */,
 				BF2F73C514F6ED9F00910E5D /* img_claims@2x.png */,
-				BFF08F2614FE7FFD00C168D2 /* pvo_icon@2x.png */,
-				BFF08F2814FE800200C168D2 /* pvo_icon.png */,
 				BFF3A349152B6D7900270B39 /* img_receive@2x.png */,
 				BFF3A34A152B6D7900270B39 /* img_receive.png */,
 				BF816E7D156EADFE0095C372 /* img_images.png */,
@@ -4097,9 +4059,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6338C49218C6326300E3A7EF /* Mobile Mover */ = {
+		6338C49218C6326300E3A7EF /* HQ Driver */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6338C63D18C6326300E3A7EF /* Build configuration list for PBXNativeTarget "Mobile Mover" */;
+			buildConfigurationList = 6338C63D18C6326300E3A7EF /* Build configuration list for PBXNativeTarget "HQ Driver" */;
 			buildPhases = (
 				62937408DE0B7511F12992E2 /* [CP] Check Pods Manifest.lock */,
 				6338C54918C6326300E3A7EF /* Sources */,
@@ -4113,14 +4075,14 @@
 			dependencies = (
 				D53135161FAA484100220809 /* PBXTargetDependency */,
 			);
-			name = "Mobile Mover";
+			name = "HQ Driver";
 			productName = Survey;
 			productReference = 6338C64118C6326300E3A7EF /* Mobile Mover.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94B25AB51CB43FE7004366D4 /* Mobile Mover Simulator */ = {
+		94B25AB51CB43FE7004366D4 /* HQ Driver Simulator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Simulator" */;
+			buildConfigurationList = 94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "HQ Driver Simulator" */;
 			buildPhases = (
 				ADD99A0C87CDCF1BEE80F97B /* [CP] Check Pods Manifest.lock */,
 				94B25AB61CB43FE7004366D4 /* Sources */,
@@ -4134,7 +4096,7 @@
 			);
 			dependencies = (
 			);
-			name = "Mobile Mover Simulator";
+			name = "HQ Driver Simulator";
 			productName = Survey;
 			productReference = 94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */;
 			productType = "com.apple.product-type.application";
@@ -4190,8 +4152,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				6338C49218C6326300E3A7EF /* Mobile Mover */,
-				94B25AB51CB43FE7004366D4 /* Mobile Mover Simulator */,
+				6338C49218C6326300E3A7EF /* HQ Driver */,
+				94B25AB51CB43FE7004366D4 /* HQ Driver Simulator */,
 			);
 		};
 /* End PBXProject section */
@@ -4307,6 +4269,7 @@
 				9456BA661C6D1F2F00CA4CED /* car_top.png in Resources */,
 				35A9431519464FA200A2BC8B /* PartsHardwareInventory.pdf in Resources */,
 				1C1E58AD1B9F1A98004FDDE4 /* CheckMark_blue.png in Resources */,
+				6A1D3C9B256C4E8C00825EFF /* driver-full.svg in Resources */,
 				358786391936130400E7A6A0 /* Dates.fla in Resources */,
 				35A9430F19464FA200A2BC8B /* MILDDForm619.pdf in Resources */,
 				3587864D1936130400E7A6A0 /* tile_basic_info.png in Resources */,
@@ -4432,15 +4395,9 @@
 				6338C51018C6326300E3A7EF /* img_claims.png in Resources */,
 				6338C51118C6326300E3A7EF /* img_claims@2x.png in Resources */,
 				6338C51218C6326300E3A7EF /* PVOClaimItemsView.xib in Resources */,
-				6338C51318C6326300E3A7EF /* pvo_logo@2x.png in Resources */,
-				6338C51418C6326300E3A7EF /* pvo_logo.png in Resources */,
 				35A9431319464FA200A2BC8B /* MotorVehicleInventory.pdf in Resources */,
 				D70030ED1C5A65F800F7266B /* demosurvey2.xml in Resources */,
 				9456BA5D1C6D1F2F00CA4CED /* car_left.png in Resources */,
-				6338C51518C6326300E3A7EF /* pvo_splash.png in Resources */,
-				6338C51618C6326300E3A7EF /* pvo_splash@2x.png in Resources */,
-				6338C51718C6326300E3A7EF /* pvo_icon@2x.png in Resources */,
-				6338C51818C6326300E3A7EF /* pvo_icon.png in Resources */,
 				6338C51B18C6326300E3A7EF /* img_receive@2x.png in Resources */,
 				6338C51C18C6326300E3A7EF /* img_receive.png in Resources */,
 				6338C51D18C6326300E3A7EF /* PVOReceiveView.xib in Resources */,
@@ -4499,6 +4456,7 @@
 				6338C53E18C6326300E3A7EF /* cb_mono_off@2x.png in Resources */,
 				35C676CF197D626C000B1E9C /* demopack1.xml in Resources */,
 				6338C53F18C6326300E3A7EF /* cb_mono_on.png in Resources */,
+				6A1D3C9D256C4E8D00825EFF /* driver-full.png in Resources */,
 				9456BA821C6D1F4B00CA4CED /* suv_top.png in Resources */,
 				6338C54018C6326300E3A7EF /* cb_mono_on@2x.png in Resources */,
 				358786411936130400E7A6A0 /* notes.fla in Resources */,
@@ -4634,6 +4592,7 @@
 				94B25C631CB43FE7004366D4 /* fb_pricing@2x.png in Resources */,
 				94B25C641CB43FE7004366D4 /* TextEditViewController.xib in Resources */,
 				94B25C651CB43FE7004366D4 /* truck_rear.png in Resources */,
+				6A1D3C9E256C4E8D00825EFF /* driver-full.png in Resources */,
 				94B25C661CB43FE7004366D4 /* fb_survey@2x.png in Resources */,
 				94B25C671CB43FE7004366D4 /* upload_accessory@2x.png in Resources */,
 				94B25C681CB43FE7004366D4 /* PriorityItemsOfConcern.pdf in Resources */,
@@ -4659,6 +4618,7 @@
 				94B25C7D1CB43FE7004366D4 /* doc_library@2x.png in Resources */,
 				94B25C7E1CB43FE7004366D4 /* PVOSignatureView.xib in Resources */,
 				94B25C7F1CB43FE7004366D4 /* SelectItemWithFilterView.xib in Resources */,
+				6A1D3C9C256C4E8D00825EFF /* driver-full.svg in Resources */,
 				94B25C801CB43FE7004366D4 /* PVODamageButtonView.xib in Resources */,
 				94B25C811CB43FE7004366D4 /* FourButtonCell.xib in Resources */,
 				94B25C821CB43FE7004366D4 /* tile_move_information.png in Resources */,
@@ -4729,16 +4689,10 @@
 				94B25CBE1CB43FE7004366D4 /* img_claims.png in Resources */,
 				94B25CBF1CB43FE7004366D4 /* img_claims@2x.png in Resources */,
 				94B25CC01CB43FE7004366D4 /* PVOClaimItemsView.xib in Resources */,
-				94B25CC11CB43FE7004366D4 /* pvo_logo@2x.png in Resources */,
-				94B25CC21CB43FE7004366D4 /* pvo_logo.png in Resources */,
 				94B25CC31CB43FE7004366D4 /* MotorVehicleInventory.pdf in Resources */,
 				94B25CC41CB43FE7004366D4 /* demosurvey2.xml in Resources */,
 				6A033179243297BA00CFD063 /* EmailCell.xib in Resources */,
 				94B25CC51CB43FE7004366D4 /* car_left.png in Resources */,
-				94B25CC61CB43FE7004366D4 /* pvo_splash.png in Resources */,
-				94B25CC71CB43FE7004366D4 /* pvo_splash@2x.png in Resources */,
-				94B25CC81CB43FE7004366D4 /* pvo_icon@2x.png in Resources */,
-				94B25CC91CB43FE7004366D4 /* pvo_icon.png in Resources */,
 				94B25CCA1CB43FE7004366D4 /* img_receive@2x.png in Resources */,
 				94B25CCB1CB43FE7004366D4 /* img_receive.png in Resources */,
 				6A0219C724AE7AD70012B02C /* AboutView~ipad.xib in Resources */,
@@ -5616,7 +5570,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5669,7 +5623,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5720,7 +5674,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5771,7 +5725,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5822,7 +5776,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -5871,7 +5825,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 405;
+				MARKETING_VERSION = 407;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "Mobile Mover";
@@ -6014,7 +5968,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6338C63D18C6326300E3A7EF /* Build configuration list for PBXNativeTarget "Mobile Mover" */ = {
+		6338C63D18C6326300E3A7EF /* Build configuration list for PBXNativeTarget "HQ Driver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6338C63E18C6326300E3A7EF /* Debug */,
@@ -6024,7 +5978,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "Mobile Mover Simulator" */ = {
+		94B25D0B1CB43FE7004366D4 /* Build configuration list for PBXNativeTarget "HQ Driver Simulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94B25D0C1CB43FE7004366D4 /* Debug */,

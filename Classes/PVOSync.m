@@ -556,7 +556,7 @@ exit:
         result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
         
         if (result == nil || result.length == 0) {
-            NSString *errorMessage = [[error userInfo] valueForKey:@"Error"];
+            NSString *errorMessage = [self getErrorMessage:error eventText:@"uploading the current document"];
             if ([errorMessage rangeOfString:@"Unable to load Order for Order Number provided."].location != NSNotFound)
             {
                 //clean up error message for the device.  tell them they need to sync first.
@@ -640,6 +640,14 @@ exit:
     
 }
 
+- (NSString* _Nullable)getErrorMessage:(NSError *)error eventText:(NSString*) text {
+    NSString *errorMessage = [[error userInfo] valueForKey:@"Error"];
+    if ([errorMessage rangeOfString:@"One or more errors occurred"].location != NSNotFound) {
+        errorMessage = [NSString stringWithFormat:@"An error has occurred when %@. Please contact Support.", text];
+    }
+    return errorMessage;
+}
+
 -(BOOL)downloadSurvey
 {
     NSError *error = nil;
@@ -670,7 +678,7 @@ exit:
         
     if(result == nil || result.length == 0) {
         //error with message...
-        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+        [self updateProgress:[self getErrorMessage:error eventText:@"downloading your order"] withPercent:1];
         return FALSE;
     }
     
@@ -906,8 +914,8 @@ exit:
                 result = [restRequest executeHttpRequest:@"PUT" withQueryParameters:queryParameters andBodyData:body andError:&error shouldDecode:NO];
                 
                 if(result == nil || result.length == 0) {
-                    [self updateProgress:[NSString stringWithFormat:@"%@ failed to upload. Reason: %@", item.name, [[error userInfo] valueForKey:@"Error"]] withPercent:1];
-                    //set sync to falce, per defect 208
+                    [self updateProgress:[NSString stringWithFormat:@"%@(%@) failed to upload. Reason: %@", item.name, item.orderNumber, [self getErrorMessage:error eventText:@"uploading inventory"]] withPercent:1];
+                    //set sync to false, per defect 208
                     sync.syncToPVO = FALSE;
                     [appDelegate.surveyDB updateCustomerSync:sync];
                     //                        [result release];
@@ -1001,7 +1009,7 @@ exit:
                 
                 if(result == nil || result.length == 0)
                 {
-                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    [self updateProgress:[self getErrorMessage:error eventText:@"uploading item photos"] withPercent:1];
                     break;
                 }
                 else
@@ -1070,7 +1078,7 @@ exit:
                 
                 if(result == nil || result.length == 0)
                 {
-                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    [self updateProgress:[self getErrorMessage:error eventText:@"uploading room photos"] withPercent:1];
                     break;
                 }
                 else
@@ -1131,7 +1139,7 @@ exit:
 
                 if(result == nil || result.length == 0)
                 {
-                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    [self updateProgress:[self getErrorMessage:error eventText:@"uploading unload room photos"] withPercent:1];
                     break;
                 }
                 else
@@ -1203,7 +1211,7 @@ exit:
 
                 if(result == nil || result.length == 0)
                 {
-                    [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                    [self updateProgress:[self getErrorMessage:error eventText:@"uploading location photos"] withPercent:1];
                     break;
                 }
                 else
@@ -1264,7 +1272,7 @@ exit:
 
                     if(result == nil || result.length == 0)
                     {
-                        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+                        [self updateProgress:[self getErrorMessage:error eventText:@"uploading weight tickets"] withPercent:1];
                         break;
                     }
                     else
@@ -1331,7 +1339,7 @@ exit:
     
     if(result == nil || result.length == 0)
     {
-        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+        [self updateProgress:[self getErrorMessage:error eventText:@"downloading item images"] withPercent:1];
         return FALSE;
     }
     
@@ -1451,7 +1459,7 @@ exit:
     
     if(result == nil || result.length == 0)
     {
-        [self updateProgress:[[error userInfo] valueForKey:@"Error"] withPercent:1];
+        [self updateProgress:[self getErrorMessage:error eventText:@"downloading room images"] withPercent:1];
         return FALSE;
     }
     

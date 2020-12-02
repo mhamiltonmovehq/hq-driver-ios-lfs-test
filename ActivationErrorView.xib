@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,13 +36,13 @@
                     </accessibility>
                     <attributedString key="attributedText">
                         <fragment>
-                            <mutableString key="content" base64-UTF8="YES">
+                            <string key="content" base64-UTF8="YES">
 WW91IG11c3QgZW50ZXIgYSBVc2VybmFtZSBhbmQgUGFzc3dvcmQgdG8gY29udGludWUuIFRoaXMgaW5m
 b3JtYXRpb24gY2FuIGJlIGVudGVyZWQgaW4gdGhlIFNldHRpbmdzIEFwcGxpY2F0aW9uLiDigKjigKhC
 eSBsb2dnaW5nIGluLCB5b3UgYWdyZWUgdG8gdGhlIHRlcm1zLCBjb25kaXRpb25zLCBwb2xpY2llcywg
 YW5kIGd1aWRlbGluZXMgb2YgdGhlIE1vdmVIUSBQcml2YWN5IFBvbGljeSBhbmQgTW92ZUhRIE1hc3Rl
 ciBTZXJ2aWNlIEFncmVlbWVudAMuA
-</mutableString>
+</string>
                             <attributes>
                                 <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <font key="NSFont" metaFont="menu" size="14"/>
@@ -55,8 +55,8 @@ ciBTZXJ2aWNlIEFncmVlbWVudAMuA
                         <outlet property="delegate" destination="-1" id="7"/>
                     </connections>
                 </textView>
-                <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="pvo_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                    <rect key="frame" x="16" y="25" width="291" height="220"/>
+                <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="driver-full.png" translatesAutoresizingMaskIntoConstraints="NO" id="12">
+                    <rect key="frame" x="16" y="13" width="291" height="220"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
@@ -67,6 +67,6 @@ ciBTZXJ2aWNlIEFncmVlbWVudAMuA
         </view>
     </objects>
     <resources>
-        <image name="pvo_logo.png" width="240" height="161"/>
+        <image name="driver-full.png" width="173.49397277832031" height="55.880596160888672"/>
     </resources>
 </document>
