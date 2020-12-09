@@ -536,8 +536,6 @@
 		63F04B9218C6718D0023C0F5 /* insert_rooms.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9118C6718D0023C0F5 /* insert_rooms.sql */; };
 		63F04B9418C671A70023C0F5 /* insert_items.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9318C671A70023C0F5 /* insert_items.sql */; };
 		63F04B9818C671F20023C0F5 /* insert_mil.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63F04B9718C671F20023C0F5 /* insert_mil.sql */; };
-		6A0219C624AE7AD70012B02C /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A0219C524AE71400012B02C /* AboutView~ipad.xib */; };
-		6A0219C724AE7AD70012B02C /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A0219C524AE71400012B02C /* AboutView~ipad.xib */; };
 		6A03317424328D9100CFD063 /* EmailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317124328D9100CFD063 /* EmailCell.xib */; };
 		6A0331772432923E00CFD063 /* EmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0331762432923D00CFD063 /* EmailTableViewCell.m */; };
 		6A033179243297BA00CFD063 /* EmailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A03317124328D9100CFD063 /* EmailCell.xib */; };
@@ -554,6 +552,8 @@
 		6A2E0461242986C300172BC5 /* ActivationErrorView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */; };
 		6A3763E3251A510100C0AB02 /* libdtdev-device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331802433EE5A00CFD063 /* libdtdev-device.a */; };
 		6A3763E5251A510E00C0AB02 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A03317E2433EE3B00CFD063 /* libzbar.a */; };
+		6A8B660A2580824800204418 /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8B66092580824800204418 /* AboutView~ipad.xib */; };
+		6A8B660B2580824800204418 /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8B66092580824800204418 /* AboutView~ipad.xib */; };
 		6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
@@ -1535,7 +1535,6 @@
 		63F04B9718C671F20023C0F5 /* insert_mil.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_mil.sql; sourceTree = "<group>"; };
 		63F6BA0118884C6900392665 /* SurveyDBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDBUpdater.h; sourceTree = "<group>"; };
 		63F6BA0218884C6900392665 /* SurveyDBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyDBUpdater.m; sourceTree = "<group>"; };
-		6A0219C524AE71400012B02C /* AboutView~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "AboutView~ipad.xib"; path = "/Users/bobboatwright/Documents/GitLab/BaseMM/iOS/AboutView~ipad.xib"; sourceTree = "<absolute>"; };
 		6A03317124328D9100CFD063 /* EmailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailCell.xib; sourceTree = SOURCE_ROOT; };
 		6A0331762432923D00CFD063 /* EmailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		6A0331782432928F00CFD063 /* EmailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailTableViewCell.h; sourceTree = SOURCE_ROOT; };
@@ -1548,6 +1547,7 @@
 		6A1D3C9A256C4E8C00825EFF /* driver-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "driver-full.png"; sourceTree = "<group>"; };
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
+		6A8B66092580824800204418 /* AboutView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutView~ipad.xib"; sourceTree = "<group>"; };
 		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
 		6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestSyncRequest.h; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
@@ -3594,7 +3594,7 @@
 		BF9ED092103F239600FD8AC8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6A0219C524AE71400012B02C /* AboutView~ipad.xib */,
+				6A8B66092580824800204418 /* AboutView~ipad.xib */,
 				6A03317B2433B8B300CFD063 /* CustomerOptionsView~ipad.xib */,
 				6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */,
 				6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */,
@@ -4254,7 +4254,6 @@
 				9456BA731C6D1F4B00CA4CED /* suv_all.png in Resources */,
 				D70030E71C5A65AA00F7266B /* demo2.xml in Resources */,
 				6338C4C418C6326300E3A7EF /* fb_origin.png in Resources */,
-				6A0219C624AE7AD70012B02C /* AboutView~ipad.xib in Resources */,
 				570ADD691BACA10B005DB84A /* insert_cn_gov.sql in Resources */,
 				358786511936130400E7A6A0 /* tile_destination.png in Resources */,
 				6338C4C518C6326300E3A7EF /* fb_pack_crate_summary.png in Resources */,
@@ -4336,6 +4335,7 @@
 				6338C4F118C6326300E3A7EF /* blueButton.png in Resources */,
 				6338C4F218C6326300E3A7EF /* insert_carton_contents.sql in Resources */,
 				1C1E58AB1B9F1A98004FDDE4 /* Checkbox_clear.png in Resources */,
+				6A8B660A2580824800204418 /* AboutView~ipad.xib in Resources */,
 				6338C4F318C6326300E3A7EF /* PVOCartonContentsView.xib in Resources */,
 				9456BA4E1C6D19C700CA4CED /* PVOWireFrameTypeView.xib in Resources */,
 				6338C4F418C6326300E3A7EF /* PVOLocationSummaryView.xib in Resources */,
@@ -4695,7 +4695,6 @@
 				94B25CC51CB43FE7004366D4 /* car_left.png in Resources */,
 				94B25CCA1CB43FE7004366D4 /* img_receive@2x.png in Resources */,
 				94B25CCB1CB43FE7004366D4 /* img_receive.png in Resources */,
-				6A0219C724AE7AD70012B02C /* AboutView~ipad.xib in Resources */,
 				94B25CCC1CB43FE7004366D4 /* PVOReceiveView.xib in Resources */,
 				94B25CCD1CB43FE7004366D4 /* img_images.png in Resources */,
 				94B25CCE1CB43FE7004366D4 /* img_images@2x.png in Resources */,
@@ -4720,6 +4719,7 @@
 				94B25CE11CB43FE7004366D4 /* cb_box_off@2x.png in Resources */,
 				94B25CE21CB43FE7004366D4 /* cb_box_on.png in Resources */,
 				94B25CE31CB43FE7004366D4 /* cb_box_on@2x.png in Resources */,
+				6A8B660B2580824800204418 /* AboutView~ipad.xib in Resources */,
 				94B25CE41CB43FE7004366D4 /* MILLossDamageatDelivery.pdf in Resources */,
 				94B25CE51CB43FE7004366D4 /* cb_dark_off.png in Resources */,
 				94B25CE61CB43FE7004366D4 /* cb_dark_off@2x.png in Resources */,

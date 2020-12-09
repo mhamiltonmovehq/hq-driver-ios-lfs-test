@@ -406,6 +406,7 @@
                 [SurveyAppDelegate showAlert:@"An error occurred trying to generate online reports.  "
                  "Please verify your network connection and try again."
                                    withTitle:@"Error"];
+                [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
             }
             else if(htmlSupported && (!isAtlas || (!isInventory || !isBetween113and120)))
             //only run HTML version if not atlas, or atlas non-inventory.  Also run if Atlas Inventory, but below iOS version 11.3 or above iOS version 12.0
@@ -1989,16 +1990,6 @@
     
     viewProgress.hidden = YES;
     pdfView.hidden = NO;
-    
-    //    NSString *htmlDir = [SurveyAppDelegate getDocsDirectory];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"WorkingHTMLTemp"];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"auto_inventory.html?id=31&xmlloc=3DC32EF6-1015-4BDF-BF30-D408BFEBB6A4.xml"];
-    //
-    //    NSString* webStringURL = [htmlDir stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //    NSURL *url = [NSURL URLWithString:webStringURL];
-    //    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    //    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:requestObj];
-    //    [pdfView loadRequest:requestObj];
     
     [pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:pdfPath]]];
     
