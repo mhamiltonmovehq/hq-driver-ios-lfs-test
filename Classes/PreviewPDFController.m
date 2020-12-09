@@ -125,7 +125,9 @@
         [super viewWillAppear:animated];
         return;
     }
-        
+    
+    [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
+    
     UIBarButtonItem *signButton;
     if (self.noSignatureAllowed || [self.pvoItem hasSignatureType:-1])
     {
@@ -270,6 +272,8 @@
             if(disconnectedDrawer != nil)
                 supportsDisconnected = [[disconnectedDrawer availableReports] objectForKey:[NSNumber numberWithInt:reportTypeID]] != nil;
         }
+        
+        [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
         
         if([del.pricingDB vanline] == ATLAS && reportTypeID == VIEW_BOL)
         {
@@ -1991,8 +1995,10 @@
     viewProgress.hidden = YES;
     pdfView.hidden = NO;
     
-    [pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:pdfPath]]];
-    
+    NSURL *pdfUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@", pdfPath]];
+    NSURL *pdfDir = [NSURL fileURLWithPath:[SurveyAppDelegate getDocsDirectory] isDirectory:YES];
+    [pdfView  loadFileURL:pdfUrl allowingReadAccessToURL:pdfDir];
+                                          
     if (signedReport)
         [self savePDFToCustomerDocuments:self.pdfPath];
     
