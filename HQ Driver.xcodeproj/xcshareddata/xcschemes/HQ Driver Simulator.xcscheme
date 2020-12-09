@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6338C49218C6326300E3A7EF"
-               BuildableName = "Mobile Mover.app"
-               BlueprintName = "HQ Driver"
-               ReferencedContainer = "container:Survey.xcodeproj">
+               BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+               BuildableName = "HQ Driver.app"
+               BlueprintName = "HQ Driver Simulator"
+               ReferencedContainer = "container:HQ Driver.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6338C49218C6326300E3A7EF"
-            BuildableName = "Mobile Mover.app"
-            BlueprintName = "HQ Driver"
-            ReferencedContainer = "container:Survey.xcodeproj">
+            BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+            BuildableName = "HQ Driver.app"
+            BlueprintName = "HQ Driver Simulator"
+            ReferencedContainer = "container:HQ Driver.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6338C49218C6326300E3A7EF"
-            BuildableName = "Mobile Mover.app"
-            BlueprintName = "HQ Driver"
-            ReferencedContainer = "container:Survey.xcodeproj">
+            BlueprintIdentifier = "94B25AB51CB43FE7004366D4"
+            BuildableName = "HQ Driver.app"
+            BlueprintName = "HQ Driver Simulator"
+            ReferencedContainer = "container:HQ Driver.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1519,7 +1519,7 @@
 		57F4FDD21BC31D4D00DF16B3 /* insert_cn_descriptive_symbols.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_descriptive_symbols.sql; sourceTree = "<group>"; };
 		6324E9A418B7EAFC00B24725 /* PVOBarcodeValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOBarcodeValidation.h; sourceTree = "<group>"; };
 		6324E9A518B7EAFC00B24725 /* PVOBarcodeValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOBarcodeValidation.m; sourceTree = "<group>"; };
-		6338C64118C6326300E3A7EF /* Mobile Mover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Mover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6338C64118C6326300E3A7EF /* HQ Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HQ Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		636BA3B418C501AB00961D31 /* DoubleSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoubleSwitchCell.xib; sourceTree = "<group>"; };
 		636BA3B618C5038D00961D31 /* DoubleSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleSwitchCell.h; sourceTree = "<group>"; };
 		636BA3B718C5038D00961D31 /* DoubleSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleSwitchCell.m; sourceTree = "<group>"; };
@@ -1643,7 +1643,7 @@
 		9456BA8A1C6D1F5600CA4CED /* truck_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck_top.png; sourceTree = "<group>"; };
 		9493D3D81BD0908700EB70D0 /* insert_mil_2.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_mil_2.sql; sourceTree = "<group>"; };
 		94ACF5B71CDBEC90007FB551 /* Mobile Mover GVL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Mobile Mover GVL-Info.plist"; path = "/Users/mb-dev-3/Documents/MobileMover_iOS_Trunk/Mobile Mover GVL-Info.plist"; sourceTree = "<absolute>"; };
-		94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Mover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94B25D0F1CB43FE7004366D4 /* HQ Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HQ Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B25D101CB43FE9004366D4 /* Mobile Mover Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mobile Mover Enterprise-Info.plist"; sourceTree = "<group>"; };
 		94BAC37A1C752252000490AB /* AutoSizeLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoSizeLabelCell.xib; sourceTree = "<group>"; };
 		94C799471CD2956D00BDFA7A /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -2491,8 +2491,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6338C64118C6326300E3A7EF /* Mobile Mover.app */,
-				94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */,
+				6338C64118C6326300E3A7EF /* HQ Driver.app */,
+				94B25D0F1CB43FE7004366D4 /* HQ Driver.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4077,7 +4077,7 @@
 			);
 			name = "HQ Driver";
 			productName = Survey;
-			productReference = 6338C64118C6326300E3A7EF /* Mobile Mover.app */;
+			productReference = 6338C64118C6326300E3A7EF /* HQ Driver.app */;
 			productType = "com.apple.product-type.application";
 		};
 		94B25AB51CB43FE7004366D4 /* HQ Driver Simulator */ = {
@@ -4098,7 +4098,7 @@
 			);
 			name = "HQ Driver Simulator";
 			productName = Survey;
-			productReference = 94B25D0F1CB43FE7004366D4 /* Mobile Mover.app */;
+			productReference = 94B25D0F1CB43FE7004366D4 /* HQ Driver.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -4129,7 +4129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Survey" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HQ Driver" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -5570,10 +5570,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
@@ -5623,10 +5623,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
@@ -5674,10 +5674,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "MobileMover Distribution";
 				STRIPFLAGS = "";
@@ -5725,10 +5725,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
@@ -5776,10 +5776,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
@@ -5825,10 +5825,10 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 407;
+				MARKETING_VERSION = 409;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
-				PRODUCT_NAME = "Mobile Mover";
+				PRODUCT_NAME = "HQ Driver";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
@@ -5988,7 +5988,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Survey" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HQ Driver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
