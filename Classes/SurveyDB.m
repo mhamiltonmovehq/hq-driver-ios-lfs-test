@@ -11213,19 +11213,24 @@
     [self updateDB:@"DELETE FROM OpListMultChoiceOptions"];
 }
 
--(void)savePVOActionTime:(PVOActionTimes*)actionTimes
+-(int)savePVOActionTime:(PVOActionTimes*)actionTimes
 {
     NSString* cmd = nil;
     if (actionTimes.pvoActionTimesId == -1)
     {
         cmd = [[NSString alloc] initWithFormat:@"INSERT INTO PVOActionTimes(CustomerId, OrigStarted, OrigArrived, DestStarted, DestArrived) VALUES(%d,%f,%f,%f,%f)", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970]];
+        
+        [self updateDB:cmd];
+        actionTimes.pvoActionTimesId = (int) sqlite3_last_insert_rowid(db);
     }
     else
     {
         cmd = [[NSString alloc] initWithFormat:@"UPDATE PVOActionTimes SET CustomerId = %d, OrigStarted = %f, OrigArrived = %f, DestStarted = %f, DestArrived = %f WHERE PVOActionTimesId = %d", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970], actionTimes.pvoActionTimesId];
+        
+        [self updateDB:cmd];
     }
     
-    [self updateDB:cmd];
+    return actionTimes.pvoActionTimesId;
 }
 
 -(PVOActionTimes*)getPVOActionTime:(int)customerId

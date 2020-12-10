@@ -671,7 +671,7 @@
 -(bool)areAllQuestionsAnsweredWithCustomerID:(int)customerId withVehicleID:(int)vehicleId;
 
 // PVO Action Times
--(void)savePVOActionTime:(PVOActionTimes*)actionTimes;
+-(int)savePVOActionTime:(PVOActionTimes*)actionTimes;
 -(PVOActionTimes*)getPVOActionTime:(int)customerId;
 -(void)deletePVOActionTime:(int)customerId;
 

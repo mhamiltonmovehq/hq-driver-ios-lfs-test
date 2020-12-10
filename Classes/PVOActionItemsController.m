@@ -86,7 +86,7 @@
         _actionTimes.destStarted = newDate;
     }
     
-    [del.surveyDB savePVOActionTime:_actionTimes];
+    _actionTimes.pvoActionTimesId = [del.surveyDB savePVOActionTime:_actionTimes];
     
     
     if(_isOrigin)
@@ -139,7 +139,7 @@
         _actionTimes.destArrived = newDate;
     }
     
-    [del.surveyDB savePVOActionTime:_actionTimes];
+    _actionTimes.pvoActionTimesId = [del.surveyDB savePVOActionTime:_actionTimes];
     [self.tableView reloadData];
 }
 
