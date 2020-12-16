@@ -274,7 +274,7 @@
         }
         
         [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
-
+        
         if([del.pricingDB vanline] == ATLAS && reportTypeID == VIEW_BOL)
         {
             PVOSync *sync = [[PVOSync alloc] init];
@@ -1995,18 +1995,10 @@
     viewProgress.hidden = YES;
     pdfView.hidden = NO;
     
-    //    NSString *htmlDir = [SurveyAppDelegate getDocsDirectory];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"WorkingHTMLTemp"];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"auto_inventory.html?id=31&xmlloc=3DC32EF6-1015-4BDF-BF30-D408BFEBB6A4.xml"];
-    //
-    //    NSString* webStringURL = [htmlDir stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //    NSURL *url = [NSURL URLWithString:webStringURL];
-    //    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    //    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:requestObj];
-    //    [pdfView loadRequest:requestObj];
-    
-    [pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:pdfPath]]];
-    
+    NSURL *pdfUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@", pdfPath]];
+    NSURL *pdfDir = [NSURL fileURLWithPath:[SurveyAppDelegate getDocsDirectory] isDirectory:YES];
+    [pdfView  loadFileURL:pdfUrl allowingReadAccessToURL:pdfDir];
+                                          
     if (signedReport)
         [self savePDFToCustomerDocuments:self.pdfPath];
     
