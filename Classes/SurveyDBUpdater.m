@@ -2546,12 +2546,17 @@
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         if(maj < ++ver) {
-            [db updateDB: @"INSERT INTO PhoneTypes values (5, 'Phone 1', 1)"];
-            [db updateDB: @"INSERT INTO PhoneTypes values (6, 'Phone 2', 1)"];
+            [db updateDB: @"INSERT INTO PhoneTypes values (5, 'Phone 1', 1);"];
+            [db updateDB: @"INSERT INTO PhoneTypes values (6, 'Phone 2', 1);"];
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        if(maj < ++ver) {
+            [db updateDB: @"ALTER TABLE PVOWeightTickets ADD MoveHqId INT DEFAULT 0;"];
+            [db updateDB: @"ALTER TABLE PVOWeightTickets ADD ShouldSync SMALLINT DEFAULT 1;"];
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         
-        // [db checkDatabaseIntegrity]; // prescott's safety check
+        // [db checkDatabaseIntegrity]; // prescott's safety check to use when necessary
         
         [self completed];
     }
