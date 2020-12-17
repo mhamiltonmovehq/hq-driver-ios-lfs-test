@@ -54,6 +54,7 @@
         [self updateValueWithField:tboxCurrent];
     
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    weightTicket.shouldSync = YES;
     weightTicket.weightTicketID = [del.surveyDB savePVOWeightTicket:weightTicket];
     
     UIImage *myimage = [SurveyImageViewer getDefaultImage:IMG_PVO_WEIGHT_TICKET forItem:weightTicket.weightTicketID];

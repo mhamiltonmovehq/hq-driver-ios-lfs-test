@@ -1122,9 +1122,6 @@ exit:
                 
                 Room *r = [appDelegate.surveyDB getRoom:unloadConditions.roomID];
                 
-                //if (![del.surveyDB roomHasPVOInventoryItems:r.roomID])
-                //  continue; //skip if room has no items
-                
                 UIImage *img = [UIImage imageWithContentsOfFile:fullPath];
                 NSData *imgData = [PVOSync getResizedPhotoData:img];
                 
@@ -1237,7 +1234,10 @@ exit:
 
     NSArray *tickets = [appDelegate.surveyDB getPVOWeightTickets:custID];
     for (PVOWeightTicket *ticket in tickets) {
-        
+        if (!ticket.shouldSync) {
+            NSLog(@"Skipping upload of weight ticket. Sync flag is false");
+            continue;
+        }
         images = [appDelegate.surveyDB getImagesList:custID withPhotoType:IMG_PVO_WEIGHT_TICKET withSubID:ticket.weightTicketID
                                         loadAllItems:FALSE loadAllForType:FALSE];
         if([images count] > 0)
@@ -1270,13 +1270,16 @@ exit:
                     NSData * bodyData = [self getBodyDataForDictionary:bodyDictionary error:&error];
                     result = [restRequest executeHttpRequest:@"POST" withQueryParameters:queryParameters andBodyData:bodyData andError:&error shouldDecode:NO];
 
-                    if(result == nil || result.length == 0)
-                    {
+                    if(result == nil || result.length == 0) {
                         [self updateProgress:[self getErrorMessage:error eventText:@"uploading weight tickets"] withPercent:1];
                         break;
-                    }
-                    else
-                    {
+                    } else {
+                        SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+                        
+                        ticket.moveHqId = [result integerValue];
+                        ticket.shouldSync = NO;
+                        [del.surveyDB savePVOWeightTicket:ticket];
+                        
                         currentProgress = i + 1;
                         calculatedProgress = currentProgress / totalImagesToUpload;
                         

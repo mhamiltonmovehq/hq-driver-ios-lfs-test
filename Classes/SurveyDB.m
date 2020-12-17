@@ -8417,13 +8417,11 @@
     
     
     if([self prepareStatement:[NSString stringWithFormat:
-                               @"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType "
+                               @"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType, MoveHqId, ShouldSync "
                                "FROM PVOWeightTickets "
                                "WHERE CustomerID = %d ", custID]
-                withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
+                withStatement:&stmnt]) {
+        while(sqlite3_step(stmnt) == SQLITE_ROW) {
             PVOWeightTicket *current = [[PVOWeightTicket alloc] init];
             
             current.custID = custID;
@@ -8432,10 +8430,10 @@
             current.ticketDate = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 2)];
             current.description = [SurveyDB stringFromStatement:stmnt columnID:3];
             current.weightType = sqlite3_column_int(stmnt, 4);
+            current.moveHqId = sqlite3_column_int(stmnt, 5);
+            current.shouldSync = sqlite3_column_int(stmnt, 6) == 1;
             
             [retval addObject:current];
-            
-            
         }
     }
     sqlite3_finalize(stmnt);
@@ -8445,21 +8443,27 @@
 
 -(int)savePVOWeightTicket:(PVOWeightTicket*)weightTicket
 {
-    if([self getIntValueFromQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM PVOWeightTickets WHERE WeightTicketID = %d", weightTicket.weightTicketID]] > 0)
-    {
-        [self updateDB:[NSString stringWithFormat:@"UPDATE PVOWeightTickets SET GrossWeight = %d, TicketDate = %f, Description = %@, WeightType = %d"
+    if([self getIntValueFromQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM PVOWeightTickets WHERE WeightTicketID = %d", weightTicket.weightTicketID]] > 0) {
+        [self updateDB:[NSString stringWithFormat:@"UPDATE PVOWeightTickets SET GrossWeight = %d, TicketDate = %f, Description = %@, WeightType = %d, MoveHqId = %d, ShouldSync = %d"
                         " WHERE WeightTicketID = %d",
-                        weightTicket.grossWeight, [weightTicket.ticketDate timeIntervalSince1970],
-                        [self prepareStringForInsert:weightTicket.description], weightTicket.weightType,
+                        weightTicket.grossWeight,
+                        [weightTicket.ticketDate timeIntervalSince1970],
+                        [self prepareStringForInsert:weightTicket.description],
+                        weightTicket.weightType,
+                        weightTicket.moveHqId,
+                        weightTicket.shouldSync ? 1 : 0,
                         weightTicket.weightTicketID]];
         return weightTicket.weightTicketID;
-    }
-    else
-    {
-        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOWeightTickets(CustomerID, GrossWeight, TicketDate, Description, WeightType) "
-                        "VALUES(%d,%d,%f,%@,%d)",
-                        weightTicket.custID, weightTicket.grossWeight, [weightTicket.ticketDate timeIntervalSince1970],
-                        [self prepareStringForInsert:weightTicket.description], weightTicket.weightType]];
+    } else {
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOWeightTickets(CustomerID, GrossWeight, TicketDate, Description, WeightType, MoveHqId, ShouldSync) "
+                        "VALUES(%d, %d, %f, %@, %d, %d, %d)",
+                        weightTicket.custID,
+                        weightTicket.grossWeight,
+                        [weightTicket.ticketDate timeIntervalSince1970],
+                        [self prepareStringForInsert:weightTicket.description],
+                        weightTicket.weightType,
+                        weightTicket.moveHqId,
+                        weightTicket.shouldSync ? 1 : 0]];
         return sqlite3_last_insert_rowid(db);
     }
 }
@@ -8476,27 +8480,16 @@
     NSString *docsDir = [SurveyAppDelegate getDocsDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-
     for (SurveyImage *image in arr)
     {
-        // I am sad that I need to destroy this loop.  I want it to live forever in its infinite stupidity. ...so I'm going to leave the code here.  The below commented-out code was a part of this loop for 3-6 years.
-        // Code courtesy of Justin Little and Tony Brame.
-        
-        // image = nil; // hack to get rid of the variable unused warning without messing with this loop (assuming that the loop works).
-        // SurveyImage *image = [arr objectAtIndex:0];
-        // NSString *docsDir = [SurveyAppDelegate getDocsDirectory];
-        // NSFileManager *fileManager = [NSFileManager defaultManager];
-
         NSString *filePath = image.path;
         NSString *fullPath = [docsDir stringByAppendingPathComponent:filePath];
         
         if([fileManager fileExistsAtPath:fullPath])
             [fileManager removeItemAtPath:fullPath error:nil];
         
-        
         [self deleteImageEntry:image.imageID];
     }
-    
 }
 
 -(NSArray*)getPVOVerifyInventoryOrders

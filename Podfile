@@ -1,10 +1,10 @@
-platform :ios, '8.0'
+platform :ios, '11.0'
 
 # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
 use_frameworks!
 
 # Use existing workspace
-workspace 'Survey'
+workspace 'HQ Driver'
 
 def mm_pods
     # Pods for Mobile Mover Enterprise
@@ -13,13 +13,13 @@ def mm_pods
 #    pod 'AFNetworking', '~> 3.2.1' #4.0+ requires min of iOS 9
 end
 
-target 'Mobile Mover Simulator' do
-    project 'Survey'
+target 'HQ Driver Simulator' do
+    project 'HQ Driver'
     mm_pods
 end
 
-target 'Mobile Mover' do
-    project 'Survey'
+target 'HQ Driver' do
+    project 'HQ Driver'
     mm_pods
 end
 
