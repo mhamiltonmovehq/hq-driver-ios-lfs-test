@@ -168,7 +168,7 @@
     return YES;
 }
 
-#pragma mark Table view methods
+#pragma mark - Table view methods -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return (lockFields ? 1 : 2);
@@ -180,7 +180,7 @@
 	if(section == 0 && !lockFields)
 		return 1;
 	else
-		return 10;
+		return 9;
 }
 
 

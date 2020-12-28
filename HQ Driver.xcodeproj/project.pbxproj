@@ -1367,7 +1367,6 @@
 		358786351936130400E7A6A0 /* tile_survey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile_survey.png; path = Tiles/tile_survey.png; sourceTree = "<group>"; };
 		358786361936130400E7A6A0 /* tile_third_party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile_third_party.png; path = Tiles/tile_third_party.png; sourceTree = "<group>"; };
 		358786651936137800E7A6A0 /* IGCLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IGCLogo.jpg; sourceTree = "<group>"; };
-		358786681936165E00E7A6A0 /* Info AtlasNet.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info AtlasNet.plist"; sourceTree = "<group>"; };
 		3587866919362EC000E7A6A0 /* ThirdPartyApplied.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdPartyApplied.h; sourceTree = "<group>"; };
 		3587866A19362EC000E7A6A0 /* ThirdPartyApplied.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdPartyApplied.m; sourceTree = "<group>"; };
 		3587866D19362ED300E7A6A0 /* ThirdPartyChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdPartyChoice.h; sourceTree = "<group>"; };
@@ -2555,7 +2554,6 @@
 				BC1C17E616B8BE3C00A398A6 /* Miles.sqlite3 */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				358786681936165E00E7A6A0 /* Info AtlasNet.plist */,
 				BF9ED094103F23A000FD8AC8 /* Cells */,
 				BF9ED092103F239600FD8AC8 /* Views */,
 				BF9ED093103F239B00FD8AC8 /* Images */,
@@ -5549,7 +5547,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5570,7 +5568,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5602,7 +5600,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5623,7 +5621,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5654,7 +5652,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5674,7 +5672,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5703,7 +5701,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5725,7 +5723,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5754,7 +5752,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5776,7 +5774,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5804,7 +5802,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.0;
+				CURRENT_PROJECT_VERSION = 4.0.3;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5825,7 +5823,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 409;
+				MARKETING_VERSION = 413;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
