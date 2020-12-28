@@ -11,8 +11,16 @@
 
 @implementation PVOWeightTicket
 
-@synthesize ticketDate, description;
+@synthesize ticketDate, description, moveHqId, shouldSync;
 
+-(id)init {
+    self = [super init];
+    if (self) {
+        moveHqId = 0;
+        shouldSync = YES;
+    }
+    return self;
+}
 
 -(XMLWriter*)xmlFile
 {
@@ -24,6 +32,7 @@
     [retval writeElementString:@"gross_weight" withIntData:self.grossWeight];
     [retval writeElementString:@"ticket_date" withData:[WCFParser stringFromDate:self.ticketDate]];
     [retval writeElementString:@"description" withData:self.description];
+    [retval writeElementString:@"weight_ticket_id" withIntData:self.moveHqId];
     
     switch (self.weightType) {
         case PVO_WEIGHT_TICKET_GROSS:
@@ -41,12 +50,4 @@
     
     return retval;
 }
-
-
--(void)dealloc
-{
-    self.description = nil;
-    self.ticketDate = nil;
-}
-
 @end
