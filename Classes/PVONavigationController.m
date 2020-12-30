@@ -522,23 +522,8 @@
     [self continueToSelectedItem];
 }
 
--(BOOL)stopBecause113OrAboveInvReportOffline {
-    // Temporary fix to force HTML reports for 11.3+ devices on inventory reports (OT 20803)
-    if((selectedItem.reportTypeID == 1 || selectedItem.reportTypeID == 6) && ![SurveyAppDelegate hasInternetConnection:TRUE] && [[[UIDevice currentDevice] systemVersion] compare:@"11.3" options:NSNumericSearch] != NSOrderedAscending) {
-        [SurveyAppDelegate showAlert:@"Disconnected reports are not available for this option.  You must connect to the Internet to run this report."
-                           withTitle:@"Disconnected Not Available"];
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
-
 -(void)continueToSelectedItem
-{
-    if([self stopBecause113OrAboveInvReportOffline]) {
-        return;
-    }
-    
+{   
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     BOOL hasHTMLReports, isForceDisc, doesntHaveOffline;
     NSString *appName = @"Mobile Mover";
