@@ -1,0 +1,6 @@
+framework module Pods_HQ_Driver_Simulator {
+  umbrella header "Pods-HQ Driver Simulator-umbrella.h"
+
+  export *
+  module * { export * }
+}

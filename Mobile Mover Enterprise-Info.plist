@@ -2,10 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -43,16 +49,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>351</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>3.5.0</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -76,10 +76,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>MobileMover requires access to the camera to add images to reports.</string>
-	<key>NSMainNibFile</key>
-	<string>MainWindow</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>MobileMover requires access to the photos to add images to reports.</string>
+	<key>NSMainNibFile</key>
+	<string>MainWindow</string>
 	<key>TargetName</key>
 	<string>$(TARGET_NAME)</string>
 	<key>UIApplicationShortcutItems</key>

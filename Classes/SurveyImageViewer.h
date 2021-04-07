@@ -6,7 +6,6 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 @import ImagePicker;
-@import Lightbox;
 
 #import <Foundation/Foundation.h>
 #import "ExistingImagesController.h"

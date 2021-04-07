@@ -22,9 +22,8 @@
 #define AGENT_STATE_ROW 4
 #define AGENT_ZIP_ROW 5
 #define AGENT_PHONE_ROW 6
-#define AGENT_FAX_ROW 7
-#define AGENT_EMAIL_ROW 8
-#define AGENT_CONTACT_ROW 9
+#define AGENT_EMAIL_ROW 7
+#define AGENT_CONTACT_ROW 8
 
 @interface EditAgentController : PVOBaseTableViewController {
 	SurveyAgent *agent;

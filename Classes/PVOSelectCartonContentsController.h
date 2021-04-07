@@ -32,16 +32,15 @@
     
     BOOL goAwayAfterLoad;
     BOOL createNewItemMode;
-    
-    BOOL searching;
-    NSString *searchString;
-    
+        
     int currentSegment;
     
-    IBOutlet UISegmentedControl *segmentFilter;
-    
+    IBOutlet UISegmentedControl *segmentFilter;    
     PVOFavoriteCartonContentsController *favoriteItems;
 }
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic) BOOL keyboardVisible;
 
 @property (nonatomic, retain) NSArray *keys;
 @property (nonatomic, retain) NSArray *allItems;
@@ -53,7 +52,6 @@
 
 @property (nonatomic, retain) NSMutableArray *selectedItems;
 @property (nonatomic) BOOL useCheckBoxes;
-@property (nonatomic, retain) NSString *searchString;
 
 -(IBAction)addContentItem:(id)sender;
 -(IBAction)cancel:(id)sender;

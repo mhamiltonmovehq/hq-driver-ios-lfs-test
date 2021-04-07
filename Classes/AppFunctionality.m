@@ -346,13 +346,7 @@
 
 +(BOOL)removeSignatureOnNavigateIntoCompletedInv
 {
-#ifdef ATLASNET
     return YES;
-#else
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanline = [del.pricingDB vanline];
-    return vanline == ARPIN || vanline == SIRVA;
-#endif
 }
 
 +(BOOL)showCubeAndWeight:(PVOInventory*)inventory 
