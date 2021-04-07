@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import ImagePicker
-import Lightbox
 
 @objc class ImagePickerAdapterController : ImagePickerController {
     @objc func setDelegate (_ delegate:ImagePickerDelegate) {

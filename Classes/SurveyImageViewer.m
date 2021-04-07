@@ -458,8 +458,8 @@
 
 // Image picker gallery button pressed
 - (void)wrapperDidPress:(ImagePickerController * _Nonnull)imagePicker images:(NSArray<UIImage *> * _Nonnull)images {
-    LightboxAdapterController *lbc = [LightboxAdapterController new];
-    [lbc showLightboxWithImages:images imagePicker:imagePicker];
+    OptikAdapterController *oac = [OptikAdapterController new];
+    [oac showOptikWithImages:images imagePicker:imagePicker];
 }
 
 // Process single image

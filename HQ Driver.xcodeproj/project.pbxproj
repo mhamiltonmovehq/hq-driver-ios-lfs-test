@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09290437FE8D95BE2285735E /* Pods_Mobile_Mover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932BD7DB7EF48BA28CF730C8 /* Pods_Mobile_Mover.framework */; };
 		1C167A981BBACCBE00501FA5 /* PVOItemComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C167A971BBACCBE00501FA5 /* PVOItemComment.m */; };
 		1C1E58AB1B9F1A98004FDDE4 /* Checkbox_clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C1E58A91B9F1A98004FDDE4 /* Checkbox_clear.png */; };
 		1C1E58AD1B9F1A98004FDDE4 /* CheckMark_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C1E58AA1B9F1A98004FDDE4 /* CheckMark_blue.png */; };
@@ -123,6 +122,7 @@
 		35F32C031961C49A00C9CD6F /* DebugView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35F32C021961C49A00C9CD6F /* DebugView.xib */; };
 		35F32C071961D49F00C9CD6F /* AutoBackupSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F32C061961D49F00C9CD6F /* AutoBackupSettingsController.m */; };
 		35F32C0B1961D4BA00C9CD6F /* DebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F32C0A1961D4BA00C9CD6F /* DebugController.m */; };
+		39CDC18D54639B53E2E648A7 /* Pods_HQ_Driver_Simulator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7C17A009807C8EF3EDEEB1 /* Pods_HQ_Driver_Simulator.framework */; };
 		3E0BA9542003B6A200C483E7 /* demomilitary2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BA9532003B6A200C483E7 /* demomilitary2.xml */; };
 		3E4CB57C21348239003CAE17 /* AddFavoriteItemsForRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4CB57B21348239003CAE17 /* AddFavoriteItemsForRoomController.m */; };
 		3E4CB57D21348239003CAE17 /* AddFavoriteItemsForRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4CB57B21348239003CAE17 /* AddFavoriteItemsForRoomController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -137,8 +137,9 @@
 		3E81DEF721305F840024823D /* AddFavoriteItemRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E81DEF521305F840024823D /* AddFavoriteItemRoomController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3E956FBA2017984F00E89659 /* ImagePickerAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */; };
 		3E956FBB2017984F00E89659 /* ImagePickerAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */; };
-		3EE3F3662023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */; };
-		3EE3F3672023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */; };
+		3EE3F3662023A49900F2FDD7 /* OptikAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */; };
+		3EE3F3672023A49900F2FDD7 /* OptikAdapterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */; };
+		4B52B2A1FCDB30C36C30F32C /* Pods_HQ_Driver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9D91FF6A38710EA50C02CA5 /* Pods_HQ_Driver.framework */; };
 		570ADD671BACA10B005DB84A /* insert_cn_civ.sql in Resources */ = {isa = PBXBuildFile; fileRef = 570ADD651BACA10B005DB84A /* insert_cn_civ.sql */; };
 		570ADD691BACA10B005DB84A /* insert_cn_gov.sql in Resources */ = {isa = PBXBuildFile; fileRef = 570ADD661BACA10B005DB84A /* insert_cn_gov.sql */; };
 		5719A3B21BB475000018F4F8 /* insert_cn_carton_contents.sql in Resources */ = {isa = PBXBuildFile; fileRef = 5719A3AF1BB475000018F4F8 /* insert_cn_carton_contents.sql */; };
@@ -558,11 +559,8 @@
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
 		6AFC02212515172500DF3608 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
-		6AFC02452518FA4300DF3608 /* ScanbotSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DC5F1D1F6AC7F1002ED529 /* ScanbotSDK.framework */; };
-		6AFC02462518FA4300DF3608 /* ScanbotSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5DC5F1D1F6AC7F1002ED529 /* ScanbotSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		7B3218CF1DAEA3BF00F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
-		82770273C1459C6282A477BB /* Pods_Mobile_Mover_Simulator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D7AD4CDF552EC70D58B853 /* Pods_Mobile_Mover_Simulator.framework */; };
 		9416C1A41D2FFE0800E06616 /* upright_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1A31D2FFE0800E06616 /* upright_piano_all.png */; };
 		9416C1A51D2FFE0800E06616 /* upright_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1A31D2FFE0800E06616 /* upright_piano_all.png */; };
 		9416C1AD1D30007D00E06616 /* grand_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1AB1D30007D00E06616 /* grand_piano_all.png */; };
@@ -1277,22 +1275,10 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		6AFC02472518FA4300DF3608 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6AFC02462518FA4300DF3608 /* ScanbotSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		09EDE03FE5704EE9CF8EBF72 /* Pods-HQ Driver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver.release.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver/Pods-HQ Driver.release.xcconfig"; sourceTree = "<group>"; };
 		15284DACBA941800E7FA98CC /* Pods-Mobile Mover.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover.debug.xcconfig"; sourceTree = "<group>"; };
+		1563870581A3B91BA5BFA1AE /* Pods-HQ Driver Simulator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver Simulator.release.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator.release.xcconfig"; sourceTree = "<group>"; };
 		1A352DC9C257F88C76B68241 /* Pods-Mobile Mover Simulator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover Simulator.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.release.xcconfig"; sourceTree = "<group>"; };
 		1C167A961BBACC7F00501FA5 /* PVOItemComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOItemComment.h; sourceTree = "<group>"; };
 		1C167A971BBACCBE00501FA5 /* PVOItemComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOItemComment.m; sourceTree = "<group>"; };
@@ -1508,14 +1494,17 @@
 		3E81DEF521305F840024823D /* AddFavoriteItemRoomController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddFavoriteItemRoomController.m; sourceTree = "<group>"; };
 		3E956FB82017984F00E89659 /* Mobile Mover Enterprise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mobile Mover Enterprise-Bridging-Header.h"; sourceTree = "<group>"; };
 		3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerAdapterController.swift; sourceTree = "<group>"; };
-		3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightboxAdapterController.swift; sourceTree = "<group>"; };
+		3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptikAdapterController.swift; sourceTree = "<group>"; };
+		42886DCDF00AD0802B230D9E /* Pods-HQ Driver Simulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver Simulator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator.debug.xcconfig"; sourceTree = "<group>"; };
 		4EC1069FE02620AC9009D8A9 /* Pods-Mobile Mover.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover.release.xcconfig"; sourceTree = "<group>"; };
+		56370D7938759662C547B78B /* Pods-HQ Driver Simulator.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver Simulator.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator.distribution.xcconfig"; sourceTree = "<group>"; };
 		570ADD651BACA10B005DB84A /* insert_cn_civ.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_civ.sql; sourceTree = "<group>"; };
 		570ADD661BACA10B005DB84A /* insert_cn_gov.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_gov.sql; sourceTree = "<group>"; };
 		5719A3AF1BB475000018F4F8 /* insert_cn_carton_contents.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_carton_contents.sql; sourceTree = "<group>"; };
 		57914D5A1BBB352F00E399BA /* insert_cn_item_locations.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_item_locations.sql; sourceTree = "<group>"; };
 		57B99DFC1BBC12BA00EDD653 /* insert_cn_item_damages.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_item_damages.sql; sourceTree = "<group>"; };
 		57F4FDD21BC31D4D00DF16B3 /* insert_cn_descriptive_symbols.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = insert_cn_descriptive_symbols.sql; sourceTree = "<group>"; };
+		5BC4D11FC985E28452398665 /* Pods-HQ Driver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver/Pods-HQ Driver.debug.xcconfig"; sourceTree = "<group>"; };
 		6324E9A418B7EAFC00B24725 /* PVOBarcodeValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOBarcodeValidation.h; sourceTree = "<group>"; };
 		6324E9A518B7EAFC00B24725 /* PVOBarcodeValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOBarcodeValidation.m; sourceTree = "<group>"; };
 		6338C64118C6326300E3A7EF /* HQ Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HQ Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1565,10 +1554,8 @@
 		7BBBE6CF1F7401E7001D4FB8 /* UIImage+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utilities.m"; sourceTree = "<group>"; };
 		7BF4C6191F912D1700D9D5C5 /* PVOSTGBOLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOLParser.h; sourceTree = "<group>"; };
 		7BF4C61A1F912D1700D9D5C5 /* PVOSTGBOLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOLParser.m; sourceTree = "<group>"; };
-		83D7AD4CDF552EC70D58B853 /* Pods_Mobile_Mover_Simulator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mobile_Mover_Simulator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C0BACCE5ACB050F1C71A90E /* Pods-Mobile Mover Simulator.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover Simulator.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.distribution.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		932BD7DB7EF48BA28CF730C8 /* Pods_Mobile_Mover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mobile_Mover.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9416C1A31D2FFE0800E06616 /* upright_piano_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upright_piano_all.png; sourceTree = "<group>"; };
 		9416C1AB1D30007D00E06616 /* grand_piano_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grand_piano_all.png; sourceTree = "<group>"; };
 		9416C1AC1D30007D00E06616 /* motorcycle_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = motorcycle_all.png; sourceTree = "<group>"; };
@@ -1914,6 +1901,7 @@
 		BF790FE10FF149CE005816F6 /* ButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		BF790FE50FF14B12005816F6 /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
 		BF790FE60FF14B12005816F6 /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonCell.m; sourceTree = "<group>"; };
+		BF7C17A009807C8EF3EDEEB1 /* Pods_HQ_Driver_Simulator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Driver_Simulator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7C332014DA0B420036ED51 /* PVOClaimItemDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOClaimItemDetailController.h; sourceTree = "<group>"; };
 		BF7C332114DA0B420036ED51 /* PVOClaimItemDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOClaimItemDetailController.m; sourceTree = "<group>"; };
 		BF7C332214DA0B420036ED51 /* PVOClaimItemsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOClaimItemsController.h; sourceTree = "<group>"; };
@@ -2296,6 +2284,7 @@
 		BFFFFCEA13FAAD95003028B1 /* SignatureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignatureView.xib; sourceTree = "<group>"; };
 		BFFFFCEC13FAAE2C003028B1 /* SignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureViewController.m; sourceTree = "<group>"; };
 		BFFFFCED13FAAE2C003028B1 /* SignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureViewController.h; sourceTree = "<group>"; };
+		C9D91FF6A38710EA50C02CA5 /* Pods_HQ_Driver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HQ_Driver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5142D1B200424A20009FC53 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D51F38401F6B0D27005EA12C /* ScanbotWeightTicketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanbotWeightTicketController.h; sourceTree = "<group>"; };
 		D51F38411F6B0D47005EA12C /* ScanbotWeightTicketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanbotWeightTicketController.m; sourceTree = "<group>"; };
@@ -2311,6 +2300,7 @@
 		D70030EB1C5A65F800F7266B /* demosurvey2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = demosurvey2.xml; sourceTree = "<group>"; };
 		D739BA8C1ECA239C00B5FDBE /* PDFXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFXMLParser.h; sourceTree = "<group>"; };
 		D739BA8D1ECA239C00B5FDBE /* PDFXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFXMLParser.m; sourceTree = "<group>"; };
+		E35CFFFE81BC025D04265897 /* Pods-HQ Driver.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver/Pods-HQ Driver.distribution.xcconfig"; sourceTree = "<group>"; };
 		E6ED5D505F4F98AB24027EEB /* Pods-Mobile Mover Enterprise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover Enterprise.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover Enterprise/Pods-Mobile Mover Enterprise.debug.xcconfig"; sourceTree = "<group>"; };
 		E9A02344F5FF6A4DD3134F05 /* Pods-Mobile Mover Simulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover Simulator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2347,7 +2337,7 @@
 				6338C63218C6326300E3A7EF /* CoreLocation.framework in Frameworks */,
 				6338C63318C6326300E3A7EF /* MapKit.framework in Frameworks */,
 				6338C63818C6326300E3A7EF /* libsqlite3.dylib in Frameworks */,
-				09290437FE8D95BE2285735E /* Pods_Mobile_Mover.framework in Frameworks */,
+				4B52B2A1FCDB30C36C30F32C /* Pods_HQ_Driver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2381,9 +2371,8 @@
 				94B25BEE1CB43FE7004366D4 /* CoreLocation.framework in Frameworks */,
 				94B25BEF1CB43FE7004366D4 /* MapKit.framework in Frameworks */,
 				6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */,
-				6AFC02452518FA4300DF3608 /* ScanbotSDK.framework in Frameworks */,
 				94B25BF01CB43FE7004366D4 /* libsqlite3.dylib in Frameworks */,
-				82770273C1459C6282A477BB /* Pods_Mobile_Mover_Simulator.framework in Frameworks */,
+				39CDC18D54639B53E2E648A7 /* Pods_HQ_Driver_Simulator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2595,8 +2584,8 @@
 				BF132B3214A135A100E98F60 /* CoreVideo.framework */,
 				BC342C8516650ED800EBB307 /* MobileCoreServices.framework */,
 				350A115719353615001D8EF2 /* XCTest.framework */,
-				932BD7DB7EF48BA28CF730C8 /* Pods_Mobile_Mover.framework */,
-				83D7AD4CDF552EC70D58B853 /* Pods_Mobile_Mover_Simulator.framework */,
+				C9D91FF6A38710EA50C02CA5 /* Pods_HQ_Driver.framework */,
+				BF7C17A009807C8EF3EDEEB1 /* Pods_HQ_Driver_Simulator.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2882,6 +2871,12 @@
 				E9A02344F5FF6A4DD3134F05 /* Pods-Mobile Mover Simulator.debug.xcconfig */,
 				1A352DC9C257F88C76B68241 /* Pods-Mobile Mover Simulator.release.xcconfig */,
 				8C0BACCE5ACB050F1C71A90E /* Pods-Mobile Mover Simulator.distribution.xcconfig */,
+				5BC4D11FC985E28452398665 /* Pods-HQ Driver.debug.xcconfig */,
+				09EDE03FE5704EE9CF8EBF72 /* Pods-HQ Driver.release.xcconfig */,
+				E35CFFFE81BC025D04265897 /* Pods-HQ Driver.distribution.xcconfig */,
+				42886DCDF00AD0802B230D9E /* Pods-HQ Driver Simulator.debug.xcconfig */,
+				1563870581A3B91BA5BFA1AE /* Pods-HQ Driver Simulator.release.xcconfig */,
+				56370D7938759662C547B78B /* Pods-HQ Driver Simulator.distribution.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -3526,7 +3521,7 @@
 				1CB6EEB51B9A22D0001C3449 /* Documentcell.m */,
 				3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */,
 				3E956FB82017984F00E89659 /* Mobile Mover Enterprise-Bridging-Header.h */,
-				3EE3F3652023A49900F2FDD7 /* LightboxAdapterController.swift */,
+				3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */,
 			);
 			name = "Reusable Cells";
 			sourceTree = "<group>";
@@ -4088,7 +4083,6 @@
 				94B25BF11CB43FE7004366D4 /* Resources */,
 				D5D87B1020E2931900E86E19 /* ShellScript */,
 				F8D58DA0CEC6EA93C0FE5BF8 /* [CP] Embed Pods Frameworks */,
-				6AFC02472518FA4300DF3608 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4781,7 +4775,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mobile Mover-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HQ Driver-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4799,7 +4793,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mobile Mover Simulator-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HQ Driver Simulator-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4838,20 +4832,18 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
-				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-HQ Driver/Pods-HQ Driver-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/Optik/Optik.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Optik.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover/Pods-Mobile Mover-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HQ Driver/Pods-HQ Driver-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F8D58DA0CEC6EA93C0FE5BF8 /* [CP] Embed Pods Frameworks */ = {
@@ -4860,20 +4852,18 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
-				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
+				"${BUILT_PRODUCTS_DIR}/Optik/Optik.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Optik.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -5138,7 +5128,7 @@
 				6338C60118C6326300E3A7EF /* DeviceInfo.m in Sources */,
 				9456B7D91C6CFC3500CA4CED /* PVOAutoInventorySignController.m in Sources */,
 				6338C60218C6326300E3A7EF /* ScanApiHelper.mm in Sources */,
-				3EE3F3662023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */,
+				3EE3F3662023A49900F2FDD7 /* OptikAdapterController.swift in Sources */,
 				35878675193630BE00E7A6A0 /* AutoBackup.m in Sources */,
 				6338C60318C6326300E3A7EF /* SocketDummyReceiver.m in Sources */,
 				6338C60418C6326300E3A7EF /* PVODrawer.m in Sources */,
@@ -5469,7 +5459,7 @@
 				94B25BB61CB43FE7004366D4 /* PVOVerifyInventoryItem.m in Sources */,
 				94B25BB71CB43FE7004366D4 /* PVOVerifyHolder.m in Sources */,
 				94B25BB81CB43FE7004366D4 /* ScanOrEnterValueController.m in Sources */,
-				3EE3F3672023A49900F2FDD7 /* LightboxAdapterController.swift in Sources */,
+				3EE3F3672023A49900F2FDD7 /* OptikAdapterController.swift in Sources */,
 				94B25BB91CB43FE7004366D4 /* PDFDraw.m in Sources */,
 				94B25BBA1CB43FE7004366D4 /* ShipmentInfo.m in Sources */,
 				94B25BBB1CB43FE7004366D4 /* ReportDefaults.m in Sources */,
@@ -5534,7 +5524,7 @@
 /* Begin XCBuildConfiguration section */
 		6338C63E18C6326300E3A7EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15284DACBA941800E7FA98CC /* Pods-Mobile Mover.debug.xcconfig */;
+			baseConfigurationReference = 5BC4D11FC985E28452398665 /* Pods-HQ Driver.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -5568,7 +5558,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 413;
+				MARKETING_VERSION = 414;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5587,7 +5577,7 @@
 		};
 		6338C63F18C6326300E3A7EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4EC1069FE02620AC9009D8A9 /* Pods-Mobile Mover.release.xcconfig */;
+			baseConfigurationReference = 09EDE03FE5704EE9CF8EBF72 /* Pods-HQ Driver.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -5621,7 +5611,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 413;
+				MARKETING_VERSION = 414;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5639,7 +5629,7 @@
 		};
 		6338C64018C6326300E3A7EF /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B88139FE3589C07682FD393F /* Pods-Mobile Mover.distribution.xcconfig */;
+			baseConfigurationReference = E35CFFFE81BC025D04265897 /* Pods-HQ Driver.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -5672,7 +5662,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 413;
+				MARKETING_VERSION = 414;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5690,7 +5680,7 @@
 		};
 		94B25D0C1CB43FE7004366D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E9A02344F5FF6A4DD3134F05 /* Pods-Mobile Mover Simulator.debug.xcconfig */;
+			baseConfigurationReference = 42886DCDF00AD0802B230D9E /* Pods-HQ Driver Simulator.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -5741,7 +5731,7 @@
 		};
 		94B25D0D1CB43FE7004366D4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A352DC9C257F88C76B68241 /* Pods-Mobile Mover Simulator.release.xcconfig */;
+			baseConfigurationReference = 1563870581A3B91BA5BFA1AE /* Pods-HQ Driver Simulator.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -5791,7 +5781,7 @@
 		};
 		94B25D0E1CB43FE7004366D4 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C0BACCE5ACB050F1C71A90E /* Pods-Mobile Mover Simulator.distribution.xcconfig */;
+			baseConfigurationReference = 56370D7938759662C547B78B /* Pods-HQ Driver Simulator.distribution.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
