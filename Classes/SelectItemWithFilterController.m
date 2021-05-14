@@ -160,6 +160,8 @@
     if(!dontReloadOnAppear)
         [self reloadItemsList];
     dontReloadOnAppear = NO;
+    
+    [self.itemsTable setUserInteractionEnabled:YES];
 }
 
 -(NSArray*)surveyedItemsForRoom
@@ -675,7 +677,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    [tableView setUserInteractionEnabled:NO];
     NSString *key = [keys objectAtIndex:[indexPath section]];
     NSArray *letterSection = [items objectForKey:key];
     
