@@ -208,9 +208,6 @@
 -(NSString*)displayInventoryNumber
 {
     NSMutableString *str = [NSMutableString stringWithFormat:@"%@%@", lotNumber == nil ? @"" : lotNumber, itemNumber == nil ? @"" : itemNumber];
-    while ([str length] < PVO_INVENTORY_NUMBER_CHARS) {
-        [str insertString:@"0" atIndex:lotNumber == nil ? 0 : [lotNumber length]];
-    }
     return str;
 }
 
