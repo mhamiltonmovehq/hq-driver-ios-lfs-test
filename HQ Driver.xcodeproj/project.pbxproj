@@ -557,6 +557,8 @@
 		6A8B660B2580824800204418 /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8B66092580824800204418 /* AboutView~ipad.xib */; };
 		6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
+		6AB84987268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
+		6AB84988268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
 		6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
 		6AFC02212515172500DF3608 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
@@ -1538,6 +1540,7 @@
 		6A8B66092580824800204418 /* AboutView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutView~ipad.xib"; sourceTree = "<group>"; };
 		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
 		6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestSyncRequest.h; sourceTree = "<group>"; };
+		6AB849862685129F009E0D31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
 		7B13181E1F967C1200E6CC6A /* PVOSTGBOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOL.m; sourceTree = "<group>"; };
 		7B13936D1FBB7986003F2F39 /* CNGOVSignatureValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNGOVSignatureValidation.h; sourceTree = "<group>"; };
@@ -2507,6 +2510,7 @@
 				94ACF5B71CDBEC90007FB551 /* Mobile Mover GVL-Info.plist */,
 				943E10F41CECB45D0047F26A /* Mobile Mover Auto Enterprise-Info.plist */,
 				D59EAEB92098EE430038DE68 /* Security.framework */,
+				6AB849862685129F009E0D31 /* GoogleService-Info.plist */,
 				A16A07C421B0044FE46D852B /* Pods */,
 			);
 			name = CustomTemplate;
@@ -4453,6 +4457,7 @@
 				6338C54018C6326300E3A7EF /* cb_mono_on@2x.png in Resources */,
 				358786411936130400E7A6A0 /* notes.fla in Resources */,
 				6338C54818C6326300E3A7EF /* DoubleSwitchCell.xib in Resources */,
+				6AB84987268512A0009E0D31 /* GoogleService-Info.plist in Resources */,
 				9456BA761C6D1F4B00CA4CED /* suv_front.png in Resources */,
 				63F04B9218C6718D0023C0F5 /* insert_rooms.sql in Resources */,
 				63F04B9418C671A70023C0F5 /* insert_items.sql in Resources */,
@@ -4682,6 +4687,7 @@
 				94B25CBF1CB43FE7004366D4 /* img_claims@2x.png in Resources */,
 				94B25CC01CB43FE7004366D4 /* PVOClaimItemsView.xib in Resources */,
 				94B25CC31CB43FE7004366D4 /* MotorVehicleInventory.pdf in Resources */,
+				6AB84988268512A0009E0D31 /* GoogleService-Info.plist in Resources */,
 				94B25CC41CB43FE7004366D4 /* demosurvey2.xml in Resources */,
 				6A033179243297BA00CFD063 /* EmailCell.xib in Resources */,
 				94B25CC51CB43FE7004366D4 /* car_left.png in Resources */,
@@ -4806,12 +4812,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" 502c6ca45fd7e6fb15e71cd83e395758a71c5df8 de0c12d32d4994285a6c21cca9ecc426a281770f3c1f24a8e1a59da5d4255009\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		D5D87B1020E2931900E86E19 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4819,12 +4827,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" 502c6ca45fd7e6fb15e71cd83e395758a71c5df8 de0c12d32d4994285a6c21cca9ecc426a281770f3c1f24a8e1a59da5d4255009\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		F3B47C127C071E8BF2D21854 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4833,13 +4843,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HQ Driver/Pods-HQ Driver-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Optik/Optik.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Optik.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4853,13 +4869,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Optik/Optik.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Optik.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5537,7 +5559,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5558,7 +5580,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5590,7 +5612,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5611,7 +5633,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5642,7 +5664,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5662,7 +5684,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5691,7 +5713,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5713,7 +5735,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5742,7 +5764,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5764,7 +5786,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5792,7 +5814,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.6;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5813,7 +5835,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 418;
+				MARKETING_VERSION = 419;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";

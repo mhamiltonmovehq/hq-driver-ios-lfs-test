@@ -5,7 +5,7 @@
 //  Created by Tony Brame on 4/30/09.
 //  Copyright __MyCompanyName__ 2009. All rights reserved.
 //
-
+@import Firebase;
 #include "TargetConditionals.h"
 #import <AudioToolbox/AudioServices.h>
 #import "SurveyAppDelegate.h"
@@ -28,7 +28,6 @@
 #import "NoteViewController.h"
 #import "PVOWeightTicketController.h"
 #import "RootViewController.h"
-#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #if defined(ATLASNET)
 #import <ScanbotSDK/ScanbotSDK.h>
@@ -842,6 +841,8 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	    
+    [FIRApp configure];
+
     if([SurveyAppDelegate isRetina4] || [SurveyAppDelegate iPad])
         [window setFrame:[[UIScreen mainScreen] bounds]];
     
@@ -853,7 +854,6 @@
     
     splashView = [[SplashViewController alloc] initWithNibName:@"SplashView" bundle:nil];
 	
-	[Fabric with:@[[Crashlytics class]]];
 
     [SurveyAppDelegate setupScanbot];
 

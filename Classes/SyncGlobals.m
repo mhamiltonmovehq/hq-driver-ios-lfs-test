@@ -610,7 +610,7 @@
         [retval writeStartElement:@"rooms"];
         for (PVORoomSummary *sum in pvoRooms) 
         {
-            if (sum.room == nil)
+            if (sum.room == nil || sum.numberOfItems <= 0)
                 continue;
             
             [retval writeStartElement:@"inventory_room"];
@@ -925,7 +925,7 @@
             [retval writeStartElement:@"rooms"];
             for (PVORoomSummary *sum in pvoRooms)
             {
-                if (sum.room == nil)
+                if (sum.room == nil || sum.numberOfItems <= 0)
                     continue;
                 
                 [retval writeStartElement:@"inventory_room"];

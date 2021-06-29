@@ -10,6 +10,8 @@ def mm_pods
     # Pods for Mobile Mover Enterprise
     pod 'ImagePicker'
     pod 'Optik'
+    pod 'Firebase/Analytics'
+    pod 'Firebase/Crashlytics'
 #    pod 'AFNetworking', '~> 3.2.1' #4.0+ requires min of iOS 9
 end
 
