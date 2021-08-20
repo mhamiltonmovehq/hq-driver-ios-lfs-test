@@ -21,7 +21,7 @@
 #define ITEM_COLUMN_ITEMISGUN 9
 #define ITEM_COLUMN_ITEMISELECTRONIC 10
 
-@interface Item : NSObject {
+@interface Item : NSObject<NSCopying> {
     int itemID;
     NSString *name;
     double cube;

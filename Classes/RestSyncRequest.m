@@ -22,6 +22,7 @@
     [request setHTTPMethod:httpMethod];
     [request setURL:url];
     [request setValue:@"text/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[self getUserAgentHeaderValue] forHTTPHeaderField:@"User-Agent"];
     if (bodyData != nil) {
         [request setHTTPBody:bodyData];
         
@@ -65,5 +66,14 @@
     }
     
     return components.URL;
+}
+
+-(NSString*)getUserAgentHeaderValue {
+    UIDevice *currentDevice = [UIDevice currentDevice];
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *appVersion = [[bundle infoDictionary] objectForKey:@"CFBundleVersion"];
+    NSString *buildNumber = [[bundle infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
+    return [NSString stringWithFormat:@"%@/%@ build %@ (%@ %@) %@", @"HQ Driver", appVersion, buildNumber, currentDevice.systemName, currentDevice.systemVersion, currentDevice.model];
 }
 @end
