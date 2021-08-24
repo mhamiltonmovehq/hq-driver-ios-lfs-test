@@ -300,7 +300,7 @@
                 
                 textCell.tboxValue.placeholder = @"Password";
                 textCell.tboxValue.secureTextEntry = YES;
-                textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+                textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
                 textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
                 textCell.tboxValue.text = self.reloCRMPassword;
             }
@@ -349,7 +349,7 @@
             
             textCell.tboxValue.placeholder = @"Password";
             textCell.tboxValue.secureTextEntry = YES;
-            textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+            textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
             textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
             textCell.tboxValue.text = self.password;
         }
@@ -359,7 +359,7 @@
             
             textCell.tboxValue.placeholder = @"Beta Password";
             textCell.tboxValue.secureTextEntry = NO;
-            textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+            textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
             textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
             textCell.tboxValue.text = self.betaPassword;
         }

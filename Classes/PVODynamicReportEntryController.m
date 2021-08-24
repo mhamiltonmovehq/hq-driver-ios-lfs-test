@@ -226,7 +226,7 @@
                 break;
             case RDT_TEXT_CAPS:
                 ltCell.tboxValue.text = thisData.textValue;
-                [ltCell.tboxValue setKeyboardType:UIKeyboardTypeDefault];
+                [ltCell.tboxValue setKeyboardType:UIKeyboardTypeASCIICapable];
                 ltCell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
                 ltCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
                 break;
