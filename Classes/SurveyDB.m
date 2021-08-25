@@ -4473,18 +4473,18 @@
             {
                 if (itemListId == 0)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
                 }
                 else if (itemListId == 2)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
                 }
                 else if (itemListId == 3)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
                 }
             }
             
