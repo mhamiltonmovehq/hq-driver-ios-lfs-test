@@ -5559,7 +5559,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5580,7 +5580,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5612,7 +5612,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5633,7 +5633,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5664,7 +5664,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5684,7 +5684,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5713,7 +5713,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5735,7 +5735,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5764,7 +5764,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5786,7 +5786,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5814,7 +5814,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.7;
+				CURRENT_PROJECT_VERSION = 4.0.8;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5835,7 +5835,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 419;
+				MARKETING_VERSION = 420;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
