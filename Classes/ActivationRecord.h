@@ -34,5 +34,6 @@
 @property (nonatomic) int pricingDBVersion;
 @property (nonatomic) int fileCompany;
 @property (nonatomic) int milesDBVersion;
+@property (nonatomic) int fileAssociationId;
 
 @end

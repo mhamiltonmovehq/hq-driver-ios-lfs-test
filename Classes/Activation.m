@@ -354,6 +354,7 @@ downloadCheck:
 //            [del.milesDB deleteDB];
 //            rec.milesDBVersion = xmlParse.results.milesVersion;
 //        }
+        rec.fileAssociationId = xmlParse.results.fileAssociationId;
     }
     
     //check to see if the dbs exists yet..

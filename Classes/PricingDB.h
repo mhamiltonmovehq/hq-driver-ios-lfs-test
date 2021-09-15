@@ -134,5 +134,5 @@ enum PACK_TYPES {
 -(NSDictionary*)getWireframeTypesForPVOBulkyItemType:(int)pvoBulkyItemTypeID;
 
 - (NSString *)getRequiredSignaturesForNavItemID:(int)navItemID pricingMode:(int)pricingMode loadType:(int)loadType itemCategory:(int)itemCategory haulingAgentCode:(NSString *)haulingAgentCode;
-
+-(void)recreatePVODatabaseTables:(NSString *)xmlString;
 @end

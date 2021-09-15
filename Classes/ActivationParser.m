@@ -69,6 +69,8 @@
         self.results.resetTrial = [current isEqualToString:@"true"];
     else if ([self thisElement:elementName isElement:@"EnableAutoInv"])
         self.results.allowAutoInv = [current isEqualToString:@"true"];
+    else if ([self thisElement:elementName isElement:@"PricingVanlineID"])
+        self.results.fileAssociationId = [current intValue];
     
 }
 

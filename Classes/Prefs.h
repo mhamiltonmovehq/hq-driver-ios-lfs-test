@@ -23,6 +23,7 @@
 #define BETA_PASS_KEY @"betaPassword"
 #define REPORTS_PASS_KEY @"reportsPassword"
 #define BROTHER_PRINTER_KEY @"brotherPrinterIP"
+#define CURRENT_PRICING_DB_VERSION  @"currentPricingDBVersion"
 
 
 @interface Prefs : NSObject {
@@ -51,5 +52,7 @@
 +(NSMutableDictionary*)brotherSettings;
 +(void)setBrotherSettings:(NSMutableDictionary*)values;
 
++(int)currentPricingDBVersion;
++(void)setCurrentPricingDBVersion:(NSInteger)i;
 
 @end

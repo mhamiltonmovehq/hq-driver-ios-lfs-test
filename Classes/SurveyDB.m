@@ -83,14 +83,8 @@
     {
         sqlite3_close(db);
         db = nil;
-        NSAssert(0, @"Falied to open survey database");
+        NSAssert(0, @"Failed to open survey database");
     }
-    //	else
-    //	{
-    //        [self updateDB:@"PRAGMA foreign_keys=ON"];
-    //
-    //		[self upgradeDB:vlID];
-    //	}
 }
 
 -(BOOL) updateDB: (NSString*)cmd
@@ -5026,7 +5020,8 @@
                     "MilesDLFolder = '%@',"
                     "TariffDLFolder = '%@'"
                     "%@"
-                    "%@",
+                    "%@,"
+                    "FileAssociationId = '%@'",
                     [rec.trialBegin timeIntervalSince1970],
                     [rec.lastValidation timeIntervalSince1970],
                     [rec.lastOpen timeIntervalSince1970],
@@ -5037,7 +5032,8 @@
                     rec.milesDLFolder == nil ? @"" : [rec.milesDLFolder stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                     rec.tariffDLFolder == nil ? @"" : [rec.tariffDLFolder stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                     (autoUnlockedColumnExists ? [NSString stringWithFormat:@",AutoUnlocked = %d", rec.autoUnlocked ? 1 : 0] : @""),
-                    (newVerAvailable ? [NSString stringWithFormat:@",NewVersionAlert = %f", [rec.alertNewVersionDate timeIntervalSince1970]] : @"")]];
+                    (newVerAvailable ? [NSString stringWithFormat:@",NewVersionAlert = %f", [rec.alertNewVersionDate timeIntervalSince1970]] : @""),
+                    @(rec.fileAssociationId)]];
 }
 
 -(ActivationRecord*)getActivation
@@ -5051,28 +5047,32 @@
     BOOL newVerAvailable = [self columnExists:@"NewVersionAlert" inTable:@"ActivationControl"];
     
     cmd = [NSString stringWithFormat:@"SELECT TrialBeginDate,LastValidationDate,LastOpenDate,Unlocked,FileCompanyPtr"
-           ",PricingDBVersion,MilesDBVersion,MilesDLFolder,TariffDLFolder%@%@"
+           ",PricingDBVersion,MilesDBVersion,MilesDLFolder,TariffDLFolder%@%@, FileAssociationId"
            " FROM ActivationControl",
            autoUnlockedColumnExists ? @",AutoUnlocked" : @"",
            newVerAvailable ? @",NewVersionAlert" : @""];
     
     if([self prepareStatement:cmd withStatement:&stmnt])
     {
+        int currentRow = 0;
+        
         if(sqlite3_step(stmnt) == SQLITE_ROW)
         {
-            retval.trialBegin = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 0)];
-            retval.lastValidation = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 1)];
-            retval.lastOpen = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 2)];
-            retval.unlocked = sqlite3_column_int(stmnt, 3) > 0;
-            retval.fileCompany = sqlite3_column_int(stmnt, 4);
-            retval.pricingDBVersion = sqlite3_column_int(stmnt, 5);
-            retval.milesDBVersion = 0; //sqlite3_column_int(stmnt, 6);
-            retval.milesDLFolder = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 7)];
-            retval.tariffDLFolder = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 8)];
-            if (sqlite3_column_count(stmnt) > 9)
-                retval.autoUnlocked = sqlite3_column_int(stmnt, 9) > 0;
-            if (sqlite3_column_count(stmnt) > 10)
-                retval.alertNewVersionDate = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 10)];
+            retval.trialBegin = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, currentRow++)];
+            retval.lastValidation = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, currentRow++)];
+            retval.lastOpen = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, currentRow++)];
+            retval.unlocked = sqlite3_column_int(stmnt, currentRow++) > 0;
+            retval.fileCompany = sqlite3_column_int(stmnt, currentRow++);
+            retval.pricingDBVersion = sqlite3_column_int(stmnt, currentRow++);
+            retval.milesDBVersion = 0;
+            currentRow++;
+            retval.milesDLFolder = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, currentRow++)];
+            retval.tariffDLFolder = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, currentRow++)];
+            if (autoUnlockedColumnExists)
+                retval.autoUnlocked = sqlite3_column_int(stmnt, currentRow++) > 0;
+            if (newVerAvailable)
+                retval.alertNewVersionDate = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, currentRow++)];
+            retval.fileAssociationId = sqlite3_column_int(stmnt, currentRow++);
         }
         else
         {
@@ -5086,7 +5086,8 @@
             retval.milesDLFolder = @"";
             retval.tariffDLFolder = @"";
             retval.autoUnlocked = 0;
-            [self updateDB:[NSString stringWithFormat:@"INSERT INTO ActivationControl VALUES(%f,%f,%f,%d,%d,%d,%d,'','',0%@)",
+            retval.fileAssociationId = 0;
+            [self updateDB:[NSString stringWithFormat:@"INSERT INTO ActivationControl VALUES(%f,%f,%f,%d,%d,%d,%d,'','',0%@,%d)",
                             [retval.trialBegin timeIntervalSince1970],
                             [retval.lastValidation timeIntervalSince1970],
                             [retval.lastOpen timeIntervalSince1970],
@@ -5094,7 +5095,8 @@
                             retval.fileCompany,
                             retval.pricingDBVersion,
                             0, //retval.milesDBVersion,
-                            autoUnlockedColumnExists ? [NSString stringWithFormat:@",%d", retval.autoUnlocked ? 1 : 0] : @""]];
+                            autoUnlockedColumnExists ? [NSString stringWithFormat:@",%d", retval.autoUnlocked ? 1 : 0] : @"",
+                            retval.fileAssociationId]];
         }
         
     }

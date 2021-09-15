@@ -159,7 +159,7 @@
                 req.type = PVO_SYNC;
                 
                 restRequest.scheme = SCHEME;
-                restRequest.host = [self getRestHost];
+                restRequest.host = [PVOSync getRestHost];
                 restRequest.basePath = AICLOUD_PATH;
                 
 #else
@@ -169,7 +169,7 @@
                 req.type = PVO_SYNC;
                 
                 restRequest.scheme = SCHEME;
-                restRequest.host = [self getRestHost];
+                restRequest.host = [PVOSync getRestHost];
                 restRequest.basePath = AICLOUD_PATH;
 #endif
         }
@@ -223,30 +223,6 @@
             default:
                 break;
         }
-        
-        //        if(syncAction == PVO_SYNC_ACTION_DOWNLOAD)
-        //            [self downloadSurvey];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_INVENTORY)
-        //            success = [self uploadCurrentDoc];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_DEL_HVI)
-        //            success = [self uploadCurrentDoc];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_PPI)
-        //            success = [self uploadCurrentDoc];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_WEIGHT_TICKET)
-        //            success = [self uploadCurrentDoc];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_PACK_SERVICES)
-        //            success = [self uploadCurrentDoc];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_HVI_AND_CUST_RESP)
-        //            success = [self uploadHVIAndCustResponsibilities];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPLOAD_INVENTORIES)
-        //            success = [self uploadInventories];
-        //        else if(syncAction == PVO_SYNC_ACTION_RECEIVE)
-        //            [self receiveInventory];
-        //        else if(syncAction == PVO_SYNC_ACTION_DOWNLOAD_BOL)
-        //            success = [self downloadBOL];
-        //        else if(syncAction == PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES)
-        //            success = [self updateActualDates];
-        
     }
     @catch (NSException * e) {
         
@@ -1850,7 +1826,7 @@ exit:
     return retval;
 }
 
--(NSString*)getRestHost {
++(NSString*)getRestHost {
     if ([[Prefs betaPassword] rangeOfString:@"crmenv:"].location != NSNotFound)
     {
         NSRange addpre = [[Prefs betaPassword] rangeOfString:@"crmenv:"];

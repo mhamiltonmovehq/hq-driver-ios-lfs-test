@@ -12,7 +12,7 @@
 @implementation ActivationRecord
 
 @synthesize lastOpen, lastValidation, unlocked, autoUnlocked, trialBegin, pricingDBVersion, fileCompany;
-@synthesize milesDLFolder, tariffDLFolder, milesDBVersion, alertNewVersionDate;
+@synthesize milesDLFolder, tariffDLFolder, milesDBVersion, alertNewVersionDate, fileAssociationId;
 
 
 @end

@@ -555,12 +555,18 @@
 		6A3763E5251A510E00C0AB02 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A03317E2433EE3B00CFD063 /* libzbar.a */; };
 		6A8B660A2580824800204418 /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8B66092580824800204418 /* AboutView~ipad.xib */; };
 		6A8B660B2580824800204418 /* AboutView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8B66092580824800204418 /* AboutView~ipad.xib */; };
+		6AA6B82C26E9453000507114 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6B82B26E9453000507114 /* XMLDictionary.m */; };
+		6AA6B82D26E9453000507114 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6B82B26E9453000507114 /* XMLDictionary.m */; };
+		6AA6B83026E9CD1F00507114 /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6B82F26E9CD1F00507114 /* NSString+Utilities.m */; };
+		6AA6B83126E9CD1F00507114 /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6B82F26E9CD1F00507114 /* NSString+Utilities.m */; };
 		6AB496E924C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB84987268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
 		6AB84988268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
 		6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
 		6AFC02212515172500DF3608 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
+		6AFD1CDA26C3B3A400CBB62E /* PVOPricingSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */; };
+		6AFD1CDB26C3B3A400CBB62E /* PVOPricingSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		7B3218CF1DAEA3BF00F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		9416C1A41D2FFE0800E06616 /* upright_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1A31D2FFE0800E06616 /* upright_piano_all.png */; };
@@ -1538,9 +1544,15 @@
 		6A2E045C2429598B00172BC5 /* SplashView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SplashView~ipad.xib"; sourceTree = "<group>"; };
 		6A2E0460242986C300172BC5 /* ActivationErrorView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ActivationErrorView~ipad.xib"; sourceTree = "<group>"; };
 		6A8B66092580824800204418 /* AboutView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutView~ipad.xib"; sourceTree = "<group>"; };
+		6AA6B82826E9453000507114 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		6AA6B82B26E9453000507114 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
+		6AA6B82E26E9CD1F00507114 /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
+		6AA6B82F26E9CD1F00507114 /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
 		6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestSyncRequest.h; sourceTree = "<group>"; };
 		6AB849862685129F009E0D31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6AFD1CD626C3B1C500CBB62E /* PVOPricingSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PVOPricingSync.h; sourceTree = "<group>"; };
+		6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PVOPricingSync.m; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
 		7B13181E1F967C1200E6CC6A /* PVOSTGBOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOL.m; sourceTree = "<group>"; };
 		7B13936D1FBB7986003F2F39 /* CNGOVSignatureValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNGOVSignatureValidation.h; sourceTree = "<group>"; };
@@ -2519,6 +2531,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6AA6B82E26E9CD1F00507114 /* NSString+Utilities.h */,
+				6AA6B82F26E9CD1F00507114 /* NSString+Utilities.m */,
+				6AA6B82826E9453000507114 /* XMLDictionary.h */,
+				6AA6B82B26E9453000507114 /* XMLDictionary.m */,
 				D5EFF426200FB1FC004BB131 /* Constants-Defines.h */,
 				94F550001C0CD476005E878E /* RPFloatingPlaceholders */,
 				32CA4F630368D1EE00C91783 /* Survey_Prefix.pch */,
@@ -3999,6 +4015,8 @@
 				BCA2E2FA170C845800280CA4 /* WCFDataParam.m */,
 				7BF4C6191F912D1700D9D5C5 /* PVOSTGBOLParser.h */,
 				7BF4C61A1F912D1700D9D5C5 /* PVOSTGBOLParser.m */,
+				6AFD1CD626C3B1C500CBB62E /* PVOPricingSync.h */,
+				6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */,
 			);
 			name = PVO;
 			sourceTree = "<group>";
@@ -4968,6 +4986,7 @@
 				6338C57A18C6326300E3A7EF /* SelectNewAgencyController.m in Sources */,
 				9456B7D31C6CFC3500CA4CED /* PVOAutoEditViewController.m in Sources */,
 				6338C57B18C6326300E3A7EF /* Base64.m in Sources */,
+				6AA6B82C26E9453000507114 /* XMLDictionary.m in Sources */,
 				6338C57C18C6326300E3A7EF /* WebSyncRequest.m in Sources */,
 				6338C57D18C6326300E3A7EF /* SyncViewController.m in Sources */,
 				6338C57E18C6326300E3A7EF /* ProcessSync.m in Sources */,
@@ -5004,6 +5023,7 @@
 				6338C59918C6326300E3A7EF /* PopulateLabelTextCell.m in Sources */,
 				3566E47819A3872C00839B08 /* PVOAttachDocItem.m in Sources */,
 				358786B01936464300E7A6A0 /* PVOWeightTicketSummaryController.m in Sources */,
+				6AFD1CDA26C3B3A400CBB62E /* PVOPricingSync.m in Sources */,
 				6338C59A18C6326300E3A7EF /* PurgeController.m in Sources */,
 				6338C59C18C6326300E3A7EF /* DeleteItemController.m in Sources */,
 				6338C59D18C6326300E3A7EF /* DeleteRoomController.m in Sources */,
@@ -5141,6 +5161,7 @@
 				6338C5FB18C6326300E3A7EF /* PVOClaim.m in Sources */,
 				6338C5FC18C6326300E3A7EF /* PVOClaimItem.m in Sources */,
 				3587866B19362EC000E7A6A0 /* ThirdPartyApplied.m in Sources */,
+				6AA6B83026E9CD1F00507114 /* NSString+Utilities.m in Sources */,
 				6338C5FD18C6326300E3A7EF /* ScannerInputView.m in Sources */,
 				1CDBA7981B90ADEF00385AA1 /* DynamicReportDataXMLParser.m in Sources */,
 				6338C5FE18C6326300E3A7EF /* PVOEditClaimController.m in Sources */,
@@ -5234,6 +5255,7 @@
 				94B25ACD1CB43FE7004366D4 /* SingleFieldController.m in Sources */,
 				94B25ACE1CB43FE7004366D4 /* NewRoomController.m in Sources */,
 				94B25ACF1CB43FE7004366D4 /* SurveySummaryController.m in Sources */,
+				6AA6B83126E9CD1F00507114 /* NSString+Utilities.m in Sources */,
 				6A03317A243297CC00CFD063 /* EmailTableViewCell.m in Sources */,
 				94B25AD01CB43FE7004366D4 /* Room.m in Sources */,
 				94B25AD11CB43FE7004366D4 /* AddRoomController.m in Sources */,
@@ -5381,10 +5403,12 @@
 				94B25B591CB43FE7004366D4 /* PVONavigationController.m in Sources */,
 				94B25B5A1CB43FE7004366D4 /* PVONavigationListItem.m in Sources */,
 				94B25B5B1CB43FE7004366D4 /* SignatureView.m in Sources */,
+				6AFD1CDB26C3B3A400CBB62E /* PVOPricingSync.m in Sources */,
 				94B25B5C1CB43FE7004366D4 /* PVOValInitialController.m in Sources */,
 				94B25B5D1CB43FE7004366D4 /* PVOServicesController.m in Sources */,
 				94B25B5E1CB43FE7004366D4 /* PVOConfirmPaymentController.m in Sources */,
 				94B25B5F1CB43FE7004366D4 /* PVODamageController.m in Sources */,
+				6AA6B82D26E9453000507114 /* XMLDictionary.m in Sources */,
 				94B25B601CB43FE7004366D4 /* TextEditViewController.m in Sources */,
 				94B25B611CB43FE7004366D4 /* PVOPrintController.m in Sources */,
 				94B25B621CB43FE7004366D4 /* DebugController.m in Sources */,
@@ -5559,7 +5583,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5580,7 +5604,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5612,7 +5636,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5633,7 +5657,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5664,7 +5688,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = H95763AZ3F;
 				ENABLE_BITCODE = NO;
@@ -5684,7 +5708,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5713,7 +5737,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5735,7 +5759,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5764,7 +5788,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5786,7 +5810,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5814,7 +5838,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: IGC Software, Inc";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.9;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = DR9L2S86ZF;
 				ENABLE_BITCODE = NO;
@@ -5835,7 +5859,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 421;
+				MARKETING_VERSION = 422;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";

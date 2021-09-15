@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSString *activatedFunctionality;
 @property (nonatomic) BOOL ignoreUpdates;
 @property (nonatomic) BOOL allowAutoInv;
+@property (nonatomic) int fileAssociationId;
 
 //determines if the user can access the application
 //called first - will return true to continue, error string, or nil for no error (no user creds)

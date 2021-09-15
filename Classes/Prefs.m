@@ -107,5 +107,22 @@
     [defaults synchronize];
 }
 
++(int)currentPricingDBVersion
+{
+    NSInteger temp = [[NSUserDefaults standardUserDefaults] integerForKey:CURRENT_PRICING_DB_VERSION];
+    return (int)temp;
+}
+
++(void)setCurrentPricingDBVersion:(NSInteger)i
+{
+    [Prefs setIntegerValue:i forKey:CURRENT_PRICING_DB_VERSION];
+}
+
++ (void)setIntegerValue:(NSInteger)i forKey:(NSString *)key
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:i forKey:key];
+    [defaults synchronize];
+}
 
 @end

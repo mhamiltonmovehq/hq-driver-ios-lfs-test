@@ -685,11 +685,6 @@
 	return TRUE;
 }
 
-//-(BOOL)openMilesDB
-//{
-//	return [milesDB openDB];
-//}
-
 -(BOOL)debugCodeValid
 {
     

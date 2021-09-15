@@ -2555,6 +2555,11 @@
             [db updateDB: @"ALTER TABLE PVOWeightTickets ADD ShouldSync SMALLINT DEFAULT 1;"];
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
+        if (maj < ++ver) {
+            [db updateDB:@"ALTER TABLE ActivationControl ADD FileAssociationId INT"];
+
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
         
         // [db checkDatabaseIntegrity]; // prescott's safety check to use when necessary
         

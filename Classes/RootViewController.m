@@ -211,18 +211,6 @@
 
 -(IBAction) cmdMaintenance_Click:(id)sender;
 {
-//	UIActionSheet *sheet;
-//    BOOL showDemoOrders = ([AppFunctionality getDemoOrderNumbers] != nil);
-//    sheet = [[UIActionSheet alloc] initWithTitle:@"Additional Options"
-//                                        delegate:self
-//                               cancelButtonTitle:@"Cancel"
-//                          destructiveButtonTitle:nil
-//                               otherButtonTitles:@"Backup", @"Purge", @"About", @"Maintenance Refresh", @"HTML Reports Refresh", @"View Filters",
-//             (showDemoOrders ? @"Demo Orders" : @"Brother PJ-673 Settings"), (showDemoOrders ? @"Brother PJ-673 Settings" : nil), nil];
-//	
-//	[sheet showInView:self.view];
-//	
-    
     UIActionSheet *sheet;
     BOOL showDemoOrders = ([AppFunctionality getDemoOrderNumbers] != nil);
     sheet = [[UIActionSheet alloc] initWithTitle:@"Additional Options"

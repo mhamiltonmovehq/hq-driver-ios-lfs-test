@@ -50,6 +50,7 @@
 
 @property (nonatomic) BOOL dismiss;
 @property (nonatomic) BOOL downloadHTMLReportsOnly;
+@property (nonatomic) NSInteger webPricingDBVersion;
 
 -(IBAction)done:(id)sender;
 -(IBAction)start:(id)sender;

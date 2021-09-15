@@ -152,5 +152,5 @@
 
 -(XMLWriter*)getRequestXML;
 -(NSDictionary*)getOrderRequestJson:(NSError**) error;
-
++(NSString*)getRestHost;
 @end

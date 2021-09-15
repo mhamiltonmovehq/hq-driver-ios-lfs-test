@@ -15,6 +15,8 @@
 #import "PVODynamicReportEntry.h"
 #import "PVOBulkyEntry.h"
 #import "AppFunctionality.h"
+#import "XMLDictionary.h"
+#import "NSString+Utilities.h"
 
 @implementation PricingDB
 
@@ -1421,5 +1423,721 @@ success:
     
     sqlite3_finalize(stmnt);
     return f;
+}
+
+#pragma mark - Creating Pricing DB From service -
+-(NSArray *)getItemArrayFromDictionary:(NSDictionary *)dict forKeyPath:(NSString *)keyPath
+{
+    NSArray *arr = [dict valueForKeyPath:keyPath];
+    if ([arr isKindOfClass:[NSDictionary class]])
+    {
+        arr = @ [ arr ];
+    }
+    
+    return arr;
+}
+
+-(void)recreatePVODatabaseTables:(NSString *)xmlString
+{
+    [self deleteDB];
+    [self createDatabase];
+    if (!self.openDB) return;
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithXMLString:xmlString];
+    
+    NSArray *crmSettings = [self getItemArrayFromDictionary:dict forKeyPath:@"CRMSettings.CRMSetting"];
+    if ([crmSettings count] > 0)
+    {
+        [self recreateCRMSettingsTable:crmSettings];
+    }
+    
+    NSArray *crmSystemTypes = [self getItemArrayFromDictionary:dict forKeyPath:@"CRMSystemTypes.CRMSystemType"];
+    if ([crmSystemTypes count] > 0)
+    {
+        [self recreateCRMSystemTypesTable:crmSystemTypes];
+    }
+    
+    NSArray *attachDocuments = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOAttachDocuments.PVOAttachDocument"];
+    if ([attachDocuments count] > 0)
+    {
+        [self recreatePVOAttachDocumentsTable:attachDocuments];
+    }
+    
+    NSArray *bulkyEntries = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOBulkyEntries.PVOBulkyEntry"];
+    if ([bulkyEntries count] > 0)
+    {
+        [self recreatePVOBulkyEntriesTable:bulkyEntries];
+    }
+    
+    NSArray *bulkyEntriesXrefs = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOBulkyEntriesXrefs.PVOBulkyEntriesXref"];
+    if ([bulkyEntriesXrefs count] > 0)
+    {
+        [self recreatePVOBulkyEntriesXrefTable:bulkyEntriesXrefs];
+    }
+    
+    NSArray *bulkyTypes = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOBulkyTypes.PVOBulkyType"];
+    if ([bulkyTypes count] > 0)
+    {
+        [self recreatePVOBulkyTypesTable:bulkyTypes];
+    }
+    
+    NSArray *bulkyWireframeTypesXrefs = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOBulkyWireframeTypesXrefs.PVOBulkyWireframeTypesXref"];
+    if ([bulkyWireframeTypesXrefs count] > 0)
+    {
+        [self recreatePVOBulkyWireframeTypesXrefTable:bulkyWireframeTypesXrefs];
+    }
+    
+    NSArray *confirmPrompts = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOConfirmPrompts.PVOConfirmPrompt"];
+    if ([confirmPrompts count] > 0)
+    {
+        [self recreatePVOConfirmPromptsTable:confirmPrompts];
+    }
+    
+    NSArray *esigns = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOEsigns.PVOEsign"];
+    if ([esigns count] > 0)
+    {
+        [self recreatePVOEsignTable:esigns];
+    }
+    
+    NSArray *haulingAgents = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOHaulingAgents.PVOHaulingAgent"];
+    if ([haulingAgents count] > 0)
+    {
+        [self recreatePVOHaulingAgentsTable:haulingAgents];
+    }
+    
+    NSArray *navCategories = [self getItemArrayFromDictionary:dict forKeyPath:@"PVONavCategories.PVONavCategory"];
+    if ([navCategories count] > 0)
+    {
+        [self recreatePVONavCategoriesTable:navCategories];
+    }
+    
+    NSArray *navItems = [self getItemArrayFromDictionary:dict forKeyPath:@"PVONavItems.PVONavItem"];
+    if ([navItems count] > 0)
+    {
+        [self recreatePVONavItemsTable:navItems];
+    }
+    
+    NSArray *navItemOverrides = [self getItemArrayFromDictionary:dict forKeyPath:@"PVONavItemOverrides.PVONavItemOverride"];
+    if ([navItemOverrides count] > 0)
+    {
+        [self recreatePVONavItemOverridesTable:navItemOverrides];
+    }
+    
+    NSArray *pricingModes = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOPricingModes.PVOPricingMode"];
+    if ([pricingModes count] > 0)
+    {
+        [self recreatePVOPricingModesTable:pricingModes];
+    }
+    
+    NSArray *reportDataEntries = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOReportDataEntries.PVOReportDataEntry"];
+    if ([reportDataEntries count] > 0)
+    {
+        [self recreatePVOReportDataEntriesTable:reportDataEntries];
+    }
+    
+    NSArray *reportDataMultipleChoiceOptions = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOReportDataMultipleChoiceOptions.PVOReportDataMultipleChoiceOption"];
+    if ([reportDataMultipleChoiceOptions count] > 0)
+    {
+        [self recreatePVOReportDataMultipleChoiceOptionsTable:reportDataMultipleChoiceOptions];
+    }
+    
+    NSArray *reportDataSections = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOReportDataSections.PVOReportDataSection"];
+    if ([reportDataSections count] > 0)
+    {
+        [self recreatePVOReportDataSectionsTable:reportDataSections];
+    }
+    
+    NSArray *reportDataTypes = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOReportDataTypes.PVOReportDataType"];
+    if ([reportDataTypes count] > 0)
+    {
+        [self recreatePVOReportDataTypesTable:reportDataTypes];
+    }
+    
+    NSArray *signatureTypes = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOSignatureTypes.PVOSignatureType"];
+    if ([signatureTypes count] > 0)
+    {
+        [self recreatePVOSignatureTypesTable:signatureTypes];
+    }
+    
+    NSArray *vanlines = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOVanlines.PVOVanline"];
+    if ([vanlines count] > 0)
+    {
+        [self recreatePVOVanlinesTable:vanlines];
+    }
+    
+    NSArray *vanlinesDynamic = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOVanlinesDynamic.PVOVanlineDynamicRecord"];
+    if ([vanlines count] > 0)
+    {
+        [self recreatePVOVanlinesDynamicTable:vanlinesDynamic];
+    }
+    
+    NSArray *wireframeTypes = [self getItemArrayFromDictionary:dict forKeyPath:@"PVOWireframeTypes.PVOWireframeType"];
+    if ([wireframeTypes count] > 0)
+    {
+        [self recreatePVOWireframeTypesTable:wireframeTypes];
+    }
+
+    NSArray *scriptedResponses = [self getItemArrayFromDictionary:dict forKeyPath:@"ScriptedResponses.ScriptedResponse"];
+    if ([scriptedResponses count] > 0)
+    {
+        [self recreateScriptedResponsesTable:scriptedResponses];
+    }
+    
+    [self recreateDbVersion];
+}
+
+-(void)recreateCRMSettingsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS CRMSettings"];
+    [self updateDB:@"CREATE TABLE CRMSettings ( VanlineID integer, DevSyncAddress char(255), QASyncAddress char(255), ProdSyncAddress char(255), CRMSystemType char(255), UATSyncAddress char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSString *devSyncAddress = dict[@"devSyncAddress"];
+        NSString *qaSyncAddress = dict[@"qaSyncAddress"];
+        NSString *prodSyncAddress = dict[@"prodSyncAddress"];
+        NSString *crmSystemType = dict[@"crmSystemType"];
+        NSString *uatSyncAddress = dict[@"uatSyncAddress"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO CRMSettings"
+                        "(VanlineID, DevSyncAddress, QASyncAddress, ProdSyncAddress, CRMSystemType, UATSyncAddress)"
+                        "VALUES(%@, '%@', '%@', '%@', '%@', '%@')", @(vanlineID), DBSAFE(devSyncAddress), DBSAFE(qaSyncAddress), DBSAFE(prodSyncAddress), DBSAFE(crmSystemType), DBSAFE(uatSyncAddress)]];
+    }
+
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreateCRMSystemTypesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS CRMSystemTypes"];
+    [self updateDB:@"CREATE TABLE CRMSystemTypes ( TypeID integer NOT NULL, SystemDescription char(255) NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger typeID = [dict[@"typeID"] integerValue];
+        NSString *systemDescription = dict[@"systemDescription"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO CRMSystemTypes"
+                        "(TypeID,SystemDescription)"
+                        "VALUES(%@, '%@')", @(typeID), DBSAFE(systemDescription)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOAttachDocumentsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOAttachDocuments"];
+    [self updateDB:@"CREATE TABLE PVOAttachDocuments ( PVOAttachDocumentID integer NOT NULL, NavItemID integer NOT NULL, DocDescription char(255), DriverType integer NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoAttachDocumentID = [dict[@"pvoAttachDocumentID"] integerValue];
+        NSInteger navItemID = [dict[@"navItemID"] integerValue];
+        NSString *docDescription = dict[@"docDescription"];
+        NSInteger driverType = [dict[@"driverType"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOAttachDocuments"
+                        "(PVOAttachDocumentID,NavItemID,DocDescription,DriverType)"
+                        "VALUES(%@, %@, '%@', %@)", @(pvoAttachDocumentID), @(navItemID), DBSAFE(docDescription), @(driverType)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOBulkyEntriesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOBulkyEntries"];
+    [self updateDB:@"CREATE TABLE PVOBulkyEntries ( PVOBulkyEntryID integer NOT NULL, PVOBulkyEntryTypeID integer NOT NULL, PVOBulkyEntryName char(255) NOT NULL, SortKey integer NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoBulkyEntryID = [dict[@"pvoBulkyEntryID"] integerValue];
+        NSInteger pvoBulkyEntryTypeID = [dict[@"pvoBulkyEntryTypeID"] integerValue];
+        NSString *pvoBulkyEntryName = dict[@"pvoBulkyEntryName"];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOBulkyEntries"
+                        "(PVOBulkyEntryID, PVOBulkyEntryTypeID, PVOBulkyEntryName, SortKey)"
+                        "VALUES(%@, %@, '%@', %@)", @(pvoBulkyEntryID), @(pvoBulkyEntryTypeID), DBSAFE(pvoBulkyEntryName), @(sortKey)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOBulkyEntriesXrefTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOBulkyEntriesXref"];
+    [self updateDB:@"CREATE TABLE PVOBulkyEntriesXref ( PVOBulkyTypeID integer NOT NULL, PVOBulkyEntryID integer NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoBulkyTypeID = [dict[@"pvoBulkyTypeID"] integerValue];
+        NSInteger pvoBulkyEntryID = [dict[@"pvoBulkyEntryID"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOBulkyEntriesXref"
+                        "(PVOBulkyTypeID, PVOBulkyEntryID)"
+                        "VALUES(%@, %@)", @(pvoBulkyTypeID), @(pvoBulkyEntryID)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOBulkyTypesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOBulkyTypes"];
+    [self updateDB:@"CREATE TABLE PVOBulkyTypes ( PVOBulkyTypeID integer NOT NULL, PVOBulkyDescription char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoBulkyTypeID = [dict[@"pvoBulkyTypeID"] integerValue];
+        NSString *pvoBulkyDescription = dict[@"pvoBulkyDescription"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOBulkyTypes"
+                        "(PVOBulkyTypeID, PVOBulkyDescription)"
+                        "VALUES(%@, '%@')", @(pvoBulkyTypeID), DBSAFE(pvoBulkyDescription)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOBulkyWireframeTypesXrefTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOBulkyWireframeTypesXref"];
+    [self updateDB:@"CREATE TABLE PVOBulkyWireframeTypesXref ( PVOBulkyTypeID integer NOT NULL, PVOWireframeTypeID integer NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoBulkyTypeID = [dict[@"pvoBulkyTypeID"] integerValue];
+        NSInteger pvoWireframeTypeID = [dict[@"pvoWireframeTypeID"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOBulkyWireframeTypesXref"
+                        "(PVOBulkyTypeID, PVOWireframeTypeID)"
+                        "VALUES(%@, %@)", @(pvoBulkyTypeID), @(pvoWireframeTypeID)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOConfirmPromptsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOConfirmPrompts"];
+    [self updateDB:@"CREATE TABLE PVOConfirmPrompts ( NavItemID smallint, ConfirmationText text, ContinueButton char(255), CancelButton char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger navItemID = [dict[@"navItemID"] integerValue];
+        NSString *confirmationText = dict[@"confirmationText"];
+        NSString *continueButton = dict[@"continueButton"];
+        NSString *cancelButton = dict[@"cancelButton"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOConfirmPrompts"
+                        "(NavItemID,ConfirmationText,ContinueButton,CancelButton)"
+                        "VALUES(%@, '%@', '%@', '%@')", @(navItemID), DBSAFE(confirmationText), DBSAFE(continueButton), DBSAFE(cancelButton)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOEsignTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOEsign"];
+    [self updateDB:@"CREATE TABLE PVOEsign ( VanlineID  smallint, EsignText  text )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSString *esignText = dict[@"esignText"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOEsign"
+                        "(VanlineID, EsignText)"
+                        "VALUES(%@, '%@')", @(vanlineID), DBSAFE(esignText)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOHaulingAgentsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOHaulingAgents"];
+    [self updateDB:@"CREATE TABLE PVOHaulingAgents ( VanlineID smallint, HaulingAgentCode char(255), IncludedPVOItem smallint, ItemCategory smallint )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSString *haulingAgentCode = dict[@"haulingAgentCode"];
+        NSInteger includedPVOItem = [dict[@"includedPVOItem"] integerValue];
+        NSInteger itemCategory = [dict[@"itemCategory"] integerValue];
+       
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOHaulingAgents"
+                        "(VanlineID,HaulingAgentCode,IncludedPVOItem,ItemCategory)"
+                        "VALUES(%@, '%@', %@, %@)", @(vanlineID), DBSAFE(haulingAgentCode), @(includedPVOItem), @(itemCategory)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVONavCategoriesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVONavCategories"];
+    [self updateDB:@"CREATE TABLE PVONavCategories ( ID smallint, CategoryName char(255), SortKey smallint )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoNavCategoryID = [dict[@"pvoNavCategoryID"] integerValue];
+        NSString *categoryName = dict[@"categoryName"];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVONavCategories"
+                        "(ID, CategoryName, SortKey)"
+                        "VALUES(%@, '%@', %@)", @(pvoNavCategoryID), DBSAFE(categoryName), @(sortKey)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVONavItemsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVONavItems"];
+    [self updateDB:@"CREATE TABLE PVONavItems (NavItemID integer NOT NULL, NavDescription char(255), SortKey integer, ReportID integer, SignatureID char(255), DriverType integer, ReportNotesType integer )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger driverType = [dict[@"driverType"] integerValue];
+        NSString *navDescription = dict[@"navDescription"];
+        NSInteger navItemID = [dict[@"navItemID"] integerValue];
+        NSInteger reportID = [dict[@"reportID"] integerValue];
+        NSInteger reportNotesType = [dict[@"reportNotesType"] integerValue];
+        NSString *signatureID = dict[@"signatureID"];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVONavItems"
+                    "(NavItemID, NavDescription, SortKey, ReportID, SignatureID, DriverType, ReportNotesType)"
+                    "VALUES(%@, '%@', %@, %@, '%@', %@, %@)", @(navItemID), DBSAFE(navDescription), @(sortKey), @(reportID), DBSAFE(signatureID), @(driverType), @(reportNotesType)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVONavItemOverridesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVONavItemsOverride"];
+    [self updateDB:@"CREATE TABLE PVONavItemsOverride ( NavItemID integer, NavDescription char(255), VanlineID integer, ReportID integer, SignatureID integer, DriverType integer, PricingMode integer, HaulingAgentCode char(255), HaulingAgentOverrideNavItemID integer )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger navItemID = [dict[@"navItemID"] integerValue];
+        NSString *navDescription = dict[@"navDescription"];
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSInteger reportID = [dict[@"reportID"] integerValue];
+        NSInteger signatureID = [dict[@"signatureID"] integerValue];
+        NSInteger driverType = [dict[@"driverType"] integerValue];
+        NSInteger pricingMode = [dict[@"pricingMode"] integerValue];
+        NSString *haulingAgentCode = dict[@"haulingAgentCode"];
+        NSInteger haulingAgentOverrideNavItemID = [dict[@"haulingAgentOverrideNavItemID"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVONavItemsOverride"
+                        "(NavItemID,NavDescription,VanlineID,ReportID,SignatureID,DriverType,PricingMode,HaulingAgentCode,HaulingAgentOverrideNavItemID)"
+                        "VALUES(%@, '%@', %@, %@, %@, %@, %@, '%@', %@)", @(navItemID), DBSAFE(navDescription), @(vanlineID), @(reportID), @(signatureID), @(driverType), @(pricingMode), DBSAFE(haulingAgentCode), @(haulingAgentOverrideNavItemID)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOPricingModesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOPricingModes"];
+    [self updateDB:@"CREATE TABLE PVOPricingModes ( PricingModeID integer PRIMARY KEY NOT NULL, Description text NOT NULL )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pricingModeID = [dict[@"pricingModeID"] integerValue];
+        NSString *description = dict[@"description"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOPricingModes"
+                        "(PricingModeID,Description)"
+                        "VALUES(%@, '%@')", @(pricingModeID), DBSAFE(description)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOReportDataEntriesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOReportDataEntries"];
+    [self updateDB:@"CREATE TABLE PVOReportDataEntries ( ID integer NOT NULL, ReportID integer, DataSectionID integer, DataEntryID integer, SortKey integer, EntryType integer, EntryName char(255), DefaultValue char(255), DateTimeGroup integer, Hidden integer )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger ID = [dict[@"ID"] integerValue];
+        NSInteger reportID = [dict[@"reportID"] integerValue];
+        NSInteger dataSectionID = [dict[@"dataSectionID"] integerValue];
+        NSInteger dataEntryID = [dict[@"dataEntryID"] integerValue];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        NSInteger entryType = [dict[@"entryType"] integerValue];
+        NSString *entryName = dict[@"entryName"];
+        NSString *defaultValue = dict[@"defaultValue"];
+        NSInteger dateTimeGroup = [dict[@"dateTimeGroup"] integerValue];
+        NSInteger hidden = [dict[@"hidden"] integerValue];
+       
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOReportDataEntries"
+                        "(ID,ReportID,DataSectionID,DataEntryID,SortKey,EntryType,EntryName,DefaultValue,DateTimeGroup,Hidden)"
+                        "VALUES(%@, %@, %@, %@, %@, %@, '%@', '%@', %@, %@)", @(ID), @(reportID), @(dataSectionID), @(dataEntryID), @(sortKey), @(entryType), DBSAFE(entryName), DBSAFE(defaultValue), @(dateTimeGroup), @(hidden)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOReportDataMultipleChoiceOptionsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOReportDataMultipleChoiceOptions"];
+    [self updateDB:@"CREATE TABLE PVOReportDataMultipleChoiceOptions ( ReportID integer, SectionID integer, EntryID integer, Choice char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger reportID = [dict[@"reportID"] integerValue];
+        NSInteger sectionID = [dict[@"sectionID"] integerValue];
+        NSInteger entryID = [dict[@"entryID"] integerValue];
+        NSString *choice = dict[@"choice"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOReportDataMultipleChoiceOptions"
+                        "(ReportID,SectionID,EntryID,Choice)"
+                        "VALUES(%@, %@, %@, '%@')", @(reportID), @(sectionID), @(entryID), DBSAFE(choice)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOReportDataSectionsTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOReportDataSections"];
+    [self updateDB:@"CREATE TABLE PVOReportDataSections ( ID integer PRIMARY KEY NOT NULL, NavItemID integer, ReportID integer, ReportSectionID integer, SectionName char(255), SortKey integer, Hidden integer, SignatureID char(255), SignatureRequirementType integer )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger ID = [dict[@"ID"] integerValue];
+        NSInteger navItemID = [dict[@"navItemID"] integerValue];
+        NSInteger reportID = [dict[@"reportID"] integerValue];
+        NSInteger reportSectionID = [dict[@"reportSectionID"] integerValue];
+        NSString *sectionName = dict[@"sectionName"];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        NSInteger hidden = [dict[@"hidden"] integerValue];
+        NSString *signatureId = dict[@"signatureID"];
+        NSInteger signatureRequirementType = [dict[@"signatureRequirementType"] integerValue];
+
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOReportDataSections"
+                        "(ID,NavItemID,ReportID,ReportSectionID,SectionName,SortKey,Hidden, SignatureID, SignatureRequirementType)"
+                        "VALUES(%@, %@, %@, %@, '%@', %@, %@, %@, %@)", @(ID), @(navItemID), @(reportID), @(reportSectionID), DBSAFE(sectionName), @(sortKey), @(hidden), signatureId, @(signatureRequirementType)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOReportDataTypesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOReportDataTypes"];
+    [self updateDB:@"CREATE TABLE PVOReportDataTypes ( ID integer NOT NULL, DataTypeID integer, Description char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger ID = [dict[@"ID"] integerValue];
+        NSInteger dataTypeID = [dict[@"dataTypeID"] integerValue];
+        NSString *description = dict[@"description"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOReportDataTypes"
+                        "(ID,DataTypeID,Description)"
+                        "VALUES(%@, %@, '%@')", @(ID), @(dataTypeID), DBSAFE(description)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOSignatureTypesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOSignatureTypes"];
+    [self updateDB:@"CREATE TABLE PVOSignatureTypes ( PVOSignatureID smallint, Description char(255) )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoSignatureID = [dict[@"pvoSignatureID"] integerValue];
+        NSString *description = dict[@"description"];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOSignatureTypes"
+                        "(PVOSignatureID, Description)"
+                        "VALUES(%@, '%@')", @(pvoSignatureID), DBSAFE(description)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOVanlinesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOVanlines"];
+    [self updateDB:@"CREATE TABLE PVOVanlines ( VanlineID smallint, IncludedPVOItem smallint, ItemCategory smallint )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSInteger includedPVOItem = [dict[@"includedPVOItem"] integerValue];
+        NSInteger itemCategory = [dict[@"itemCategory"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOVanlines"
+                        "(VanlineID, IncludedPVOItem, ItemCategory)"
+                        "VALUES(%@, %@, %@)",
+                        @(vanlineID), @(includedPVOItem), @(itemCategory)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOVanlinesDynamicTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOVanlines_Dynamic"];
+    [self updateDB:@"CREATE TABLE PVOVanlines_Dynamic ( VanlineID smallint, IncludedPVOItem smallint, ItemCategory smallint, PricingMode int, LoadType int, IntraState text, HaulingAgentCode text, MinApplicationVersion text, Hidden int, Brand int, RequiredSignatures text, AdditionalSignatures text )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSInteger includedPVOItem = [dict[@"includedPVOItem"] integerValue];
+        NSString *itemCategory = dict[@"itemCategory"];
+        NSString *pricingMode = dict[@"pricingMode"];
+        NSString *loadType = dict[@"loadType"];
+        NSString *intraState = dict[@"intraState"];
+        NSString *haulingAgentCode = dict[@"haulingAgentCode"];
+        NSString *minApplicationVersion = dict[@"minApplicationVersion"];
+        NSInteger hidden = [dict[@"hidden"] integerValue];
+        NSInteger brand = [dict[@"brand"] integerValue];
+        NSString *requiredSignatures = dict[@"requiredSignatures"];
+        NSString *additionalSignatures = dict[@"additionalSignatures"];
+        
+        if ([itemCategory isEqualToString:@"-1"]) itemCategory = nil;
+        if ([pricingMode isEqualToString:@"-1"]) pricingMode = nil;
+        if ([loadType isEqualToString:@"-1"]) loadType = nil;
+        if ([haulingAgentCode isEqualToString:@"-1"]) haulingAgentCode = nil;
+        
+        NSString *cmd = [NSString stringWithFormat:@"INSERT INTO PVOVanlines_Dynamic"
+                         "(VanlineID, IncludedPVOItem, ItemCategory, PricingMode, LoadType, IntraState, "
+                         "HaulingAgentCode, MinApplicationVersion, Hidden, Brand, RequiredSignatures, AdditionalSignatures)"
+                         "VALUES(%@, %@, %@, %@, %@, %@, %@, '%@', %@, '%@', %@, %@)",
+                         @(vanlineID), @(includedPVOItem), itemCategory, pricingMode, loadType,
+                         intraState == nil ? @"NULL" : [NSString stringWithFormat:@"'%@'", intraState],
+                         haulingAgentCode == nil ? @"NULL" : [NSString stringWithFormat:@"'%@'", haulingAgentCode],
+                         DBSAFE(minApplicationVersion), @(hidden), @(brand),
+                         requiredSignatures == nil ? @"NULL" : [NSString stringWithFormat:@"'%@'", requiredSignatures],
+                         additionalSignatures == nil ? @"NULL" : [NSString stringWithFormat:@"'%@'", additionalSignatures]
+                         ];
+        
+        [self updateDB:cmd];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreatePVOWireframeTypesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS PVOWireframeTypes"];
+    [self updateDB:@"CREATE TABLE PVOWireframeTypes (PVOWireframeTypeID integer NOT NULL, PVOWireframeDescription char(255), SortKey integer)"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger pvoWireframeTypeID = [dict[@"pvoWireframeTypeID"] integerValue];
+        NSString *pvoWireframeDescription = dict[@"pvoWireframeDescription"];
+        NSInteger sortKey = [dict[@"sortKey"] integerValue];
+        
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOWireframeTypes"
+                        "(PVOWireframeTypeID, PVOWireframeDescription, SortKey)"
+                        "VALUES(%@, '%@', %@)", @(pvoWireframeTypeID), DBSAFE(pvoWireframeDescription), @(sortKey)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreateScriptedResponsesTable:(NSArray *)dictArray
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS ScriptedResponses"];
+    [self updateDB:@"CREATE TABLE ScriptedResponses ( ID integer NOT NULL, VanlineID integer, ItemName char(255), ItemCube integer, OrderID integer, Question text, Comment text, OptOut integer )"];
+    
+    for (NSDictionary *dict in dictArray)
+    {
+        NSInteger scriptedResponseID = [dict[@"scriptedResponseID"] integerValue];
+        NSInteger vanlineID = [dict[@"vanlineID"] integerValue];
+        NSString *itemName = dict[@"itemName"];
+        NSInteger itemCube = [dict[@"itemCube"] integerValue];
+        NSInteger orderID = [dict[@"orderID"] integerValue];
+        NSString *question = dict[@"question"];
+        NSString *comment = dict[@"comment"];
+        NSInteger optOut = [dict[@"optOut"] integerValue];
+       
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO ScriptedResponses"
+                        "(ID,VanlineID,ItemName,ItemCube,OrderID,Question,Comment,OptOut)"
+                        "VALUES(%@, %@, '%@', %@, %@, '%@', '%@', %@)", @(scriptedResponseID), @(vanlineID), DBSAFE(itemName), @(itemCube), @(orderID), DBSAFE(question), DBSAFE(comment), @(optOut)]];
+    }
+    
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreateDbVersion
+{
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    
+    [self updateDB:@"DROP TABLE IF EXISTS DBVersion"];
+    [self updateDB:@"CREATE TABLE DBVersion ( VanLineID integer )"];
+    
+    SurveyAppDelegate *del = SURVEY_APP_DELEGATE;
+    
+    NSInteger fileAssociationId = [del.surveyDB getActivation].fileAssociationId;
+    
+    [self updateDB:[NSString stringWithFormat:@"INSERT INTO DBVersion"
+                    "(VanLineID)"
+                    "VALUES(%@)", @(fileAssociationId)]];
+    
+    [self updateDB:@"END TRANSACTION;"];
 }
 @end
