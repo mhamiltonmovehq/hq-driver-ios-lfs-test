@@ -5008,6 +5008,7 @@
 {
     BOOL autoUnlockedColumnExists = [self columnExists:@"AutoUnlocked" inTable:@"ActivationControl"];
     BOOL newVerAvailable = [self columnExists:@"NewVersionAlert" inTable:@"ActivationControl"];
+    BOOL fileAssociationIdColumnExists = [self columnExists:@"FileAssociationId" inTable:@"ActivationControl"];
     
     [self updateDB:[NSString stringWithFormat:@"UPDATE ActivationControl SET "
                     "TrialBeginDate = %f,"
@@ -5020,8 +5021,8 @@
                     "MilesDLFolder = '%@',"
                     "TariffDLFolder = '%@'"
                     "%@"
-                    "%@,"
-                    "FileAssociationId = '%@'",
+                    "%@"
+                    "%@",
                     [rec.trialBegin timeIntervalSince1970],
                     [rec.lastValidation timeIntervalSince1970],
                     [rec.lastOpen timeIntervalSince1970],
@@ -5031,9 +5032,9 @@
                     0, //not needed
                     rec.milesDLFolder == nil ? @"" : [rec.milesDLFolder stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                     rec.tariffDLFolder == nil ? @"" : [rec.tariffDLFolder stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                    (autoUnlockedColumnExists ? [NSString stringWithFormat:@",AutoUnlocked = %d", rec.autoUnlocked ? 1 : 0] : @""),
-                    (newVerAvailable ? [NSString stringWithFormat:@",NewVersionAlert = %f", [rec.alertNewVersionDate timeIntervalSince1970]] : @""),
-                    @(rec.fileAssociationId)]];
+                    (autoUnlockedColumnExists ? [NSString stringWithFormat:@", AutoUnlocked = %d", rec.autoUnlocked ? 1 : 0] : @""),
+                    (newVerAvailable ? [NSString stringWithFormat:@", NewVersionAlert = %f", [rec.alertNewVersionDate timeIntervalSince1970]] : @""),
+                    (fileAssociationIdColumnExists ? [NSString stringWithFormat:@", FileAssociationId = %d", rec.fileAssociationId] : @"")]];
 }
 
 -(ActivationRecord*)getActivation
@@ -5045,12 +5046,14 @@
     
     BOOL autoUnlockedColumnExists = [self columnExists:@"AutoUnlocked" inTable:@"ActivationControl"];
     BOOL newVerAvailable = [self columnExists:@"NewVersionAlert" inTable:@"ActivationControl"];
-    
+    BOOL fileAssociationIdColumnExists = [self columnExists:@"FileAssociationId" inTable:@"ActivationControl"];
+
     cmd = [NSString stringWithFormat:@"SELECT TrialBeginDate,LastValidationDate,LastOpenDate,Unlocked,FileCompanyPtr"
-           ",PricingDBVersion,MilesDBVersion,MilesDLFolder,TariffDLFolder%@%@, FileAssociationId"
+           ",PricingDBVersion,MilesDBVersion,MilesDLFolder,TariffDLFolder%@%@%@"
            " FROM ActivationControl",
-           autoUnlockedColumnExists ? @",AutoUnlocked" : @"",
-           newVerAvailable ? @",NewVersionAlert" : @""];
+           autoUnlockedColumnExists ? @", AutoUnlocked" : @"",
+           newVerAvailable ? @", NewVersionAlert" : @"",
+           fileAssociationIdColumnExists ? @", FileAssociationId" : @""];
     
     if([self prepareStatement:cmd withStatement:&stmnt])
     {
@@ -5072,7 +5075,8 @@
                 retval.autoUnlocked = sqlite3_column_int(stmnt, currentRow++) > 0;
             if (newVerAvailable)
                 retval.alertNewVersionDate = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, currentRow++)];
-            retval.fileAssociationId = sqlite3_column_int(stmnt, currentRow++);
+            if (fileAssociationIdColumnExists)
+                retval.fileAssociationId = sqlite3_column_int(stmnt, currentRow++);
         }
         else
         {
@@ -9448,42 +9452,6 @@
 {
     [self saveDocLibraryEntry:data withVanline:-1];
 }
-
-/*
- -(int)saveDocLibraryEntry:(DocLibraryEntry*)data
- {
- int retval = -1;
- 
- if([self getIntValueFromQuery:
- [NSString stringWithFormat:@"SELECT COUNT(*) FROM DocumentLibrary WHERE DocEntryID = %d", data.docEntryID]] > 0)
- {//update
- [self updateDB:[NSString stringWithFormat:@"UPDATE DocumentLibrary SET DocEntryType = %d, CustomerID = %d, "
- "DocURL = %@, DocName = '%@', DocPath = '%@', SavedDate = %f, Synchronized = %d WHERE DocEntryID = %d",
- data.docEntryType, data.customerID,
- [self prepareStringForInsert:data.url supportsNull:YES],
- [data.docName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
- [data.docPath stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
- [data.savedDate timeIntervalSince1970],
- data.synchronized ? 1 : 0,
- data.docEntryID]];
- retval = data.docEntryID;
- }
- else
- {//insert
- [self updateDB:[NSString stringWithFormat:@"INSERT INTO DocumentLibrary(DocEntryType, CustomerID, "
- "DocURL, DocName, DocPath, SavedDate, Synchronized) VALUES(%d,%d,%@,'%@','%@',%f,%d)",
- data.docEntryType, data.customerID,
- [self prepareStringForInsert:data.url supportsNull:YES],
- [data.docName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
- [data.docPath stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
- [data.savedDate timeIntervalSince1970],
- data.synchronized ? 1 : 0]];
- retval = sqlite3_last_insert_rowid(db);
- }
- 
- return retval;
- }
- */
 
 #pragma mark - html reports
 
