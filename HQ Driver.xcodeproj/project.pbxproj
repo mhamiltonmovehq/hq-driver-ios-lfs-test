@@ -563,6 +563,8 @@
 		6AB496EA24C681CD00A94F24 /* RestSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB496E824C681CD00A94F24 /* RestSyncRequest.m */; };
 		6AB84987268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
 		6AB84988268512A0009E0D31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AB849862685129F009E0D31 /* GoogleService-Info.plist */; };
+		6AD1621B270CD85C00EC9EEA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AD1621A270CD85C00EC9EEA /* Colors.xcassets */; };
+		6AD1621E270CDBCD00EC9EEA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AD1621A270CD85C00EC9EEA /* Colors.xcassets */; };
 		6AFC021E2515170C00DF3608 /* libdtdev-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331822433EF5E00CFD063 /* libdtdev-sim.a */; };
 		6AFC02212515172500DF3608 /* libzbar-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0331842433EF6600CFD063 /* libzbar-sim.a */; };
 		6AFD1CDA26C3B3A400CBB62E /* PVOPricingSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */; };
@@ -1553,6 +1555,7 @@
 		6AB849862685129F009E0D31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6AFD1CD626C3B1C500CBB62E /* PVOPricingSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PVOPricingSync.h; sourceTree = "<group>"; };
 		6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PVOPricingSync.m; sourceTree = "<group>"; };
+		6AD1621A270CD85C00EC9EEA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
 		7B13181E1F967C1200E6CC6A /* PVOSTGBOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOL.m; sourceTree = "<group>"; };
 		7B13936D1FBB7986003F2F39 /* CNGOVSignatureValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNGOVSignatureValidation.h; sourceTree = "<group>"; };
@@ -2553,6 +2556,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6AD1621A270CD85C00EC9EEA /* Colors.xcassets */,
 				94CABAF91C18BA21009D7902 /* Images-3.xcassets */,
 				35A942EC19464F4F00A2BC8B /* Arpin Docs */,
 				BC36E00617553D03002D52D2 /* Demos */,
@@ -4396,6 +4400,7 @@
 				3587863F1936130400E7A6A0 /* mock_up_interface.png in Resources */,
 				9456BA7C1C6D1F4B00CA4CED /* suv_rear.png in Resources */,
 				6338C50B18C6326300E3A7EF /* zbar-back.png in Resources */,
+				6AD1621B270CD85C00EC9EEA /* Colors.xcassets in Resources */,
 				3E79E99A210B6CFC00F3626D /* demomilitary1.xml in Resources */,
 				9456BA9A1C6D1F5600CA4CED /* truck_top.png in Resources */,
 				1CB6EEB91B9A2758001C3449 /* DocumentCell.xib in Resources */,
@@ -4724,6 +4729,7 @@
 				94B25CD61CB43FE7004366D4 /* tile_third_party.png in Resources */,
 				94B25CD71CB43FE7004366D4 /* Images-3.xcassets in Resources */,
 				94B25CD81CB43FE7004366D4 /* PreExistingConditions.pdf in Resources */,
+				6AD1621E270CDBCD00EC9EEA /* Colors.xcassets in Resources */,
 				94B25CD91CB43FE7004366D4 /* Miles.sqlite3 in Resources */,
 				94B25CDA1CB43FE7004366D4 /* bst212ad.ptd in Resources */,
 				94B25CDB1CB43FE7004366D4 /* car_front.png in Resources */,

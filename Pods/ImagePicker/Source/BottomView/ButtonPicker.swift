@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ButtonPickerDelegate: class {
+protocol ButtonPickerDelegate: AnyObject {
 
   func buttonDidPress()
 }
@@ -13,12 +13,12 @@ class ButtonPicker: UIButton {
     static let buttonBorderSize: CGFloat = 68
   }
 
-  lazy var numberLabel: UILabel = { [unowned self] in
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = Configuration.numberLabelFont
-
-    return label
+    lazy var numberLabel: UILabel = { [unowned self] in
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = ImagePicker.Configuration.numberLabelFont
+        
+        return label
     }()
 
   weak var delegate: ButtonPickerDelegate?
