@@ -91,23 +91,6 @@
     }
 }
 
-//-(void)setupDualViewCmd1:(NSString*)topText withSubText:(NSString*)bottomText
-//{
-//    [self setupDualView:cmd1 withTopText:topText andSubText:bottomText];
-//}
-//-(void)setupDualViewCmd2:(NSString*)topText withSubText:(NSString*)bottomText
-//{
-//    [self setupDualView:cmd2 withTopText:topText andSubText:bottomText];
-//}
-//-(void)setupDualViewCmd3:(NSString*)topText withSubText:(NSString*)bottomText
-//{
-//    [self setupDualView:cmd3 withTopText:topText andSubText:bottomText];
-//}
-//-(void)setupDualViewCmd4:(NSString*)topText withSubText:(NSString*)bottomText
-//{
-//    [self setupDualView:cmd4 withTopText:topText andSubText:bottomText];
-//}
-
 -(void)setupDualView:(int)buttonTag withTopText:(NSString*)topText andSubText:(NSString*)bottomText
 {
     UIButton *cmd = nil;
@@ -132,13 +115,14 @@
     int padding = 3;
     UILabel *topLabel = (UILabel*)[self viewWithTag:FOUR_BUTTON_TOP_LABEL + (buttonTag * 10)];
     CGSize size = cmd.bounds.size;
-    float iPadModifier = [SurveyAppDelegate iPad] ? 2.4 : 1;// cmd.bounds.size is pulling from the interface builder predefined size, as this method is being called from cellForRowAt.  Need to multiply the width by a factor of 2.4 for larger screen sizes to accommodate.  An ideal solution is probably to add text labels to the buttons themselves.
-    int width = size.width * iPadModifier;
-    int height = size.height * iPadModifier;
+    float iPadWidthModifier = [SurveyAppDelegate iPad] ? 2.4 : 1;// cmd.bounds.size is pulling from the interface builder predefined size, as this method is being called from cellForRowAt.  Need to multiply the width by a factor of 2.4 for larger screen sizes to accommodate.  An ideal solution is probably to add text labels to the buttons themselves.
+    float iPadHeightModifier = [SurveyAppDelegate iPad] ? 2.1 : .7;
+    int width = size.width * iPadWidthModifier;
+    int height = size.height * iPadHeightModifier;
     if(topLabel == nil)
     {
         topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        topLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 15] : [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        topLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 20] : [UIFont systemFontOfSize:[UIFont systemFontSize]];
         if (imageButtons)
             topLabel.textColor = [UIColor blackColor];
         else
@@ -153,13 +137,13 @@
     UILabel *bottomLabel = (UILabel*)[self viewWithTag:FOUR_BUTTON_BOTTOM_LABEL + (buttonTag * 10)];
     if(bottomLabel == nil)
     {
-        int spacing = [SurveyAppDelegate iPad] ? 5 : 0;
+        int spacing = [SurveyAppDelegate iPad] ? 10 : 0;
         bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                                 ((size.height - padding * 2) / 2.0) + spacing,
                                                                 width,
                                                                 height)];
 
-        bottomLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 5] : [UIFont systemFontOfSize:[UIFont systemFontSize] - 2];
+        bottomLabel.font = [SurveyAppDelegate iPad] ? [UIFont systemFontOfSize:[UIFont systemFontSize] + 8] : [UIFont systemFontOfSize:[UIFont systemFontSize] - 2];
         if (imageButtons)
             bottomLabel.textColor = [UIColor blackColor];
         else
