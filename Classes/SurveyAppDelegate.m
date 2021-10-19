@@ -836,12 +836,12 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if (@available(iOS 15, *)){
-            UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
-            [appearance configureWithOpaqueBackground];
-        appearance.backgroundColor = [UIColor colorNamed:@"navBarColor"];
-            [UINavigationBar appearance].standardAppearance = appearance;
-            [UINavigationBar appearance].scrollEdgeAppearance = appearance;
-        }
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        [appearance configureWithOpaqueBackground];
+        appearance.backgroundColor = [UIColor colorNamed:@"NavBarColor"];
+        [UINavigationBar appearance].standardAppearance = appearance;
+        [UINavigationBar appearance].scrollEdgeAppearance = appearance;
+    }
     
     [FIRApp configure];
 
