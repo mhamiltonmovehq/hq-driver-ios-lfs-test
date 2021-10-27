@@ -236,11 +236,8 @@
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     switch (navItemID)
     {
-            //per feature 54, always let them into hvi
-            //        case PVO_P_ORG_HIGH_VALUE:
-            //        case PVO_P_DEL_HIGH_VALUE:
-            //            //check to see if any high value items exist.
-            //            return [del.surveyDB pvoHasHighValueItems:del.customerID];
+        case PVO_ERROR_STATE:
+            return NO;
         case PVO_P_HARDWARE_INVENTORY:
             return [del.surveyDB pvoHasItemsWithDescription:del.customerID forDescription:@"HW"];
         case PVO_P_PRIORITY_INVENTORY:

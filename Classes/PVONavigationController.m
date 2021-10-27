@@ -444,55 +444,16 @@
     }
     
     [rows removeAllObjects];
-    
-    PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
-    [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
-    
-    //set up all completed, enabled, required... should be driven from DB?
-    //no need for enabled, already driven from DB
-    //logic need for every Item id tho to determine if it is completed.  required?
-    
-    /*PVOSignature *sig;
-    
-    for (PVONavigationListItem *item in rows) 
-    {
-        switch (item.navItemID) 
-        {
-            case PVO_ENTER_TARE_WEIGHT:
-                item.completed = tareWeight > 0;
-                break;
-            case PVO_INVENTORY:
-            case PVO_P_INV_CARTON_DETAIL:
-                sig = [del.surveyDB getPVOSignature:del.customerID forImageType:PVO_SIGNATURE_TYPE_ORG_INVENTORY];
-                if(item.navItemID == PVO_INVENTORY)
-                    item.completed = inventory.inventoryCompleted || sig != nil;
-                else
-                    item.completed = sig != nil;
-                [sig release];
-                break;
-            case PVO_GENERAL_COMMENTS:
-                item.completed = [pvoNote length] > 0;
-                break;
-            case PVO_PAYMENT_METHOD:
-                item.completed = confirmPaymentController != nil && confirmPaymentController.paymentMethod != 0;
-                break;
-            case PVO_ORG_PROPERTY_DAMAGE:
-                item.completed = propertyDamageController != nil;
-                break;
-            case PVO_DELIVER_SHIPMENT:
-            case PVO_P_DEL_EXCP:
-                sig = [del.surveyDB getPVOSignature:del.customerID forImageType:PVO_SIGNATURE_TYPE_DEST_INVENTORY];
-                if(item.navItemID == PVO_DELIVER_SHIPMENT)
-                    item.completed = inventory.deliveryCompleted || sig != nil;
-                else
-                    item.completed = sig != nil;
-                [sig release];
-                break;
-            default:
-                item.completed = NO;
-                break;
-        }
-    }*/
+    if (categories.count > 0) {
+        PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
+        [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
+    } else {
+        PVONavigationListItem *error = [[PVONavigationListItem alloc] init];
+        error.navItemID = PVO_ERROR_STATE;
+        error.reportTypeID = -1;
+        error.display = @"No options available";
+        [rows addObject:error];
+    }
     
     [self.tableView reloadData];
 }

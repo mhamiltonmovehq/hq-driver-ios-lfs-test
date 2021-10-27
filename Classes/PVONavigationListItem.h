@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define PVO_ERROR_STATE 0
 //org 1
 #define PVO_ENTER_TARE_WEIGHT 1
 #define PVO_CONFIRM_VALUATION 2
