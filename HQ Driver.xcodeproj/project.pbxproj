@@ -1553,9 +1553,9 @@
 		6AB496E824C681CD00A94F24 /* RestSyncRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestSyncRequest.m; sourceTree = "<group>"; };
 		6AB496ED24C681DD00A94F24 /* RestSyncRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestSyncRequest.h; sourceTree = "<group>"; };
 		6AB849862685129F009E0D31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6AD1621A270CD85C00EC9EEA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		6AFD1CD626C3B1C500CBB62E /* PVOPricingSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PVOPricingSync.h; sourceTree = "<group>"; };
 		6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PVOPricingSync.m; sourceTree = "<group>"; };
-		6AD1621A270CD85C00EC9EEA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7B13181D1F967C1200E6CC6A /* PVOSTGBOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOL.h; sourceTree = "<group>"; };
 		7B13181E1F967C1200E6CC6A /* PVOSTGBOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOL.m; sourceTree = "<group>"; };
 		7B13936D1FBB7986003F2F39 /* CNGOVSignatureValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNGOVSignatureValidation.h; sourceTree = "<group>"; };
@@ -5610,7 +5610,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5663,7 +5663,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5714,7 +5714,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5765,7 +5765,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5816,7 +5816,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5865,7 +5865,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 423;
+				MARKETING_VERSION = 425;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
