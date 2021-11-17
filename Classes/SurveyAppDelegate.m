@@ -679,10 +679,7 @@
 
 -(BOOL)openPricingDB
 {
-	if(![pricingDB openDB])
-		return FALSE;
-	
-	return TRUE;
+    return [pricingDB openDB];
 }
 
 -(BOOL)debugCodeValid

@@ -336,31 +336,27 @@ downloadCheck:
         
         if(rec.fileCompany != xmlParse.results.vanlineDownloadID)
         {
-            [del.pricingDB deleteDB];
-//            [del.milesDB deleteDB];
             rec.fileCompany = xmlParse.results.vanlineDownloadID;
         }
         
         rec.tariffDLFolder = xmlParse.results.pricingDownloadLocation;
         if(rec.pricingDBVersion != xmlParse.results.pricingVersion)
         {
-            [del.pricingDB deleteDB];
             rec.pricingDBVersion = xmlParse.results.pricingVersion;
         }
         
         rec.milesDLFolder = xmlParse.results.milesDownloadLocation;
-//        if(rec.milesDBVersion != xmlParse.results.milesVersion)
-//        {
-//            [del.milesDB deleteDB];
-//            rec.milesDBVersion = xmlParse.results.milesVersion;
-//        }
+
         rec.fileAssociationId = xmlParse.results.fileAssociationId;
     }
     
     //check to see if the dbs exists yet..
-    if(/*![del openMilesDB] || */![del openPricingDB])
+    if(![del openPricingDB])
     {
         allow = ACTIVATION_DOWNLOAD;
+    } else {
+        [del.pricingDB recreateDbVersion:rec.fileAssociationId];
+        [del.pricingDB closeDB];
     }
     
 connectReturn:

@@ -77,8 +77,9 @@ enum PACK_TYPES {
 @property (nonatomic, strong) NSDate *effectiveDate;
 
 -(void)deleteDB;
++(BOOL)dbExists;
 -(BOOL)openDB;
--(NSString*)fullDBPath;
++(NSString*)fullDBPath;
 -(void)closeDB;
 -(BOOL) updateDB: (NSString*)cmd;
 -(BOOL)prepareStatement:(NSString*)cmd withStatement:(sqlite3_stmt**)stmnt;
@@ -135,4 +136,6 @@ enum PACK_TYPES {
 
 - (NSString *)getRequiredSignaturesForNavItemID:(int)navItemID pricingMode:(int)pricingMode loadType:(int)loadType itemCategory:(int)itemCategory haulingAgentCode:(NSString *)haulingAgentCode;
 -(void)recreatePVODatabaseTables:(NSString *)xmlString;
+
+-(void)recreateDbVersion:(NSInteger)fileAssociationId;
 @end

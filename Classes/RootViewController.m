@@ -833,9 +833,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
 			else if(buttonIndex == OPTIONS_TARIFF_REFRESH) // || buttonIndex == OPTIONS_HTML_REPORTS_REFRESH)
 			{//download test
-                
 				DownloadController *download = [[DownloadController alloc] initWithNibName:@"DownloadView" bundle:nil];
-				download.dismiss = TRUE;
+				download.dismiss = YES;
                 download.downloadHTMLReportsOnly = NO; //buttonIndex == OPTIONS_HTML_REPORTS_REFRESH;
                 navController = [[PortraitNavController alloc] initWithRootViewController:download];
 				[del.navController presentViewController:navController animated:YES completion:nil];

@@ -39,9 +39,14 @@
 {
 	processing = NO;
 	[super viewWillAppear:animated];
-    
     [self checkForNewPricingDBVersion];
+
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 
 -(IBAction)done:(id)sender
 {
@@ -120,7 +125,7 @@
             NSURL *url = nil;
             
 //            if(i == 0)
-                url = [NSURL fileURLWithPath:[del.pricingDB fullDBPath]];
+                url = [NSURL fileURLWithPath:[PricingDB fullDBPath]];
 //            else
 //                url = [NSURL fileURLWithPath:[del.milesDB fullDBPath]];
             
@@ -298,7 +303,7 @@
     {
         webPricingDBVersion = [pricingVersion integerValue];
         NSInteger currentPricingDBVersion = [Prefs currentPricingDBVersion];
-        if ((webPricingDBVersion != -1 && webPricingDBVersion > currentPricingDBVersion) ||
+        if (![PricingDB dbExists] || webPricingDBVersion > currentPricingDBVersion ||
             ([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"forcepricingdbupdate"].location != NSNotFound))
         {
             NSLog(@"Updating pricing DB: currentPricingDBVersion: %@; webPricingDBVersion: %@", @(currentPricingDBVersion), @(webPricingDBVersion));
