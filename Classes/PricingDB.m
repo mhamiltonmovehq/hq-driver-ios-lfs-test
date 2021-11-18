@@ -43,7 +43,7 @@
     return self;
 }
 
--(NSString*)fullDBPath
++(NSString*)fullDBPath
 {
     return [[SurveyAppDelegate getDocsDirectory] stringByAppendingPathComponent:PRICING_DB_NAME];
 }
@@ -55,23 +55,27 @@
     
     //check if file exists.  if so, delete it
     NSFileManager *mgr = [NSFileManager defaultManager];
-    if([mgr fileExistsAtPath:[self fullDBPath]])
+    if([mgr fileExistsAtPath:[PricingDB fullDBPath]])
     {
-        [mgr removeItemAtPath:[self fullDBPath] error:nil];
+        [mgr removeItemAtPath:[PricingDB fullDBPath] error:nil];
     }
+}
+
++(BOOL)dbExists {
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    return [mgr fileExistsAtPath:[PricingDB fullDBPath]];
 }
 
 -(BOOL)openDB
 {    
     //check if file exists
-    NSFileManager *mgr = [NSFileManager defaultManager];
-    if(![mgr fileExistsAtPath:[self fullDBPath]])
+    if(![PricingDB dbExists])
         return FALSE;//[self createDatabase];
     
     if(db != NULL)
         return TRUE;
     
-    if(sqlite3_open([[self fullDBPath] UTF8String], &db) != SQLITE_OK)
+    if(sqlite3_open([[PricingDB fullDBPath] UTF8String], &db) != SQLITE_OK)
     {
         sqlite3_close(db);
         db = nil;
@@ -215,14 +219,6 @@ success:
     
     return retval;
 }
-
-
--(void)dealloc
-{
-    [self closeDB];
-    
-}
-
 
 #pragma mark Agents
 
@@ -1439,6 +1435,8 @@ success:
 
 -(void)recreatePVODatabaseTables:(NSString *)xmlString
 {
+    SurveyAppDelegate *del = SURVEY_APP_DELEGATE;
+    
     [self deleteDB];
     [self createDatabase];
     if (!self.openDB) return;
@@ -1583,7 +1581,7 @@ success:
         [self recreateScriptedResponsesTable:scriptedResponses];
     }
     
-    [self recreateDbVersion];
+    [self recreateDbVersion: [del.surveyDB getActivation].fileAssociationId];
 }
 
 -(void)recreateCRMSettingsTable:(NSArray *)dictArray
@@ -2123,16 +2121,12 @@ success:
     [self updateDB:@"END TRANSACTION;"];
 }
 
--(void)recreateDbVersion
+-(void)recreateDbVersion:(NSInteger)fileAssociationId
 {
     [self updateDB:@"BEGIN TRANSACTION;"];
     
     [self updateDB:@"DROP TABLE IF EXISTS DBVersion"];
     [self updateDB:@"CREATE TABLE DBVersion ( VanLineID integer )"];
-    
-    SurveyAppDelegate *del = SURVEY_APP_DELEGATE;
-    
-    NSInteger fileAssociationId = [del.surveyDB getActivation].fileAssociationId;
     
     [self updateDB:[NSString stringWithFormat:@"INSERT INTO DBVersion"
                     "(VanLineID)"
