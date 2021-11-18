@@ -5610,7 +5610,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5663,7 +5663,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5714,7 +5714,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/iOS",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilemover.mobmov;
 				PRODUCT_NAME = "HQ Driver";
@@ -5765,7 +5765,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5816,7 +5816,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
@@ -5865,7 +5865,7 @@
 					"$(PROJECT_DIR)/Linea",
 					"$(PROJECT_DIR)/ZBarSDK/Simulator",
 				);
-				MARKETING_VERSION = 425;
+				MARKETING_VERSION = 426;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wirg.mobilemover;
 				PRODUCT_NAME = "HQ Driver";
