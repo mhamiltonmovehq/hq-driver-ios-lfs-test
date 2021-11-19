@@ -1582,6 +1582,7 @@ success:
     }
     
     [self recreateDbVersion: [del.surveyDB getActivation].fileAssociationId];
+    [self recreateVanlineAgents];
 }
 
 -(void)recreateCRMSettingsTable:(NSArray *)dictArray
@@ -2132,6 +2133,26 @@ success:
                     "(VanLineID)"
                     "VALUES(%@)", @(fileAssociationId)]];
     
+    [self updateDB:@"END TRANSACTION;"];
+}
+
+-(void)recreateVanlineAgents {
+    [self updateDB:@"BEGIN TRANSACTION;"];
+    [self updateDB:@"DROP TABLE IF EXISTS VanlineAgents"];
+    
+    [self updateDB:@"CREATE TABLE VanlineAgents ("
+      "Address    char(255),"
+      "Name       char(255),"
+      "City       char(255),"
+      "State      char(255),"
+      "Email      char(255),"
+      "Zip        char(255),"
+      "Fax        char(255),"
+      "Phone      char(255),"
+      "Code       numeric(15),"
+      "ID         integer PRIMARY KEY NOT NULL,"
+      "VanlineID  numeric(15)"
+     ")"];
     [self updateDB:@"END TRANSACTION;"];
 }
 @end
