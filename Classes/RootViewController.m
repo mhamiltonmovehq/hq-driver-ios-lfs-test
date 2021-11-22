@@ -376,37 +376,6 @@
         del.launchedShortcutItem = nil;
     }
     
-    //something i was working on to pop all the way to the inventory screen, i dont like it
-    //    CustomerListItem *item = nil;
-//    if (del.launchedShortcutItem != nil)
-//    {
-//        item = [customers lastObject];
-//        
-//        if (item != nil)
-//        {
-//            SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-//            
-//            //lazy load the optionsController
-//            if(optionsController == nil)
-//                optionsController = [[CustomerOptionsController alloc] initWithNibName:@"CustomerOptionsView" bundle:nil];
-//            
-//            optionsController.title = item.name;
-//            optionsController.selectedItem = item;
-//            del.customerID = item.custID;
-//            [self.navigationController pushViewController:optionsController	animated:YES];
-//            
-//            PVONavigationController *pvoController = [[PVONavigationController alloc] initWithNibName:@"PVONavigationView" bundle:nil];
-//            pvoController.currentPage = 1;
-//            [self.navigationController pushViewController:pvoController animated:YES];
-//            
-//            PVOLandingController *landingController = [[PVOLandingController alloc] initWithStyle:UITableViewStyleGrouped];
-//            landingController.title = @"Inventory";
-//            [self.navigationController pushViewController:landingController animated:YES];
-//        }
-//        
-//        del.launchedShortcutItem = nil;
-//    }
-    
     if([del.pricingDB vanline] == ARPIN){
         if([SurveyAppDelegate hasInternetConnection]){
             _numDirtyReports = [[del.surveyDB getAllDirtyReports] count];

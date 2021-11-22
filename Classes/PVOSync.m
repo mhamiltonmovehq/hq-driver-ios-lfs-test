@@ -669,6 +669,11 @@ exit:
     PVOInventoryParser *inventoryParser = [[PVOInventoryParser alloc] init];
     parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
     parser.delegate = inventoryParser;
+    
+    // Before parsing the inventory, we need to set the delegate's customer ID so that custom items, lists, and languages will be set properly. 
+    int nextCustomerId = [appDelegate.surveyDB getNextCustomerId];
+    appDelegate.customerID = nextCustomerId;
+    
     [parser parse];
     
     if([self isCancelled])

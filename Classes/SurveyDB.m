@@ -1661,6 +1661,23 @@
     
 }
 
+-(int)getNextCustomerId {
+    //get the current highest customer ID.
+    int nextCustomerId = 1;
+    sqlite3_stmt *stmnt;
+    NSString *cmd = [[NSString alloc] initWithFormat: @"SELECT MAX(CustomerID) FROM Customer"];
+    if([self prepareStatement:cmd withStatement:&stmnt])
+    {
+        if(sqlite3_step(stmnt) == SQLITE_ROW)
+        {
+            nextCustomerId = sqlite3_column_int(stmnt, 0) + 1;
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    return nextCustomerId;
+}
+
 -(SurveyDates*)getDates:(int) cID
 {
     SurveyDates *dates = [[SurveyDates alloc] init];
@@ -2403,7 +2420,6 @@
 {
     [self updateDB:[NSString stringWithFormat:@"UPDATE PhoneTypes SET IsHidden = 1 WHERE PhoneTypeID = %d", phoneTypeID]];
 }
-
 
 #pragma mark agents
 

@@ -142,7 +142,6 @@
 -(SurveyLocation*)getCustomerLocation:(int)locID;
 -(SurveyLocation*)getCustomerLocation:(int) cID withType:(int)locID;
 -(NSMutableArray*)getCustomerLocations:(int) cID atOrigin:(BOOL)origin;
--(void)copyCustomer:(int)custID;
 -(int)getExtraLocationsCount:(int) cID;
 -(void)updateCustomer:(SurveyCustomer*) cust;
 -(void)updateCustomerPricingMode:(int)custID pricingMode:(enum PRICING_MODE_TYPE)pricingMode;
@@ -154,6 +153,8 @@
 -(int)insertNewCustomer:(SurveyCustomer*) cust withSync:(SurveyCustomerSync*)sync andShipInfo:(ShipmentInfo*)info;
 -(void)deleteCustomerLocalRates:(int) cID;
 -(void)deleteCustomer:(int) cID;
+-(void)copyCustomer:(int)custID;
+-(int)getNextCustomerId;
 -(SurveyDates*)getDates:(int) cID;
 -(void)updateDates:(SurveyDates*) dates;
 -(NSMutableArray*)getPhoneTypeList;
@@ -168,6 +169,7 @@
 -(BOOL)phoneExists:(int)customerID withLocationID:(int)locationID withPhoneType:(int)phoneTypeID;
 -(BOOL)insertNewPhoneType:(NSString*)typeName;
 -(void)hidePhoneType:(int)phoneTypeID;
+
 -(void)updatePhoneType:(int) newTypeID withOldPhoneTypeID:(int)oldTypeID withCustomerID:(int)customerID andLocationID:(int)locationID;
 -(SurveyCustomerSync*)getCustomerSync:(int)custID;
 -(void)updateCustomerSync:(SurveyCustomerSync*)sync;
