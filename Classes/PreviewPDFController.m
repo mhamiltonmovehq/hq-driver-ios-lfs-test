@@ -126,8 +126,7 @@
         return;
     }
     
-    //    [self.pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-    [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+    [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
     
     UIBarButtonItem *signButton;
     if (self.noSignatureAllowed || [self.pvoItem hasSignatureType:-1])
@@ -274,9 +273,7 @@
                 supportsDisconnected = [[disconnectedDrawer availableReports] objectForKey:[NSNumber numberWithInt:reportTypeID]] != nil;
         }
         
-        //[pdfView loadRequest:nil];
-        //[pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-        [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+        [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
         
         if([del.pricingDB vanline] == ATLAS && reportTypeID == VIEW_BOL)
         {
@@ -415,9 +412,7 @@
                 [SurveyAppDelegate showAlert:@"An error occurred trying to generate online reports.  "
                  "Please verify your network connection and try again."
                                    withTitle:@"Error"];
-                //[pdfView loadRequest:nil];
-                //[pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-                [pdfView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+                [pdfView evaluateJavaScript:@"document.body.innerHTML = \"\";" completionHandler:nil];
             }
             else if(htmlSupported && (!isAtlas || (!isInventory || !isBetween113and120)))
             //only run HTML version if not atlas, or atlas non-inventory.  Also run if Atlas Inventory, but below iOS version 11.3 or above iOS version 12.0
@@ -554,7 +549,6 @@
             [SurveyAppDelegate showAlert:@"An error occurred trying to generate online reports.  "
              "Please verify your network connection and try again."
                                withTitle:@"Error"];
-            //[SurveyAppDelegate showAlert:result withTitle:@"Get Report Error"];
         }
         else
         {
@@ -787,8 +781,12 @@
     NSData *pdfData = [NSData dataWithContentsOfFile:self.pdfPath];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[pdfData] applicationActivities:nil];
     //    activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard];
-    
+    if ([SurveyAppDelegate iPad]) {
+        activityViewController.popoverPresentationController.barButtonItem = (UIBarButtonItem*)sender;
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+    }
     [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+
     //[self presentViewController:activityViewController animated:YES completion:nil];
     //[self presentViewController:activityViewController animated:YES completion:nil];
 }
@@ -1059,8 +1057,10 @@
     }
     
     sigNav = [[LandscapeNavController alloc] initWithRootViewController:signatureController];
+    sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:sigNav animated:YES completion:nil];
+    //[self.navigationController pushViewController:sigNav animated:YES];
     
 }
 
@@ -2020,18 +2020,10 @@
     viewProgress.hidden = YES;
     pdfView.hidden = NO;
     
-    //    NSString *htmlDir = [SurveyAppDelegate getDocsDirectory];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"WorkingHTMLTemp"];
-    //    htmlDir = [htmlDir stringByAppendingPathComponent:@"auto_inventory.html?id=31&xmlloc=3DC32EF6-1015-4BDF-BF30-D408BFEBB6A4.xml"];
-    //
-    //    NSString* webStringURL = [htmlDir stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //    NSURL *url = [NSURL URLWithString:webStringURL];
-    //    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    //    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:requestObj];
-    //    [pdfView loadRequest:requestObj];
-    
-    [pdfView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:pdfPath]]];
-    
+    NSURL *pdfUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@", pdfPath]];
+    NSURL *pdfDir = [NSURL fileURLWithPath:[SurveyAppDelegate getDocsDirectory] isDirectory:YES];
+    [pdfView  loadFileURL:pdfUrl allowingReadAccessToURL:pdfDir];
+                                          
     if (signedReport)
         [self savePDFToCustomerDocuments:self.pdfPath];
     

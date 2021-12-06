@@ -78,16 +78,13 @@
 {
     [_sections removeAllObjects];
     
-    BOOL isDriverTypePacker = (data != nil && data.driverType == PVO_DRIVER_TYPE_PACKER);
-    
-    
     //Add driver section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
     
-    if (!isDriverTypePacker) {
-        //add hauling agent section
-        [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
-    }
+  
+    //add hauling agent section
+    [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
+    
     
     //add app customerization section
     [_sections addObject:[NSNumber numberWithInt:DRIVER_DATA_SECTION_APPLICATION_OPTIONS]];
@@ -104,8 +101,6 @@
     
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     int vanlineID = [del.pricingDB vanline];
-    
-    
     
     NSMutableArray *currentRows = [[NSMutableArray alloc] init];
     
@@ -125,14 +120,16 @@
 
         }
     }
+    // For both driver and packer
+    if ([AppFunctionality enableMoveHQSettings])
+    {
+        //Enter relo settings screen
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_MOVE_HQ_SETTINGS]];
+    }
     
     if (!isDriverTypePacker)
     {
-        if ([AppFunctionality enableMoveHQSettings])
-        {
-            //Enter relo settings screen
-            [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_MOVE_HQ_SETTINGS]];
-        }
+
         //Enter Driver Signature
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SIGNATURE]];
         
@@ -163,16 +160,21 @@
         //Driver Email Type: OFF/CC/BCC
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_DRIVER_EMAIL_CC_BCC]];
     }
+    // Packer fields
+    if(isDriverTypePacker) {
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_NAME]];
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL]];
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL_CC_BCC]];
+    }
+    
     //add all rows to driver / packer section
     [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_DRIVERPACKER]];
-    
+    currentRows = [[NSMutableArray alloc] init];
+
     if (!isDriverTypePacker)
     {
         /********************/
         //HAULING AGENT SECTION
-        currentRows = [[NSMutableArray alloc] init];
-        
-        
         if ([AppFunctionality showTractorTrailerOptional])
             [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SHOW_TRACTOR_TRAILER]];
         
@@ -193,18 +195,12 @@
         
         //Hauling Email Type: OFF/CC/BCC
         [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_HAULING_EMAIL_CC_BCC]];
-        
-        [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
-        
-        
+    } else {
+        //Hauling Agt #
+        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_HAULING_AGENT]];
     }
     
-    // Packer fields
-    if(isDriverTypePacker) {
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_NAME]];
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL]];
-        [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_PACKER_EMAIL_CC_BCC]];
-    }
+    [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_HAULINGAGENT]];
     
     //APP CUSTOMIZATION
     currentRows = [[NSMutableArray alloc] init];
@@ -226,8 +222,8 @@
     [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_USE_SCANNER]];
     
     //Save Images to Camera Roll
-    [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SAVE_TO_CAM_ROLL]];
-    
+    // [currentRows addObject:[NSNumber numberWithInt:DRIVER_DATA_SAVE_TO_CAM_ROLL]];
+    //  only temporarily hiding this for TEG-1146.  Will need to investigate new libraries and/or other solutions to resolve TEG-1109 (which was the original ticket).
     
     [rows setObject:currentRows forKey:[NSNumber numberWithInt:DRIVER_DATA_SECTION_APPLICATION_OPTIONS]];
 
@@ -377,7 +373,7 @@
     
     [del.surveyDB updateDriverData:data];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - View lifecycle
@@ -458,11 +454,13 @@
     if ([driverSection count] == 0)
         return nil;
     
+    BOOL isPacker = data.driverType == PVO_DRIVER_TYPE_PACKER;
+
     switch ([key intValue]) {
         case DRIVER_DATA_SECTION_DRIVERPACKER:
-            return data.driverType == PVO_DRIVER_TYPE_PACKER? @"Packer Options" : @"Driver Options";
+            return isPacker ? @"Packer Options" : @"Driver Options";
         case DRIVER_DATA_SECTION_HAULINGAGENT:
-            return @"Hauling Agent Options";
+            return isPacker ? @"Agent Options" : @"Hauling Agent Options";
         case DRIVER_DATA_SECTION_APPLICATION_OPTIONS:
             return @"Application Customization";
     }
@@ -653,17 +651,6 @@
     }
     else
     {
-//        ltCell = (LabelTextCell*)[tableView dequeueReusableCellWithIdentifier:LabelTextCellIdentifier];
-//        if (ltCell == nil) {
-//            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LabelTextCell" owner:self options:nil];
-//            ltCell = [nib objectAtIndex:0];
-//            [ltCell setPVOView];
-//            [ltCell.tboxValue addTarget:self 
-//                                 action:@selector(textFieldDoneEditing:) 
-//                       forControlEvents:UIControlEventEditingDidEndOnExit];
-//            ltCell.tboxValue.delegate = self;
-//        }
-        
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
         ltCell = [nib objectAtIndex:0];
         [ltCell.tboxValue setDelegate:self];
@@ -681,7 +668,7 @@
         switch (row) {
             case DRIVER_DATA_HAULING_AGENT:
                 ltCell.tboxValue.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-                ltCell.tboxValue.placeholder = @"Hauling Agt #";
+                ltCell.tboxValue.placeholder = data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Agent #" : @"Hauling Agt #";
                 ltCell.tboxValue.text = data.haulingAgent;
                 break;
             case DRIVER_DATA_SAFETY_NUMBER:
@@ -830,7 +817,8 @@
         sigView.saveBeforeDismiss = NO;
 
         sigNav = [[LandscapeNavController alloc] initWithRootViewController:sigView];
-        
+        sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
+
         [self presentViewController:sigNav animated:YES completion:nil];
     }
     else if (row == DRIVER_DATA_PACKER_INITIALS)

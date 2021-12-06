@@ -36,7 +36,7 @@
     sync.errorCallback = @selector(syncCompleted);
     sync.mergeCustomer = merge;
     sync.downloadRequestType = requestType;
-    sync.orderNumber = (requestType == 0 ? self.orderNum : self.localOrderNum);
+    sync.orderNumber = self.orderNum;
     
     [del.operationQueue addOperation:sync];
     
@@ -76,43 +76,22 @@
 -(IBAction)cancel:(id)sender
 {
     [sync cancel];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(IBAction)requestTypeChanged:(id)sender
-{
-    UISegmentedControl *seg = sender;
-    requestType = seg.selectedSegmentIndex;
-    [self initializeIncludedRows];
-    [self.tableView reloadData];
 }
 
 -(void)initializeIncludedRows
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     [includedRows removeAllObjects];
-    
-    
-#ifndef ATLASNET
-    [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_TYPE]];
-        
+            
     DriverData *data = [del.surveyDB getDriverData];
     if ([AppFunctionality showAgencyCodeOnDownload] && data.driverType == PVO_DRIVER_TYPE_PACKER)
     {
         [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_INT_AGENCY_CODE]];
     }
     
-    if(requestType == 1) //local
-        [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_LOC_ORDER_NUM]];
-    else //interstate
-    {
-        [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_INT_ORDER_NUM]];
-    }
-#else
     [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_INT_ORDER_NUM]];
-#endif
-    
-    
     [includedRows addObject:[NSNumber numberWithInt:PVO_SYNC_DOWNLOAD]];
     
 }
@@ -240,35 +219,13 @@
 {
     static NSString *CellIdentifier = @"Cell";
     static NSString *TextCellIdentifier = @"TextCell";
-    static NSString *OrigDestCellIdentifier = @"OrigDestCell";
     
     UITableViewCell *cell = nil;
     TextCell *textCell = nil;
-    OrigDestCell *odCell = nil;
     
     int row = [[includedRows objectAtIndex:indexPath.row] intValue];
     
-    if(row == PVO_SYNC_TYPE)
-    {
-        odCell = (OrigDestCell*)[tableView dequeueReusableCellWithIdentifier:OrigDestCellIdentifier];
-        if(odCell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"OrigDestCell" owner:self options:nil];
-            odCell = [nib objectAtIndex:0];
-            odCell.accessoryType = UITableViewCellAccessoryNone;
-            [odCell.segmentOrigDest addTarget:self
-                                       action:@selector(requestTypeChanged:)
-                             forControlEvents:UIControlEventValueChanged];
-        }
-        
-        [odCell.segmentOrigDest removeAllSegments];
-        
-        [odCell.segmentOrigDest insertSegmentWithTitle:@"All Others" atIndex:0 animated:NO];
-        [odCell.segmentOrigDest insertSegmentWithTitle:@"Interstate" atIndex:0 animated:NO];
-        
-        odCell.segmentOrigDest.selectedSegmentIndex = requestType;
-    }
-    else if(row == PVO_SYNC_DOWNLOAD)
+    if(row == PVO_SYNC_DOWNLOAD)
     {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil)
@@ -319,47 +276,8 @@
         }
     }
     
-    return textCell != nil ? textCell : cell != nil ? cell : odCell;
+    return textCell != nil ? textCell : cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -403,7 +321,7 @@
         SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
         DriverData *data = [del.surveyDB getDriverData];
         
-        sync.orderNumber = (requestType == 0 ? self.orderNum : self.localOrderNum);
+        sync.orderNumber = self.orderNum;
         
         if(sync.orderNumber == nil || [sync.orderNumber length] == 0)
             [SurveyAppDelegate showAlert:@"You must have an order number entered to continue." withTitle:@"Order Number"];

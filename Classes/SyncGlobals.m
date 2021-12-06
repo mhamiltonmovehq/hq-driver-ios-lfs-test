@@ -22,6 +22,13 @@
 @implementation SyncGlobals
 
 
++(void)insertContactPhone:(SurveyPhone*) phone custId:(int)custId appDelegate:(SurveyAppDelegate *)del {
+    if (phone != nil && phone.number != nil && [phone.number length] > 0) {
+        phone.custID = custId;
+        [del.surveyDB insertPhone:phone];
+    }
+}
+
 +(BOOL)flushCustomerToDB:(SurveyDownloadXMLParser*)parser appDelegate:(SurveyAppDelegate *)del
 {
     //if auto inventory is unlocked on the device let's default the inventory type to both...
@@ -29,13 +36,13 @@
         parser.customer.inventoryType = AUTO;
     }
     
-    [del.surveyDB insertNewCustomer:parser.customer withSync:parser.sync andShipInfo:parser.info];
-    [parser updateCustomerID:parser.customer.custID];
+    int custId = [del.surveyDB insertNewCustomer:parser.customer withSync:parser.sync andShipInfo:parser.info];
+    [parser updateCustomerID:custId];
     
-    del.customerID = parser.customer.custID;
+    del.customerID = custId;
     
     if([parser.note length] > 0)
-        [del.surveyDB updateCustomerNote:parser.customer.custID withNote:parser.note];
+        [del.surveyDB updateCustomerNote:custId withNote:parser.note];
     
     if (parser.reportNotes != nil && [parser.reportNotes count] > 0)
     {
@@ -47,58 +54,30 @@
         for (int i = 0; i < [parser.vehicles count]; i++)
         {
             PVOVehicle *vehicle = parser.vehicles[i];
-            vehicle.customerID = parser.customer.custID;
+            vehicle.customerID = custId;
             [del.surveyDB saveVehicle:vehicle];
         }
     }
     
-    NSArray *phoneTypes = [del.surveyDB getPhoneTypeList];
-    
-    BOOL hasPrimaryPhone = NO;
-    if (parser.primaryPhone != nil && parser.primaryPhone.number != nil && [parser.primaryPhone.number length] > 0)
-    {
-        parser.primaryPhone.custID = parser.customer.custID;
-        parser.primaryPhone.locationID = 1;
-        parser.primaryPhone.isPrimary = 1;
-        if (parser.primaryPhone.type == nil)
-        {
-            parser.primaryPhone.type = [[PhoneType alloc] init];
-//            parser.primaryPhone.type.name = @"Primary";
-        }
-        [del.surveyDB insertPhone:parser.primaryPhone];
-        hasPrimaryPhone = YES;
-    }
+    [self insertContactPhone:parser.workPhone custId:custId appDelegate:del];
+    [self insertContactPhone:parser.mobilePhone custId:custId appDelegate:del];
+    [self insertContactPhone:parser.homePhone custId:custId appDelegate:del];
     
     for(int i = 0; i < [parser.locations count]; i++)
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
-        if(location.locationType == -1)
-        {//thi sis an ex stop
+        if(location.locationType == -1) {//this is an ex stop
             //locid and seq generated automatically...
-            if ([AppFunctionality downloadExtraStops:parser.customer.pricingMode])
-                [del.surveyDB insertLocation:location];
-        }
-        else
-        {
+            [del.surveyDB insertLocation:location];
+        } else {
             [del.surveyDB updateLocation:location];
-            
-            for(int j = 0; j < [location.phones count]; j++)
-            {
-                SurveyPhone *phone = [location.phones objectAtIndex:j];
-                phone.custID = parser.customer.custID;
-                phone.locationID = location.locationType;
-                if (location.locationType == ORIGIN_LOCATION_ID && [phone.type.name isEqualToString:@"Home"])
-                {
-                    phone.locationID = -1; //primary phone
-//                    phone.type.name = @"Primary";
-                    if (hasPrimaryPhone)
-                    {
-                        [del.surveyDB updatePhone:phone];
-                        continue;
-                    }
-                }
-                [del.surveyDB addPhone:phone withTypeString:phone.type.name];
-            }
+        }
+        
+        for(SurveyPhone *phone in location.phones)
+        {
+            phone.custID = custId;
+            phone.locationTypeId = location.locationType;
+            [del.surveyDB insertPhone:phone];
         }
     }
     
@@ -134,7 +113,7 @@
     //cubesheet
     if(parser.csParser.entries != nil && [parser.csParser.entries count] > 0)
     {
-        CubeSheet *cs = [del.surveyDB openCubeSheet:parser.customer.custID];
+        CubeSheet *cs = [del.surveyDB openCubeSheet:custId];
         
         for (SurveyedItem *si in parser.csParser.entries) {
             si.csID = cs.csID;
@@ -167,10 +146,11 @@
     if(existingCust == nil)
         return FALSE;
     
-    parser.customer.custID = existingCust.custID;
-    
-    [parser updateCustomerID:parser.customer.custID];
-    del.customerID = parser.customer.custID;
+    int custId = existingCust.custID;
+    parser.customer.custID = custId;
+
+    [parser updateCustomerID:custId];
+    del.customerID = custId;
     
     [del.surveyDB updateCustomer:parser.customer];
     [del.surveyDB updateShipInfo:parser.info];
@@ -178,15 +158,13 @@
     
     
     if([parser.note length] > 0)
-        [del.surveyDB updateCustomerNote:parser.customer.custID withNote:parser.note];
+        [del.surveyDB updateCustomerNote:custId withNote:parser.note];
     
     if (parser.reportNotes != nil && [parser.reportNotes count] > 0)
     {
         [del.surveyDB saveReceivableReportNotes:parser.reportNotes forCustomer:del.customerID];
     }
-    
-    NSArray *phoneTypes = [del.surveyDB getPhoneTypeList];
-    
+        
     //remove any ex stips...
     for (int i = 0; i < 2; i++) {
         
@@ -195,47 +173,31 @@
             if(l.sequence > 0)
             {
                 [del.surveyDB deleteLocation:l];
-                [del.surveyDB deletePhones:parser.customer.custID withLocationID:l.locationType];
+                [del.surveyDB deletePhones:custId withLocationID:l.locationType];
             }
         }
     }
-    
-    [del.surveyDB deletePhones:parser.customer.custID withLocationID:-1]; //delete primary phone
-    if (parser.primaryPhone != nil)
-    {
-        parser.primaryPhone.custID = parser.customer.custID;
-        parser.primaryPhone.locationID = -1;
-        if (parser.primaryPhone.type == nil)
-        {
-            parser.primaryPhone.type = [[PhoneType alloc] init];
-            parser.primaryPhone.type.name = @"Primary";
-        }
-        [del.surveyDB insertPhone:parser.primaryPhone];
-    }
+
+    [self insertContactPhone:parser.workPhone custId:custId appDelegate:del];
+    [self insertContactPhone:parser.mobilePhone custId:custId appDelegate:del];
+    [self insertContactPhone:parser.homePhone custId:custId appDelegate:del];
     
     for(int i = 0; i < [parser.locations count]; i++)
     {
         SurveyLocation *location = [parser.locations objectAtIndex:i];
-        if(location.locationType == -1)
-        {//thi sis an ex stop
+        if(location.locationType == -1) {//this is an ex stop
             //locid and seq generated automatically...
-            if ([AppFunctionality downloadExtraStops:parser.customer.pricingMode])
-                [del.surveyDB insertLocation:location];
-        }
-        else
-        {
+            [del.surveyDB insertLocation:location];
+        } else {
             [del.surveyDB updateLocation:location];
-            
-            [del.surveyDB deletePhones:parser.customer.custID withLocationID:location.locationType];
-            for(int j = 0; j < [location.phones count]; j++)
-            {
-                SurveyPhone *phone = [location.phones objectAtIndex:j];
-                phone.custID = parser.customer.custID;
-                phone.locationID = location.locationType;
-//                if (location.locationType == ORIGIN_LOCATION_ID && [phone.type.name isEqualToString:@"Home"])
-//                    phone.locationID = -1; //primary phone
-                [del.surveyDB addPhone:phone withTypeString:phone.type.name];
-            }
+            [del.surveyDB deletePhones:custId withLocationID:location.locationType];
+        }
+        
+        for(SurveyPhone *phone in location.phones)
+        {
+            phone.custID = custId;
+            phone.locationTypeId = location.locationType;
+            [del.surveyDB insertPhone:phone];
         }
     }
     
@@ -267,7 +229,7 @@
     //cubesheet
     if(parser.csParser.entries != nil && [parser.csParser.entries count] > 0)
     {
-        CubeSheet *cs = [del.surveyDB openCubeSheet:parser.customer.custID];
+        CubeSheet *cs = [del.surveyDB openCubeSheet:custId];
         
         for (SurveyedItem *si in parser.csParser.entries) {
             si.csID = cs.csID;
@@ -605,11 +567,7 @@
         [retval writeElementString:@"spro_weight" withIntData:invData.sproWeight];
     if(invData.consWeight > 0 )
         [retval writeElementString:@"cons_weight" withIntData:invData.consWeight];
-    
-    NSDictionary *colors = [del.surveyDB getPVOColors];
-    
-    //[retval writeStartElement:@"locations"];
-    
+            
     NSArray *pvoLocations = [del.surveyDB getPVOLocationsForCust:del.customerID];
     NSArray *pvoRooms, *pvoItems;
     
@@ -652,7 +610,7 @@
         [retval writeStartElement:@"rooms"];
         for (PVORoomSummary *sum in pvoRooms) 
         {
-            if (sum.room == nil)
+            if (sum.room == nil || sum.numberOfItems <= 0)
                 continue;
             
             [retval writeStartElement:@"inventory_room"];
@@ -967,7 +925,7 @@
             [retval writeStartElement:@"rooms"];
             for (PVORoomSummary *sum in pvoRooms)
             {
-                if (sum.room == nil)
+                if (sum.room == nil || sum.numberOfItems <= 0)
                     continue;
                 
                 [retval writeStartElement:@"inventory_room"];

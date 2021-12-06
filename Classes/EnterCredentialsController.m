@@ -43,9 +43,10 @@
                                                                                            target:self
                                                                                            action:@selector(cmdDoneClick:)];
     
-    self.environments = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:@"Dev", @"QA", @"PROD", nil]
+    self.environments = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:@"Dev", @"QA", @"UAT", @"PROD", nil]
                                                         forKeys:[NSArray arrayWithObjects:[NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_DEV],
                                                                  [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_QA],
+                                                                 [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_UAT],
                                                                  [NSNumber numberWithInt:PVO_DRIVER_CRM_ENVIRONMENT_PROD], nil]];
     
     // Change title based on version of application being run
@@ -106,7 +107,9 @@
     {
         [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMUSERNAME]];
         [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMPASSWORD]];
-        [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMENVIRONMENT]];
+        if ([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"crmenv"].location != NSNotFound) {
+            [_rows addObject:[NSNumber numberWithInt:ENTER_CREDENTIALS_RELOCRMENVIRONMENT]];
+        }
     }
     else
     {
@@ -216,57 +219,16 @@
     return [_rows count];
 }
 
-/*-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    if (!_isMoveHQSettings) {
-        return @"Please enter your credentials for the IGC Software website, which will be used to validate activation.\n\nBy logging in you agree to the following agreements, policies and guidelines at www.MobileMover.com/Legal";
-    } else {
-        return nil;
-    }
-}*/
-
-//// Commented out the method above and added the two below to add feature 4733
-//// This method creates a view as the footer of the tableview
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    UITextView* footer = nil;
-//
-//    // Only show if MoveHQ settings are off
-//    if (!_isMoveHQSettings) {
-//        // Create the footer UITextView and disable editing
-//        footer = [[UITextView alloc] initWithFrame:CGRectMake(20, 20, self.view.bounds.size.width - 40, 300)];
-//        footer.editable = NO;
-//
-//        // Add hyperlink functionality on the tail end of the string where the URL is present
-//        NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:@"Please enter your credentials for the IGC Software website, which will be used to validate activation.\n\nBy logging in you agree to the following agreements, policies and guidelines at www.MobileMover.com/Legal"];
-//        [attributedString addAttribute: NSLinkAttributeName value: @"http://www.mobilemover.com/legal" range: NSMakeRange(attributedString.length - 25, 25)];
-//
-//        // Set that string to be in the UITextView
-//        footer.attributedText = attributedString;
-//
-//        // Set the font
-//        footer.font = [UIFont systemFontOfSize:12];
-//        footer.textColor = UIColor.grayColor;
-//}
-//
-//    // Return the UITextView
-//    return footer;
-//}
-//
-//// Give the footer view a non-zero height
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-//    return 300;
-//}
-
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *footerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     
     UILabel *footerText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [footerText setTextAlignment:NSTextAlignmentCenter];
     footerText.font = [UIFont systemFontOfSize:12.0];
     footerText.numberOfLines = 0;
     if (!_isMoveHQSettings) {
-        [footerText setText:@"Please enter your credentials for the IGC Software website, which will be used to validate activation."];
+        [footerText setText:@"Please enter your MoveHQ activation credentials."];
     }
     
     UIButton *privacyPolicy=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -281,6 +243,16 @@
     [footerView addSubview:privacyPolicy];
 
     return footerView;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    int height = 20;
+    for (UIView *subview in footer.subviews) {
+        subview.center = CGPointMake(self.view.frame.size.width / 2, height);
+        height += 60;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -328,7 +300,7 @@
                 
                 textCell.tboxValue.placeholder = @"Password";
                 textCell.tboxValue.secureTextEntry = YES;
-                textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+                textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
                 textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
                 textCell.tboxValue.text = self.reloCRMPassword;
             }
@@ -377,7 +349,7 @@
             
             textCell.tboxValue.placeholder = @"Password";
             textCell.tboxValue.secureTextEntry = YES;
-            textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+            textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
             textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
             textCell.tboxValue.text = self.password;
         }
@@ -387,7 +359,7 @@
             
             textCell.tboxValue.placeholder = @"Beta Password";
             textCell.tboxValue.secureTextEntry = NO;
-            textCell.tboxValue.keyboardType = UIKeyboardTypeDefault;
+            textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
             textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
             textCell.tboxValue.text = self.betaPassword;
         }
@@ -466,7 +438,7 @@
 }
 -(void)goToPrivacyPolicy
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.atlasvanlines.com/privacy-policy"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.movehq.com/privacy-policy"]];
 }
 
 @end

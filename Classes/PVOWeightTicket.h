@@ -21,6 +21,8 @@
 @property (nonatomic) int weightType;
 @property (nonatomic) int weightTicketID;
 @property (nonatomic) BOOL newRecord;
+@property (nonatomic) int moveHqId;
+@property (nonatomic) BOOL shouldSync;
 
 @property (nonatomic, retain) NSDate *ticketDate;
 @property (nonatomic, retain) NSString *description;

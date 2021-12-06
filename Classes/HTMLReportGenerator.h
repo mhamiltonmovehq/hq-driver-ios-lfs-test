@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BNHtmlPdfKit.h"
+#import <WebKit/WebKit.h>
 
 @class HTMLReportGenerator;
 @protocol HTMLReportGeneratorDelegate < NSObject >
@@ -17,10 +18,10 @@
 
 #define HTML_REPORTS_TEMP_DIR @"/WorkingHTML"
 
-@interface HTMLReportGenerator : NSObject <BNHtmlPdfKitDelegate, UIWebViewDelegate>
+@interface HTMLReportGenerator : NSObject <BNHtmlPdfKitDelegate, WKNavigationDelegate>
 {
     BNHtmlPdfKit *htmlKit;
-    UIWebView *webView;
+    WKWebView *webView;
     
     int custID;
 }

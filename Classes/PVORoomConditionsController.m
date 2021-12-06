@@ -48,15 +48,6 @@
                                                                                             action:@selector(done:)];
     
     rows = [[NSMutableArray alloc] init];
-    
-//    [self buildTitleView];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -85,85 +76,9 @@
     
     
     [self initializeIncludedRows];
-    [self.tableView reloadData];
+    [self reloadData];
     [del setTitleForDriverOrPackerNavigationItem:self.navigationItem forTitle:self.title];
-//    [self buildTitleView]; //was used for room alias, but the subtitle and alias icon are conflicting, and jeff and i decided to push this to the next release due to sync issue
 }
-
-//-(void)buildTitleView
-//{
-//    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-//    
-//    DriverData *driver = [del.surveyDB getDriverData];
-//    
-//    NSString *alias = [del.surveyDB getRoomAlias:del.customerID withRoomID:room.roomID];
-//    if(alias != nil && ![alias isEqualToString:@""])
-//        room.roomName = alias;
-//    
-//    UIFont *myfont = [UIFont boldSystemFontOfSize:17];
-//    CGSize textSize = [room.roomName sizeWithAttributes:@{ NSFontAttributeName : myfont}];
-//    UIView *titleView = (UIView *)self.navigationItem.titleView;
-//    //[[UIView alloc] initWithFrame:CGRectMake(0, 0, textSize.width + 10 + 20, textSize.height)];
-//    
-//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
-//    titleLabel.font = myfont;
-//    titleLabel.text = room.roomName;
-//    [titleLabel sizeToFit];
-//    
-//    [titleView addSubview:titleLabel];
-//    
-//    UILabel *subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 0, 0)];
-//    subTitleLabel.font = [UIFont systemFontOfSize:12];
-//    subTitleLabel.text = (driver.driverType != PVO_DRIVER_TYPE_PACKER) ? @"Driver" : @"Packer";
-//    [subTitleLabel sizeToFit];
-//    
-//    
-//    float widthDiff = subTitleLabel.frame.size.width - titleLabel.frame.size.width;
-//    
-//    if (widthDiff > 0) {
-//        CGRect frame = titleLabel.frame;
-//        frame.origin.x = widthDiff / 2;
-//        titleLabel.frame = CGRectIntegral(frame);
-//    } else {
-//        CGRect frame = subTitleLabel.frame;
-//        frame.origin.x = fabsf(widthDiff) / 2;
-//        subTitleLabel.frame = CGRectIntegral(frame);
-//    }
-//    
-//    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textSize.width + 10, 0, 20, 20)];
-//    [btn setBackgroundColor:[UIColor clearColor]];
-//    [btn addTarget:self action:@selector(enterRoomAlias:) forControlEvents:UIControlEventTouchUpInside];
-//    [btn setImage:[UIImage imageNamed:@"edit_note_44"] forState:UIControlStateNormal];
-//    
-//    [btn setEnabled:YES];
-//    
-//    float w = MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width + btn.frame.size.width) + 10;
-//    
-//    UIView *twoLineTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, w, 30)];
-//    [twoLineTitleView addSubview:titleLabel];
-//    [twoLineTitleView addSubview:subTitleLabel];
-//    [twoLineTitleView addSubview:btn];
-//    
-//    
-//    self.navigationItem.titleView = twoLineTitleView;
-//    
-//    [titleLabel release];
-//}
-
-//-(IBAction) enterRoomAlias:(id)sender
-//{
-//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Room Alias"
-//                                                 message:@"Use this option to create a new name for this Room, in this Survey only."
-//                                                delegate:self
-//                                       cancelButtonTitle:@"Cancel"
-//                                       otherButtonTitles:@"OK", nil];
-//    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    UITextField *tbox = [av textFieldAtIndex:0];
-//    tbox.autocapitalizationType = UITextAutocapitalizationTypeWords;
-//    tbox.placeholder = room.roomName;
-//    [av show];
-//    
-//}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -194,7 +109,7 @@
     conditions.damageDetail = self.tboxCurrent.text; // defect 11805
     
     [self initializeIncludedRows];
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 -(IBAction)done:(id)sender
@@ -358,45 +273,6 @@
     return cell != nil ? cell : noteCell != nil ? (UITableViewCell*)noteCell : (UITableViewCell*)swCell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 
@@ -444,6 +320,8 @@
         imageViewer.subID = conditions.roomConditionsID;
         imageViewer.caller = self.view;
         imageViewer.viewController = self;
+        imageViewer.dismissDelegate = self;
+        imageViewer.dismissCallback = @selector(reloadData);
         [imageViewer loadPhotos];
     }
 }

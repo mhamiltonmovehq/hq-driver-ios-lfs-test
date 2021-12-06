@@ -58,7 +58,6 @@
 	NSString *surveyID;
     CubeSheetParser *csParser;
     DynamicReportDataXMLParser *dynamicDataParser;
-    SurveyPhone *primaryPhone;
     PVOReportNote *rptNote;
     
 }
@@ -85,6 +84,10 @@
 @property (nonatomic, retain) DynamicReportDataXMLParser *dynamicDataParser;
 @property (nonatomic, retain) ShipmentInfo *info;
 @property (nonatomic, retain) SurveyPhone *primaryPhone;
+@property (nonatomic, retain) SurveyPhone *workPhone;
+@property (nonatomic, retain) SurveyPhone *mobilePhone;
+@property (nonatomic, retain) SurveyPhone *homePhone;
+
 //@property (nonatomic, retain) PVOReportNote *rptNote;
 
 -(id)initWithAppDelegate:(SurveyAppDelegate *)del;

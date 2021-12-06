@@ -33,7 +33,7 @@
 @synthesize cmd_PackCrateSummary;
 
 
-@synthesize selectedItem, locationController, surveySummaryController, inventoryController;
+@synthesize selectedItem, surveySummaryController, inventoryController;
 @synthesize datesController, agentsController, infoController;
 @synthesize receiveController;
 @synthesize pvoController, pvoClaimsController;
@@ -92,16 +92,10 @@
 {
 	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
 	
-	if(locationController == nil)
-	{
-		locationController = [[LocationController alloc] initWithStyle:UITableViewStyleGrouped];
-	}
-	
-	locationController.title = @"Origin";
+    LocationController *locationController = [[LocationController alloc] initWithStyle:UITableViewStyleGrouped];
+    locationController.title = @"Origin";
 	locationController.locationID = ORIGIN_LOCATION_ID;
 	locationController.dirty = FALSE;
-	
-//	del.locationID = locationController.locationID;
 	
 	//tell that view what customer was selected.
 	locationController.custID = selectedItem.custID;
@@ -113,16 +107,10 @@
 {
 	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
 	
-	if(locationController == nil)
-	{
-		locationController = [[LocationController alloc] initWithStyle:UITableViewStyleGrouped];
-	}
-	
+    LocationController *locationController = [[LocationController alloc] initWithStyle:UITableViewStyleGrouped];
 	locationController.title = @"Destination";
 	locationController.locationID = DESTINATION_LOCATION_ID;
 	locationController.dirty = FALSE;
-	
-//	del.locationID = locationController.locationID;
 	
 	//tell that view what customer was selected.
 	locationController.custID = selectedItem.custID;

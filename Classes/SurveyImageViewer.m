@@ -21,11 +21,11 @@
 #import "PVOScanbotViewController.h"
 #endif
 
-#import "Mobile_Mover-Swift.h"
+#import "HQ_Driver-Swift.h"
 
 @implementation SurveyImageViewer
 
-@synthesize caller, picker, customerID, subID, photosType, existingImagesController, viewController, ipadFrame, ipadPresentView, maxPhotos, wireframeItemID;
+@synthesize caller, picker, customerID, subID, photosType, existingImagesController, viewController, ipadFrame, ipadPresentView, maxPhotos, wireframeItemID, dismissDelegate, dismissCallback;
 
 
 //load image if it has one.
@@ -105,6 +105,9 @@
     existingImagesController.wireframeItemID = wireframeItemID;
     
     PortraitNavController *nav = [[PortraitNavController alloc] initWithRootViewController:existingImagesController];
+    nav.dismissDelegate = dismissDelegate;
+    nav.dismissCallback = dismissCallback;
+    
     [viewController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -133,39 +136,11 @@
         return;
     }
     
-#if defined(ATLASNET)
-    if (photosType == IMG_PVO_WEIGHT_TICKET)
-    {
-        if(![ScanbotSDK isLicenseValid]) {
-            // Scanbot license has expired, show the user a message and do not allow them to continue, unless we are able to grab another one now that works from the web
-            [SurveyAppDelegate setupScanbot];
-            
-            if(![ScanbotSDK isLicenseValid]) {
-                NSString* expStr = @"The license for the weight ticket scanning software is no longer valid and a new license was unable to be downloaded. Please contact support for assistance.";
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"License Expired"
-                                                                message:expStr
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-                return;
-            }
-        }
-        
-        PVOScanbotViewController *controller = [[PVOScanbotViewController alloc] init];
-        controller.delegate = self;
-        [viewController presentViewController:controller animated:YES completion:nil];
-        [controller release];
-        
-        return;
-    }
-#endif
-    
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // Let user take multiple pictures at once
         ImagePickerAdapterController *ipac = [ImagePickerAdapterController new];
-        [ipac setCallingController:self];
+        [ipac setDelegate:self];
         [viewController presentViewController:ipac animated:true completion:nil];
         
         /* Old single image picker code:
@@ -215,16 +190,7 @@
         picker.allowsEditing = NO;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-        if([SurveyAppDelegate iPad])
-        {
-            popoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-            [popoverController presentPopoverFromRect:ipadFrame
-                                     inView:ipadPresentView
-                   permittedArrowDirections:UIPopoverArrowDirectionAny 
-                                   animated:YES];
-        }
-        else
-            [viewController presentViewController:picker animated:YES completion:nil];
+        [viewController presentViewController:picker animated:YES completion:nil];
         
     }
     else
@@ -236,6 +202,7 @@
 
 -(void)addPhotoToList:(UIImage *)image
 {
+    NSError *error = nil;
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSData *data = UIImageJPEGRepresentation(image, 1.0f);
@@ -248,6 +215,9 @@
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:inDocsPath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:&error];
+    }
     
     if (![fileManager createFileAtPath:filePath contents:data attributes:nil]) 
         [SurveyAppDelegate showAlert:filePath withTitle:@"Error Creating File"];
@@ -264,7 +234,13 @@
     
 }
 
-#pragma mark UIImagePickerController methods
+- (void)executeDismissCallback {
+    if (dismissDelegate != nil && [dismissDelegate respondsToSelector:dismissCallback]) {
+        [dismissDelegate performSelectorOnMainThread:dismissCallback withObject:nil waitUntilDone:NO];
+    }
+}
+
+#pragma mark - UIImagePickerController methods -
 
 -(void)imagePickerController:(UIImagePickerController*)imagePicker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo
 {
@@ -304,25 +280,16 @@
     
     [self addPhotoToList:(newImage != nil ? newImage : image)];
     
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
-        [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [self executeDismissCallback];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController*)imagePicker
 {
-    if([SurveyAppDelegate iPad])
-    {
-        [popoverController dismissPopoverAnimated:YES];
-    }
-    else
-        [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark UIActionSheet methods
+#pragma mark - UIActionSheet methods -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -447,7 +414,7 @@
     }
 }
 
-#pragma mark - PVOScanbotViewControllerDelegate
+#pragma mark - PVOScanbotViewControllerDelegate -
 
 - (void)documentImageCaptured:(UIImage *)documentImage
 {
@@ -491,8 +458,8 @@
 
 // Image picker gallery button pressed
 - (void)wrapperDidPress:(ImagePickerController * _Nonnull)imagePicker images:(NSArray<UIImage *> * _Nonnull)images {
-    LightboxAdapterController *lbc = [LightboxAdapterController new];
-    [lbc showLightboxWithImages:images imagePicker:imagePicker];
+    OptikAdapterController *oac = [OptikAdapterController new];
+    [oac showOptikWithImages:images imagePicker:imagePicker];
 }
 
 // Process single image
@@ -528,7 +495,7 @@
         else
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    
+    [self executeDismissCallback];
     [self addPhotoToList:(newImage != nil ? newImage : image)];
 }
 

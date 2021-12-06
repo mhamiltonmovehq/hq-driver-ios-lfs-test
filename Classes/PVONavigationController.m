@@ -570,23 +570,8 @@
     [self continueToSelectedItem];
 }
 
--(BOOL)stopBecause113OrAboveInvReportOffline {
-    // Temporary fix to force HTML reports for 11.3+ devices on inventory reports (OT 20803)
-    if((selectedItem.reportTypeID == 1 || selectedItem.reportTypeID == 6) && ![SurveyAppDelegate hasInternetConnection:TRUE] && [[[UIDevice currentDevice] systemVersion] compare:@"11.3" options:NSNumericSearch] != NSOrderedAscending) {
-        [SurveyAppDelegate showAlert:@"Disconnected reports are not available for this option.  You must connect to the Internet to run this report."
-                           withTitle:@"Disconnected Not Available"];
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
-
 -(void)continueToSelectedItem
-{
-    if([self stopBecause113OrAboveInvReportOffline]) {
-        return;
-    }
-    
+{   
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     BOOL hasHTMLReports, isForceDisc, doesntHaveOffline;
     NSString *appName = @"Mobile Mover";
@@ -1184,7 +1169,7 @@
     
     // OT 2582 - last sync date feature
     if(date != nil && date.length > 0) {
-        UILabel *lastSaveDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 310, 15)];
+        UILabel *lastSaveDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width - 10, 15)];
         lastSaveDateLabel.numberOfLines = 1;
         [lastSaveDateLabel setBackgroundColor:[UIColor clearColor]];
         lastSaveDateLabel.text = date;
@@ -1194,7 +1179,7 @@
         [syncView addSubview:lastSaveDateLabel];
     }
     
-    syncButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 3, 80, 44)];
+    syncButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 90, 3, 80, 44)]; // 90 = 80width + 10 buffer from regname
     
     [syncButton addTarget:self action:@selector(sync:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -1338,15 +1323,13 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    if([del.pricingDB vanline] == ARPIN){
-        if(item.isReportOption){
-            if(!item.hasRequiredSignatures){
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            } else if(![item getReportWasUploaded:del.customerID]) {
-                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
-            } else {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
+    if(item.isReportOption){
+        if(!item.hasRequiredSignatures){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if(![item getReportWasUploaded:del.customerID]) {
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
     

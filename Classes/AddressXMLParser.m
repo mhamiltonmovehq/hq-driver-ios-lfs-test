@@ -7,6 +7,7 @@
 //
 
 #import "AddressXMLParser.h"
+#import "LocationController.h"
 
 
 @implementation AddressXMLParser
@@ -22,24 +23,29 @@
 	return self;
 }
 
+- (SurveyPhone *)getNewPhone {
+    SurveyPhone *phone = [[SurveyPhone alloc] init];
+    phone.number = [NSString stringWithString:currentString];
+    phone.isPrimary = 0;
+    return phone;
+}
 
 #pragma mark NSXMLParser Parsing Callbacks
 
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *) qualifiedName attributes:(NSDictionary *)attributeDict {
-    if([elementName isEqualToString:@"add1"] || 
-			[elementName isEqualToString:@"add2"] || 
-	   [elementName isEqualToString:@"city"] || 
-	   [elementName isEqualToString:@"state"] ||
-	   [elementName isEqualToString:@"county"] || 
-			[elementName isEqualToString:@"zip"] || 
-			[elementName isEqualToString:@"home_phone"] || 
-			[elementName isEqualToString:@"work_phone"] || 
-			[elementName isEqualToString:@"mobile_phone"] || 
-			[elementName isEqualToString:@"other_phone"] || 
-		   [elementName isEqualToString:@"loc_note"] || 
-		   [elementName isEqualToString:@"id"] || 
-		   [elementName isEqualToString:@"orig_dest"] || 
+    if([elementName isEqualToString:@"add1"] ||
+       [elementName isEqualToString:@"add2"] ||
+       [elementName isEqualToString:@"city"] ||
+       [elementName isEqualToString:@"state"] ||
+       [elementName isEqualToString:@"county"] ||
+       [elementName isEqualToString:@"zip"] ||
+       [elementName isEqualToString:@"phone_1"] ||
+       [elementName isEqualToString:@"phone_2"] ||
+       [elementName isEqualToString:@"loc_note"] ||
+       [elementName isEqualToString:@"id"] ||
+       [elementName isEqualToString:@"name"] ||
+       [elementName isEqualToString:@"orig_dest"] ||
        [elementName isEqualToString:@"sequence"] ||
        [elementName isEqualToString:@"first_name"] ||
        [elementName isEqualToString:@"last_name"] ||
@@ -91,40 +97,23 @@
 	}else if(storingData && [elementName isEqualToString:@"zip"]){
 		location.zip = [NSString stringWithString:currentString];
 	}
-    else if(storingData && [elementName isEqualToString:@"home_phone"])
+    else if(storingData && [elementName isEqualToString:@"phone_1"])
     {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Home";
+        SurveyPhone * phone = [self getNewPhone];
+        phone.type.phoneTypeID = PHONE_1;
         [location.phones addObject:phone];
         
 	}
-    else if(storingData && [elementName isEqualToString:@"work_phone"])
+    else if(storingData && [elementName isEqualToString:@"phone_2"])
     {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Work";
-        [location.phones addObject:phone];
-        
-	}
-    else if(storingData && [elementName isEqualToString:@"mobile_phone"])
-    {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Mobile";
-        [location.phones addObject:phone];
-        
-	}else if(storingData && [elementName isEqualToString:@"other_phone"])
-    {
-        SurveyPhone *phone = [[SurveyPhone alloc] init];
-        phone.number = [NSString stringWithString:currentString];
-        phone.type.name = @"Other";
+        SurveyPhone * phone = [self getNewPhone];
+        phone.type.phoneTypeID = PHONE_2;
         [location.phones addObject:phone];
         
 	}
     else if(storingData && [elementName isEqualToString:@"loc_note"]){
 		//no note yet...
-	}else if(storingData && [elementName isEqualToString:@"id"]){
+	}else if(storingData && [elementName isEqualToString:@"name"]){
 		location.name = [NSString stringWithString:currentString];
 	}else if(storingData && [elementName isEqualToString:@"orig_dest"]){
 		location.isOrigin = [currentString isEqualToString:@"Origin"];

@@ -10,7 +10,7 @@
 #import "SurveyAppDelegate.h"
 
 @implementation PVODynamicReportData
-
+@synthesize custID, reportID, dataEntryID, dataSectionID, intValue, doubleValue, textValue, dateValue;
 
 -(void)flushToXML:(XMLWriter*)xml
 {

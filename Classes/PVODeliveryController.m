@@ -530,13 +530,12 @@
         [optionRows addObject:[NSNumber numberWithInt:PVO_DELIVERY_ITEM_NUMBER]];
     }
     
-    if (inventory.loadType != MILITARY || [del.pricingDB vanline] == ARPIN)
-    {
-        if ([AppFunctionality allowWaiveRightsOnDelivery])
-            [optionRows addObject:[NSNumber numberWithInt:PVO_DELIVERY_WAIVE_RIGHTS]];
-        
-        [optionRows addObject:[NSNumber numberWithInt:PVO_DELIVERY_DELIVER_ALL]];
-    }
+    // Always allow deliver all
+    if ([AppFunctionality allowWaiveRightsOnDelivery])
+        [optionRows addObject:[NSNumber numberWithInt:PVO_DELIVERY_WAIVE_RIGHTS]];
+    
+    [optionRows addObject:[NSNumber numberWithInt:PVO_DELIVERY_DELIVER_ALL]];
+    
     
     //[inventory release];
     
@@ -625,6 +624,8 @@
     }
     
     sigNav = [[LandscapeNavController alloc] initWithRootViewController:signatureController];
+    sigNav.modalPresentationStyle = UIModalPresentationFullScreen;
+
     //sigNav.navigationBarHidden = YES;
     
     [self presentViewController:sigNav animated:YES completion:nil];

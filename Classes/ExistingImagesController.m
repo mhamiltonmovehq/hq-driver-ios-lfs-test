@@ -26,7 +26,7 @@
 -(IBAction)finishedEditing:(id)sender
 {
 	if(oneImageView.hidden)
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	else
 	{// First create a CATransition object to describe the transition
 		CATransition *transition = [CATransition animation];
@@ -149,10 +149,10 @@
                 if(currenty != 0)//new row...
                     currenty += buffer + imageSize.height;
                 
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, currenty, 320, 30)];
-                [view setBackgroundColor:[UIColor grayColor]];
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, currenty, self.view.bounds.size.width, 30)];
+                [view setBackgroundColor:[UIColor lightGrayColor]];
                 
-                UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
+                UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width * .9, 30)];
                 lbl.text = header;
                 [lbl setBackgroundColor:[UIColor clearColor]];
                 
@@ -350,6 +350,8 @@
             singleDamage = [[PVODamageSingleController alloc] initWithNibName:@"PVODamageSingleView" bundle:nil];
         
         LandscapeNavController *navCtl = [[LandscapeNavController alloc] initWithRootViewController:singleDamage];
+        navCtl.modalPresentationStyle = UIModalPresentationFullScreen;
+
         //navCtl.navigationBar.barStyle = UIBarStyleBlack;
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
         

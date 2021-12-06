@@ -9,6 +9,7 @@
 @end
 
 @implementation PVODynamicReportEntryController
+@synthesize entries, data, section, editingEntry, currentTextBox;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -24,6 +25,8 @@
     [super viewDidLoad];
     
     self.editingEntry = nil;
+    self.entries = nil;
+    self.data = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -147,8 +150,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     
-    if(self.currentTextBox != nil)
+    if(self.currentTextBox != nil) {
         [self updateValueWithField:self.currentTextBox];
+        self.currentTextBox = nil;
+    }
     
     if(self.editingEntry == nil)
     {
@@ -221,7 +226,7 @@
                 break;
             case RDT_TEXT_CAPS:
                 ltCell.tboxValue.text = thisData.textValue;
-                [ltCell.tboxValue setKeyboardType:UIKeyboardTypeDefault];
+                [ltCell.tboxValue setKeyboardType:UIKeyboardTypeASCIICapable];
                 ltCell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
                 ltCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
                 break;
@@ -265,6 +270,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.text = [NSString stringWithFormat:@"%@:", thisEntry.entryName];
     }
     else if(thisEntry.entryDataType == RDT_MULTIPLE_CHOICE)
@@ -282,10 +288,12 @@
     {
         cell = [tableView dequeueReusableCellWithIdentifier:DateCellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:DateCellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DateCellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.textColor = [[self view] tintColor];
         cell.textLabel.text = thisEntry.entryName;
         
         NSDate *myDate = thisData.dateValue;

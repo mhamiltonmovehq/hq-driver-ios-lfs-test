@@ -25,7 +25,6 @@ enum PVO_RECEIVE_TYPE {
 @interface AppFunctionality : NSObject
 
 +(int)supportedNumberOfPVOLoads:(enum PRICING_MODE_TYPE)pricingMode;
-+(BOOL)downloadExtraStops:(enum PRICING_MODE_TYPE)pricingMode;
 +(int)maxNotesLengh:(enum PRICING_MODE_TYPE)pricingMode;
 +(BOOL)supportIndividualBlankDates:(enum PRICING_MODE_TYPE)pricingMode;
 +(BOOL)disableScanner:(enum PRICING_MODE_TYPE)pricingMode withDriverType:(int)driverType;
@@ -64,7 +63,6 @@ enum PVO_RECEIVE_TYPE {
 
 +(BOOL)removeSignatureOnNavigateIntoCompletedInv;
 +(BOOL)showCubeAndWeight:(PVOInventory*)inventory;
-+(BOOL)enableMilitaryWeightEntryOnLandingController;
 +(BOOL)showCPProvided;
 +(BOOL)showPackOptions;
 +(BOOL)allowAnyLoadOnAnyUnload;
@@ -111,7 +109,7 @@ enum PVO_RECEIVE_TYPE {
 +(BOOL)enableAddSettingsToBackupEmail;
 
 +(BOOL)enableWireframeExceptionsForItems;
-+(BOOL)disableHiddenReports;
++(BOOL)hideHiddenReports;
 
 +(BOOL)includeSecuritySealRowInItemDetails;
 +(BOOL)uploadReportAfterSigning;

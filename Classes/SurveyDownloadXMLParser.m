@@ -10,6 +10,7 @@
 #import "AddressXMLParser.h"
 #import "AgentXMLParser.h"
 #import "SurveyAppDelegate.h"
+#import "CustomerUtilities.h"
 
 @interface SurveyDownloadXMLParser ()
 
@@ -21,7 +22,7 @@
 
 @synthesize locationParser, agentParser, dates, customer, locations, agents, empty;
 @synthesize errorString, errorID, error, sync, note, atlasSync, reportNotes, vehicles, currentVehicle, surveyID, csParser, info;
-@synthesize primaryPhone;
+@synthesize primaryPhone, workPhone, mobilePhone, homePhone;
 @synthesize dynamicDataParser;
 
 -(void)dealloc
@@ -62,10 +63,13 @@
         vehicles = [[NSMutableArray alloc] init];
         
         primaryPhone = [[SurveyPhone alloc] init];
-        primaryPhone.locationID = 1;
+        primaryPhone.locationTypeId = ORIGIN_LOCATION_ID;
         primaryPhone.type = [[PhoneType alloc] init];
         primaryPhone.type.name = @"Primary";
         
+        self.workPhone = [CustomerUtilities setupContactPhone:workPhone withPhoneTypeId:3];
+        self.mobilePhone = [CustomerUtilities setupContactPhone:mobilePhone withPhoneTypeId:1];
+        self.homePhone = [CustomerUtilities setupContactPhone:homePhone withPhoneTypeId:2];
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
@@ -197,7 +201,10 @@
             [elementName isEqualToString:@"company_name"] ||
             [elementName isEqualToString:@"email_address"] ||
             [elementName isEqualToString:@"email"] || //backwards compatible with older XML
-            [elementName isEqualToString:@"primary_phone"] || 
+            [elementName isEqualToString:@"primary_phone"] ||
+            [elementName isEqualToString:@"work_phone"] ||
+            [elementName isEqualToString:@"mobile_phone"] ||
+            [elementName isEqualToString:@"home_phone"] ||
             [elementName isEqualToString:@"weight_factor"] ||
             [elementName isEqualToString:@"total_weight"] ||
             [elementName isEqualToString:@"weight_override"] ||
@@ -314,18 +321,24 @@
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"last_name"]){
         customer.lastName = temp;
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"company_name"]){
-        customer.companyName = temp;
+        customer.account = temp;
     }else if(storingType == XML_ROOT && ([elementName isEqualToString:@"email_address"] || [elementName isEqualToString:@"email"])){
         if(customer.email == nil || [customer.email length] == 0)
             customer.email = temp;
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"primary_phone"]){
         primaryPhone.number = temp;
+    }else if(storingType == XML_ROOT && [elementName isEqualToString:@"work_phone"]){
+        workPhone.number = temp;
+    }else if(storingType == XML_ROOT && [elementName isEqualToString:@"mobile_phone"]){
+        mobilePhone.number = temp;
+    }else if(storingType == XML_ROOT && [elementName isEqualToString:@"home_phone"]){
+        homePhone.number = temp;
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"notes"]){
         self.note = temp;
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"weight_factor"]){
         //no need as wf will always be 7
     }else if (storingType == XML_ROOT && ([elementName isEqualToString:@"total_weight"] || [elementName isEqualToString:@"weight_override"])) {
-        customer.weight = [temp integerValue];
+        customer.estimatedWeight = [temp integerValue];
     }else if(storingType == XML_ROOT && [elementName isEqualToString:@"pricing_mode"]){
 		if([temp isEqualToString:@"Local"])
 			customer.pricingMode = LOCAL;

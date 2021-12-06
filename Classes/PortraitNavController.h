@@ -7,6 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PortraitNavController : UINavigationController
+@interface PortraitNavController : UINavigationController {
+    NSObject *dismissDelegate;
+    SEL dismissCallback;
+}
+
+@property (nonatomic, strong) NSObject *dismissDelegate;
+@property (nonatomic) SEL dismissCallback;
 
 @end

@@ -370,10 +370,8 @@
                         
                         [zipper UnzipCloseFile];
                     }
-                    
-                    
-                    
-                    
+                    zipper = nil;
+          
                     NSData *fileData = [NSData dataWithContentsOfFile:zipPath];
                     [mailer addAttachmentData:fileData mimeType:@"application/zip" fileName:@"inventory.zip"];
                     
@@ -428,8 +426,8 @@
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     BOOL images = buttonIndex != alertView.cancelButtonIndex;
     
-	if([CustomerUtilities backupDatabases:images withSuppress:NO appDelegate:del] != nil)
-        [SurveyAppDelegate showAlert:@"Successfully backed up databases." withTitle:@"Success!"];
+    NSString *result = [CustomerUtilities backupDatabases:images withSuppress:NO appDelegate:del];
+    [self complete:result];
     
     //reload list...
     //BackupThread *thread = [[BackupThread alloc] init];

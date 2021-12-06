@@ -273,7 +273,7 @@
 			NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TextCell" owner:self options:nil];
 			textCell = [nib objectAtIndex:0];
 			[textCell.tboxValue addTarget:self 
-								 action:@selector(textFieldDoneEditing:) 
+								 action:@selector(cmdContinueSelected:)
 					   forControlEvents:UIControlEventEditingDidEndOnExit];
             textCell.tboxValue.returnKeyType = UIReturnKeyDone;
             textCell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;

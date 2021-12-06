@@ -7,7 +7,7 @@
 //
 
 #import "BasicInfoController.h"
-#import    "SurveyCustomer.h"
+#import "SurveyCustomer.h"
 #import "SurveyAppDelegate.h"
 #import "CustomerOptionsController.h"
 #import "RootViewController.h"
@@ -17,11 +17,15 @@
 #import "AppFunctionality.h"
 #import "LabelTextCell.h"
 #import "FloatingLabelTextCell.h"
+#import "EmailTableViewCell.h"
+
 
 @implementation BasicInfoController
 
-@synthesize custID, cust, newCustomerView, tboxCurrent, sync, pricingModes, inventoryTypes, popover, rows, info, phone, pvoRoomSummaryController;
+@synthesize custID, cust, newCustomerView, tboxCurrent, sync, pricingModes, inventoryTypes, popover, rows, info, officePhone, mobilePhone, homePhone, pvoRoomSummaryController;
 @synthesize customerPricingModesNew;
+
+SurveyPhone *selectedPhoneForAccessory;
 
 -(void)initializeRows
 {
@@ -31,47 +35,43 @@
     
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_LAST_NAME]];
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_FIRST_NAME]];
-    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_COMPANY_NAME]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ACCOUNT]];
     
-    if (data.driverType != PVO_DRIVER_TYPE_PACKER)
+    if (data.driverType != PVO_DRIVER_TYPE_PACKER) {
         [rows addObject:[NSNumber numberWithInt:BASIC_INFO_EMAIL]];
-    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_WEIGHT]];
-    
-    if(del.viewType == OPTIONS_PVO_VIEW)
-    {
-        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ORDER_NUMBER]];
-        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_GBL_NUMBER]];
     }
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ESTIMATED_WEIGHT]];
     
-    
+    if(del.viewType == OPTIONS_PVO_VIEW) {
+        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_ORDER_NUMBER]];
+        
+        PVOInventory *inventory = [del.surveyDB getPVOData:del.customerID];
+        if (inventory != nil && inventory.loadType == MILITARY) {
+            [rows addObject:[NSNumber numberWithInt:BASIC_INFO_GBL_NUMBER]];
+        }
+    }
     [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PRICING_MODE]];
     
-    if (data.driverType != PVO_DRIVER_TYPE_PACKER)
-        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PRIMARY_PHONE]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_OFFICE_PHONE]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_MOBILE_PHONE]];
+    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_HOME_PHONE]];
     
     if(!newCustomerView)
     {
         CubeSheet *cs = [del.surveyDB openCubeSheet:custID];
-        if([[del.surveyDB getRoomSummaries:cs customerID:custID] count] >= 0)
-        {
+        if([[del.surveyDB getRoomSummaries:cs customerID:custID] count] >= 0) {
             [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PVO_VIEW_SURVEY]];
             
-            if ([[del.surveyDB getSurveyedPackingItems:cs.csID].list count] > 0)
-            {
+            if ([[del.surveyDB getSurveyedPackingItems:cs.csID].list count] > 0) {
                 [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PVO_VIEW_PACK_SUMMARY]];
             }
-            
         }
-        if ([del.surveyDB hasPVOReceivableItems:custID receivedType:PACKER_INVENTORY ignoreReceived:TRUE])
+        if ([del.surveyDB hasPVOReceivableItems:custID receivedType:PACKER_INVENTORY ignoreReceived:TRUE]) {
             [rows addObject:[NSNumber numberWithInt:BASIC_INFO_PVO_VIEW_PACKER_INVENTORY]];
+        }
     }
     if ([AppFunctionality enableLanguageSelection:self.cust.pricingMode])
-        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_LANGUAGE]];
-    
-    //NOTE: disabling the ability to change this for 
-    //if ([del.surveyDB isAutoInventoryUnlocked])
-    //    [rows addObject:[NSNumber numberWithInt:BASIC_INFO_INVENTORY_TYPE]];
-
+        [rows addObject:[NSNumber numberWithInt:BASIC_INFO_LANGUAGE]];   
 }
 
 - (void)moveItems:(int)newPricingMode language:(int)newLanguageCode
@@ -80,70 +80,50 @@
     NSArray *arr = [del.surveyDB getAllSurveyedItems:custID];
     NSMutableArray *oldRoomIDs = [NSMutableArray array];
     NSMutableArray *oldItemIDs = [NSMutableArray array];
-    for (SurveyedItemsList *sil in arr)
-    {
+    for (SurveyedItemsList *sil in arr) {
         [oldRoomIDs addObject:@(sil.room.roomID)];
-        for (NSString *key in [sil.list allKeys])
-        {
+        for (NSString *key in [sil.list allKeys]) {
             SurveyedItem *sItem = sil.list[key];
-            if (![oldItemIDs containsObject:@(sItem.itemID)])
-            {
+            if (![oldItemIDs containsObject:@(sItem.itemID)]) {
                 [oldItemIDs addObject:@(sItem.itemID)];
             }
         }
     }
     
     NSMutableArray *newRoomIDs = [NSMutableArray array];
-    for (NSNumber *n in oldRoomIDs)
-    {
+    for (NSNumber *n in oldRoomIDs) {
         Room *oldRoom = [del.surveyDB getRoomIgnoringItemListID:[n intValue]];
         Room *newRoom = [del.surveyDB getRoomByName:oldRoom.roomName languageCode:newLanguageCode itemListID:newPricingMode];
-        if (newRoom.roomID > 0)
-        {
+        if (newRoom.roomID > 0) {
             [newRoomIDs addObject:@(newRoom.roomID)];
-        }
-        else
-        {
+        } else {
             [newRoomIDs addObject:n];
         }
     }
     
     NSMutableArray *newItemIDs = [NSMutableArray array];
-    for (NSNumber *n in oldItemIDs)
-    {
+    for (NSNumber *n in oldItemIDs) {
         Item *oldItem = [del.surveyDB getItem:[n intValue]];
         Item *newItem = [del.surveyDB getItemByItemName:custID itemName:oldItem.name languageCode:newLanguageCode itemListID:newPricingMode];
-        if (newItem.itemID > 0)
-        {
+        if (newItem.itemID > 0) {
             [newItemIDs addObject:@(newItem.itemID)];
-        }
-        else
-        {
+        } else {
             [newItemIDs addObject:n];
         }
     }
     
     // go through the tables and switch the old room and item IDs for the new ones
-    for (int idx = 0; idx < [newRoomIDs count]; idx++)
-    {
+    for (int idx = 0; idx < [newRoomIDs count]; idx++) {
         [del.surveyDB updateRoomIDsForSurveyedItems:[oldRoomIDs[idx] intValue] toNewRoomID:[newRoomIDs[idx] intValue]];
     }
     
-    for (int idx = 0; idx < [newItemIDs count]; idx++)
-    {
+    for (int idx = 0; idx < [newItemIDs count]; idx++) {
         [del.surveyDB updateItemIDsForSurveyedItems:[oldItemIDs[idx] intValue] toNewItemID:[newItemIDs[idx] intValue]];
     }
 }
 
 -(void)pricingModeChanged:(NSNumber*)newID
 {
-//    if (([cust isCanadianCustomer] || ([newID intValue] == CNGOV || [newID intValue] == CNCIV)) &&
-//       [newID intValue] != cust.pricingMode && !newCustomerView)
-//    {
-//        [SurveyAppDelegate showAlert:@"Inventoried items are stored with previously selected pricing mode, and will no longer be visible with this pricing mode selection.  In order to view previously inventoried items, please select previous pricing mode." withTitle:@"Inventoried Items"];
-//
-//    }
-    
     int newPricingMode = [newID intValue];
     
     [self moveItems:newPricingMode language:info.language];
@@ -156,7 +136,7 @@
     } else
         //find the customItemList id for the pricing mode and update the current itemlist id
         info.itemListID = [del.surveyDB getItemListIDForPricingMode:[newID intValue]];
-
+    
     [del.surveyDB updateCustomerPricingMode:custID pricingMode:cust.pricingMode];
     [del.surveyDB updateShipInfo:custID languageCode:info.language customItemList:info.itemListID];
     
@@ -165,10 +145,7 @@
 
 -(void)languageChanged:(NSNumber *)newID
 {
-    int code = [newID intValue];
-    
-    self.info.language = code;
-    
+    self.info.language = [newID intValue];
     [del.surveyDB updateShipInfo:custID languageCode:info.language customItemList:info.itemListID];
 }
 
@@ -181,13 +158,10 @@
 -(void)syncSwitched:(id)sender
 {
     UISwitch *sw = sender;
-    if(sw.tag == BASIC_INFO_SYNC)
-    {
-        sync.syncToQM = sw.on;    
-    }
-    else if(sw.tag == BASIC_INFO_PVO_SYNC)
-    {
-        sync.syncToPVO = sw.on;    
+    if(sw.tag == BASIC_INFO_SYNC) {
+        sync.syncToQM = sw.on;
+    } else if(sw.tag == BASIC_INFO_PVO_SYNC) {
+        sync.syncToPVO = sw.on;
     }
 }
 
@@ -195,65 +169,50 @@
 {
     [self updateCustomerValueWithField:tboxCurrent];
     
-    if([cust.email length] > 0)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] 
+    if([cust.email length] > 0) {
+        UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Email"
-                              message:[NSString stringWithFormat:@"Would you like to send an email to %@?", cust.email] 
-                              delegate:self 
-                              cancelButtonTitle:@"No" 
+                              message:[NSString stringWithFormat:@"Would you like to send an email to %@?", cust.email]
+                              delegate:self
+                              cancelButtonTitle:@"No"
                               otherButtonTitles:@"Yes", nil];
         
         [alert show];
-    }
-    else 
-    {
+    } else {
         [SurveyAppDelegate showAlert:@"You must have an email address entered to send a message." withTitle:@"Email Required"];
     }
-
+    
 }
 
 //functions called when in the new customer view
 -(void)save:(id)sender
 {
-    if(tboxCurrent != nil)
-    {
+    if(tboxCurrent != nil) {
         [self updateCustomerValueWithField:tboxCurrent];
     }
     
-    if(cust.lastName == nil || [cust.lastName length] == 0)
-    {
+    if(cust.lastName == nil || [cust.lastName length] == 0) {
         [SurveyAppDelegate showAlert:@"Customer must have a last name to be saved." withTitle:@"Name Required"];
         return;
     }
     
-    if(newCustomerView == YES)
-    {
+    if(newCustomerView == YES) {
         sync.createdOnDevice = TRUE;
-        cust.custID = [del.surveyDB insertNewCustomer:cust 
-                                             withSync:sync 
+        cust.custID = [del.surveyDB insertNewCustomer:cust
+                                             withSync:sync
                                           andShipInfo:info];
-        phone.custID = cust.custID;
-        [del.surveyDB insertPhone:phone];
-    }
-    else
-    {
+    } else {
         [del.surveyDB updateCustomer:cust];
         [del.surveyDB updateCustomerSync:sync];
         [del.surveyDB updateShipInfo:info];
-        if(phone.custID == 0)
-        {
-            phone.custID = custID;
-            [del.surveyDB insertPhone:phone];
-        }
-        else
-            [del.surveyDB updatePhone:phone];
     }
     
+    [self insertOrUpdatePhone:officePhone];
+    [self insertOrUpdatePhone:mobilePhone];
+    [self insertOrUpdatePhone:homePhone];
     
     //call cancel to clear the view
     [self cancel:nil];
-    
 }
 
 
@@ -261,43 +220,33 @@
 {
     // if sender is not nil, the user tapped the Cancel button
     // if sender is nil, the user tapped the Save button and the code is coming here to close out the view controller
-    if (sender != nil)
-    {
-        if (originalPricingMode != cust.pricingMode)
-        {
+    if (sender != nil) {
+        if (originalPricingMode != cust.pricingMode) {
             [self moveItems:originalPricingMode language:originalLanguage];
             [del.surveyDB updateCustomerPricingMode:custID pricingMode:originalPricingMode];
             [del.surveyDB updateShipInfo:custID languageCode:originalLanguage customItemList:originalItemListID];
-        }
-        else if (originalLanguage != info.language)
-        {
+        } else if (originalLanguage != info.language) {
             NSLog(@"language changed");
         }
     }
     
-    @try 
-    {
-        if(popover != nil)
-        {
+    @try {
+        if(popover != nil) {
             [popover dismissPopoverAnimated:YES];
             [popover.delegate popoverControllerDidDismissPopover:popover];
         }
         
-        if(newCustomerView == YES)
+        if(newCustomerView == YES) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        else
+        } else
             [del.navController popViewControllerAnimated:YES];
         
         
-        if(tboxCurrent != nil)
-        {
+        if(tboxCurrent != nil) {
             [tboxCurrent resignFirstResponder];
             self.tboxCurrent = nil;
         }
-        
-    }
-    @catch(NSException *exc)
-    {
+    } @catch(NSException *exc) {
         [SurveyAppDelegate handleException:exc];
     }
 }
@@ -307,10 +256,9 @@
     if(cust == nil)
         return;
     
-    switch (fld.tag) 
-    {
-        case BASIC_INFO_COMPANY_NAME:
-            cust.companyName = fld.text;
+    switch (fld.tag) {
+        case BASIC_INFO_ACCOUNT:
+            cust.account = fld.text;
             break;
         case BASIC_INFO_LAST_NAME:
             cust.lastName = fld.text;
@@ -327,246 +275,252 @@
         case BASIC_INFO_GBL_NUMBER:
             info.gblNumber = fld.text;
             break;
-        case BASIC_INFO_WEIGHT:
-            @try
-            {
-                cust.weight = [fld.text intValue];
-            }
-            @catch(NSException *exc)
-            {
-                cust.weight = 0;
+        case BASIC_INFO_ESTIMATED_WEIGHT:
+            @try {
+                cust.estimatedWeight = [fld.text intValue];
+            } @catch(NSException *exc) {
+                cust.estimatedWeight = 0;
             }
             break;
+        case BASIC_INFO_OFFICE_PHONE:
+            officePhone.number = fld.text;
+            break;
+        case BASIC_INFO_MOBILE_PHONE:
+            mobilePhone.number = fld.text;
+            break;
+        case BASIC_INFO_HOME_PHONE:
+            homePhone.number = fld.text;
+            break;
     }
-    
 }
 
-#pragma mark - Table view data source and delegate
+-(void)insertOrUpdatePhone:(SurveyPhone*)phone {
+    if(phone.custID <= 0) {
+        phone.custID = cust.custID;
+        [del.surveyDB insertPhone:phone];
+    } else {
+        [del.surveyDB updatePhone:phone];
+    }
+}
 
+- (void)callOrTextPhone: (SurveyPhone*) phone{
+    if([phone.number length] == 0)
+        [SurveyAppDelegate showAlert:@"You must have a phone number entered to call or text." withTitle:@"Number Required"];
+    else
+    {
+        if(tboxCurrent != nil)
+        {
+            [self updateCustomerValueWithField:tboxCurrent];
+            [tboxCurrent resignFirstResponder];
+        }
+        
+        //ask them to perform actions - call/sms
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"What action would you like to take for this phone number?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"Call", @"SMS Message", nil];
+        [sheet showInView:self.view];
+    }
+}
+#pragma mark - Table view data source and delegate -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [rows count];
 }
 
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *SwitchIdentifier = @"SwitchCell";
     static NSString *CellIdentifier = @"SimpleCell";
-//    static NSString *LTCellIdentifier = @"FloatingLabelTextCell";
-    //TextCell *cell = nil;
     FloatingLabelTextCell* cell = nil;
     SwitchCell *switchCell = nil;
+    EmailTableViewCell *emailCell = nil;
     UITableViewCell *simpleCell = nil;
     
-    //@try
-    //{
-        int row = [[rows objectAtIndex:[indexPath row]] intValue];
-        if(row == BASIC_INFO_SYNC || row == BASIC_INFO_PVO_SYNC)
-        {
-            switchCell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:SwitchIdentifier];
+    int row = [[rows objectAtIndex:[indexPath row]] intValue];
+    if(row == BASIC_INFO_SYNC || row == BASIC_INFO_PVO_SYNC) {
+        switchCell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:SwitchIdentifier];
+        
+        if (switchCell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SwitchCell" owner:self options:nil];
+            switchCell = [nib objectAtIndex:0];
             
-            if (switchCell == nil) {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SwitchCell" owner:self options:nil];
-                switchCell = [nib objectAtIndex:0];
-                
-                [switchCell.switchOption addTarget:self
-                 action:@selector(syncSwitched:) 
-                 forControlEvents:UIControlEventValueChanged];
-            }
-            
-            switchCell.switchOption.tag = row;
-            
-            switchCell.labelHeader.text = @"Synchronize";
-            
-            if(row == BASIC_INFO_SYNC)
-                switchCell.switchOption.on = sync.syncToQM > 0;
-            else if(row == BASIC_INFO_PVO_SYNC)
-                switchCell.switchOption.on = sync.syncToPVO > 0;
-            
+            [switchCell.switchOption addTarget:self
+                                        action:@selector(syncSwitched:)
+                              forControlEvents:UIControlEventValueChanged];
         }
-        else if (row == BASIC_INFO_PRICING_MODE || row == BASIC_INFO_PVO_VIEW_SURVEY ||
-                 row == BASIC_INFO_PVO_VIEW_PACKER_INVENTORY || row == BASIC_INFO_LANGUAGE ||
-                 row == BASIC_INFO_INVENTORY_TYPE || row == BASIC_INFO_PVO_VIEW_PACK_SUMMARY)
-        {
-            simpleCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (simpleCell == nil) {
-                simpleCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        switchCell.switchOption.tag = row;
+        switchCell.labelHeader.text = @"Synchronize";
+        
+        if(row == BASIC_INFO_SYNC)
+            switchCell.switchOption.on = sync.syncToQM > 0;
+        else if(row == BASIC_INFO_PVO_SYNC)
+            switchCell.switchOption.on = sync.syncToPVO > 0;
+        
+    } else if (row == BASIC_INFO_PRICING_MODE || row == BASIC_INFO_PVO_VIEW_SURVEY ||
+             row == BASIC_INFO_PVO_VIEW_PACKER_INVENTORY || row == BASIC_INFO_LANGUAGE ||
+             row == BASIC_INFO_INVENTORY_TYPE || row == BASIC_INFO_PVO_VIEW_PACK_SUMMARY) {
+        simpleCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (simpleCell == nil) {
+            simpleCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        simpleCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        if(row == BASIC_INFO_PRICING_MODE) {
+            if([pricingModes objectForKey:[NSNumber numberWithInt:cust.pricingMode]] == nil) {
+                simpleCell.textLabel.text = @"Unknown Pricing Mode";
+            } else {
+                NSString *pricingModeLabel = ([del.pricingDB vanline] == ARPIN) ? @"Registration Type" : @"Pricing Mode";
+                simpleCell.textLabel.text = [NSString stringWithFormat:@"%@: %@", pricingModeLabel, [pricingModes objectForKey:[NSNumber numberWithInt:cust.pricingMode]]];
             }
-            
-            simpleCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            if(row == BASIC_INFO_PRICING_MODE)
-            {
-                if([pricingModes objectForKey:[NSNumber numberWithInt:cust.pricingMode]] == nil)
-                    simpleCell.textLabel.text = @"Unknown Pricing Mode";
+        } else if(row == BASIC_INFO_PVO_VIEW_SURVEY) {
+            simpleCell.textLabel.text = @"View Survey Results";
+        } else if (row == BASIC_INFO_PVO_VIEW_PACK_SUMMARY) {
+            simpleCell.textLabel.text = @"View Survey Packing Summary";
+        } else if (row == BASIC_INFO_PVO_VIEW_PACKER_INVENTORY) {
+            simpleCell.textLabel.text = @"View Packer's Inventory";
+        } else if (row == BASIC_INFO_INVENTORY_TYPE) {
+            simpleCell.textLabel.text = [NSString stringWithFormat:@"Inventory Type: %@", [inventoryTypes objectForKey:[NSNumber numberWithInt:cust.inventoryType]]];
+        } else if (row == BASIC_INFO_LANGUAGE) {
+            simpleCell.textLabel.text = [self.languages objectForKey:@(self.info.language)];
+        }
+    } else if(row == BASIC_INFO_EMAIL) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EmailCell" owner:self options:nil];
+        emailCell = [nib objectAtIndex:0];
+        
+        emailCell.emailInput.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
+        
+        [emailCell.emailInput setDelegate:self];
+        emailCell.emailInput.returnKeyType = UIReturnKeyDone;
+        emailCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        [emailCell.emailInput addTarget:self
+                                 action:@selector(textFieldDoneEditing:)
+                       forControlEvents:UIControlEventEditingDidEndOnExit];
+        
+        [emailCell.sendEmailBtn addTarget:self action:@selector(emailSelected:) forControlEvents:UIControlEventTouchUpInside];
+        
+        emailCell.emailInput.autocorrectionType = UITextAutocorrectionTypeNo;
+        emailCell.emailInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        emailCell.emailInput.text = cust.email;
+        emailCell.emailInput.textAlignment = NSTextAlignmentLeft;
+        emailCell.emailInput.tag = BASIC_INFO_EMAIL;
+        emailCell.emailInput.placeholder = @"Email";
+        emailCell.emailInput.keyboardType = UIKeyboardTypeEmailAddress;
+        
+        if(tboxCurrent == emailCell.emailInput)
+            self.tboxCurrent = nil;
+    } else {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+        
+        cell.tboxValue.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
+        cell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
+        
+        [cell.tboxValue setDelegate:self];
+        cell.tboxValue.returnKeyType = UIReturnKeyDone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [cell.tboxValue addTarget:self
+                           action:@selector(textFieldDoneEditing:)
+                 forControlEvents:UIControlEventEditingDidEndOnExit];
+        
+        //if it wasn't created yet, go ahead and load the data to it now.
+        switch (row) {
+            case BASIC_INFO_ACCOUNT:
+                cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                cell.tboxValue.text = cust.account;
+                cell.tboxValue.placeholder = @"Account";
+                cell.tboxValue.tag = BASIC_INFO_ACCOUNT;
+                cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
+                break;
+                break;
+            case BASIC_INFO_FIRST_NAME:
+                cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                cell.tboxValue.text = cust.firstName;
+                cell.tboxValue.placeholder = @"First Name";
+                cell.tboxValue.tag = BASIC_INFO_FIRST_NAME;
+                cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
+                break;
+            case BASIC_INFO_LAST_NAME:
+                cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                cell.tboxValue.text = cust.lastName;
+                cell.tboxValue.placeholder = @"Last Name";
+                cell.tboxValue.tag = BASIC_INFO_LAST_NAME;
+                cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
+                break;
+            case BASIC_INFO_ESTIMATED_WEIGHT:
+                if(cust.estimatedWeight == 0)
+                    cell.tboxValue.text = @"";
                 else
-                {
-                    NSString *pricingModeLabel = ([del.pricingDB vanline] == ARPIN) ? @"Registration Type" : @"Pricing Mode";
-                    simpleCell.textLabel.text = [NSString stringWithFormat:@"%@: %@", pricingModeLabel, [pricingModes objectForKey:[NSNumber numberWithInt:cust.pricingMode]]];
-                    
-                }
-            }
-            else if(row == BASIC_INFO_PVO_VIEW_SURVEY)
-            {
-                simpleCell.textLabel.text = @"View Survey Results";
-            }
-            else if (row == BASIC_INFO_PVO_VIEW_PACK_SUMMARY)
-            {
-                simpleCell.textLabel.text = @"View Survey Packing Summary";
-            }
-            else if (row == BASIC_INFO_PVO_VIEW_PACKER_INVENTORY)
-            {
-                simpleCell.textLabel.text = @"View Packer's Inventory";
-            }
-            else if (row == BASIC_INFO_INVENTORY_TYPE)
-            {
-                simpleCell.textLabel.text = [NSString stringWithFormat:@"Inventory Type: %@", [inventoryTypes objectForKey:[NSNumber numberWithInt:cust.inventoryType]]];
-            }
-            else if (row == BASIC_INFO_LANGUAGE)
-            {
-                simpleCell.textLabel.text = [self.languages objectForKey:@(self.info.language)];
-            }
-        }
-        else if(row == BASIC_INFO_EMAIL)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-            
-            cell.tboxValue.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
-            
-            [cell.tboxValue setDelegate:self];
-            cell.tboxValue.returnKeyType = UIReturnKeyDone;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            
-            [cell.tboxValue addTarget:self 
-                               action:@selector(textFieldDoneEditing:) 
-                     forControlEvents:UIControlEventEditingDidEndOnExit];
-            CGRect rect = cell.tboxValue.frame;
-            rect.size.width -= 31;
-            cell.tboxValue.frame = rect;
-            rect.origin.x += rect.size.width;
-            rect.size.width = 31;
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.frame = rect;
-            [btn setImage:[SurveyAppDelegate resizeImage:[UIImage imageNamed:@"mail_button.PNG"] withNewSize:rect.size]
-                 forState:UIControlStateNormal];
-            [btn addTarget:self action:@selector(emailSelected:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:btn];
-            
-            cell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
-            cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;
-            cell.tboxValue.text = cust.email;
-            cell.tboxValue.textAlignment = NSTextAlignmentLeft;
-            cell.tboxValue.tag = BASIC_INFO_EMAIL;
-            cell.tboxValue.placeholder = @"Email";
-            cell.tboxValue.keyboardType = UIKeyboardTypeEmailAddress;
-            
-            if(tboxCurrent == cell.tboxValue)
-                self.tboxCurrent = nil;
-        }
-
-        else
-        {
-            ////cell = (TextCell *)[tableView dequeueReusableCellWithIdentifier:BasicInfoIdentifier];
-            
-            //NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TextCell" owner:self options:nil];
-            //cell = [nib objectAtIndex:0];
-            
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FloatingLabelTextCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-
-            cell.tboxValue.enabled = (![AppFunctionality lockFieldsOnSourcedFromServer] || !info.sourcedFromServer);
-            cell.tboxValue.autocorrectionType = UITextAutocorrectionTypeNo;
-            
-            [cell.tboxValue setDelegate:self];
-            cell.tboxValue.returnKeyType = UIReturnKeyDone;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            [cell.tboxValue addTarget:self 
-                               action:@selector(textFieldDoneEditing:) 
-                     forControlEvents:UIControlEventEditingDidEndOnExit];
-            
-            //if it wasn't created yet, go ahead and load the data to it now.
-            switch (row) {
-                case BASIC_INFO_COMPANY_NAME:
-                    cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                    cell.tboxValue.text = cust.companyName;
-                    cell.tboxValue.placeholder = @"Company Name";
-                    cell.tboxValue.tag = BASIC_INFO_COMPANY_NAME;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
-                    break;
-                    break;
-                case BASIC_INFO_FIRST_NAME:
-                    cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                    cell.tboxValue.text = cust.firstName;
-                    cell.tboxValue.placeholder = @"First Name";
-                    cell.tboxValue.tag = BASIC_INFO_FIRST_NAME;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
-                    break;
-                case BASIC_INFO_LAST_NAME:
-                    cell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                    cell.tboxValue.text = cust.lastName;
-                    cell.tboxValue.placeholder = @"Last Name";
-                    cell.tboxValue.tag = BASIC_INFO_LAST_NAME;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
-                    break;
-                case BASIC_INFO_WEIGHT:
-                    if(cust.weight == 0)
-                        cell.tboxValue.text = @"";
-                    else
-                        cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.weight];
-                    cell.tboxValue.placeholder = @"Weight";
-                    cell.tboxValue.tag = BASIC_INFO_WEIGHT;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
-                    cell.tboxValue.clearsOnBeginEditing = NO;
-                    break;
-                case BASIC_INFO_ORDER_NUMBER:
-                    cell.tboxValue.text = info.orderNumber;
-                    cell.tboxValue.placeholder = @"Order Number";
-                    cell.tboxValue.tag = BASIC_INFO_ORDER_NUMBER;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
-                    cell.tboxValue.clearsOnBeginEditing = NO;
-                    break;
-                case BASIC_INFO_GBL_NUMBER:
-                    cell.tboxValue.text = info.gblNumber;
-                    cell.tboxValue.placeholder = @"GBL Number";
-                    cell.tboxValue.tag = BASIC_INFO_GBL_NUMBER;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
-                    cell.tboxValue.clearsOnBeginEditing = NO;
-                    break;
-                case BASIC_INFO_PRIMARY_PHONE:
-                    cell.tboxValue.text = phone.number;
-                    if ([SurveyAppDelegate iOS7OrNewer])
-                        cell.accessoryType = UITableViewCellAccessoryDetailButton;
-                    else
-                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                    cell.tboxValue.placeholder = @"Primary Phone";
-                    cell.tboxValue.tag = BASIC_INFO_PRIMARY_PHONE;
-                    cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
-                    cell.tboxValue.clearsOnBeginEditing = NO;
-                    break;
-                default:
-                    break;
-            
-            }
-            
-            if(tboxCurrent == cell.tboxValue)
-                self.tboxCurrent = nil;
-        }
+                    cell.tboxValue.text = [NSString stringWithFormat:@"%d", cust.estimatedWeight];
+                cell.tboxValue.placeholder = @"Estimated Weight";
+                cell.tboxValue.tag = BASIC_INFO_ESTIMATED_WEIGHT;
+                cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            case BASIC_INFO_ORDER_NUMBER:
+                cell.tboxValue.text = info.orderNumber;
+                cell.tboxValue.placeholder = @"Order Number";
+                cell.tboxValue.tag = BASIC_INFO_ORDER_NUMBER;
+                cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            case BASIC_INFO_GBL_NUMBER:
+                cell.tboxValue.text = info.gblNumber;
+                cell.tboxValue.placeholder = @"GBL Number";
+                cell.tboxValue.tag = BASIC_INFO_GBL_NUMBER;
+                cell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            case BASIC_INFO_OFFICE_PHONE:
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)officePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
+                cell.tboxValue.placeholder = @"Office Phone";
+                cell.tboxValue.tag = BASIC_INFO_OFFICE_PHONE;
+                cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            case BASIC_INFO_MOBILE_PHONE:
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)mobilePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
+                cell.tboxValue.placeholder = @"Mobile Phone";
+                cell.tboxValue.tag = BASIC_INFO_MOBILE_PHONE;
+                cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            case BASIC_INFO_HOME_PHONE:
+                cell.tboxValue.text = [CustomerUtilities formatPhoneString:(NSMutableString*)homePhone.number];
+                cell.accessoryType = UITableViewCellAccessoryDetailButton;
+                cell.tboxValue.placeholder = @"Home Phone";
+                cell.tboxValue.tag = BASIC_INFO_HOME_PHONE;
+                cell.tboxValue.keyboardType = UIKeyboardTypeNumberPad;
+                cell.tboxValue.clearsOnBeginEditing = NO;
+                break;
+            default:
+                break;
                 
-    //}
-    //@catch (NSException *exc)
-    //{
-    //    [SurveyAppDelegate handleException:exc];
-    //}
+        }
+        
+        if(tboxCurrent == cell.tboxValue)
+            self.tboxCurrent = nil;
+    }
     
-    
-    return cell != nil ? (UITableViewCell*)cell : switchCell != nil ? (UITableViewCell*)switchCell : simpleCell;
+    UITableViewCell *returnCell;
+    if (cell != nil)
+        returnCell = cell;
+    else if(switchCell != nil)
+        returnCell = switchCell;
+    else if(emailCell != nil)
+        returnCell = emailCell;
+    else
+        returnCell = simpleCell;
+    return returnCell;
 }
 
 
@@ -583,26 +537,19 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    //call or text the phone number...
-    if([phone.number length] == 0)
-        [SurveyAppDelegate showAlert:@"You must have a phone number entered to call." withTitle:@"Number Required"];
-    else
-    {
-        if(tboxCurrent != nil)
-        {
-            [self updateCustomerValueWithField:tboxCurrent];
-            [tboxCurrent resignFirstResponder];
-        }
-        
-        //ask them to perform actions - call/sms
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"What action would you like to take for this phone number?"
-                                                           delegate:self 
-                                                  cancelButtonTitle:@"Cancel" 
-                                             destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"Call", @"SMS Message", nil];
-        
-        [sheet showInView:self.view];
+    SurveyPhone* phone;
+    int row = [[rows objectAtIndex:indexPath.row] intValue];
+    if (row == BASIC_INFO_OFFICE_PHONE) {
+        phone = officePhone;
+    } else if (row == BASIC_INFO_MOBILE_PHONE) {
+        phone = mobilePhone;
+    } else if (row == BASIC_INFO_HOME_PHONE) {
+        phone = homePhone;
     }
+    selectedPhoneForAccessory = phone;
+    
+    //call or text the phone number...
+    [self callOrTextPhone: phone];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -653,7 +600,7 @@
             [del pushPickerViewController:@"Pricing Mode"
                               withObjects:self.customerPricingModesNew
                      withCurrentSelection:[NSNumber numberWithInt:cust.pricingMode]
-                               withCaller:self 
+                               withCaller:self
                               andCallback:@selector(pricingModeChanged:)
                          andNavController:self.navigationController];
         }
@@ -673,13 +620,11 @@
     }
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextFieldDelegate -
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.tboxCurrent = textField;
-
-    //[SurveyAppDelegate scrollTableToTextField:textField withTable:self.tableView atRow:textField.tag];
 }
 
 -(void)textFieldDidEndEditing:(UITextField*)textField
@@ -689,19 +634,26 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    if(textField.tag == BASIC_INFO_PRIMARY_PHONE)
-        phone.number = @"";
-    
+    if(textField.tag == BASIC_INFO_OFFICE_PHONE) {
+        officePhone.number = @"";
+    } else if(textField.tag == BASIC_INFO_MOBILE_PHONE) {
+        mobilePhone.number = @"";
+    } else if(textField.tag == BASIC_INFO_HOME_PHONE) {
+        homePhone.number = @"";
+    }
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if(textField.tag != BASIC_INFO_PRIMARY_PHONE)
+    NSInteger tag = textField.tag;
+    if(tag != BASIC_INFO_OFFICE_PHONE &&
+       tag != BASIC_INFO_MOBILE_PHONE &&
+       tag != BASIC_INFO_HOME_PHONE)
         return YES;
     
     //get my current string...
-    NSMutableString *str = [[NSMutableString alloc] initWithString:phone.number];
+    NSMutableString *str = [[NSMutableString alloc] initWithString:textField.text];
     
     //they are deleting the number before the dash, delete both...
     if(range.location == 4 && range.length == 1)
@@ -712,56 +664,21 @@
     //insert string
     [str replaceCharactersInRange:range withString:string];
     
-    
     [str replaceOccurrencesOfString:@"(" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@")" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     [str replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, str.length)];
     
-    NSMutableString *newString = [[NSMutableString alloc] init];
-    if([str length] > 10)
-    {
-        //do nothing
-        [newString appendString:str];
-    }
-    else if([str length] > 7)
-    {//(xxx) xxx-xxxx format
-        [newString appendString:@"("];
-        for(int i = 0; i < 3; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        [newString appendString:@") "];
-        for(int i = 3; i < 6; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        [newString appendString:@"-"];
-        for(int i = 6; i < [str length]; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-    }
-    else 
-    {//xxx-xxxx format
-        for(int i = 0; i < 3; i++)
-        {
-            if([str length] > i)
-                [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
-        if([str length] > 3)
-            [newString appendString:@"-"];
-        for(int i = 3; i < [str length]; i++)
-        {
-            [newString appendFormat:@"%C", [str characterAtIndex:i]];
-        }
+    NSMutableString * newString = [CustomerUtilities formatPhoneString:str];
+    if(tag == BASIC_INFO_OFFICE_PHONE) {
+        officePhone.number = newString;
+    } else if(tag == BASIC_INFO_MOBILE_PHONE) {
+        mobilePhone.number = newString;
+    } else if(tag == BASIC_INFO_HOME_PHONE) {
+        homePhone.number = newString;
     }
     
-    
-    phone.number = newString;
-    
-    
-    textField.text = phone.number;
+    textField.text = newString;
     
     return NO;
 }
@@ -771,7 +688,7 @@
     [sender resignFirstResponder];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - UIAlertViewDelegate -
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -798,7 +715,7 @@
     }
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark - UIActionSheetDelegate -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -806,31 +723,28 @@
     {
         NSURL *url;
         
-        NSMutableString *num = [[NSMutableString alloc] initWithString:phone.number];
+        NSMutableString *num = [[NSMutableString alloc] initWithString:selectedPhoneForAccessory.number];
         [num replaceOccurrencesOfString:@"(" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, num.length)];
         [num replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:NSMakeRange(0, num.length)];
         [num replaceOccurrencesOfString:@")" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, num.length)];
-        [num replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, num.length)];        
+        [num replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, num.length)];
         
-        if(buttonIndex == 0)
-        {
+        if(buttonIndex == 0) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", num]];
-        }
-        else 
-        {
+        } else {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", num]];
         }
         
-        if([[UIApplication sharedApplication] canOpenURL:url])
+        if([[UIApplication sharedApplication] canOpenURL:url]) {
             [[UIApplication sharedApplication] openURL:url];
-        else
-            [SurveyAppDelegate showAlert:@"Your device does not support this type of functionality." withTitle:@"Error"];
-        
-        
+        } else {
+            NSString *error = [NSString stringWithFormat:@"Error Contacting %@", num];
+            [SurveyAppDelegate showAlert:@"Your device does not support this type of functionality." withTitle:error];
+        }
     }
 }
 
-#pragma mark - View lifecycle
+#pragma mark - View lifecycle -
 
 - (void)viewDidLoad
 {
@@ -856,7 +770,7 @@
     rows = [[NSMutableArray alloc] init];
     
     [super viewDidLoad];
-
+    
     NSDictionary *dict = [CustomerUtilities getPricingModes];
     self.pricingModes = dict;
     
@@ -866,20 +780,24 @@
     dict = [AppFunctionality getPricingModesForNewJob];
     self.customerPricingModesNew = dict;
     
-    BOOL giveMeANewPhoneRecord = FALSE;
-    if(newCustomerView == NO)
-    {
+    if (newCustomerView == NO) {
         self.cust = [del.surveyDB getCustomer:custID];
         self.sync = [del.surveyDB getCustomerSync:custID];
         self.info = [del.surveyDB getShipInfo:custID];
-        SurveyPhone *primary = [del.surveyDB getPrimaryPhone:custID];
-        if(primary != nil)
-            self.phone = primary;
-        else
-            giveMeANewPhoneRecord = TRUE;
+        NSMutableArray *phones = [del.surveyDB getCustomerPhones:custID withLocationID:ORIGIN_LOCATION_ID];
+        for(SurveyPhone *phone in phones) {
+            // 1-2-3 == mobile-home-office from PhoneTypes table in surveyDB (no enum/obj holds it)
+            NSInteger typeId = phone.type.phoneTypeID;
+            if (typeId == 1) {
+                if (mobilePhone == nil) mobilePhone = phone;
+            } else if (typeId == 2) {
+                if (homePhone == nil) homePhone = phone;
+            } else if (typeId == 3) {
+                if (officePhone == nil) officePhone = phone;
+            }
+        }
     }
-    else
-    {
+    else {
         self.cust = [[SurveyCustomer alloc] init];
         self.sync = [[SurveyCustomerSync alloc] init];
         self.info = [[ShipmentInfo alloc] init];
@@ -893,18 +811,12 @@
             self.cust.inventoryType = AUTO;
         else
             self.cust.inventoryType = STANDARD;
-        
-        giveMeANewPhoneRecord = TRUE;
     }
     
-    if(giveMeANewPhoneRecord)
-    {
-        self.phone = [[SurveyPhone alloc] init];
-        phone.number = @"";
-        //phone.locationID = -1;
-        phone.isPrimary = 1;
-        phone.locationID = 1;
-    }
+    // Initializes phones if null after attempting to load
+    self.officePhone = [CustomerUtilities setupContactPhone:officePhone withPhoneTypeId:3];
+    self.mobilePhone = [CustomerUtilities setupContactPhone:mobilePhone withPhoneTypeId:1];
+    self.homePhone = [CustomerUtilities setupContactPhone:homePhone withPhoneTypeId:2];
     
     originalPricingMode = cust.pricingMode;
     originalLanguage = info.language;
@@ -923,23 +835,6 @@
 
 - (void)viewDidAppear: (BOOL) animated
 {
-    //was causing display issues
-    /*if(keyboardIsShowing)
-     {
-     
-     #ifndef __IPHONE_4_0
-     CGRect frame = self.view.frame;
-     frame.size.height -= keyboardHeight;
-     
-     [UIView beginAnimations:nil context:NULL];
-     [UIView setAnimationBeginsFromCurrentState:YES];
-     [UIView setAnimationDuration:0.3f];
-     self.view.frame = frame;
-     [UIView commitAnimations];
-     #endif
-     
-     }*/
-    
     [super viewDidAppear:animated];
     
     DriverData *driver = [del.surveyDB getDriverData];

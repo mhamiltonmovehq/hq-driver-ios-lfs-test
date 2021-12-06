@@ -300,7 +300,6 @@
         if(menuOptions != nil && [menuOptions count] > 1)
         {
             UISegmentedControl *barButtonItem = [[UISegmentedControl alloc] initWithItems:menuOptions];
-            barButtonItem.segmentedControlStyle = UISegmentedControlStyleBar;
             barButtonItem.momentary = YES;
             barButtonItem.selectedSegmentIndex = -1;
             [barButtonItem addTarget:self
@@ -532,25 +531,7 @@
         [SurveyAppDelegate showAlert:[NSString stringWithFormat:@"Ditto unavailable with %@ Items.", [AppFunctionality getHighValueDescription]] withTitle:@"Ditto Unavailable"];
         return;
     }
-    
-    //ditto function - prompt for quantity
-    /*UIAlertView* dialog = [[UIAlertView alloc] init];
-     [dialog setDelegate:self];
-     [dialog setTitle:@"Enter Ditto (copy) Quantity"];
-     [dialog setMessage:@" "];
-     [dialog addButtonWithTitle:@"Cancel"];
-     [dialog addButtonWithTitle:@"OK"];
-     dialog.delegate = self;
-     UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(20.0, 45.0, 245.0, 25.0)];
-     [nameField setBackgroundColor:[UIColor whiteColor]];
-     nameField.keyboardType = UIKeyboardTypeNumberPad;
-     nameField.tag = DAMAGE_DITTO_QUANTITY_FIELD;
-     [dialog addSubview:nameField];
-     [dialog show];
-     [dialog release];
-     [nameField becomeFirstResponder];
-     [nameField release];*/
-    
+
     //commit any record entered.
     if(![currentDamage isEmpty])
     {
@@ -713,8 +694,10 @@
         //if height is smaller than a normal row set it to the normal cell height, otherwise return the bigger dynamic height.
         return (rect.size.height < rowHeight ? rowHeight : rect.size.height);
     }
-    else
-        return 44;
+    else {
+        int rowHeight = 44;
+        return [SurveyAppDelegate iPad] ? rowHeight * 2.4 : rowHeight;
+    }
 }
 
 -(IBAction)handleEntryClick:(id)sender
@@ -902,7 +885,7 @@
             [buttonsCell setButtonReciever:self withSelector:@selector(handleEntryClick:)];
             
             if ([SurveyAppDelegate iOS7OrNewer])
-                [buttonsCell setNormalColor:[UIColor grayColor]];
+                [buttonsCell setNormalColor:[UIColor lightGrayColor]];
             else
             {
                 UIImage *buttonBackground = [[UIImage imageNamed:@"whiteButton.png"] stretchableImageWithLeftCapWidth:12. topCapHeight:0.];
@@ -932,17 +915,19 @@
             dict = conditions;
             allKeys = [[conditions allKeys] sortedArrayUsingSelector:@selector(compare:)];
         }
+        buttonsCell.cmd1.tag = indexPath.row * 4;
+        buttonsCell.cmd2.tag = (indexPath.row * 4) + 1;
+        buttonsCell.cmd3.tag = (indexPath.row * 4) + 2;
+        buttonsCell.cmd4.tag = (indexPath.row * 4) + 3;
         
         NSString *description, *code;
         
-        buttonsCell.cmd1.tag = indexPath.row * 4;
         code = [allKeys objectAtIndex:buttonsCell.cmd1.tag];
         description = [dict objectForKey:code];
         
         [self setupPluralRemoveButtonText:&code withDescription:&description];
         [buttonsCell setupDualView:1 withTopText:code andSubText:description];
         
-        buttonsCell.cmd2.tag = (indexPath.row * 4) + 1;
         if([allKeys count] > buttonsCell.cmd2.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd2.tag];
@@ -956,7 +941,6 @@
             buttonsCell.cmd2.tag = -1;
         }
         
-        buttonsCell.cmd3.tag = (indexPath.row * 4) + 2;
         if([allKeys count] > buttonsCell.cmd3.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd3.tag];
@@ -970,7 +954,6 @@
             buttonsCell.cmd3.tag = -1;
         }
         
-        buttonsCell.cmd4.tag = (indexPath.row * 4) + 3;
         if([allKeys count] > buttonsCell.cmd4.tag)
         {
             code = [allKeys objectAtIndex:buttonsCell.cmd4.tag];

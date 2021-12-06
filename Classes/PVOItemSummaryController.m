@@ -192,7 +192,7 @@
 	
     self.wentToRoomConditions = TRUE;
     
-	[self presentViewController:portraitNav animated:YES completion:nil];
+	[self.navigationController presentViewController:portraitNav animated:YES completion:nil];
 }
 
 -(IBAction)addItem:(id)sender
@@ -572,18 +572,6 @@
     
     // Relinquish ownership any cached data, images, etc that aren't in use.
 }
-
-//- (void)viewDidUnload {
-//    [cmdVoid release];
-//    cmdVoid = nil;
-//    [cmdComplete release];
-//    cmdComplete = nil;
-//    [cmdRoomConditions release];
-//    cmdRoomConditions = nil;
-//    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-//    // For example: self.myOutlet = nil;
-//}
-
 
 #pragma mark - SelectItemWithFilterControllerDelegate methods
 

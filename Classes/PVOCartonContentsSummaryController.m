@@ -197,45 +197,6 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 -(BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -305,7 +266,7 @@
     }
 }
 
-#pragma mark PVOSelectCartonContentsControllerDelegate methods
+#pragma mark  - PVOSelectCartonContentsControllerDelegate methods -
 
 -(void)contentsController:(PVOSelectCartonContentsController*)controller selectedContent:(PVOCartonContent*)item
 {
@@ -314,6 +275,7 @@
     //[cartonContents addObject:[NSNumber numberWithInt:item.contentID]];
     SurveyAppDelegate * del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     [del.surveyDB addPVOCartonContent:item.contentID forPVOItem:pvoItem.pvoItemID];
+    [self reloadData:del forPvoItem:pvoItem];
 }
 
 -(void)contentsController:(PVOSelectCartonContentsController*)controller selectedContents:(NSMutableArray *)items
@@ -325,7 +287,7 @@
     {
         [del.surveyDB addPVOCartonContent:item.intValue forPVOItem:pvoItem.pvoItemID];
     }
-    
+    [self reloadData:del forPvoItem:pvoItem];
 }
 
 -(void)contentsControllerCanceled:(PVOSelectCartonContentsController*)controller
@@ -333,25 +295,10 @@
     contentSelected = YES;
 }
 
-
-/*-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex != [alertView cancelButtonIndex])
-    {
-        if(buttonDamageController == nil)
-            buttonDamageController = [[PVODamageButtonController alloc] initWithNibName:@"PVODamageButtonView" bundle:nil];
-        buttonDamageController.title = @"Damage";
-        buttonDamageController.details = pvoItem;
-        [self.navigationController pushViewController:buttonDamageController animated:YES];
-    }
-    else
-    {
-        if(wheelDamageController == nil)
-            wheelDamageController = [[PVODamageWheelController alloc] initWithNibName:@"PVODamageWheelView" bundle:nil];
-        wheelDamageController.title = @"Damage";
-        wheelDamageController.details = pvoItem;
-        [self.navigationController pushViewController:wheelDamageController animated:YES];
-    }
-}*/
+#pragma mark - Helpers -
+-(void)reloadData: (SurveyAppDelegate*) del forPvoItem:(PVOItemDetail*) pvoItemDetail {
+    self.cartonContents = [NSMutableArray arrayWithArray:[del.surveyDB getPVOCartonContents:pvoItemDetail.pvoItemID withCustomerID:del.customerID]];
+    [tableView reloadData];
+}
 
 @end

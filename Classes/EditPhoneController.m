@@ -128,7 +128,7 @@
 			[del.surveyDB updatePhoneType:phone.type.phoneTypeID 
 			 withOldPhoneTypeID:originalPhoneTypeID 
 			 withCustomerID:del.customerID 
-			 andLocationID:phone.locationID];
+			 andLocationID:phone.locationTypeId];
 		}
         
         if (primaryChanged) {
@@ -203,7 +203,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return phone.locationID == -1 ? 1 : EDIT_PHONE_SECTIONS;
+    return phone.locationTypeId == -1 ? 1 : EDIT_PHONE_SECTIONS;
 }
 
 
@@ -308,7 +308,7 @@
 //            phoneTypeController.preferredContentSize = self.preferredContentSize;
 //        }
         
-        phoneTypeController.locationID = phone.locationID;
+        phoneTypeController.locationID = phone.locationTypeId;
         
         if(phone.type != nil)
         {

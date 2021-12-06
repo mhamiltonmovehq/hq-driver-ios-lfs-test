@@ -18,7 +18,7 @@
 #define PVO_ROOM_COND_DAMAGE 2
 #define PVO_ROOM_COND_DAMAGE_DETAIL 3
 
-@interface PVORoomConditionsController : UITableViewController <UITextViewDelegate>
+@interface PVORoomConditionsController : PVOBaseTableViewController <UITextViewDelegate>
 {
     Room *room;
     PVOInventoryLoad *currentLoad;

@@ -43,20 +43,6 @@
     
     dbUpdateComplete = NO;
     [super viewDidLoad];
-    
-#ifdef ATLASNET
-    [cmdSplashPhoto setImage:[UIImage imageNamed:@"AtlasNetSplash.png"] forState:UIControlStateNormal];
-    [cmdSplashPhoto setImage:[UIImage imageNamed:@"AtlasNetSplash.png"] forState:UIControlStateHighlighted];
-#endif
-    
-    //labelLoad.hidden = TRUE;
-    
-//    if([SurveyAppDelegate isHighRes])
-//    {
-//        CGRect rect = labelLoad.frame;
-//        rect.origin.y += 100;
-//        labelLoad.frame = rect;
-//    }
 }
 
 -(void)tick: (NSTimer*)theTimer

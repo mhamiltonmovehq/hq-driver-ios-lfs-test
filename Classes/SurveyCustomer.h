@@ -27,9 +27,9 @@ enum INVENTORY_TYPE {
     int custID;
     NSString *lastName;
     NSString *firstName;
-    NSString *companyName;
+    NSString *account;
     NSString *email;
-    int weight;
+    int estimatedWeight;
     int cancelled;
     enum PRICING_MODE_TYPE pricingMode;
     enum INVENTORY_TYPE inventoryType;
@@ -39,7 +39,7 @@ enum INVENTORY_TYPE {
 
 @property (nonatomic) int cancelled;
 @property (nonatomic) int custID;
-@property (nonatomic) int weight;
+@property (nonatomic) int estimatedWeight;
 @property (nonatomic) enum PRICING_MODE_TYPE pricingMode;
 @property (nonatomic) enum INVENTORY_TYPE inventoryType;
 
@@ -48,7 +48,7 @@ enum INVENTORY_TYPE {
 
 @property (nonatomic, strong) NSString *lastName;
 @property (nonatomic, strong) NSString *firstName;
-@property (nonatomic, strong) NSString *companyName;
+@property (nonatomic, strong) NSString *account;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *lastSaveToServerDate;
 

@@ -5,7 +5,7 @@
 //  Created by Tony Brame on 4/30/09.
 //  Copyright __MyCompanyName__ 2009. All rights reserved.
 //
-
+@import Firebase;
 #include "TargetConditionals.h"
 #import <AudioToolbox/AudioServices.h>
 #import "SurveyAppDelegate.h"
@@ -28,7 +28,6 @@
 #import "NoteViewController.h"
 #import "PVOWeightTicketController.h"
 #import "RootViewController.h"
-#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "UIViewController+SwizzlePresent.h"
 
@@ -132,8 +131,8 @@
 
 +(BOOL)iPad
 {
-	return FALSE;
-	//return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+	//return FALSE;
+	return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
 }
 
 +(BOOL)iOS7OrNewer
@@ -152,7 +151,7 @@
     BOOL isRetinaHeight = rect.size.height == 568 || rect.size.height == 812;
     CGFloat scale = [[UIScreen mainScreen] scale];
     BOOL isRetinaScale = scale == 2 || scale == 3;
-	return  isRetinaHeight && isRetinaScale ;
+	return  isRetinaHeight && isRetinaScale;
 }
 
 +(NSString*)getLastTwoPathComponents:(NSString*)filePath
@@ -427,9 +426,11 @@
 	}
 	else 
 	{
+       dispatch_async(dispatch_get_main_queue(), ^{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
 		[alert show];
+       });
 	}
 
 }
@@ -839,16 +840,16 @@
     
 }
 
-//used to show alerts from a separate thread... idx 0 is message, 1 is title
--(void)showAlertFromDelegate:(NSArray*)alertdata
-{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:[alertdata objectAtIndex:1] message:[alertdata objectAtIndex:0] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [av show];
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+  supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	    
-    if([SurveyAppDelegate isRetina4])
+    [FIRApp configure];
+
+    if([SurveyAppDelegate isRetina4] || [SurveyAppDelegate iPad])
         [window setFrame:[[UIScreen mainScreen] bounds]];
     
     window.backgroundColor = [UIColor blackColor];
@@ -859,7 +860,6 @@
     
     splashView = [[SplashViewController alloc] initWithNibName:@"SplashView" bundle:nil];
 	
-	[Fabric with:@[[Crashlytics class]]];
 
     
     // METHOD SWIZZLING
@@ -914,6 +914,13 @@
 //    [lines release];
     
     return YES;
+}
+
+//used to show alerts from a separate thread... idx 0 is message, 1 is title
+-(void)showAlertFromDelegate:(NSArray*)alertdata
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:[alertdata objectAtIndex:1] message:[alertdata objectAtIndex:0] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [av show];
 }
 
 +(void)setupScanbot {
@@ -1774,9 +1781,9 @@
             SurveyCustomer *newCust = [[SurveyCustomer alloc] init];
             newCust.lastName = customerLastName;
             newCust.firstName = customerFirstName;
-            newCust.companyName = customerCompanyName;
+            newCust.account = customerCompanyName;
             newCust.email = customerEmail;
-            newCust.weight = [customerWeight intValue];
+            newCust.estimatedWeight = [customerWeight intValue];
             newCust.pricingMode = ([pricingMode isEqualToString:@"Interstate"] || [pricingMode isEqualToString:@"0"] ? 0 : 1);
             
             SurveyCustomerSync *sync = [[SurveyCustomerSync alloc] init];
@@ -1879,7 +1886,7 @@
                     phone.number = primaryPhone;
                     phone.type = [[PhoneType alloc] init];
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = -1;
+                    phone.locationTypeId = -1;
                     [originPhones addObject:phone];
                 }
                 
@@ -1890,7 +1897,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Home";
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1901,7 +1908,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Mobile";
                     phone.type.phoneTypeID = 1;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1912,7 +1919,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Work";
                     phone.type.phoneTypeID = 3;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1923,7 +1930,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Other";
                     phone.type.phoneTypeID = 4;
-                    phone.locationID = ORIGIN_LOCATION_ID;
+                    phone.locationTypeId = ORIGIN_LOCATION_ID;
                     [originPhones addObject:phone];
                 }
                 
@@ -1960,7 +1967,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Home";
                     phone.type.phoneTypeID = 2;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1971,7 +1978,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Mobile";
                     phone.type.phoneTypeID = 1;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1982,7 +1989,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Work";
                     phone.type.phoneTypeID = 3;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 
@@ -1993,7 +2000,7 @@
                     phone.type = [[PhoneType alloc] init];
                     phone.type.name = @"Other";
                     phone.type.phoneTypeID = 4;
-                    phone.locationID = DESTINATION_LOCATION_ID;
+                    phone.locationTypeId = DESTINATION_LOCATION_ID;
                     [destPhones addObject:phone];
                 }
                 

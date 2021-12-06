@@ -84,8 +84,9 @@
     
     if(message != nil)
         [SurveyAppDelegate showAlert:message withTitle:@"Auto Backup"];
-    
-    [_caller performSelector:_finishedBackup];
+    if ([_caller respondsToSelector:_finishedBackup]) {
+        [_caller performSelector:_finishedBackup];
+    }
 }
 
 

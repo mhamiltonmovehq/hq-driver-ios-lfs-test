@@ -44,16 +44,13 @@
         
 //        CGRect window = CGRectMake(0, 0, 320, 416);
         UIWindow *appwindow = [[UIApplication sharedApplication] keyWindow];
-        
-        UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, appwindow.frame.size.height - 64)];
-        
-        tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, appwindow.frame.size.height - 64) style:style];
+ 
+        tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, appwindow.frame.size.width, appwindow.frame.size.height) style:style];
         tableView.dataSource = self;
         tableView.delegate = self;
         [tableView setBackgroundColor:[UIColor whiteColor]];
-        [myView addSubview:tableView];
         
-        self.view = myView;
+        self.view = tableView;
         
         //removed this because viewDidLoad was getting hit before a consumer could init variables (i.e. pushed)
         [self viewDidLoad];
@@ -337,56 +334,10 @@
 	
 	if([caller respondsToSelector:callback])
 	{
+        //call cancel to clear the view
+        [self cancel:nil];
 		[caller performSelector:callback withObject:r];
 	}
-	
-	[self cancel:nil];
-	
-	//call cancel to clear the view
-	
-	
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 @end
 

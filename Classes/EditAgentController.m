@@ -130,9 +130,6 @@
 		case AGENT_PHONE_ROW:
 			agent.phone = newValue;
 			break;
-		case AGENT_FAX_ROW:
-			agent.fax = newValue;
-			break;
 		case AGENT_EMAIL_ROW:
 			agent.email = newValue;
 			break;
@@ -171,7 +168,7 @@
     return YES;
 }
 
-#pragma mark Table view methods
+#pragma mark - Table view methods -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return (lockFields ? 1 : 2);
@@ -183,7 +180,7 @@
 	if(section == 0 && !lockFields)
 		return 1;
 	else
-		return 10;
+		return 9;
 }
 
 
@@ -264,10 +261,6 @@
 			case AGENT_PHONE_ROW:
 				cell.labelHeader.text = @"Phone";
 				cell.labelText.text = agent.phone;
-				break;
-			case AGENT_FAX_ROW:
-				cell.labelHeader.text = @"Fax";
-				cell.labelText.text = agent.fax;
 				break;
 			case AGENT_EMAIL_ROW:
 				cell.labelHeader.text = @"Email";
@@ -357,9 +350,6 @@
 				break;
 			case AGENT_PHONE_ROW:
 				editController.destString = agent.phone;
-				break;
-			case AGENT_FAX_ROW:
-				editController.destString = agent.fax;
 				break;
 			case AGENT_EMAIL_ROW:
 				editController.destString = agent.email;

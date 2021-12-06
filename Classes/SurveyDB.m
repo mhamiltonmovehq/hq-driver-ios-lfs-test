@@ -891,49 +891,6 @@
     
 }
 
--(int)getPhoneTypeIDFromName:(NSString*)name
-{
-    int retval = -1;
-    
-    sqlite3_stmt *stmnt;
-    
-    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PhoneTypeID FROM PhoneTypes WHERE Name = '%@'", name];
-    if([self prepareStatement:cmd withStatement:&stmnt])
-    {
-        if(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
-            retval = sqlite3_column_int(stmnt, 0);
-        }
-    }
-    sqlite3_finalize(stmnt);
-    
-    
-    
-    return retval;
-}
-
--(NSMutableArray*)getPhoneTypeList
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    PhoneType *item;
-    
-    sqlite3_stmt *stmnt;
-    if([self prepareStatement:@"SELECT PhoneTypeID,Name FROM PhoneTypes WHERE COALESCE(IsHidden,0) = 0 ORDER BY Name COLLATE NOCASE ASC" withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
-            item = [[PhoneType alloc] init];
-            item.phoneTypeID = sqlite3_column_int(stmnt, 0);
-            item.name = [[NSString alloc] initWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
-            [array addObject:item];
-            
-        }
-    }
-    sqlite3_finalize(stmnt);
-    
-    return array;
-}
-
 -(void)updateCustomer:(SurveyCustomer*) cust
 {
     
@@ -950,9 +907,9 @@
                      "WHERE CustomerID = %d",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.weight, cust.pricingMode, cust.cancelled, cust.inventoryType,
+                     cust.estimatedWeight, cust.pricingMode, cust.cancelled, cust.inventoryType,
                      cust.lastSaveToServerDate == nil ? @"" : [cust.lastSaveToServerDate stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.custID];
     
@@ -1059,10 +1016,10 @@
             cust.lastName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
             cust.firstName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 2)];
             cust.email = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 3)];
-            cust.weight = sqlite3_column_int(stmnt, 4);
+            cust.estimatedWeight = sqlite3_column_int(stmnt, 4);
             cust.pricingMode = sqlite3_column_int(stmnt, 5);
             cust.cancelled = sqlite3_column_int(stmnt, 6);
-            cust.companyName = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
+            cust.account = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             cust.inventoryType = sqlite3_column_int(stmnt, 8);
             cust.lastSaveToServerDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             cust.originCompletionDate = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -1821,9 +1778,9 @@
                      "Weight,PricingMode,Cancelled, InventoryType, OriginCompletionDate, DestinationCompletionDate) VALUES('%@','%@','%@','%@',%d,%d,0, %d, '', '');",
                      cust.lastName == nil ? @"" : [cust.lastName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.firstName == nil ? @"" : [cust.firstName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.companyName == nil ? @"" : [cust.companyName stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     cust.account == nil ? @"" : [cust.account stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      cust.email == nil ? @"" : [cust.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     cust.weight, cust.pricingMode, cust.inventoryType];
+                     cust.estimatedWeight, cust.pricingMode, cust.inventoryType];
     
     [self updateDB:cmd];
     
@@ -1982,30 +1939,10 @@
     return cust.custID;
 }
 
-
-//TODO: update to use type property in phone when adding...
--(BOOL)addPhone:(SurveyPhone*)phone withTypeString:(NSString*)type
-{
-    int typeID = [self getPhoneTypeIDFromName:type];
-    if(typeID == -1)
-    {
-        [self insertNewPhoneType:type];
-        typeID = [self getPhoneTypeIDFromName:type];
-    }
-    
-    phone.type = [[PhoneType alloc] init];
-    phone.type.phoneTypeID = typeID;
-    
-    [self insertPhone:phone];
-    
-    return YES;
-}
-
--(void)insertPhone:(SurveyPhone*) phone
-{
+-(void)insertPhone:(SurveyPhone*) phone {
     NSString *cmd = [[NSString alloc] initWithFormat:@"INSERT INTO Phones(CustomerID,LocationID,TypeID,Number,isPrimary) VALUES(%ld,%ld,%ld,'%@',%d);",
                      phone.custID,
-                     phone.locationID,
+                     phone.locationTypeId,
                      phone.type == nil ? 0 : phone.type.phoneTypeID,
                      phone.number == nil ? @"" : [phone.number stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      phone.isPrimary];
@@ -2016,14 +1953,12 @@
     
 }
 
--(void)updatePhone:(SurveyPhone*) phone
-{
-    
+-(void)updatePhone:(SurveyPhone*) phone {
     NSString *cmd = [[NSString alloc] initWithFormat:@"UPDATE Phones SET Number = '%@', isPrimary = %d WHERE CustomerID = %ld AND LocationID = %ld AND TypeID = %ld;",
                      phone.number == nil ? @"" : [phone.number stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      phone.isPrimary,
                      phone.custID,
-                     phone.locationID,
+                     phone.locationTypeId,
                      phone.type == nil ? 0 : phone.type.phoneTypeID];
     
     [self updateDB:cmd];
@@ -2036,7 +1971,7 @@
 {
     
     NSString *cmd = [[NSString alloc] initWithFormat:@"DELETE FROM Phones WHERE CustomerID = %ld AND LocationID = %ld AND TypeID = %ld;",
-                     phone.custID, phone.locationID, phone.type.phoneTypeID];
+                     phone.custID, phone.locationTypeId, phone.type.phoneTypeID];
     
     [self updateDB:cmd];
     
@@ -2318,19 +2253,71 @@
     return sqlite3_last_insert_rowid(db);
 }
 
--(NSString*)getCustomerPhone:(int)cID withLocationID:(int)locationID andPhoneType:(NSString*)type
+-(int)getPhoneTypeIDFromName:(NSString*)name
 {
-    NSArray *phones = [self getCustomerPhones:cID withLocationID:locationID];
+    int retval = -1;
     
-    NSString *retval = [[NSString alloc] initWithString:@""];
+    sqlite3_stmt *stmnt;
     
-    SurveyPhone *current;
-    for(int i = 0; i < [phones count]; i++)
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PhoneTypeID FROM PhoneTypes WHERE Name = '%@'", name];
+    if([self prepareStatement:cmd withStatement:&stmnt])
     {
-        current = [phones objectAtIndex:i];
-        if([current.type.name isEqualToString:type])
+        if(sqlite3_step(stmnt) == SQLITE_ROW)
         {
+            retval = sqlite3_column_int(stmnt, 0);
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    
+    
+    return retval;
+}
+
+
+-(NSString*)getPhoneTypeNameFromId:(int)phoneTypeId {
+    NSString *retval = nil;
+    sqlite3_stmt *stmnt;
+    
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT Name FROM PhoneTypes WHERE PhoneTypeID = '%d'", phoneTypeId];
+    if([self prepareStatement:cmd withStatement:&stmnt]) {
+        if(sqlite3_step(stmnt) == SQLITE_ROW) {
+            retval = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 0)];
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    return retval;
+}
+
+-(NSMutableArray*)getPhoneTypeList
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    PhoneType *item;
+    
+    sqlite3_stmt *stmnt;
+    if([self prepareStatement:@"SELECT PhoneTypeID,Name FROM PhoneTypes WHERE COALESCE(IsHidden,0) = 0 ORDER BY Name COLLATE NOCASE ASC" withStatement:&stmnt])
+    {
+        while(sqlite3_step(stmnt) == SQLITE_ROW)
+        {
+            item = [[PhoneType alloc] init];
+            item.phoneTypeID = sqlite3_column_int(stmnt, 0);
+            item.name = [[NSString alloc] initWithUTF8String:(char*)sqlite3_column_text(stmnt, 1)];
+            [array addObject:item];
             
+        }
+    }
+    sqlite3_finalize(stmnt);
+    
+    return array;
+}
+
+-(NSString*)getCustomerPhone:(int)cID withLocationID:(int)locationID andPhoneType:(NSString*)type {
+    NSArray *phones = [self getCustomerPhones:cID withLocationID:locationID];
+    NSString *retval = nil;
+    
+    for(SurveyPhone *current in phones) {
+        if([current.type.name isEqualToString:type]) {
             retval = [[NSString alloc] initWithString:current.number];
         }
     }
@@ -2338,30 +2325,20 @@
     return retval;
 }
 
--(NSMutableArray*)getCustomerPhones:(int) cID withLocationID:(int)locID
-{
+-(NSMutableArray*)getCustomerPhones:(int) cID withLocationID:(int)locID {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     SurveyPhone *item;
-    
     sqlite3_stmt *stmnt;
     
-    NSString *cmd = nil;
-    // this portion no longer needed.
-    //if(locID == -1)//location -1 is for the primary phone, which is not associated with a location
-    //cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,p.Number FROM Phones p WHERE p.CustomerID = %d AND p.LocationID = %d", cID, locID];
-    //else
-    // added isPrimary 3/22/16
-    cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,t.PhoneTypeID,t.Name,p.Number, p.IsPrimary FROM Phones p,PhoneTypes t WHERE p.CustomerID = %d AND p.LocationID = %d AND p.TypeID = t.PhoneTypeID AND IsPrimary = 0", cID, locID];
+    NSString *cmd = [[NSString alloc] initWithFormat: @"SELECT p.CustomerID,p.LocationID,t.PhoneTypeID,t.Name,p.Number, p.IsPrimary FROM Phones p,PhoneTypes t WHERE p.CustomerID = %d AND p.LocationID = %d AND p.TypeID = t.PhoneTypeID AND IsPrimary = 0", cID, locID];
     
-    if([self prepareStatement:cmd withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
+    if([self prepareStatement:cmd withStatement:&stmnt]) {
+        while(sqlite3_step(stmnt) == SQLITE_ROW) {
             item = [[SurveyPhone alloc] init];
             item.type = [[PhoneType alloc] init];
             
             item.custID = sqlite3_column_int(stmnt, 0);
-            item.locationID = sqlite3_column_int(stmnt, 1);
+            item.locationTypeId = sqlite3_column_int(stmnt, 1);
             item.type.phoneTypeID = sqlite3_column_int(stmnt, 2);
             int isPrimary = sqlite3_column_int(stmnt, 5);
             if (isPrimary == 1)
@@ -2372,14 +2349,9 @@
             item.isPrimary = isPrimary;
             
             [array addObject:item];
-            
         }
     }
-    
-    
     sqlite3_finalize(stmnt);
-    
-    
     
     return array;
 }
@@ -2402,7 +2374,7 @@
             item.type = [[PhoneType alloc] init];
             
             item.custID = sqlite3_column_int(stmnt, 0);
-            item.locationID = sqlite3_column_int(stmnt, 1);
+            item.locationTypeId = sqlite3_column_int(stmnt, 1);
             item.type.phoneTypeID = sqlite3_column_int(stmnt, 2);
             //item.type.name = @"Primary";  // This makes it show as 'Primary' in the editphonecontroller if primary is unchecked... don't like it.
             item.type.name = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 3)];
@@ -2486,7 +2458,6 @@
             item.state = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 4)];
             item.zip = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 5)];
             item.phone = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 6)];
-            item.fax = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 7)];
             item.email = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 8)];
             item.code = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 9)];
             item.contact = [NSString stringWithUTF8String:(char*)sqlite3_column_text(stmnt, 10)];
@@ -2509,7 +2480,7 @@
                      agent.state == nil ? @"" : [agent.state stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.zip == nil ? @"" : [agent.zip stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.phone == nil ? @"" : [agent.phone stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                     agent.fax == nil ? @"" : [agent.fax stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                     @"", // Former Fax (Removed with TEG-617)
                      agent.email == nil ? @"" : [agent.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.code == nil ? @"" : [agent.code stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                      agent.contact == nil ? @"" : [agent.contact stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
@@ -4527,18 +4498,18 @@
             {
                 if (itemListId == 0)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
                 }
                 else if (itemListId == 2)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:3 checkForAdditionalCustomItemLists:NO];
                 }
                 else if (itemListId == 3)
                 {
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
-                    [self insertNewItem:item withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:0 checkForAdditionalCustomItemLists:NO];
+                    [self insertNewItem:[item copyWithZone:nil] withRoomID:roomID withCustomerID:customerID includeCubeInValidation:includeCube withPVOLocationID:pvoLocationID withLanguageCode:languageCode withItemListId:2 checkForAdditionalCustomItemLists:NO];
                 }
             }
             
@@ -8470,13 +8441,12 @@
     sqlite3_stmt *stmnt;
     
     
-    if([self prepareStatement:[NSString stringWithFormat:@"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType "
+    if([self prepareStatement:[NSString stringWithFormat:
+                               @"SELECT WeightTicketID, GrossWeight, TicketDate, Description, WeightType, MoveHqId, ShouldSync "
                                "FROM PVOWeightTickets "
                                "WHERE CustomerID = %d ", custID]
-                withStatement:&stmnt])
-    {
-        while(sqlite3_step(stmnt) == SQLITE_ROW)
-        {
+                withStatement:&stmnt]) {
+        while(sqlite3_step(stmnt) == SQLITE_ROW) {
             PVOWeightTicket *current = [[PVOWeightTicket alloc] init];
             
             current.custID = custID;
@@ -8485,10 +8455,10 @@
             current.ticketDate = [NSDate dateWithTimeIntervalSince1970:sqlite3_column_double(stmnt, 2)];
             current.description = [SurveyDB stringFromStatement:stmnt columnID:3];
             current.weightType = sqlite3_column_int(stmnt, 4);
+            current.moveHqId = sqlite3_column_int(stmnt, 5);
+            current.shouldSync = sqlite3_column_int(stmnt, 6) == 1;
             
             [retval addObject:current];
-            
-            
         }
     }
     sqlite3_finalize(stmnt);
@@ -8498,21 +8468,27 @@
 
 -(int)savePVOWeightTicket:(PVOWeightTicket*)weightTicket
 {
-    if([self getIntValueFromQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM PVOWeightTickets WHERE WeightTicketID = %d", weightTicket.weightTicketID]] > 0)
-    {
-        [self updateDB:[NSString stringWithFormat:@"UPDATE PVOWeightTickets SET GrossWeight = %d, TicketDate = %f, Description = %@, WeightType = %d"
+    if([self getIntValueFromQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM PVOWeightTickets WHERE WeightTicketID = %d", weightTicket.weightTicketID]] > 0) {
+        [self updateDB:[NSString stringWithFormat:@"UPDATE PVOWeightTickets SET GrossWeight = %d, TicketDate = %f, Description = %@, WeightType = %d, MoveHqId = %d, ShouldSync = %d"
                         " WHERE WeightTicketID = %d",
-                        weightTicket.grossWeight, [weightTicket.ticketDate timeIntervalSince1970],
-                        [self prepareStringForInsert:weightTicket.description], weightTicket.weightType,
+                        weightTicket.grossWeight,
+                        [weightTicket.ticketDate timeIntervalSince1970],
+                        [self prepareStringForInsert:weightTicket.description],
+                        weightTicket.weightType,
+                        weightTicket.moveHqId,
+                        weightTicket.shouldSync ? 1 : 0,
                         weightTicket.weightTicketID]];
         return weightTicket.weightTicketID;
-    }
-    else
-    {
-        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOWeightTickets(CustomerID, GrossWeight, TicketDate, Description, WeightType) "
-                        "VALUES(%d,%d,%f,%@,%d)",
-                        weightTicket.custID, weightTicket.grossWeight, [weightTicket.ticketDate timeIntervalSince1970],
-                        [self prepareStringForInsert:weightTicket.description], weightTicket.weightType]];
+    } else {
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO PVOWeightTickets(CustomerID, GrossWeight, TicketDate, Description, WeightType, MoveHqId, ShouldSync) "
+                        "VALUES(%d, %d, %f, %@, %d, %d, %d)",
+                        weightTicket.custID,
+                        weightTicket.grossWeight,
+                        [weightTicket.ticketDate timeIntervalSince1970],
+                        [self prepareStringForInsert:weightTicket.description],
+                        weightTicket.weightType,
+                        weightTicket.moveHqId,
+                        weightTicket.shouldSync ? 1 : 0]];
         return sqlite3_last_insert_rowid(db);
     }
 }
@@ -8529,27 +8505,16 @@
     NSString *docsDir = [SurveyAppDelegate getDocsDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-
     for (SurveyImage *image in arr)
     {
-        // I am sad that I need to destroy this loop.  I want it to live forever in its infinite stupidity. ...so I'm going to leave the code here.  The below commented-out code was a part of this loop for 3-6 years.
-        // Code courtesy of Justin Little and Tony Brame.
-        
-        // image = nil; // hack to get rid of the variable unused warning without messing with this loop (assuming that the loop works).
-        // SurveyImage *image = [arr objectAtIndex:0];
-        // NSString *docsDir = [SurveyAppDelegate getDocsDirectory];
-        // NSFileManager *fileManager = [NSFileManager defaultManager];
-
         NSString *filePath = image.path;
         NSString *fullPath = [docsDir stringByAppendingPathComponent:filePath];
         
         if([fileManager fileExistsAtPath:fullPath])
             [fileManager removeItemAtPath:fullPath error:nil];
         
-        
         [self deleteImageEntry:image.imageID];
     }
-    
 }
 
 -(NSArray*)getPVOVerifyInventoryOrders
@@ -9248,10 +9213,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);
@@ -9273,10 +9235,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);
@@ -9298,10 +9257,7 @@
         while(sqlite3_step(stmnt) == SQLITE_ROW)
         {
             current = [[PVOItemDetail alloc] initWithStatement:stmnt];
-            
-            total += current.weight;
-            
-            
+            total += current.weight * current.quantity;
         }
     }
     sqlite3_finalize(stmnt);

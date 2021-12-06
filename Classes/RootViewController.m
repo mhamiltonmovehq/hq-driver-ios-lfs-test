@@ -36,6 +36,7 @@
 	return self;
 }
 
+#pragma mark - Lifecycle Methods -
 
 - (void)viewDidLoad
 {
@@ -67,6 +68,85 @@
     NSLog(@"Beta password: %@", [Prefs betaPassword]);
     NSLog(@"Reports password: %@", [Prefs reportsPassword]);
 #endif
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    //make sure pricing and mileage is open
+    [del openPricingDB];
+    
+    self.customers = [del.surveyDB getCustomerList:filters];
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                    target:nil
+                                                                    action:nil]];
+    
+    if (![AppFunctionality disableDocumentsLibrary])
+    {
+        [array addObject:[[UIBarButtonItem alloc]
+                           initWithTitle:@"Docs" style:UIBarButtonItemStylePlain
+                           target:self
+                           action:@selector(cmdDocuments_Click:)]];
+    }
+    
+    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
+    //                                                       style:UIBarButtonItemStylePlain
+    //                                                      target:self
+    //                                                      action:@selector(cmdSort_Click:)]];
+    
+    
+    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
+    //                                                       style:UIBarButtonItemStylePlain
+    //                                                      target:self
+    //                                                      action:@selector(cmdSync_Click:)]];
+    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(cmdMaintenance_Click:)]];
+    
+    DriverData *data = [del.surveyDB getDriverData];
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithTitle:(data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver")
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(cmdDriver_Click:)]];
+    
+    
+    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                    target:nil
+                                                                    action:nil]];
+    
+    [toolbarOptions setItems:array];
+    [self.view bringSubviewToFront:toolbarOptions];
+    [self.tblView reloadData];
+    
+//    [del setTitleForDriverOrPackerNavigationItem:self.navigationItem forTitle:@"Customers"];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //check for auto backup stuff...
+    AutoBackup *backup = [[AutoBackup alloc] init];
+    backup.caller = self;
+    backup.finishedBackup = @selector(finishedBackup);
+    [backup beginBackup];
+}
+
+#pragma mark - Instance Methods -
+
+-(void)reloadTableViewData {
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    self.customers = [del.surveyDB getCustomerList:filters];
+    [tblView reloadData];
 }
 
 - (IBAction)cmdDocuments_Click:(id)sender
@@ -111,8 +191,22 @@
     DriverDataController *drv = [[DriverDataController alloc] initWithStyle:UITableViewStyleGrouped];
     drv.title = [NSString stringWithFormat:@"%@ Data", driverData == nil || driverData.driverType != PVO_DRIVER_TYPE_PACKER ? @"Driver" : @"Packer"];
     
-    self.navController = [[PortraitNavController alloc] initWithRootViewController:drv];
+    navController = [[PortraitNavController alloc] initWithRootViewController:drv];
+    navController.dismissDelegate = self;
+    navController.dismissCallback = @selector(updateDriverButton);
+
     [del.navController presentViewController:navController animated:YES completion:nil];
+}
+
+-(void) updateDriverButton {
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    for (UIBarButtonItem *item in toolbarOptions.items) {
+        if ([item.title isEqualToString:@"Driver"] || [item.title isEqualToString:@"Packer"]) {
+            DriverData *data = [del.surveyDB getDriverData];
+            item.title = data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver";
+        }
+    }
 }
 
 -(IBAction) cmdMaintenance_Click:(id)sender;
@@ -177,7 +271,6 @@
     [action showInView:self.view];
 }
 
-
 -(void)createNewCustomer
 {
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -187,6 +280,8 @@
         addController.newCustomerView = YES;
     //recreate it each time...
     navController = [[PortraitNavController alloc] initWithRootViewController:addController];
+    navController.dismissDelegate = self;
+    navController.dismissCallback = @selector(reloadTableViewData);
     
     [del.navController presentViewController:navController animated:YES completion:nil];
 }
@@ -256,70 +351,13 @@
                 pvoDownload = [[PVOSyncController alloc] initWithStyle:UITableViewStyleGrouped];
             pvoDownload.title = @"Download";
             navController = [[PortraitNavController alloc] initWithRootViewController:pvoDownload];
-           
+
+            navController.dismissDelegate = self;
+            navController.dismissCallback = @selector(reloadTableViewData);
+
             [self presentViewController:navController animated:YES completion:nil];
         }
     }
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-	
-	//make sure pricing and mileage is open
-	[del openPricingDB];
-//	[del openMilesDB];
-	
-	self.customers = [del.surveyDB getCustomerList:filters];
-    
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                    target:nil
-                                                                    action:nil]];
-    
-    if (![AppFunctionality disableDocumentsLibrary])
-    {
-        [array addObject:[[UIBarButtonItem alloc]
-                           initWithTitle:@"Docs" style:UIBarButtonItemStylePlain
-                           target:self
-                           action:@selector(cmdDocuments_Click:)]];
-    }
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSort_Click:)]];
-    
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSync_Click:)]];
-    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
-                                                       style:UIBarButtonItemStylePlain
-                                                      target:self
-                                                      action:@selector(cmdMaintenance_Click:)]];
-    
-    DriverData *data = [del.surveyDB getDriverData];
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithTitle:(data.driverType == PVO_DRIVER_TYPE_PACKER ? @"Packer" : @"Driver")
-                                                       style:UIBarButtonItemStylePlain
-                                                      target:self
-                                                      action:@selector(cmdDriver_Click:)]];
-    
-    
-    [array addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                    target:nil
-                                                                    action:nil]];
-    
-    [toolbarOptions setItems:array];
-    [self.view bringSubviewToFront:toolbarOptions];
-	[self.tblView reloadData];
-    
-//    [del setTitleForDriverOrPackerNavigationItem:self.navigationItem forTitle:@"Customers"];
 }
 
 -(IBAction) cmdPackers_Click:(id)sender
@@ -330,17 +368,6 @@
     packerInitialController.isModal = YES;
     UINavigationController *newNav = [[UINavigationController alloc] initWithRootViewController:packerInitialController];
     [self presentViewController:newNav animated:YES completion:nil];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //check for auto backup stuff...
-    AutoBackup *backup = [[AutoBackup alloc] init];
-    backup.caller = self;
-    backup.finishedBackup = @selector(finishedBackup);
-    [backup beginBackup];
 }
 
 -(void)finishedBackup
@@ -431,30 +458,9 @@
     }
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-/*
- Implement loadView if you want to create a view hierarchy programmatically
- - (void)loadView {
- }
- */
-
-/*
- */
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// Return YES for supported orientations
 	return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
-}
-
-
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
 }
 
 -(void)setupProgressView
@@ -480,7 +486,7 @@
     }
 }
 
-#pragma mark Table Data Source Methods
+#pragma mark - Table Data Source Methods -
 
 -(NSInteger)tableView: (UITableView *)thisTableView numberOfRowsInSection: (NSInteger)section
 {
@@ -529,36 +535,35 @@
     
     cell.labelDate.text = labelDateText;
     
-    if([del.pricingDB vanline] == ARPIN){
-        BOOL noAccessory = true;
-        NSArray *d = [del.surveyDB getUploadTrackingRecordsForCustomer:item.custID];
-        for(NSNumber *n in d){
-            PVONavigationListItem *p = [[PVONavigationListItem alloc] init];
-            p.navItemID = n.intValue;
-            p.custID = item.custID;
-            if(p.hasRequiredSignatures){
-                noAccessory = false;
-                break;
-            }
-        }
-        
-        if(!noAccessory){
-            if([[del.surveyDB getAllDirtyReportsForCustomer:item.custID] count] > 0){
-                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
-            } else {
-                cell.accessoryView = nil;
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    BOOL noAccessory = true;
+    NSArray *d = [del.surveyDB getUploadTrackingRecordsForCustomer:item.custID];
+    for(NSNumber *n in d){
+        PVONavigationListItem *p = [[PVONavigationListItem alloc] init];
+        p.navItemID = n.intValue;
+        p.custID = item.custID;
+        if(p.hasRequiredSignatures){
+            noAccessory = false;
+            break;
         }
     }
+    
+    if(!noAccessory){
+        if([[del.surveyDB getAllDirtyReportsForCustomer:item.custID] count] > 0){
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"upload_accessory.png"]];
+        } else {
+            cell.accessoryView = nil;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
     
 	return (UITableViewCell*)cell;
 	
 }
 
-#pragma mark - Table View Delegate Methods
+#pragma mark - Table View Delegate Methods -
 
 -(void)tableView:(UITableView *)thisTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -632,21 +637,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     // If row is deleted, remove it from the list.
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		
 		@try {
-			
-			deleteIndex = indexPath;
-			CustomerListItem *item = [customers objectAtIndex:[deleteIndex row]];
-			
-			UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Are you sure you would like to delete record for %@?", item.name]
-															   delegate:self
-													  cancelButtonTitle:@"No"
-												 destructiveButtonTitle:@"Yes"
-													  otherButtonTitles:nil];
-			sheet.tag = ACTION_SHEET_DELETE;
-			[sheet showInView:self.view];
+            CustomerListItem *item = [customers objectAtIndex:[indexPath row]];
+            NSString *message = [NSString stringWithFormat:@"Are you sure you would like to delete record for %@?", item.name];
+            UIAlertController *alert =
+                [UIAlertController alertControllerWithTitle:@"Delete Customer"
+                                                    message:message
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        
+            [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+                SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+                [del.surveyDB deleteCustomer:item.custID];
+                
+                [self.customers removeObject:item];
+                // Animate the deletion from the table.
+                [self.tblView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                                    withRowAnimation:UITableViewRowAnimationFade];
+                }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
             
-		}
+        }
 		@catch (NSException * e) {
 			[SurveyAppDelegate handleException:e];
 		}
@@ -654,29 +665,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark action sheet stuff
+#pragma mark - action sheet stuff -
 
 -(void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
 	if(buttonIndex != [actionSheet cancelButtonIndex])
 	{
-		if(actionSheet.tag == ACTION_SHEET_DELETE)
-		{
-			
-			
-			CustomerListItem *item = [customers objectAtIndex:[deleteIndex row]];
-			
-			[del.surveyDB deleteCustomer:item.custID];
-			
-			[self.customers removeObject:item];
-			
-			// Animate the deletion from the table.
-			[self.tblView deleteRowsAtIndexPaths:[NSArray arrayWithObject:deleteIndex]
-								withRowAnimation:UITableViewRowAnimationFade];
-			
-		}
-        else if(actionSheet.tag == ACTION_SHEET_CREATE)
+		if(actionSheet.tag == ACTION_SHEET_CREATE)
         {
             if(buttonIndex == 0)
                 [self createNewCustomer];
@@ -859,15 +855,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			}
 		}
 	}
-	
-	
-	if(deleteIndex != nil)
-	{
-		deleteIndex = nil;
-	}
 }
 
-#pragma mark - Brother PJ-673 settings
+#pragma mark - Brother PJ-673 settings -
 
 - (void)showBrotherPJ673Settings
 {

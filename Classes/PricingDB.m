@@ -261,8 +261,6 @@ success:
             if(temp)
                 item.phone = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 7);
-            if(temp)
-                item.fax = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 8);
             if(temp)
                 item.email = [NSString stringWithUTF8String:temp];
@@ -310,8 +308,6 @@ success:
             if(temp)
                 item.phone = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 7);
-            if(temp)
-                item.fax = [NSString stringWithUTF8String:temp];
             temp = (const char*)sqlite3_column_text(stmnt, 8);
             if(temp)
                 item.email = [NSString stringWithUTF8String:temp];
@@ -344,7 +340,6 @@ success:
                         current.state == nil ? @"" : [current.state stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.zip    == nil ? @"" : [current.zip stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.phone == nil ? @"" : [current.phone stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
-                        current.fax == nil ? @"" : [current.fax stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.email == nil ? @"" : [current.email stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
                         current.code == nil ? @"" : [current.code stringByReplacingOccurrencesOfString:@"'" withString:@"''"]]];
     }
@@ -738,7 +733,7 @@ success:
                        " %@ "
                        " AND COALESCE(vpm.PricingMode,%d) = %d AND COALESCE(vpm.LoadType,%d) = %d %@ "
                        " AND i.DriverType IN (0,%d) ",
-                       vanlineID, ([AppFunctionality disableHiddenReports ] ? @" AND vpm.Hidden = 0" : @""), pricingMode, pricingMode,
+                       vanlineID, ([AppFunctionality hideHiddenReports ] ? @" AND vpm.Hidden = 0" : @""), pricingMode, pricingMode,
                        loadType, loadType, intraStateQuery, driverType];
     
     cmd = [NSString stringWithFormat:@"%@ UNION %@ ORDER BY Category, i.SortKey ASC", part2, part3];
@@ -1396,7 +1391,7 @@ success:
                        " WHERE RequiredSignatures IS NOT NULL AND IncludedPVOItem = %d AND VanlineID IN(0,%d) "
                        " %@ "
                        " AND COALESCE(PricingMode,%d) = %d AND COALESCE(LoadType,%d) = %d AND COALESCE(ItemCategory,%d) = %d AND COALESCE(HaulingAgentCode,'%@') = '%@' ",
-                       navItemID, [del.pricingDB vanline], ([AppFunctionality disableHiddenReports ] ? @" AND Hidden = 0" : @""), pricingMode, pricingMode,
+                       navItemID, [del.pricingDB vanline], ([AppFunctionality hideHiddenReports ] ? @" AND Hidden = 0" : @""), pricingMode, pricingMode,
                        loadType, loadType, itemCategory, itemCategory, haulingAgentCode, haulingAgentCode];
 
     sqlite3_stmt *stmnt;

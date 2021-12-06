@@ -266,4 +266,25 @@
 }
 
 
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+    Item *copy = [[Item alloc] init];
+    
+    copy->name = self->name;
+    copy->_nameFrench = self->_nameFrench;
+    copy->itemID = self->itemID;
+    copy->cube = self->cube;
+    copy->isCP = self->isCP;
+    copy->isPBO = self->isPBO;
+    copy->isCrate = self->isCrate;
+    copy->isBulky = self->isBulky;
+    copy->cartonBulkyID = self->cartonBulkyID;
+    copy->isVehicle = self->isVehicle;
+    copy->isGun = self->isGun;
+    copy->isElectronic = self->isElectronic;
+    copy->isHidden = self->isHidden;
+    copy->CNItemCode = self->CNItemCode;
+
+    return copy;
+}
+
 @end

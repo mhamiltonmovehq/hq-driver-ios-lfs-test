@@ -10,13 +10,8 @@
 
 
 @interface ActivationErrorController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
-	IBOutlet UITableView *tv;
-	IBOutlet UITextView *tboxMessage;
-	NSString *message;
-    IBOutlet UIImageView *imgLogo;
 }
 
-@property (retain, nonatomic) IBOutlet UIImageView *imgLogo;
 @property (nonatomic, retain) UITableView *tv;
 @property (nonatomic, retain) NSString *message;
 @property (nonatomic, retain) UITextView *tboxMessage;

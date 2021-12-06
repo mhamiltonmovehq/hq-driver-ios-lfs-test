@@ -25,27 +25,13 @@
         return -1;
 }
 
-+(BOOL)downloadExtraStops:(enum PRICING_MODE_TYPE)pricingMode
-{
-    if (pricingMode == INTERSTATE)
-        return NO;
-    else
-        return YES;
-}
-
 +(int)maxNotesLengh:(enum PRICING_MODE_TYPE)pricingMode
 {
-    if (pricingMode == INTERSTATE)
-        return -1;
-    else
         return -1;
 }
 
 +(BOOL)supportIndividualBlankDates:(enum PRICING_MODE_TYPE)pricingMode
 {
-    if (pricingMode == INTERSTATE)
-        return NO;
-    else
         return NO;
 }
 
@@ -53,19 +39,6 @@
 {
     //always allow per defect 541
     return NO;
-//    if (pricingMode == INTERSTATE)
-//    {
-//        switch (driverType) {
-//            case PVO_DRIVER_TYPE_PACKER:
-//                return YES;
-//            default:
-//                return NO;
-//        }
-//    }
-//    else
-//    {
-//        return NO;
-//    }
 }
 
 +(BOOL)disableTractorTrailer:(enum PRICING_MODE_TYPE)pricingMode withDriverType:(int)driverType
@@ -87,19 +60,7 @@
 
 +(BOOL)disablePackersInventory
 {
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanline = [del.pricingDB vanline];
-    switch (vanline) {
-        case 155:
-        case ARPIN:
-        case GRAEBEL:
-        case ALLIED:
-        case NORTH_AMERICAN:
-        case SIRVA:
-            return NO;
-        default:
-            return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"packer"].location == NSNotFound); //disable if beta password not present
-    }
+    return NO; //always show option for base users per Kim 10/27/2020 (TEG-1135)
 }
 
 +(BOOL)showAgencyCodeOnDownload
@@ -385,13 +346,7 @@
 
 +(BOOL)removeSignatureOnNavigateIntoCompletedInv
 {
-#ifdef ATLASNET
     return YES;
-#else
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanline = [del.pricingDB vanline];
-    return vanline == ARPIN || vanline == SIRVA;
-#endif
 }
 
 +(BOOL)showCubeAndWeight:(PVOInventory*)inventory 
@@ -408,17 +363,6 @@
         return YES;
     else
         return NO;    
-    
-}
-
-+(BOOL)enableMilitaryWeightEntryOnLandingController
-{
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    int vanlineID = [del.pricingDB vanline];
-    if (vanlineID == ARPIN)
-        return NO;
-    else
-        return YES;
     
 }
 
@@ -826,12 +770,14 @@
     return NO; //([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"wireframe"].location == NSNotFound); //disable if beta password not present
 }
 
-+(BOOL)disableHiddenReports
++(BOOL)hideHiddenReports
 {
 #if DEBUG
+    // show all reports (including those flagged as hidden)
     return NO;
 #else
-    return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"allreports"].location == NSNotFound); //disable if beta password not present
+    //hide reports flagged as hidden if beta password not present
+    return ([Prefs betaPassword] == nil || [[Prefs betaPassword] rangeOfString:@"allreports"].location == NSNotFound);
 #endif
 }
 
@@ -857,5 +803,4 @@
     }
     return false;
 }
-
 @end

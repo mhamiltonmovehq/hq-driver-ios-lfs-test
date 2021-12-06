@@ -23,35 +23,35 @@
 #define LOCATIONS_ADD_VAN_OP 2
 #define LOCATIONS_ADD_AK 3
 
-@interface LocationController : UITableViewController <UIActionSheetDelegate> {
-	NSInteger custID;
-	NSInteger locationID;
-	NSMutableArray *locations;
-	NSMutableArray *addRows;
-	EditAddressController *editAddressController;
-	EditPhoneController *phoneController;
+#define PHONE_1_ROW 0
+#define PHONE_2_ROW 1
+
+#define PHONE_1 5
+#define PHONE_2 6
+
+@interface LocationController : PVOBaseTableViewController <UIActionSheetDelegate, UITextFieldDelegate> {
 	int imagesCount;
 	UIImage *locationImage;
-	SurveyImageViewer *imageViewer;
-	BOOL dirty;
 	BOOL goingToLocation;
 	SurveyPhone *calling;
-	
-    BOOL lockFields;
 }
 
 @property (nonatomic) BOOL dirty;
 @property (nonatomic) NSInteger custID;
 @property (nonatomic) NSInteger locationID;
-@property (nonatomic, retain) NSMutableArray *addRows;
-@property (nonatomic, retain) NSMutableArray *locations;
-@property (nonatomic, retain) EditAddressController *editAddressController;
-@property (nonatomic, retain) EditPhoneController *phoneController;
-@property (nonatomic, retain) SurveyImageViewer *imageViewer;
+@property (nonatomic, strong) NSMutableArray *addRows;
+@property (nonatomic, strong) NSMutableArray *locations;
+@property (nonatomic, strong) EditAddressController *editAddressController;
+@property (nonatomic, strong) EditPhoneController *phoneController;
+@property (nonatomic, strong) SurveyImageViewer *imageViewer;
 @property (nonatomic) BOOL lockFields;
 @property (nonatomic) BOOL isPacker;
+@property (nonatomic, strong) SurveyPhone *phone1;
+@property (nonatomic, strong) SurveyPhone *phone2;
+
 
 -(void)initializeAddRows;
 -(NSString*)combineStrings:(NSArray*)strings withSplitter:(NSString*)split;
+-(BOOL)isOrigin;
 
 @end
