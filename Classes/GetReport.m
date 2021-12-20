@@ -22,13 +22,8 @@
 
 -(void)main
 {
-	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	@try 
+	@try
 	{
-		
-		//[self updateProgress:@"Successfully saved file."];
-		//return;
-		
         BOOL async = NO;
         success = TRUE;
         

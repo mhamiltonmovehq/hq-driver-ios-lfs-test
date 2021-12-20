@@ -10,7 +10,7 @@ import UIKit
 import ImagePicker
 
 @objc class ImagePickerAdapterController : ImagePickerController {
-    @objc func setDelegate (_ delegate:ImagePickerDelegate) {
+    @objc func setImagePickerDelegate (_ delegate:ImagePickerDelegate) {
         self.delegate = delegate
     }
 }

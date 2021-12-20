@@ -14,10 +14,13 @@ open class BottomContainerView: UIView {
     static let height: CGFloat = 101
   }
 
+  var configuration = ImagePickerConfiguration()
+
   lazy var pickerButton: ButtonPicker = { [unowned self] in
-    let pickerButton = ButtonPicker()
+    let pickerButton = ButtonPicker(configuration: self.configuration)
     pickerButton.setTitleColor(UIColor.white, for: UIControl.State())
     pickerButton.delegate = self
+    pickerButton.numberLabel.isHidden = !self.configuration.showsImageCountLabel
 
     return pickerButton
     }()
@@ -34,8 +37,8 @@ open class BottomContainerView: UIView {
 
   open lazy var doneButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.setTitle(Configuration.cancelButtonTitle, for: UIControl.State())
-    button.titleLabel?.font = Configuration.doneButton
+    button.setTitle(self.configuration.cancelButtonTitle, for: UIControl.State())
+    button.titleLabel?.font = self.configuration.doneButton
     button.addTarget(self, action: #selector(doneButtonDidPress(_:)), for: .touchUpInside)
 
     return button
@@ -45,7 +48,7 @@ open class BottomContainerView: UIView {
 
   lazy var topSeparator: UIView = { [unowned self] in
     let view = UIView()
-    view.backgroundColor = Configuration.backgroundColor
+    view.backgroundColor = self.configuration.backgroundColor
 
     return view
     }()
@@ -62,29 +65,35 @@ open class BottomContainerView: UIView {
 
   // MARK: Initializers
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    [borderPickerButton, pickerButton, doneButton, stackView, topSeparator].forEach {
-      addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
+  public init(configuration: ImagePickerConfiguration? = nil) {
+    if let configuration = configuration {
+      self.configuration = configuration
     }
-
-    backgroundColor = Configuration.backgroundColor
-    stackView.accessibilityLabel = "Image stack"
-    stackView.addGestureRecognizer(tapGestureRecognizer)
-
-    setupConstraints()
+    super.init(frame: .zero)
+    configure()
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  func configure() {
+    [borderPickerButton, pickerButton, doneButton, stackView, topSeparator].forEach {
+      addSubview($0)
+      $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    backgroundColor = configuration.backgroundColor
+    stackView.accessibilityLabel = "Image stack"
+    stackView.addGestureRecognizer(tapGestureRecognizer)
+
+    setupConstraints()
+  }
+
   // MARK: - Action methods
 
   @objc func doneButtonDidPress(_ button: UIButton) {
-    if button.currentTitle == Configuration.cancelButtonTitle {
+    if button.currentTitle == configuration.cancelButtonTitle {
       delegate?.cancelButtonDidPress()
     } else {
       delegate?.doneButtonDidPress()
@@ -103,8 +112,8 @@ open class BottomContainerView: UIView {
       }, completion: { _ in
         UIView.animate(withDuration: 0.2, animations: {
           imageView.transform = CGAffineTransform.identity
-        }) 
-    }) 
+        })
+    })
   }
 }
 

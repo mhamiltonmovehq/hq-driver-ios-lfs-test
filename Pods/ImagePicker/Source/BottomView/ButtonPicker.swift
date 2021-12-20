@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ButtonPickerDelegate: AnyObject {
+protocol ButtonPickerDelegate: class {
 
   func buttonDidPress()
 }
@@ -13,21 +13,34 @@ class ButtonPicker: UIButton {
     static let buttonBorderSize: CGFloat = 68
   }
 
-    lazy var numberLabel: UILabel = { [unowned self] in
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = ImagePicker.Configuration.numberLabelFont
-        
-        return label
+    var ipConfig:ImagePickerConfiguration = ImagePickerConfiguration()
+
+  lazy var numberLabel: UILabel = { [unowned self] in
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = self.ipConfig.numberLabelFont
+
+    return label
     }()
 
   weak var delegate: ButtonPickerDelegate?
 
   // MARK: - Initializers
 
+  public init(configuration: ImagePickerConfiguration? = nil) {
+    if let configuration = configuration {
+      self.ipConfig = configuration
+    }
+    super.init(frame: .zero)
+    configure()
+  }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
+    configure()
+  }
 
+  func configure() {
     addSubview(numberLabel)
 
     subscribe()
@@ -86,6 +99,6 @@ class ButtonPicker: UIButton {
 
   @objc func pickerButtonDidHighlight(_ button: UIButton) {
     numberLabel.textColor = UIColor.white
-    backgroundColor = UIColor(red:0.3, green:0.3, blue:0.3, alpha:1)
+    backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1)
   }
 }

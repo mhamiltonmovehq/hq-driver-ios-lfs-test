@@ -11,6 +11,8 @@ protocol CameraViewDelegate: class {
 
 class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate {
 
+  var configuration = ImagePickerConfiguration()
+
   lazy var blurView: UIVisualEffectView = { [unowned self] in
     let effect = UIBlurEffect(style: .dark)
     let blurView = UIVisualEffectView(effect: effect)
@@ -45,9 +47,9 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
 
   lazy var noCameraLabel: UILabel = { [unowned self] in
     let label = UILabel()
-    label.font = Configuration.noCameraFont
-    label.textColor = Configuration.noCameraColor
-    label.text = Configuration.noCameraTitle
+    label.font = self.configuration.noCameraFont
+    label.textColor = self.configuration.noCameraColor
+    label.text = self.configuration.noCameraTitle
     label.sizeToFit()
 
     return label
@@ -55,16 +57,16 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
 
   lazy var noCameraButton: UIButton = { [unowned self] in
     let button = UIButton(type: .system)
-    let title = NSAttributedString(string: Configuration.settingsTitle,
-      attributes: convertToOptionalNSAttributedStringKeyDictionary([
-        convertFromNSAttributedStringKey(NSAttributedString.Key.font) : Configuration.settingsFont,
-        convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : Configuration.settingsColor,
-      ]))
+    let title = NSAttributedString(string: self.configuration.settingsTitle,
+      attributes: [
+        NSAttributedString.Key.font: self.configuration.settingsFont,
+        NSAttributedString.Key.foregroundColor: self.configuration.settingsColor
+      ])
 
     button.setAttributedTitle(title, for: UIControl.State())
     button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
     button.sizeToFit()
-    button.layer.borderColor = Configuration.settingsColor.cgColor
+    button.layer.borderColor = self.configuration.settingsColor.cgColor
     button.layer.borderWidth = 1
     button.layer.cornerRadius = 4
     button.addTarget(self, action: #selector(settingsButtonDidTap), for: .touchUpInside)
@@ -79,21 +81,46 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
     return gesture
     }()
 
+  lazy var pinchGestureRecognizer: UIPinchGestureRecognizer = { [unowned self] in
+    let gesture = UIPinchGestureRecognizer()
+    gesture.addTarget(self, action: #selector(pinchGestureRecognizerHandler(_:)))
+
+    return gesture
+    }()
+
   let cameraMan = CameraMan()
 
   var previewLayer: AVCaptureVideoPreviewLayer?
   weak var delegate: CameraViewDelegate?
   var animationTimer: Timer?
   var locationManager: LocationManager?
+  var startOnFrontCamera: Bool = false
+
+  private let minimumZoomFactor: CGFloat = 1.0
+  private let maximumZoomFactor: CGFloat = 3.0
+
+  private var currentZoomFactor: CGFloat = 1.0
+  private var previousZoomFactor: CGFloat = 1.0
+
+  public init(configuration: ImagePickerConfiguration? = nil) {
+    if let configuration = configuration {
+      self.configuration = configuration
+    }
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    if Configuration.recordLocation {
+    if configuration.recordLocation {
       locationManager = LocationManager()
     }
 
-    view.backgroundColor = Configuration.mainColor
+    view.backgroundColor = configuration.mainColor
 
     view.addSubview(containerView)
     containerView.addSubview(blurView)
@@ -104,8 +131,12 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
 
     view.addGestureRecognizer(tapGestureRecognizer)
 
+    if configuration.allowPinchToZoom {
+      view.addGestureRecognizer(pinchGestureRecognizer)
+    }
+
     cameraMan.delegate = self
-    cameraMan.setup()
+    cameraMan.setup(self.startOnFrontCamera)
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +154,7 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
   func setupPreviewLayer() {
     let layer = AVCaptureVideoPreviewLayer(session: cameraMan.session)
 
-    layer.backgroundColor = Configuration.mainColor.cgColor
+    layer.backgroundColor = configuration.mainColor.cgColor
     layer.autoreverses = true
     layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
@@ -165,13 +196,13 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
   // MARK: - Camera actions
 
   func rotateCamera() {
-    UIView.animate(withDuration: 0.3, animations: { 
+    UIView.animate(withDuration: 0.3, animations: {
       self.containerView.alpha = 1
       }, completion: { _ in
         self.cameraMan.switchCamera {
           UIView.animate(withDuration: 0.7, animations: {
             self.containerView.alpha = 0
-          }) 
+          })
         }
     })
   }
@@ -185,7 +216,7 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
     cameraMan.flash(mapping[title] ?? .auto)
   }
 
-  func takePicture(_ completion: @escaping () -> ()) {
+  func takePicture(_ completion: @escaping () -> Void) {
     guard let previewLayer = previewLayer else { return }
 
     UIView.animate(withDuration: 0.1, animations: {
@@ -193,7 +224,7 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
       }, completion: { _ in
         UIView.animate(withDuration: 0.1, animations: {
           self.capturedImageView.alpha = 0
-        }) 
+        })
     })
 
     cameraMan.takePhoto(previewLayer, location: locationManager?.latestLocation) {
@@ -216,18 +247,28 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
 
   func focusTo(_ point: CGPoint) {
     let convertedPoint = CGPoint(x: point.x / UIScreen.main.bounds.width,
-                                 y:point.y / UIScreen.main.bounds.height)
+                                 y: point.y / UIScreen.main.bounds.height)
 
     cameraMan.focus(convertedPoint)
 
     focusImageView.center = point
-    UIView.animate(withDuration: 0.5, animations: { 
+    UIView.animate(withDuration: 0.5, animations: {
       self.focusImageView.alpha = 1
       self.focusImageView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
       }, completion: { _ in
         self.animationTimer = Timer.scheduledTimer(timeInterval: 1, target: self,
           selector: #selector(CameraView.timerDidFire), userInfo: nil, repeats: false)
     })
+  }
+
+  func zoomTo(_ zoomFactor: CGFloat) {
+    guard let device = cameraMan.currentInput?.device else { return }
+
+    let maximumDeviceZoomFactor = device.activeFormat.videoMaxZoomFactor
+    let newZoomFactor = previousZoomFactor * zoomFactor
+    currentZoomFactor = min(maximumZoomFactor, max(minimumZoomFactor, min(newZoomFactor, maximumDeviceZoomFactor)))
+
+    cameraMan.zoom(currentZoomFactor)
   }
 
   // MARK: - Tap
@@ -238,6 +279,21 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
     focusImageView.transform = CGAffineTransform.identity
     animationTimer?.invalidate()
     focusTo(touch)
+  }
+
+  // MARK: - Pinch
+
+  @objc func pinchGestureRecognizerHandler(_ gesture: UIPinchGestureRecognizer) {
+    switch gesture.state {
+    case .began:
+      fallthrough
+    case .changed:
+      zoomTo(gesture.scale)
+    case .ended:
+      zoomTo(gesture.scale)
+      previousZoomFactor = currentZoomFactor
+    default: break
+    }
   }
 
   // MARK: - Private helpers
@@ -256,26 +312,12 @@ class CameraView: UIViewController, CLLocationManagerDelegate, CameraManDelegate
   }
 
   func cameraMan(_ cameraMan: CameraMan, didChangeInput input: AVCaptureDeviceInput) {
-    delegate?.setFlashButtonHidden(!input.device.hasFlash)
+    if !configuration.flashButtonAlwaysHidden {
+      delegate?.setFlashButtonHidden(!input.device.hasFlash)
+    }
   }
 
   func cameraManDidStart(_ cameraMan: CameraMan) {
     setupPreviewLayer()
   }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVLayerVideoGravity(_ input: AVLayerVideoGravity) -> String {
-	return input.rawValue
 }
