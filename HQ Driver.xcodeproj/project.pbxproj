@@ -1234,9 +1234,7 @@
 		94F54FFD1C0CD3A6005E878E /* FloatingLabelTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F54FFC1C0CD3A6005E878E /* FloatingLabelTextCell.m */; };
 		94F550061C0CD476005E878E /* RPFloatingPlaceholderTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F550031C0CD476005E878E /* RPFloatingPlaceholderTextField.m */; };
 		94F550081C0CD476005E878E /* RPFloatingPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F550051C0CD476005E878E /* RPFloatingPlaceholderTextView.m */; };
-		BA0C0FBC1F3A03A700B33699 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0C0FBA1F3A03A700B33699 /* Crashlytics.framework */; };
 		BA0C0FBD1F3A03A700B33699 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0C0FBA1F3A03A700B33699 /* Crashlytics.framework */; };
-		BA0C0FC31F3A03A700B33699 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0C0FBB1F3A03A700B33699 /* Fabric.framework */; };
 		BA0C0FC41F3A03A700B33699 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0C0FBB1F3A03A700B33699 /* Fabric.framework */; };
 		BC0E9CFE1A93D45200C8F308 /* BNHtmlPdfKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0E9CFD1A93D45200C8F308 /* BNHtmlPdfKit.m */; };
 		BC0E9D021A93D45D00C8F308 /* HTMLReportGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0E9D011A93D45D00C8F308 /* HTMLReportGenerator.m */; };
@@ -2336,7 +2334,6 @@
 				6338C63418C6326300E3A7EF /* QuartzCore.framework in Frameworks */,
 				6338C62D18C6326300E3A7EF /* libiconv.dylib in Frameworks */,
 				6338C63118C6326300E3A7EF /* SystemConfiguration.framework in Frameworks */,
-				BA0C0FC31F3A03A700B33699 /* Fabric.framework in Frameworks */,
 				35A5EC091AC1B52300C772EB /* libePrintLib.a in Frameworks */,
 				35A3651E1A8BB546002DD77D /* libScanApi.a in Frameworks */,
 				9456B91B1C6CFEE200CA4CED /* AudioToolbox.framework in Frameworks */,
@@ -2348,7 +2345,6 @@
 				6338C63718C6326300E3A7EF /* CoreGraphics.framework in Frameworks */,
 				6338C62818C6326300E3A7EF /* MobileCoreServices.framework in Frameworks */,
 				D59EAEBA2098EE440038DE68 /* Security.framework in Frameworks */,
-				BA0C0FBC1F3A03A700B33699 /* Crashlytics.framework in Frameworks */,
 				9456B91D1C6CFEE200CA4CED /* CFNetwork.framework in Frameworks */,
 				6338C62918C6326300E3A7EF /* MessageUI.framework in Frameworks */,
 				6338C62E18C6326300E3A7EF /* libz.1.2.5.dylib in Frameworks */,
@@ -2503,7 +2499,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				D5142D1B200424A20009FC53 /* Security.framework */,
@@ -4159,7 +4155,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
