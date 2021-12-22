@@ -571,6 +571,11 @@
 		6AFD1CDB26C3B3A400CBB62E /* PVOPricingSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFD1CD926C3B3A400CBB62E /* PVOPricingSync.m */; };
 		7B3218CE1DAEA31500F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
 		7B3218CF1DAEA3BF00F5FCBD /* UIViewController+MADebugTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3218CD1DAEA31500F5FCBD /* UIViewController+MADebugTools.m */; };
+		84C8F9122773818300753B22 /* HubEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F90E2773817100753B22 /* HubEnvironment.swift */; };
+		84C8F9142773818300753B22 /* RestSyncRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F9102773818200753B22 /* RestSyncRequest.swift */; };
+		84C8F9152773818300753B22 /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F9112773818300753B22 /* TokenService.swift */; };
+		84C8F9172773821300753B22 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F9162773821300753B22 /* UIDevice+Model.swift */; };
+		84C8F9192773823800753B22 /* HubActivationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F9182773823800753B22 /* HubActivationService.swift */; };
 		9416C1A41D2FFE0800E06616 /* upright_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1A31D2FFE0800E06616 /* upright_piano_all.png */; };
 		9416C1A51D2FFE0800E06616 /* upright_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1A31D2FFE0800E06616 /* upright_piano_all.png */; };
 		9416C1AD1D30007D00E06616 /* grand_piano_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416C1AB1D30007D00E06616 /* grand_piano_all.png */; };
@@ -1570,6 +1575,11 @@
 		7BBBE6CF1F7401E7001D4FB8 /* UIImage+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utilities.m"; sourceTree = "<group>"; };
 		7BF4C6191F912D1700D9D5C5 /* PVOSTGBOLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOSTGBOLParser.h; sourceTree = "<group>"; };
 		7BF4C61A1F912D1700D9D5C5 /* PVOSTGBOLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOSTGBOLParser.m; sourceTree = "<group>"; };
+		84C8F90E2773817100753B22 /* HubEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubEnvironment.swift; sourceTree = "<group>"; };
+		84C8F9102773818200753B22 /* RestSyncRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestSyncRequest.swift; sourceTree = "<group>"; };
+		84C8F9112773818300753B22 /* TokenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		84C8F9162773821300753B22 /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
+		84C8F9182773823800753B22 /* HubActivationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubActivationService.swift; sourceTree = "<group>"; };
 		8C0BACCE5ACB050F1C71A90E /* Pods-Mobile Mover Simulator.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Mover Simulator.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Mover Simulator/Pods-Mobile Mover Simulator.distribution.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9416C1A31D2FFE0800E06616 /* upright_piano_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upright_piano_all.png; sourceTree = "<group>"; };
@@ -2479,6 +2489,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				84C8F90B2773812100753B22 /* HubActivation */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				1CDBA79A1B90AE5100385AA1 /* PVOReportNote.h */,
 				1CDBA79B1B90AE5100385AA1 /* PVOReportNote.m */,
@@ -2858,6 +2869,18 @@
 				7B4584B51F82DD3E0069E1CD /* GPUImage.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		84C8F90B2773812100753B22 /* HubActivation */ = {
+			isa = PBXGroup;
+			children = (
+				84C8F9182773823800753B22 /* HubActivationService.swift */,
+				84C8F9162773821300753B22 /* UIDevice+Model.swift */,
+				84C8F90E2773817100753B22 /* HubEnvironment.swift */,
+				84C8F9102773818200753B22 /* RestSyncRequest.swift */,
+				84C8F9112773818300753B22 /* TokenService.swift */,
+			);
+			path = HubActivation;
 			sourceTree = "<group>";
 		};
 		94F54FFF1C0CD44A005E878E /* Other Sources */ = {
@@ -4944,6 +4967,7 @@
 				6338C55018C6326300E3A7EF /* CustomerListItem.m in Sources */,
 				6338C55118C6326300E3A7EF /* BasicInfoController.m in Sources */,
 				BC8B4A191AB77F2900B0B670 /* PVODynamicReportEntryController.m in Sources */,
+				84C8F9192773823800753B22 /* HubActivationService.swift in Sources */,
 				6338C55218C6326300E3A7EF /* SplashViewController.m in Sources */,
 				6338C55318C6326300E3A7EF /* RoomSummaryCell.m in Sources */,
 				6338C55418C6326300E3A7EF /* TextCell.m in Sources */,
@@ -4971,6 +4995,7 @@
 				35A942EA19464BAE00A2BC8B /* AllNavController.m in Sources */,
 				6338C56718C6326300E3A7EF /* SurveyedItemsList.m in Sources */,
 				6338C56818C6326300E3A7EF /* RoomSurveyedItems.m in Sources */,
+				84C8F9142773818300753B22 /* RestSyncRequest.swift in Sources */,
 				1CB6EEB61B9A22D0001C3449 /* Documentcell.m in Sources */,
 				94CABAFD1C1F22CF009D7902 /* CHCSVParser.m in Sources */,
 				94F550081C0CD476005E878E /* RPFloatingPlaceholderTextView.m in Sources */,
@@ -5059,6 +5084,7 @@
 				35B9C7A51AAA483E00CD12E3 /* PrinterBonjourController.m in Sources */,
 				9456B8011C6CFCBB00CA4CED /* PVODamageAllController.m in Sources */,
 				6338C5A418C6326300E3A7EF /* DownloadController.m in Sources */,
+				84C8F9172773821300753B22 /* UIDevice+Model.swift in Sources */,
 				6338C5A618C6326300E3A7EF /* ioapi.c in Sources */,
 				35A5EC041AC1B48D00C772EB /* ZipArchive.mm in Sources */,
 				6338C5A718C6326300E3A7EF /* mztools.c in Sources */,
@@ -5164,6 +5190,7 @@
 				6338C5ED18C6326300E3A7EF /* PVOSignature.m in Sources */,
 				6338C5EE18C6326300E3A7EF /* PVOHighValueInitial.m in Sources */,
 				1CDBA79C1B90AE5100385AA1 /* PVOReportNote.m in Sources */,
+				84C8F9122773818300753B22 /* HubEnvironment.swift in Sources */,
 				6338C5EF18C6326300E3A7EF /* PVOInventoryLoad.m in Sources */,
 				6338C5F018C6326300E3A7EF /* PVOInventoryUnload.m in Sources */,
 				9456B7FC1C6CFC8A00CA4CED /* PVOWireFrameTypeController.m in Sources */,
@@ -5236,6 +5263,7 @@
 				94E5B6CE1D357BB00077152C /* PVOBulkyInventorySignController.m in Sources */,
 				6338C61F18C6326300E3A7EF /* SSCheckBoxView.m in Sources */,
 				35F32C071961D49F00C9CD6F /* AutoBackupSettingsController.m in Sources */,
+				84C8F9152773818300753B22 /* TokenService.swift in Sources */,
 				BC8B4A171AB77F2900B0B670 /* PVODynamicReportEntry.m in Sources */,
 				6338C62018C6326300E3A7EF /* OpenUDID.m in Sources */,
 				6338C62118C6326300E3A7EF /* SurveyDBUpdater.m in Sources */,
