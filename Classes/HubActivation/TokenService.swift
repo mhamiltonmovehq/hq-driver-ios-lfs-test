@@ -59,7 +59,7 @@ import UIKit
     @objc func verifyToken(jwt: String, caller: TokenWrapperProtocol) {
          
         self.caller = caller
-        let appName = "Survey"
+        let appName = "Driver"
         do {
             try TokenService.shared._verifyToken(jwt: jwt, info: appName, completion: verifyCompleted)
         }
@@ -84,7 +84,7 @@ import UIKit
     
     @objc func  refreshToken(jwt: String){
         
-        let appName = "Survey"
+        let appName = "Driver"
         
         do {
             try TokenService.shared._refreshToken(jwt: jwt, info: appName, completion: verifyRefreshCompleted)

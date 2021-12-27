@@ -38,28 +38,11 @@
     
     // Check for device passcode (Atlas SOW 11042016.04)
     // TODO: Reenable this when Security SOW needs released
-//#ifdef ATLASNET
-//    BOOL hasPasscode = [SurveyAppDelegate deviceHasPasscode];
-//    if(!hasPasscode)
-//    {
-//        // Passcode not enabled, show error and do not allow activation
-//        *results = @"You must set a passcode on your device in order to use this app.";
-//        return ACTIVATION_NO_ACCESS;
-//    }
-//#endif
     
     //call web form for user validation
     NSString *uuid = nil;
-    
-//    if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
-//        // This is will run if it is iOS6
-//        uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-//    } else {
-        // This will run before iOS6
-//        uuid = [OpenUDID value];
-          uuid = [self getUUID];
-//    }
-    
+    uuid = [self getUUID];
+
     if(uuid == nil || [uuid length] == 0)
     {
         *results = @"Invalid installation detected, code 235.  Please contact Support to resolve this issue.";
@@ -74,54 +57,36 @@
         WebSyncRequest *request = [[WebSyncRequest alloc] init];
         request.type = ACTIVATION;
         request.overrideWithFullPITSAddress = YES;
-        if ([AppFunctionality useNewActiviationMethod])
+        
+        if ([[Prefs betaPassword] rangeOfString:@"crmenv:"].location != NSNotFound)
         {
-            if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"stage"].location != NSNotFound)
-                //override the default virtual directory
+            NSRange addpre = [[Prefs betaPassword] rangeOfString:@"crmenv:"];
+            NSString *envStr = [[Prefs betaPassword] substringFromIndex:addpre.location + addpre.length];
+            addpre = [envStr rangeOfString:@" "];
+            if (addpre.location != NSNotFound)
+                envStr = [envStr substringToIndex:addpre.location];
+            if ([[envStr lowercaseString] isEqualToString:@"dev"] || [[envStr lowercaseString] isEqualToString:@"qa"] || [[envStr lowercaseString] isEqualToString:@"uat"]) {
                 request.pitsDir = @"https://aws.igcsoftware.com/ActivationCheckBeta/Service.svc";
-            else
-                request.pitsDir = @"https://aws.igcsoftware.com/ActivationCheck/Service.svc";
-            
-            request.functionName = @"CheckDeviceActivationForRequest";
-            
-            XMLWriter *writer = [self getActivationRequestXML];
-            
-            
-            WCFDataParam *parm = [[WCFDataParam alloc] init];
-            parm.contents = writer.file;
-            
-            success = [request getData:&retval
-                     withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                        parm,
-                                                                        nil]
-                                                               forKeys:[NSArray arrayWithObjects:@"request", nil]]
-                      needsDecoded:NO withSSL:YES
-                       flushToFile:nil
-                         withOrder:[NSArray arrayWithObjects:@"request", nil]];
-            
-        }
-        else
-        {
-            request.pitsDir = @"https://aws.igcsoftware.com/ActivationCheck/Service.svc";
-            
-            NSString *deviceVersion = [NSString stringWithFormat:@"%@%@ - %@",
-                                       UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"iPad" : @"iPhone",
-                                       UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![SurveyAppDelegate iPad] ? @"(2x Mode)" : @"",
-                                       [[UIDevice currentDevice] systemVersion]];
-            
-            request.functionName = @"CheckDeviceActivation";
-            success = [request getData:&retval
-                         withArguments:@{ @"username": [Prefs username],
-                                          @"password": [Prefs password],
-                                          @"deviceID": uuid,
-                                          @"deviceVersion": deviceVersion,
-                                          @"appVersion": [NSString stringWithFormat:@"MM%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] }
-                          needsDecoded:NO
-                               withSSL:YES
-                           flushToFile:nil withOrder:@[@"username", @"password", @"deviceID", @"deviceVersion", @"appVersion"]];
-            
+            }
         }
         
+
+        NSString *deviceVersion = [NSString stringWithFormat:@"%@%@ - %@",
+                                   UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"iPad" : @"iPhone",
+                                   UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![SurveyAppDelegate iPad] ? @"(2x Mode)" : @"",
+                                   [[UIDevice currentDevice] systemVersion]];
+        
+        request.functionName = @"CheckDeviceActivation";
+        success = [request getData:&retval
+                     withArguments:@{ @"username": [Prefs username],
+                                      @"password": [Prefs password],
+                                      @"deviceID": uuid,
+                                      @"deviceVersion": deviceVersion,
+                                      @"appVersion": [NSString stringWithFormat:@"MM%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] }
+                      needsDecoded:NO
+                           withSSL:YES
+                       flushToFile:nil withOrder:@[@"username", @"password", @"deviceID", @"deviceVersion", @"appVersion"]];
+
         if(success)
         {
             //parse the result
@@ -132,38 +97,20 @@
             
         }
         
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-//        NSString *url = [NSString stringWithFormat:@"http://www.igcsoftware.com/security/iphone(2).cfm?username=%@&password=%@&iphoneid=%@&DeviceVer=%@&SurveyVer=%@",
-//                         [Prefs username],
-//                         [Prefs password],
-//                         uuid,
-//                         deviceVersion,
-//                         [NSString stringWithFormat:@"MM%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
-//        
-//        retval = [NSString stringWithContentsOfURL: [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
-//                                          encoding:NSUTF8StringEncoding
-//                                             error:&err];
-        
-        
-        /*[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-         NSString *url = [NSString stringWithFormat:@"http://www.igcsoftware.com/security/iphone.cfm?username=%@&password=%@&iphoneid=%@",
-         [Prefs igcUsername],
-         [Prefs igcPassword],
-         uuid];
-         retval = [NSString stringWithContentsOfURL: [NSURL URLWithString:url]
-         encoding:NSUTF8StringEncoding
-         error:&err];*/
     }
     @catch (NSException * e)
     {
         *results = [NSString stringWithFormat:@"Error in accessing site: %@", [e description]];
-//        err = [NSError errorWithDomain:@"error caught... should i exit here?"
-//               "(does it go here if there is no conenction?)" code:2 userInfo:nil];
     }
     @finally
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
+    
+    // Ignore this result and use Hub logic
+//    if(xmlParse.results.useHub) {
+        return ACTIVATION_HUB;
+//    }
     
     if(!success)
     {
@@ -365,17 +312,6 @@ connectReturn:
     [del.surveyDB updateActivation:rec];
     return allow;
 }
-
-/*+(BOOL)isInTrial
- {
- return FALSE;
- }
- 
- +(NSDate*)trialStartDate
- {
- return [NSDate date];
- }*/
-
 
 -(void)main
 {

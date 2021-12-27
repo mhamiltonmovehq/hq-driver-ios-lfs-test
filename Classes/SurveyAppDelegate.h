@@ -30,6 +30,7 @@
 @class SurveyViewController;
 @class AppFunctionality;
 @class RootViewController;
+@class HubToken;
 
 #define ONE_KB 1024
 #define ONE_MB 1048576
@@ -129,7 +130,7 @@
 @property (nonatomic) BOOL uploadingArpinDoc;
 @property (nonatomic) BOOL showedReleasedValWarning;
 @property (nonatomic, retain) UIApplicationShortcutItem * launchedShortcutItem;
-
+@property (nonatomic) HubToken* session;
 
 +(BOOL)hasInternetConnection;
 +(BOOL)hasInternetConnection:(BOOL)testExternal;
@@ -189,6 +190,10 @@
 -(void)hideDownloadShowCustomers;
 -(void)hideSplashShowDownload;
 -(void)hideSplashShowActivationError:(NSString*)results;
+
+-(void)showActivationError:(NSString*)results
+           fromCurrentView:(UIViewController*)viewController;
+
 -(void)pushSingleFieldController:(NSString*)value 
 					 clearOnEdit:(BOOL)clear 
 					withKeyboard:(UIKeyboardType)kb

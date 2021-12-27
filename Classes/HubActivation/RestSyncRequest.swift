@@ -15,8 +15,10 @@ enum RestResult<T> {
 }
 
 class RestSyncRequest {
-    let logger: Logger
+//    let logger: Logger
     var scheme, host, basePath, methodPath: String
+    var hubResponse = [String: String]()
+
     
     
     init() {
@@ -24,7 +26,20 @@ class RestSyncRequest {
         host = "basesync.movecrm.com"
         basePath = "moveCRMSync/api/aicloud"
         methodPath = "Create a new init method that accepts this parameter and move the scheme/host/basepath contents to constants somewhere"
-        logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+//        logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+        
+        hubResponse =
+            ["invalid_key"              : "Invalid Key. Please contact our support team.",
+            "expired_key"               : "Expired Key. Please contact our support team.",
+            "no_activaiton"             : "Mobile Activation record not found. Please create one at hub.movehq.com or contact our support team.",
+            "wrong_id"                  : "The device you are using is different than the one used previously. Please use the previous device or contact our support team to switch devices.",
+            "account_disabled"          : "This account is disabled. Please enabled it in hub.movehq.com or contact our support team.",
+            "account_locked"            : "This account is locked. Please contact our support team.",
+            "invalid_credentials"       : "Your credentials are invalid. Please check your username and password.",
+            "missing_info"              : "The device is missing information. Please contact our support team.",
+            "no_file"                   : "Account does not have file association. Please contact our support team.",
+            "missing_username_password" : "Missing Required Params",
+            "account_suspended"         : "Your account is suspended"]
     }
     
     func _buildURLRequest(httpMethod: String,
@@ -34,7 +49,7 @@ class RestSyncRequest {
         
         let urlString = "\(scheme)\(host)\(basePath)\(methodPath)"
         guard let url = urlWithQueryParams(url: urlString, queryParams: queryParameters) else {
-            logger.error("Failed to create URL object")
+//            logger.error("Failed to create URL object")
             return nil;
         }
         
@@ -52,7 +67,7 @@ class RestSyncRequest {
             request.httpBody = bodyData
             
             let message = String(data: bodyData!, encoding: String.Encoding.utf8)
-            logger.info("Request Body: \(message ?? "Request Body could not be converted to string")")
+//            logger.info("Request Body: \(message ?? "Request Body could not be converted to string")")
         }
         
         return request
@@ -71,7 +86,7 @@ class RestSyncRequest {
             try executeRequest(request: request!, completion: completion)
         }
         catch let serviceError { // problem sending request/receiving response/creating json object from data
-            logger.error("\(serviceError.localizedDescription)")
+//            logger.error("\(serviceError.localizedDescription)")
             throw serviceError
         }
     }
@@ -99,7 +114,7 @@ class RestSyncRequest {
                 // Add list of codes and generic messages
                 if let errorData = responseString.data(using: .utf8) {
                     do {
-                        self.logger.error("\(String(data: errorData, encoding: String.Encoding.utf8) ?? "Unknown error occured in sync request")")
+//                        self.logger.error("\(String(data: errorData, encoding: String.Encoding.utf8) ?? "Unknown error occured in sync request")")
                         guard let jsonDict = try JSONSerialization.jsonObject(with: errorData, options: []) as? Dictionary<String, String> else {
                             
                             // I don't like this, but there are some conditions where errors are passed back in this format
@@ -108,8 +123,8 @@ class RestSyncRequest {
                             
                             return
                         }
-                        
-                        completion(.Error(jsonDict["error"] ?? "Unable to read server error"))
+                        completion(.Error(self.hubResponse[jsonDict["error"] ?? ""] ?? "Unable to read server error"))
+//                        completion(.Error(jsonDict["error"] ?? "Unable to read server error"))
                     }
                     catch {
                         completion(.Error("Unable to read server error"))
@@ -134,7 +149,7 @@ class RestSyncRequest {
     {
         let urlString = "\(scheme)\(host)\(basePath)\(methodPath)"
         guard let url = urlWithQueryParams(url: urlString, queryParams: queryParameters) else {
-            logger.error("Failed to create URL object")
+//            logger.error("Failed to create URL object")
             return nil;
             // throw NSError.init(domain: "Local Crew", code: -1, userInfo: ["Error" : "Failed to create URL object"])
         }
@@ -153,12 +168,12 @@ class RestSyncRequest {
             request.httpBody = bodyData
             
             let message = String(data: bodyData!, encoding: String.Encoding.utf8)
-            logger.info("Request Body: \(message ?? "Request Body could not be converted to string")")
+//            logger.info("Request Body: \(message ?? "Request Body could not be converted to string")")
         }
         
         do {
             let responseString = try executeRequest_legacy(request: request)
-            logger.info("Request Response: \(responseString ?? "No Response Received")")
+//            logger.info("Request Response: \(responseString ?? "No Response Received")")
             
             return responseString;
         } catch {
@@ -184,7 +199,7 @@ class RestSyncRequest {
                 throw badRequest
             }
         } catch let serviceError { // problem sending request/receiving response/creating json object from data
-            logger.error("\(serviceError.localizedDescription)")
+//            logger.error("\(serviceError.localizedDescription)")
             throw serviceError
         }
     }

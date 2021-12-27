@@ -29,6 +29,7 @@
 #import "PVOWeightTicketController.h"
 #import "RootViewController.h"
 #import <Crashlytics/Crashlytics.h>
+#import <HQ_Driver-Swift.h>
 #if defined(ATLASNET)
 #import <ScanbotSDK/ScanbotSDK.h>
 #endif
@@ -45,6 +46,7 @@
 @synthesize operationQueue, activationController, downloadDBs;
 @synthesize singleDateController, pricingDB, pickerView, doubleDecFormatter; //, milesDB;
 @synthesize dashCalcQueue, tablePicker, viewType;
+@synthesize session;
 
 @synthesize pvoDamageHolder;
 @synthesize lastPackerInitials;
@@ -1556,6 +1558,25 @@
     PortraitNavController *newnav = [[PortraitNavController alloc] initWithRootViewController:activationController];
 	[self showHideVC:newnav withHide:splashView];
 }
+
+-(void)showActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController
+{
+    if(activationController == nil)
+    {
+        ActivationErrorController *controller = [[ActivationErrorController alloc] init];
+
+        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
+        controller.message = results;
+        activationController = [[PortraitNavController alloc] initWithRootViewController:controller];
+    }
+    
+    activationError = true;
+    
+    [self showHideVC:activationController withHide:viewController];
+    
+}
+
+
 
 -(void)hideDownloadShowCustomers
 {

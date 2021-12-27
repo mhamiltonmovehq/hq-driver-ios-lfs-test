@@ -37,10 +37,16 @@ struct HubEnvironment {
     }
     
     static func environmentURL () -> String {
+        let envPrefixRange = Prefs.betaPassword().range(of: "crmenv:")
+        var envValue = Prefs.betaPassword().suffix(from: envPrefixRange!.upperBound)
+        let rangeOfSpaceCharacter = envValue.range(of: " ")
+        if (rangeOfSpaceCharacter != nil) {
+            envValue = envValue.prefix(upTo:rangeOfSpaceCharacter!.lowerBound)
+        }
         
-        let envString = UserDefaults.standard.string(forKey: "config_code") ?? "prod"
+//        let envString = UserDefaults.standard.string(forKey: "conf") ?? "prod"
         
-        guard let env = Environments(rawValue: envString) else {
+        guard let env = Environments(rawValue: String(envValue)) else {
             return Environments.prod.baseUrl
         }
         

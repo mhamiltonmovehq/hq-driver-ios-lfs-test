@@ -34,6 +34,7 @@
 #import "PVOPreShipChecklistParser.h"
 #import "PVONavigationListItem.h"
 #import "PVOSTGBOLParser.h"
+#import <HQ_Driver-Swift.h>
 
 @interface PVOSync ()
 
@@ -1541,6 +1542,8 @@ exit:
 
 -(XMLWriter*)getRequestXML
 {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+
     NSString *deviceID = nil;
     //    if ([[ASIdentifierManager sharedManager] respondsToSelector:@selector(advertisingIdentifier)])
     //        deviceID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
@@ -1657,17 +1660,18 @@ exit:
         //    [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
         
         //password
-        if (driverData.crmPassword == nil || [driverData.crmPassword length] <= 0)
-        {
-            [writer writeStartElement:@"a:Password"];
-            //            [writer writeAttribute:@"i:nil" withData:@"true"];
-            [writer writeEndElement];
-        }
-        else
-        {
-            [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
-        }
-        
+//        if (driverData.crmPassword == nil || [driverData.crmPassword length] <= 0)
+//        {
+//            [writer writeStartElement:@"a:Password"];
+//            //            [writer writeAttribute:@"i:nil" withData:@"true"];
+//            [writer writeEndElement];
+//        }
+//        else
+//        {
+//            [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
+//        }
+        [writer writeElementString:@"a:AccessToken" withData:del.session._access_token];
+
         //crm url
         if ([self getReloCRMSyncURL] == nil || [[self getReloCRMSyncURL] length] <= 0)
         {
@@ -1760,12 +1764,14 @@ exit:
 }
 
 -(NSDictionary*)getReloSettings {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSMutableDictionary *reloSettings = [[NSMutableDictionary alloc] init];
     
     if (driverData != nil) {
         if ([AppFunctionality enableMoveHQSettings]) {
             [reloSettings setObject:[self getValueOrEmptyString:driverData.crmUsername] forKey:@"Username"];
-            [reloSettings setObject:[self getValueOrEmptyString:driverData.crmPassword] forKey:@"Password"];
+//            [reloSettings setObject:[self getValueOrEmptyString:driverData.crmPassword] forKey:@"Password"];
+            [reloSettings setObject:[self getValueOrEmptyString:del.session._access_token] forKey:@"AcessToken"];
             [reloSettings setObject:[self getValueOrEmptyString:[self getReloCRMSyncURL]] forKey:@"SyncAddress"];
         }
     }
@@ -1777,6 +1783,8 @@ exit:
     //
     //    NSString *deviceID = nil;
     //    deviceID = [OpenUDID value];
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+
     
     XMLWriter *writer = [[XMLWriter alloc] init];
     
@@ -1789,7 +1797,8 @@ exit:
         [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
         
         //password
-        [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
+//        [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
+        [writer writeElementString:@"a:AccessToken" withData:del.session._access_token];
         
         //crm url
         [writer writeElementString:@"a:SyncAddress" withData:[self getReloCRMSyncURL]];

@@ -9,6 +9,11 @@
 #import "SplashViewController.h"
 #import "SurveyAppDelegate.h"
 #import "Prefs.h"
+#import <HQ_Driver-Swift.h>
+
+
+@interface SplashViewController() <HubActivationResponseProtocol>
+@end
 
 @implementation SplashViewController
 
@@ -56,18 +61,26 @@
         
         allow = [Activation allowAccess:&results];
         
-        self.resultString = results;
-        
+        if(allow == ACTIVATION_HUB) {
+            HubActivationWrapper *hubActivationService = [[HubActivationWrapper alloc] init];
+            [hubActivationService activateWithCaller:self];
+            timerDone = YES;
+        }
+        if(allow != ACTIVATION_HUB) {
+            self.resultString = results;
+            
+            
+            
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                          target:self
+                                                        selector:@selector(tick:)
+                                                        userInfo:NULL
+                                                         repeats:NO];
+            
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        }
         labelLoad.text = @"Updating Database...";
         [del.surveyDB upgradeDBWithDelegate:self forVanline:[del.pricingDB vanline]];
-        
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                      target:self
-                                                    selector:@selector(tick:)
-                                                    userInfo:NULL
-                                                     repeats:NO];
-        
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     }
     else
     {
@@ -173,6 +186,33 @@
     labelLoad.text = @"Updating Database...";
     progress.progress = 1;
     progress.hidden = YES;
+}
+
+- (void)hubActivationCompletedWithResult:(HubActivationWrapperResult * _Nonnull)result {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    ActivationRecord *rec = [del.surveyDB getActivation];
+    
+    if (result.success) {
+    
+        // TODO: Hub should support a vanlineID to compare to the existing vanlineID
+        //   If vanlineID's don't match, delete both pricing and mileage dbs
+        allow = ACTIVATION_CUSTS;
+        rec.unlocked = 1;
+        rec.lastOpen = rec.lastValidation = [NSDate date];
+        rec.milesDLFolder = result.hubResult.milesFileLocation;
+        rec.tariffDLFolder = result.hubResult.pricingFileLocation;
+
+    }
+    else {
+        rec.unlocked = 0;
+        rec.lastOpen = [NSDate date];
+        self.resultString = result.errorMessage;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [del.surveyDB updateActivation:rec];
+        [self splashPhotoClicked:nil];
+    });
 }
 
 @end

@@ -1505,7 +1505,7 @@
 		3E81DEE321304CC10024823D /* PVOFavoriteItemsByRoomController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PVOFavoriteItemsByRoomController.m; sourceTree = "<group>"; };
 		3E81DEF421305F6B0024823D /* AddFavoriteItemRoomController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddFavoriteItemRoomController.h; sourceTree = "<group>"; };
 		3E81DEF521305F840024823D /* AddFavoriteItemRoomController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddFavoriteItemRoomController.m; sourceTree = "<group>"; };
-		3E956FB82017984F00E89659 /* Mobile Mover Enterprise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mobile Mover Enterprise-Bridging-Header.h"; sourceTree = "<group>"; };
+		3E956FB82017984F00E89659 /* HQ Driver-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HQ Driver-Bridging-Header.h"; sourceTree = "<group>"; };
 		3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerAdapterController.swift; sourceTree = "<group>"; };
 		3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptikAdapterController.swift; sourceTree = "<group>"; };
 		42886DCDF00AD0802B230D9E /* Pods-HQ Driver Simulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HQ Driver Simulator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HQ Driver Simulator/Pods-HQ Driver Simulator.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2489,6 +2489,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3E956FB82017984F00E89659 /* HQ Driver-Bridging-Header.h */,
 				84C8F90B2773812100753B22 /* HubActivation */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				1CDBA79A1B90AE5100385AA1 /* PVOReportNote.h */,
@@ -3563,7 +3564,6 @@
 				1CB6EEB41B9A22B2001C3449 /* DocumentCell.h */,
 				1CB6EEB51B9A22D0001C3449 /* Documentcell.m */,
 				3E956FB92017984F00E89659 /* ImagePickerAdapterController.swift */,
-				3E956FB82017984F00E89659 /* Mobile Mover Enterprise-Bridging-Header.h */,
 				3EE3F3652023A49900F2FDD7 /* OptikAdapterController.swift */,
 			);
 			name = "Reusable Cells";
@@ -5662,7 +5662,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/Mobile Mover-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/HQ Driver-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -5715,7 +5715,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIPFLAGS = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/Mobile Mover-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/HQ Driver-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -5766,7 +5766,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "HQ Driver 2021";
 				STRIPFLAGS = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/Mobile Mover-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Classes/HQ Driver-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;

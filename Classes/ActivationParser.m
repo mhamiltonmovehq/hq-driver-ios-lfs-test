@@ -71,6 +71,8 @@
         self.results.allowAutoInv = [current isEqualToString:@"true"];
     else if ([self thisElement:elementName isElement:@"PricingVanlineID"])
         self.results.fileAssociationId = [current intValue];
+    else if ([self thisElement:elementName isElement:@"UseHub"])
+        self.results.useHub = [current isEqualToString:@"true"];
     
 }
 

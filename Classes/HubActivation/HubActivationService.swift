@@ -58,18 +58,14 @@ import UIKit
         
         self.caller = caller
         
-        let username = Prefs.moveCRMUsername() ?? ""
-        let password = Prefs.moveCRMPassword() ?? ""
+        let username = Prefs.username() ?? ""
+        let password = Prefs.password() ?? ""
         let udid = OpenUDID.value() ?? ""
-        let appName = "Survey"
-        var deviceType = UIDevice.current.type.rawValue
+        let appName = "Driver"
+        let deviceType = UIDevice.current.model
         let deviceVersion = UIDevice.current.systemVersion
         let softwareVersion = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         
-        // Modify Device Type to include if the user has 2xMode enabled
-        if(Prefs.isIPad2XModeOn()) {
-            deviceType += " (2x Mode)"
-        }
 
         HubActivationService.shared.activate(username: username, password: password, udid: udid, appName: appName, deviceType: deviceType, deviceVersion: deviceVersion, softwareVersion: softwareVersion, completion: authenticateCompleted)
     }
@@ -170,12 +166,6 @@ class HubActivationService {
                     let decoder = JSONDecoder()
                     do {
                         activationRecord = try decoder.decode(HubActivationRecord.self, from: jsonData)
-                        if (activationRecord?.license_product == "Sales Mobile") {
-                            del?.surveyOnly = true
-                        }
-                        else {
-                            del?.surveyOnly = false
-                        }
                     }
                     catch {
                         completion(.Error("Failed to process activation response"))

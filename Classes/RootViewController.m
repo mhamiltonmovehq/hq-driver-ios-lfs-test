@@ -20,6 +20,11 @@
 #import "AppFunctionality.h"
 #import "AutoBackup.h"
 #import "Prefs.h"
+#import <HQ_Driver-Swift.h>
+
+@interface SplashViewController() <HubActivationResponseProtocol>
+@end
+
 
 @implementation RootViewController
 
@@ -65,7 +70,7 @@
 #if defined(DEBUG)
     NSLog(@"User name: %@", [Prefs username]);
     NSLog(@"Password: %@", [Prefs password]);
-    NSLog(@"Beta password: %@", [Prefs betaPassword]);
+    NSLog(@"Config Code: %@", [Prefs betaPassword]);
     NSLog(@"Reports password: %@", [Prefs reportsPassword]);
 #endif
 }
