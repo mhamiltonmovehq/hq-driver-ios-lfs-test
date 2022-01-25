@@ -121,14 +121,13 @@ class RestSyncRequest {
                             let jsonError = try JSONSerialization.jsonObject(with: errorData, options: []) as? [String] ?? nil
                             completion(.Error(jsonError?[0] ?? "Unable to read server error"))
                             
-                            return
+                                return
+                            }
+                            completion(.Error((self.hubResponse[jsonDict["error"] ?? ""] ?? jsonDict["error"]) ?? "Unable to read server error"))
                         }
-                        completion(.Error(self.hubResponse[jsonDict["error"] ?? ""] ?? "Unable to read server error"))
-//                        completion(.Error(jsonDict["error"] ?? "Unable to read server error"))
-                    }
-                    catch {
-                        completion(.Error("Unable to read server error"))
-                    }
+                        catch {
+                            completion(.Error("Unable to read server error"))
+                        }
                     return
                 }
                 

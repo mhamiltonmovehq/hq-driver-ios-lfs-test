@@ -59,7 +59,7 @@
         
         NSString *results = nil;
         
-        allow = [Activation allowAccess:&results];
+        allow = ACTIVATION_HUB; // [Activation allowAccess:&results];
         
         if(allow == ACTIVATION_HUB) {
             HubActivationWrapper *hubActivationService = [[HubActivationWrapper alloc] init];
@@ -201,6 +201,11 @@
         rec.lastOpen = rec.lastValidation = [NSDate date];
         rec.milesDLFolder = result.hubResult.milesFileLocation;
         rec.tariffDLFolder = result.hubResult.pricingFileLocation;
+        rec.fileAssociationId = result.hubResult.carrierId;
+        if([del openPricingDB]) {
+            [del.pricingDB recreateDbVersion:rec.fileAssociationId];
+            [del.pricingDB closeDB];
+        }
 
     }
     else {

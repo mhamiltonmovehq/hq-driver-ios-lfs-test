@@ -195,10 +195,6 @@
 
 - (void)downloadNewPricingDB
 {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _progressContainerView.hidden = NO;
-//        [MBProgressHUD showHUDAddedTo:_progressContainerView animated:YES];
-//    });
     NSError *error = nil;
 
     start = [[NSDate date] timeIntervalSince1970];
