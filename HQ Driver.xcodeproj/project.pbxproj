@@ -604,7 +604,6 @@
 		9456B7E01C6CFC5D00CA4CED /* PVOChecklistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7DD1C6CFC5D00CA4CED /* PVOChecklistController.m */; };
 		9456B7E31C6CFC5D00CA4CED /* PVOCheckListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7DF1C6CFC5D00CA4CED /* PVOCheckListItem.m */; };
 		9456B7F01C6CFC8A00CA4CED /* PVODamageSingleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7E71C6CFC8A00CA4CED /* PVODamageSingleController.m */; };
-		9456B7F31C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7E91C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m */; };
 		9456B7F61C6CFC8A00CA4CED /* PVOVehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7EB1C6CFC8A00CA4CED /* PVOVehicle.m */; };
 		9456B7F91C6CFC8A00CA4CED /* PVOWireframeDamage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7ED1C6CFC8A00CA4CED /* PVOWireframeDamage.m */; };
 		9456B7FC1C6CFC8A00CA4CED /* PVOWireFrameTypeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7EF1C6CFC8A00CA4CED /* PVOWireFrameTypeController.m */; };
@@ -860,7 +859,6 @@
 		94B25B901CB43FE7004366D4 /* PVODeliverySummaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF27D4F1144DB069002584A4 /* PVODeliverySummaryController.m */; };
 		94B25B911CB43FE7004366D4 /* SelectObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF27D4F4144DDCE4002584A4 /* SelectObjectController.m */; };
 		94B25B921CB43FE7004366D4 /* PVOUploadReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0217A4144F4CDD00BAE69A /* PVOUploadReportView.m */; };
-		94B25B931CB43FE7004366D4 /* PVOPreShipChecklistParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9456B7E91C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m */; };
 		94B25B941CB43FE7004366D4 /* TextAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF098B63146467F900C9D50A /* TextAlertViewController.m */; };
 		94B25B951CB43FE7004366D4 /* PVOItemDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = BF740D3F1473F7EE00F1D2CC /* PVOItemDescription.m */; };
 		94B25B961CB43FE7004366D4 /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF54B57314C0BD2600D387F7 /* SearchCell.m */; };
@@ -1616,8 +1614,6 @@
 		9456B7DF1C6CFC5D00CA4CED /* PVOCheckListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOCheckListItem.m; sourceTree = "<group>"; };
 		9456B7E61C6CFC8A00CA4CED /* PVODamageSingleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVODamageSingleController.h; sourceTree = "<group>"; };
 		9456B7E71C6CFC8A00CA4CED /* PVODamageSingleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVODamageSingleController.m; sourceTree = "<group>"; };
-		9456B7E81C6CFC8A00CA4CED /* PVOPreShipChecklistParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOPreShipChecklistParser.h; sourceTree = "<group>"; };
-		9456B7E91C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOPreShipChecklistParser.m; sourceTree = "<group>"; };
 		9456B7EA1C6CFC8A00CA4CED /* PVOVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOVehicle.h; sourceTree = "<group>"; };
 		9456B7EB1C6CFC8A00CA4CED /* PVOVehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVOVehicle.m; sourceTree = "<group>"; };
 		9456B7EC1C6CFC8A00CA4CED /* PVOWireframeDamage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVOWireframeDamage.h; sourceTree = "<group>"; };
@@ -2468,8 +2464,6 @@
 				9456B8001C6CFCBB00CA4CED /* PVODamageAllController.m */,
 				9456B7E61C6CFC8A00CA4CED /* PVODamageSingleController.h */,
 				9456B7E71C6CFC8A00CA4CED /* PVODamageSingleController.m */,
-				9456B7E81C6CFC8A00CA4CED /* PVOPreShipChecklistParser.h */,
-				9456B7E91C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m */,
 				9456B7EA1C6CFC8A00CA4CED /* PVOVehicle.h */,
 				9456B7EB1C6CFC8A00CA4CED /* PVOVehicle.m */,
 				9456B7EC1C6CFC8A00CA4CED /* PVOWireframeDamage.h */,
@@ -5198,7 +5192,6 @@
 				6338C5F218C6326300E3A7EF /* PVODeliverySummaryController.m in Sources */,
 				6338C5F318C6326300E3A7EF /* SelectObjectController.m in Sources */,
 				6338C5F418C6326300E3A7EF /* PVOUploadReportView.m in Sources */,
-				9456B7F31C6CFC8A00CA4CED /* PVOPreShipChecklistParser.m in Sources */,
 				6338C5F518C6326300E3A7EF /* TextAlertViewController.m in Sources */,
 				6338C5F618C6326300E3A7EF /* PVOItemDescription.m in Sources */,
 				6338C5F718C6326300E3A7EF /* SearchCell.m in Sources */,
@@ -5516,7 +5509,6 @@
 				94B25B901CB43FE7004366D4 /* PVODeliverySummaryController.m in Sources */,
 				94B25B911CB43FE7004366D4 /* SelectObjectController.m in Sources */,
 				94B25B921CB43FE7004366D4 /* PVOUploadReportView.m in Sources */,
-				94B25B931CB43FE7004366D4 /* PVOPreShipChecklistParser.m in Sources */,
 				94B25B941CB43FE7004366D4 /* TextAlertViewController.m in Sources */,
 				94B25B951CB43FE7004366D4 /* PVOItemDescription.m in Sources */,
 				94B25B961CB43FE7004366D4 /* SearchCell.m in Sources */,

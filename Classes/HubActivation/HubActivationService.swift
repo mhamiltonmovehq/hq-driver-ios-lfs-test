@@ -198,7 +198,7 @@ struct HubActivationRecord: Codable {
         case mile_file_location
         case tariff_file_location
         case license_product
-//        case carrier_id
+        case carrier_id
     }
     
     let tariff_version: Int
@@ -206,20 +206,20 @@ struct HubActivationRecord: Codable {
     let mile_file_location: String
     let tariff_file_location: String
     let license_product: String
-    let carrier_id: Int = 155
+    let carrier_id: Int
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let tariff_version_string = try container.decode(String.self, forKey: .tariff_version)
         let mile_file_version_string = try container.decode(String.self, forKey: .mile_file_version)
-//        let carrier_id_string = try container.decode(String.self, forKey: .carrier_id)
+        let carrier_id_string = try container.decode(String.self, forKey: .carrier_id)
         
         tariff_version = Int(tariff_version_string)!
         mile_file_version = Int(mile_file_version_string)!
         mile_file_location = try container.decode(String.self, forKey: .mile_file_location)
         tariff_file_location = try container.decode(String.self, forKey: .tariff_file_location)
         license_product = try container.decode(String.self, forKey: .license_product)
-//        carrier_id = Int(carrier_id_string)!
+        carrier_id = Int(carrier_id_string)!
         
     }
 }

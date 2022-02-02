@@ -63,6 +63,7 @@
 		url	= [NSURL URLWithString:pitsDir];
     
     NSLog(@"REQ.ServiceURL: %@", [NSString stringWithFormat:@"%@", url]);
+    NSLog(@"REQ.Function name: %@", [NSString stringWithFormat:@"%@",functionName]);
 	
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
 	

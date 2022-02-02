@@ -175,6 +175,7 @@ class TokenService {
         request.basePath = "/api"
         request.methodPath = "/token/refresh"
         
+        
         do {
            try request.executeHttpRequest(httpMethod: "GET", queryParameters:params, bodyData:nil , headerData: headerValues) {result in
                switch (result) {

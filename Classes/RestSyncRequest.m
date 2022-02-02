@@ -8,11 +8,30 @@
 #import <Foundation/Foundation.h>
 #import "RestSyncRequest.h"
 #import "Base64.h"
+#import <HQ_Driver-Swift.h>
 
 @implementation RestSyncRequest
 @synthesize scheme, host, basePath, methodPath;
 
 -(NSString*)executeHttpRequest:(NSString*) httpMethod withQueryParameters:(NSDictionary*) queryParams andBodyData:(NSData*) bodyData andError:(NSError**) error shouldDecode:(BOOL) shouldDecode {
+    // verify token
+    // if expired refresh
+    // if unsuccesfeull refresh
+    // kick back to creds screen
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+
+//    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+//    tokenWrapper.caller = self;
+//    
+//    
+//    
+//    if(![tokenWrapper refreshTokenWithJwt:del.session._access_token] == [NonEmpty string]) {
+//        if ([tokenWrapper verifyTokenWithJwt:del.session._access_token caller:self]) {
+//        
+//        }
+//    }
+
+
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", scheme, host, basePath, methodPath];
     NSURL *url = [self url:urlString withQueryParameters:queryParams];
     
