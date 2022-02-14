@@ -18,19 +18,6 @@
     // if expired refresh
     // if unsuccesfeull refresh
     // kick back to creds screen
-    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
-
-//    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
-//    tokenWrapper.caller = self;
-//    
-//    
-//    
-//    if(![tokenWrapper refreshTokenWithJwt:del.session._access_token] == [NonEmpty string]) {
-//        if ([tokenWrapper verifyTokenWithJwt:del.session._access_token caller:self]) {
-//        
-//        }
-//    }
-
 
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", scheme, host, basePath, methodPath];
     NSURL *url = [self url:urlString withQueryParameters:queryParams];

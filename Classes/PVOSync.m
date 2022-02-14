@@ -1661,7 +1661,7 @@ exit:
     if (driverData != nil) {
         if ([AppFunctionality enableMoveHQSettings]) {
             [reloSettings setObject:[self getValueOrEmptyString:driverData.crmUsername] forKey:@"Username"];
-            [reloSettings setObject:[self getValueOrEmptyString:del.session._access_token] forKey:@"AcessToken"];
+            [reloSettings setObject:[self getValueOrEmptyString:del.session._access_token] forKey:@"AccessToken"];
             [reloSettings setObject:[self getValueOrEmptyString:[self getReloCRMSyncURL]] forKey:@"SyncAddress"];
         }
     }

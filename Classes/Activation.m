@@ -108,9 +108,9 @@
     }
     
     // Ignore this result and use Hub logic
-//    if(xmlParse.results.useHub) {
+    if(xmlParse.results.useHub) {
         return ACTIVATION_HUB;
-//    }
+    }
     
     if(!success)
     {

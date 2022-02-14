@@ -22,7 +22,7 @@
 #import "Prefs.h"
 #import <HQ_Driver-Swift.h>
 
-@interface SplashViewController() <HubActivationResponseProtocol>
+@interface RootViewController() <HubActivationResponseProtocol>
 @end
 
 
@@ -99,17 +99,7 @@
                            target:self
                            action:@selector(cmdDocuments_Click:)]];
     }
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSort_Click:)]];
-    
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSync_Click:)]];
+
     [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
                                                        style:UIBarButtonItemStylePlain
                                                       target:self

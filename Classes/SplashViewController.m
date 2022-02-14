@@ -59,18 +59,16 @@
         
         NSString *results = nil;
         
-        allow = ACTIVATION_HUB; // [Activation allowAccess:&results];
+//        allow = ACTIVATION_HUB; we can switch this out when we no longer need the toggle.
+        allow = [Activation allowAccess:&results];
         
         if(allow == ACTIVATION_HUB) {
             HubActivationWrapper *hubActivationService = [[HubActivationWrapper alloc] init];
             [hubActivationService activateWithCaller:self];
             timerDone = YES;
         }
-        if(allow != ACTIVATION_HUB) {
+        else {
             self.resultString = results;
-            
-            
-            
             self.timer = [NSTimer scheduledTimerWithTimeInterval:1
                                                           target:self
                                                         selector:@selector(tick:)
