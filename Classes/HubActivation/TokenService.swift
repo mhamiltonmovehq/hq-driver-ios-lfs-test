@@ -126,7 +126,8 @@ class TokenService {
                       "device_id"               : info.device_id,
                       "device_type"             : info.device_type,
                       "device_version"          : info.device_version,
-                      "device_software_version" : info.device_software_version]
+                      "device_software_version" : info.device_software_version,
+                      "ttl_override"            : String(CustomerUtilities.ttlOverride())]
         request.scheme = "https://"
         request.host = HubEnvironment.environmentURL()
         request.basePath = "/api"
@@ -168,7 +169,8 @@ class TokenService {
         let headerValues = ["Authorization" : "Bearer " + jwt]
         let request = RestSyncRequest()
         var hubToken: HubToken? = nil
-        let params = ["product" : info]
+        let params = ["product"         : info,
+                      "ttl_override"    : String(CustomerUtilities.ttlOverride())]
         
         request.scheme = "https://"
         request.host = HubEnvironment.environmentURL()

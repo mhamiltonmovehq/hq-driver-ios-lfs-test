@@ -10,6 +10,9 @@
 #import "Base64.h"
 #import <HQ_Driver-Swift.h>
 
+@interface RestSyncRequest() <TokenResponseProtocol, HubActivationResponseProtocol>
+@end
+
 @implementation RestSyncRequest
 @synthesize scheme, host, basePath, methodPath;
 
@@ -18,7 +21,12 @@
     // if expired refresh
     // if unsuccesfeull refresh
     // kick back to creds screen
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
 
+    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+    [tokenWrapper verifyTokenWithJwt:del.session._access_token caller:self];
+    
+    
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", scheme, host, basePath, methodPath];
     NSURL *url = [self url:urlString withQueryParameters:queryParams];
     
@@ -82,4 +90,53 @@
     
     return [NSString stringWithFormat:@"%@/%@ build %@ (%@ %@) %@", @"HQ Driver", appVersion, buildNumber, currentDevice.systemName, currentDevice.systemVersion, currentDevice.model];
 }
+
+- (void)verifyTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull)result {\
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    BOOL resultSuccess  = (BOOL)result.success;
+    
+    if (resultSuccess == NO) {
+        TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+        tokenWrapper.caller = self;
+        if ([result.errorMessage containsString:@"blacklisted"]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [del logoutAndShowActivationError:@"Access to the application has been revoked, please contact support" fromCurrentView:del.currentView];
+            });
+        }
+        else {
+            [tokenWrapper refreshTokenWithJwt:del.session._access_token];
+        }
+    }
+    
+}
+
+- (void)refreshTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull)result {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    if (result.success == NO) {
+        if (![result.errorMessage containsString:@"blacklisted"]) {
+            HubActivationWrapper *hubWrapper = [[HubActivationWrapper alloc] init];
+            [hubWrapper activateWithCaller:self];
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [del logoutAndShowActivationError:@"Access to the application has been revoked, please contact support"  fromCurrentView:del.currentView];
+            });
+            NSLog(@"refresh token error %@", result.errorMessage);
+        }
+    }
+}
+
+- (void)hubActivationCompletedWithResult:(HubActivationWrapperResult * _Nonnull)result {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    if (!result.success) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [del logoutAndShowActivationError:result.errorMessage fromCurrentView:del.currentView];
+        });
+        NSLog(@"Activation error %@", result.errorMessage);
+    }
+}
+
 @end

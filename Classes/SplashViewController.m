@@ -111,7 +111,7 @@
     [timer invalidate];
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    if(allow == ACTIVATION_CUSTS)
+    if(allow == ACTIVATION_CUSTS || allow == ACTIVATION_HUB)
     {
         [del hideSplashShowCustomers];
     }
@@ -214,7 +214,6 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [del.surveyDB updateActivation:rec];
-        [self splashPhotoClicked:nil];
     });
 }
 

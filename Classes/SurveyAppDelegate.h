@@ -95,6 +95,8 @@
     NSString *lastPackerInitials;
     
     BOOL activationError;
+    UIViewController *currentView;
+
 }
 
 @property (nonatomic, retain) UIWindow *window;
@@ -131,6 +133,7 @@
 @property (nonatomic) BOOL showedReleasedValWarning;
 @property (nonatomic, retain) UIApplicationShortcutItem * launchedShortcutItem;
 @property (nonatomic) HubToken* session;
+@property (nonatomic) UIViewController *currentView;
 
 +(BOOL)hasInternetConnection;
 +(BOOL)hasInternetConnection:(BOOL)testExternal;
@@ -372,6 +375,7 @@
 + (void)eliminateTableHeaderAndFooterViews:(UITableView *)theTable;
 + (void)setTableHeaderAndFooterViewsHeight:(UITableView *)theTable withHeight:(CGFloat)h;
 + (void)setDefaultBackButton:(UIViewController*)controller;
+-(void)logoutAndShowActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController;
 
 +(BOOL) deviceHasPasscode;
 

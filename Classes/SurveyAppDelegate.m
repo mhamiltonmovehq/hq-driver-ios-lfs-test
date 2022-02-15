@@ -34,6 +34,10 @@
 #import <ScanbotSDK/ScanbotSDK.h>
 #endif
 
+@interface SurveyAppDelegate() <TokenResponseProtocol, HubActivationResponseProtocol>
+
+@end
+
 @implementation SurveyAppDelegate
 
 @synthesize window;
@@ -816,6 +820,13 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
+
+    if(self.session._access_token != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+            [tokenWrapper verifyTokenWithJwt:self.session._access_token caller:self];
+        });
+    }
     if(activationError)
     {
         [self showHideVC:splashView withHide:activationController];
@@ -1546,11 +1557,8 @@
 
 -(void)hideSplashShowActivationError:(NSString*)results
 {
-	if(activationController == nil)
-	{
-        activationController = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
-	}
-	
+
+    activationController = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
 	activationController.message = results;
 	
 	activationError = YES;
@@ -1561,14 +1569,12 @@
 
 -(void)showActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController
 {
-    if(activationController == nil)
-    {
-        ActivationErrorController *controller = [[ActivationErrorController alloc] init];
 
-        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
-        controller.message = results;
-        activationController = [[PortraitNavController alloc] initWithRootViewController:controller];
-    }
+    ActivationErrorController *controller = [[ActivationErrorController alloc] init];
+
+    controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
+    controller.message = results;
+    activationController = (ActivationErrorController*)[[PortraitNavController alloc] initWithRootViewController:controller];
     
     activationError = true;
     
@@ -1628,6 +1634,24 @@
 	
 	[UIView commitAnimations];
 }
+
+-(void)logoutAndShowActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController
+{
+    ActivationErrorController *controller = [[ActivationErrorController alloc] init];
+
+    if([SurveyAppDelegate iPad])
+        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView-iPad" bundle:nil];
+    else
+        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
+   
+    controller.message = results;
+    activationController = (ActivationErrorController*)[[PortraitNavController alloc] initWithRootViewController:controller];
+    activationError = true;
+    [self.operationQueue cancelAllOperations];
+    [self.dashCalcQueue cancelAllOperations];
+    [self showHideVC:activationController withHide:viewController];
+}
+
 
 - (void)dealloc {
     self.debugController = nil;
@@ -2172,6 +2196,50 @@
     }
     
     return false;
+}
+
+- (void)verifyTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull)result
+{
+    BOOL resultSuccess  = (BOOL)result.success;
+    
+    if (resultSuccess == NO) {
+        TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+        tokenWrapper.caller = self;
+        if ([result.errorMessage containsString:@"blacklisted"] ){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self logoutAndShowActivationError:@"Access to the application has been revoked, please contact support" fromCurrentView:self.currentView];
+            });
+        }
+        else {
+            [tokenWrapper refreshTokenWithJwt:self.session._access_token];
+        }
+    }
+}
+ 
+- (void)refreshTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull)result
+{
+     if (result.success == NO) {
+        if (![result.errorMessage containsString:@"blacklisted"]) {
+            HubActivationWrapper *hubWrapper = [[HubActivationWrapper alloc] init];
+            [hubWrapper activateWithCaller:self];
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self logoutAndShowActivationError:result.errorMessage fromCurrentView:self.currentView];
+            });
+            NSLog(@"refresh token error %@", result.errorMessage);
+        }
+    }
+}
+
+- (void)hubActivationCompletedWithResult:(HubActivationWrapperResult * _Nonnull)result {
+
+    if (!result.success) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self logoutAndShowActivationError:result.errorMessage fromCurrentView:self.currentView];
+        });
+        NSLog(@"Activation error %@", result.errorMessage);
+    }
 }
 
 @end
