@@ -134,6 +134,7 @@
 @property (nonatomic, retain) UIApplicationShortcutItem * launchedShortcutItem;
 @property (nonatomic) HubToken* session;
 @property (nonatomic) UIViewController *currentView;
+@property (nonatomic) double tokenAcquiredTimeIntervalSince1970;
 
 +(BOOL)hasInternetConnection;
 +(BOOL)hasInternetConnection:(BOOL)testExternal;

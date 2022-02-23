@@ -50,7 +50,7 @@
 @synthesize operationQueue, activationController, downloadDBs;
 @synthesize singleDateController, pricingDB, pickerView, doubleDecFormatter; //, milesDB;
 @synthesize dashCalcQueue, tablePicker, viewType;
-@synthesize session;
+@synthesize session, tokenAcquiredTimeIntervalSince1970;
 
 @synthesize pvoDamageHolder;
 @synthesize lastPackerInitials;
@@ -820,12 +820,14 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
-
-    if(self.session._access_token != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
-            [tokenWrapper verifyTokenWithJwt:self.session._access_token caller:self];
-        });
+    NSDate *now  = [NSDate date];
+    if ([SurveyAppDelegate hasInternetConnection] || ([now timeIntervalSince1970] - self.tokenAcquiredTimeIntervalSince1970) > (double)self.session._expires_in) {
+        if(self.session._access_token != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+                [tokenWrapper verifyTokenWithJwt:self.session._access_token caller:self];
+            });
+        }
     }
     if(activationError)
     {

@@ -22,9 +22,10 @@
     // if unsuccesfeull refresh
     // kick back to creds screen
     SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
-
-    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
-    [tokenWrapper verifyTokenWithJwt:del.session._access_token caller:self];
+    NSDate *now  = [NSDate date];
+    if ([SurveyAppDelegate hasInternetConnection] || ([now timeIntervalSince1970] - del.tokenAcquiredTimeIntervalSince1970) > (double)del.session._expires_in) {    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+        [tokenWrapper verifyTokenWithJwt:del.session._access_token caller:self];
+    }
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", scheme, host, basePath, methodPath];

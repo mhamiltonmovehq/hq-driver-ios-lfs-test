@@ -79,6 +79,7 @@
         }
         labelLoad.text = @"Updating Database...";
         [del.surveyDB upgradeDBWithDelegate:self forVanline:[del.pricingDB vanline]];
+        del.tokenAcquiredTimeIntervalSince1970 = [[NSDate date] timeIntervalSince1970];
     }
     else
     {
