@@ -10,6 +10,8 @@
 #import "Activation.h"
 #import "SurveyDBUpdater.h"
 
+@protocol HubActivationResponseProtocol;
+
 @interface SplashViewController : UIViewController <SurveyDBUpdaterDelegate> {
     NSTimer *timer;
     int allow;

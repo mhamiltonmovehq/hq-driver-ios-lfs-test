@@ -400,7 +400,7 @@
                         [emailBody appendString:[NSString stringWithFormat:@"\r\nPort: %@", ([Prefs mailPort] > 0 ? [NSString stringWithFormat:@"%d", [Prefs mailPort]] : @"<NONE>")]];
                         
                         
-                        [emailBody appendString:[NSString stringWithFormat:@"\r\n\r\nBeta Passwords"]];
+                        [emailBody appendString:[NSString stringWithFormat:@"\r\n\r\nConfig Code"]];
                         [emailBody appendString:[NSString stringWithFormat:@"\r\nCustom Reports: %@", [[Prefs reportsPassword] length] > 0 ? [Prefs reportsPassword] : @"<NONE>"]];
                         [emailBody appendString:[NSString stringWithFormat:@"\r\nBeta: %@", [[Prefs betaPassword] length] > 0 ? [Prefs betaPassword] : @"<NONE>"]];
                     }

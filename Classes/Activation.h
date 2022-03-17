@@ -11,7 +11,7 @@
 #define ACTIVATION_NO_ACCESS 0
 #define ACTIVATION_CUSTS 1
 #define ACTIVATION_DOWNLOAD 2
-
+#define ACTIVATION_HUB 3
 
 #define TRIAL_DAYS 30
 //has to reach out to within this number of days
@@ -36,7 +36,7 @@
 @property (nonatomic) BOOL ignoreUpdates;
 @property (nonatomic) BOOL allowAutoInv;
 @property (nonatomic) int fileAssociationId;
-
+@property (nonatomic) BOOL useHub;
 //determines if the user can access the application
 //called first - will return true to continue, error string, or nil for no error (no user creds)
 +(int)allowAccess:(NSString**)results;

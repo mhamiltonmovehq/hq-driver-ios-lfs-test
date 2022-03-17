@@ -537,14 +537,10 @@
 +(int)webRequestTimeoutInSeconds
 {
 #ifdef TARGET_IPHONE_SIMULATOR
-    return 60 * 4;
+    return 4;
 #endif
-    
-#ifdef ATLASNET
-    return 60 * 3;  // 3 minute timeout value
-#else
-    return 60;      // 1 minute timeout value
-#endif
+    return 10;      // 10 second timeout value
+
 }
 
 +(BOOL)flagAllItemsAsVehicle

@@ -641,5 +641,20 @@ exit:
     return newString;
 }
 
++(NSString*)ttlOverride {
+    NSString* ttlOverride = @""; // this is passed to /token/refresh as minutes
+    if ([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"ttloverride:"].location != NSNotFound)
+    {
+        NSRange addpre = [[Prefs betaPassword] rangeOfString:@"ttloverride:"];
+        ttlOverride = [[Prefs betaPassword] substringFromIndex:addpre.location + addpre.length];
+        if ([ttlOverride intValue] > 60 || [ttlOverride intValue] < 1) {  // limits negative minutes or more than the default 60
+            return ttlOverride;
+        }
+        addpre = [ttlOverride rangeOfString:@" "]; // eats the ' ' if there is one after ttloverride:x
+        if (addpre.location != NSNotFound)
+            ttlOverride = [ttlOverride substringToIndex:addpre.location];
+    }
+    return ttlOverride;
+}
 
 @end
