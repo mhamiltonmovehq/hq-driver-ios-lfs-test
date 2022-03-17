@@ -31,9 +31,9 @@
 #import "OpenUDID.h"
 #import "PVOPrintController.h"
 #import "ReportOptionParser.h"
-#import "PVOPreShipChecklistParser.h"
 #import "PVONavigationListItem.h"
 #import "PVOSTGBOLParser.h"
+#import <HQ_Driver-Swift.h>
 
 @interface PVOSync ()
 
@@ -552,69 +552,6 @@ exit:
     return success;
 }
 
--(BOOL)downloadPreShipCheckList
-{
-    //username
-    if ([driverData.crmUsername length] == 0 || [driverData.crmPassword length] == 0 || [[self getReloCRMSyncURL] length] == 0)
-    {
-        return false;
-    }
-    
-    BOOL success = TRUE;
-    NSXMLParser *parser = nil;
-    PVOPreShipChecklistParser *checkListParser = nil;
-    NSString *result = nil;
-    
-    if (driverData.haulingAgent == nil || [driverData.haulingAgent isEqualToString:@""])
-        return NO;
-    
-    XMLWriter *reloSettings = [self getReloCRMSettingsXML];
-    WCFDataParam *requestParm = [[WCFDataParam alloc] init];
-    requestParm.contents = reloSettings.file;
-    
-    req.functionName = @"GetPreShipChecklistWithAgencyCode";
-    
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                              requestParm,
-                                                              (driverData == nil || driverData.haulingAgent == nil ? @"" : driverData.haulingAgent),
-                                                              nil]
-                                                     forKeys:[NSArray arrayWithObjects:@"reloSettings", @"agencyCode", nil]];
-    
-    
-    success = [req getData:&result
-             withArguments:dict
-              needsDecoded:YES
-                   withSSL:ssl
-               flushToFile:nil
-                 withOrder:[NSArray arrayWithObjects:@"reloSettings", @"agencyCode", nil]] ;
-    
-    //    [requestParm release];
-    
-    if([self isCancelled])
-        return FALSE;
-    
-    if([result rangeOfString:@"Sync Error:"].location == 0)
-    {
-        //error with message...
-        [self updateProgress:result withPercent:1];
-        //        [result release];
-        return FALSE;
-    }
-    
-    //Create preshipchecklist parser and pull checklist items, save to db
-    // we will just wipe out all the old checklist items PER AGENCY then save new ones
-    //parse the survey, and demo data
-    parser = [[NSXMLParser alloc] initWithData:[result dataUsingEncoding:NSUTF8StringEncoding]];
-    checkListParser = [[PVOPreShipChecklistParser alloc] init];
-    parser.delegate = checkListParser;
-    [parser parse];
-    
-    //save all of the checklist items to the db, wipes out the old items per hauling agent code
-    [appDelegate.surveyDB savePVOVehicleCheckListForAgency:checkListParser.checkListItems withAgencyCode:driverData.haulingAgent];
-    
-    return success;
-    
-}
 
 - (NSString* _Nullable)getErrorMessage:(NSError *)error eventText:(NSString*) text {
     NSString *errorMessage = [[error userInfo] valueForKey:@"Error"];
@@ -748,9 +685,6 @@ exit:
     }
     
     [self downloadMMLocationImages];
-    
-    //download the premove checklist for auto inventory. Per tony we're doing this in the order download, but its a separate call because we'll probably separate this out from order download in the future
-    [self downloadPreShipCheckList];
     
     [self updateProgress:[NSString stringWithFormat:@"Downloaded Customer: %@, %@",
                           downloadParser.customer.lastName == nil ? @"" : downloadParser.customer.lastName,
@@ -1361,10 +1295,6 @@ exit:
         
         imageParser = [[PVOImageParser alloc] init];
         
-        
-        
-        //        if ([del.pricingDB vanline] == ATLAS)
-        //        {
         req.functionName = @"DownloadSurveyImages";
         success = [req getData:&result
                  withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", i], orderNumber, @"SURVEY_LOCATION", nil]
@@ -1373,18 +1303,6 @@ exit:
                    flushToFile:nil];
         imageParser.isWCF = NO;
         imageParser.isWCF = NO;
-        //        }
-        //        else
-        //        {
-        //            req.functionName = @"GetIGCSyncLocationImages";
-        //            success = [req getData:&result
-        //                     withArguments:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:orderNumber, [NSString stringWithFormat:@"%d", imageID], data.haulingAgent, self.downloadRequestType == 0 ? @"true" : @"false", nil]
-        //                                                               forKeys:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]]
-        //                      needsDecoded:NO withSSL:ssl
-        //                       flushToFile:nil
-        //                         withOrder:[NSArray arrayWithObjects:@"regNumber", @"imageID", @"agencyCode", @"isInterstate", nil]];
-        //            [data release];
-        //        }
         
         if(!success)
         {
@@ -1541,6 +1459,8 @@ exit:
 
 -(XMLWriter*)getRequestXML
 {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+
     NSString *deviceID = nil;
     //    if ([[ASIdentifierManager sharedManager] respondsToSelector:@selector(advertisingIdentifier)])
     //        deviceID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
@@ -1583,17 +1503,6 @@ exit:
         [writer writeEndElement];
     }
     [writer writeElementString:@"a:CarrierID" withIntData:vanlineId];
-    
-    //not going to use this, we're doing agency code instead
-    //    if(data.driverType != PVO_DRIVER_TYPE_PACKER || self.customerLastName == nil || self.customerLastName.length == 0)
-    //    {
-    //        [writer writeStartElement:@"a:CustomerLastName"];
-    //        [writer writeAttribute:@"i:nil" withData:@"true"];
-    //        [writer writeEndElement];
-    //    }
-    //    else
-    //        [writer writeElementString:@"a:CustomerLastName" withData:self.customerLastName];
-    
     [writer writeElementString:@"a:DeviceID" withData:deviceID];
     [writer writeElementString:@"a:DeviceMake" withData:@"Apple"];
     [writer writeElementString:@"a:DeviceModel" withData:[NSString stringWithFormat:@"%@ %@", [UIDevice currentDevice].model, [UIDevice currentDevice].systemVersion]];
@@ -1652,22 +1561,8 @@ exit:
         //add relocrmsettings
         [writer writeStartElement:@"a:ReloSettings"];
         [writer writeAttribute:@"z:Id" withData:@"i2"];
-        //    [writer writeAttribute:@"xmlns:a" withData:@"http://schemas.datacontract.org/2004/07/AISync.Model.ReloCRMSettings"];
-        //    [writer writeAttribute:@"xmlns:i" withData:@"http://www.w3.org/2001/XMLSchema-instance"];
-        //    [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
-        
-        //password
-        if (driverData.crmPassword == nil || [driverData.crmPassword length] <= 0)
-        {
-            [writer writeStartElement:@"a:Password"];
-            //            [writer writeAttribute:@"i:nil" withData:@"true"];
-            [writer writeEndElement];
-        }
-        else
-        {
-            [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
-        }
-        
+        [writer writeElementString:@"a:AccessToken" withData:del.session._access_token];
+
         //crm url
         if ([self getReloCRMSyncURL] == nil || [[self getReloCRMSyncURL] length] <= 0)
         {
@@ -1760,12 +1655,13 @@ exit:
 }
 
 -(NSDictionary*)getReloSettings {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
     NSMutableDictionary *reloSettings = [[NSMutableDictionary alloc] init];
     
     if (driverData != nil) {
         if ([AppFunctionality enableMoveHQSettings]) {
             [reloSettings setObject:[self getValueOrEmptyString:driverData.crmUsername] forKey:@"Username"];
-            [reloSettings setObject:[self getValueOrEmptyString:driverData.crmPassword] forKey:@"Password"];
+            [reloSettings setObject:[self getValueOrEmptyString:del.session._access_token] forKey:@"AccessToken"];
             [reloSettings setObject:[self getValueOrEmptyString:[self getReloCRMSyncURL]] forKey:@"SyncAddress"];
         }
     }
@@ -1774,9 +1670,8 @@ exit:
 
 -(XMLWriter*)getReloCRMSettingsXML
 {
-    //
-    //    NSString *deviceID = nil;
-    //    deviceID = [OpenUDID value];
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+
     
     XMLWriter *writer = [[XMLWriter alloc] init];
     
@@ -1789,7 +1684,7 @@ exit:
         [writer writeAttribute:@"xmlns:z" withData:@"http://schemas.microsoft.com/2003/10/Serialization/"];
         
         //password
-        [writer writeElementString:@"a:Password" withData:driverData.crmPassword];
+        [writer writeElementString:@"a:AccessToken" withData:del.session._access_token];
         
         //crm url
         [writer writeElementString:@"a:SyncAddress" withData:[self getReloCRMSyncURL]];

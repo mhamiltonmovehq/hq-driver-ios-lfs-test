@@ -257,7 +257,7 @@
 -(IBAction)valueSelected:(id)sender
 {
     if(selectingRow == DRIVER_DATA_VANLINE)
-        data.vanlineID = [sender intValue];
+        data.vanlineID = [sender intValue]; // TODO: needs to come from activation Rec
     else if(selectingRow == DRIVER_DATA_DRIVER_TYPE)
     {
         data.driverType = [sender intValue];

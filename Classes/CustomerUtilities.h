@@ -65,5 +65,6 @@
 +(NSMutableString*)formatPhoneString:(NSMutableString *)str;
 // date utilities
 +(NSDate*)dateFromString:(NSString*)dateString;
++(NSString*)ttlOverride;
 
 @end

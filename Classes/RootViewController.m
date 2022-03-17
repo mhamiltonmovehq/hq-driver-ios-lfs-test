@@ -20,6 +20,11 @@
 #import "AppFunctionality.h"
 #import "AutoBackup.h"
 #import "Prefs.h"
+#import <HQ_Driver-Swift.h>
+
+@interface RootViewController() <HubActivationResponseProtocol>
+@end
+
 
 @implementation RootViewController
 
@@ -65,7 +70,7 @@
 #if defined(DEBUG)
     NSLog(@"User name: %@", [Prefs username]);
     NSLog(@"Password: %@", [Prefs password]);
-    NSLog(@"Beta password: %@", [Prefs betaPassword]);
+    NSLog(@"Config Code: %@", [Prefs betaPassword]);
     NSLog(@"Reports password: %@", [Prefs reportsPassword]);
 #endif
 }
@@ -94,17 +99,7 @@
                            target:self
                            action:@selector(cmdDocuments_Click:)]];
     }
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Verify"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSort_Click:)]];
-    
-    
-    //    [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Sync"
-    //                                                       style:UIBarButtonItemStylePlain
-    //                                                      target:self
-    //                                                      action:@selector(cmdSync_Click:)]];
+
     [array addObject:[[UIBarButtonItem alloc] initWithTitle:@"Maintenance"
                                                        style:UIBarButtonItemStylePlain
                                                       target:self

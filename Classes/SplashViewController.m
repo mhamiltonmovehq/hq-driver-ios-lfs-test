@@ -9,6 +9,11 @@
 #import "SplashViewController.h"
 #import "SurveyAppDelegate.h"
 #import "Prefs.h"
+#import <HQ_Driver-Swift.h>
+
+
+@interface SplashViewController() <HubActivationResponseProtocol>
+@end
 
 @implementation SplashViewController
 
@@ -54,20 +59,27 @@
         
         NSString *results = nil;
         
+//        allow = ACTIVATION_HUB; we can switch this out when we no longer need the toggle.
         allow = [Activation allowAccess:&results];
         
-        self.resultString = results;
-        
+        if(allow == ACTIVATION_HUB) {
+            HubActivationWrapper *hubActivationService = [[HubActivationWrapper alloc] init];
+            [hubActivationService activateWithCaller:self];
+            timerDone = YES;
+        }
+        else {
+            self.resultString = results;
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                          target:self
+                                                        selector:@selector(tick:)
+                                                        userInfo:NULL
+                                                         repeats:NO];
+            
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        }
         labelLoad.text = @"Updating Database...";
         [del.surveyDB upgradeDBWithDelegate:self forVanline:[del.pricingDB vanline]];
-        
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                      target:self
-                                                    selector:@selector(tick:)
-                                                    userInfo:NULL
-                                                     repeats:NO];
-        
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        del.tokenAcquiredTimeIntervalSince1970 = [[NSDate date] timeIntervalSince1970];
     }
     else
     {
@@ -99,17 +111,13 @@
     
     [timer invalidate];
     SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    if(allow == ACTIVATION_CUSTS)
-    {
+    if (allow == ACTIVATION_HUB) { // Hub activation follows a separate path upon completing activation.  Leaving this temporarily in case hub activation is disabled.
+        return;
+    } else if(allow == ACTIVATION_CUSTS ) {
         [del hideSplashShowCustomers];
-    }
-    else if(allow == ACTIVATION_DOWNLOAD)
-    {
+    } else if(allow == ACTIVATION_DOWNLOAD) {
         [del hideSplashShowDownload];
-    }
-    else 
-    {
+    } else {
         [del hideSplashShowActivationError:resultString];
     }
 
@@ -173,6 +181,33 @@
     labelLoad.text = @"Updating Database...";
     progress.progress = 1;
     progress.hidden = YES;
+}
+
+- (void)hubActivationCompletedWithResult:(HubActivationWrapperResult * _Nonnull)result {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    ActivationRecord *rec = [del.surveyDB getActivation];
+    
+    if (result.success) {
+        allow = ACTIVATION_CUSTS;
+        rec.unlocked = 1;
+        rec.lastOpen = rec.lastValidation = [NSDate date];
+        rec.milesDLFolder = result.hubResult.milesFileLocation;
+        rec.tariffDLFolder = result.hubResult.pricingFileLocation;
+        rec.fileAssociationId = result.hubResult.carrierId;
+        if([del openPricingDB]) {
+            [del.pricingDB recreateDbVersion:rec.fileAssociationId];
+            [del hideSplashShowCustomers];
+        } else {
+            [del hideSplashShowDownload];
+        }
+    }
+    else {
+        rec.unlocked = 0;
+        rec.lastOpen = [NSDate date];
+        self.resultString = result.errorMessage;
+        [del logoutAndShowActivationError:result.errorMessage fromCurrentView:del.currentView];
+    }
+    [del.surveyDB updateActivation:rec];
 }
 
 @end

@@ -29,9 +29,14 @@
 #import "PVOWeightTicketController.h"
 #import "RootViewController.h"
 #import <Crashlytics/Crashlytics.h>
+#import <HQ_Driver-Swift.h>
 #if defined(ATLASNET)
 #import <ScanbotSDK/ScanbotSDK.h>
 #endif
+
+@interface SurveyAppDelegate() <TokenResponseProtocol, HubActivationResponseProtocol>
+
+@end
 
 @implementation SurveyAppDelegate
 
@@ -45,6 +50,7 @@
 @synthesize operationQueue, activationController, downloadDBs;
 @synthesize singleDateController, pricingDB, pickerView, doubleDecFormatter; //, milesDB;
 @synthesize dashCalcQueue, tablePicker, viewType;
+@synthesize session, tokenAcquiredTimeIntervalSince1970;
 
 @synthesize pvoDamageHolder;
 @synthesize lastPackerInitials;
@@ -109,7 +115,7 @@
     if (hasInternet && testExternal)
     {//test external connection.  timeout of 10 seconds
         NSHTTPURLResponse *resp = nil;
-        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://print.moverdocs.com/"]
+        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com"]
                                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                                                 timeoutInterval:10.0]
                                                  returningResponse:&resp error:nil];
@@ -814,16 +820,36 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
+    TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+    
+    NSData *tokenData = [KeyChainAdapter getDataValueForKey:@"hubToken"];
+    NSString *myString = [[NSString alloc] initWithData:tokenData encoding:NSUTF8StringEncoding];
+
+    HubToken *token = [tokenWrapper jsonToTokenDecoderWithData:tokenData];
+    self.session = token;
+    
+    if (token != nil) {
+        if ([SurveyAppDelegate hasInternetConnection:YES] && [Prefs username].length != 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tokenWrapper verifyTokenWithJwt:token._access_token caller:self];
+            });
+        } else if ([self tokenHasExpired]) {
+            [self logoutAndShowActivationError:@"Session has expired.  Internet connection required to establish a new session." fromCurrentView:self.currentView];
+        }
+    }
+    
     if(activationError)
     {
         [self showHideVC:splashView withHide:activationController];
         activationError = NO;
     }
+}
+
+-(BOOL)tokenHasExpired {
+    ActivationRecord *rec = [self.surveyDB getActivation];
+    NSDate *now = [NSDate date];
     
-    Activation *act = [[Activation alloc] init];
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [del.operationQueue addOperation:act];
-    
+    return ([now timeIntervalSince1970] - [rec.lastValidation timeIntervalSince1970]) > (double)self.session._expires_in;
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application
@@ -1544,11 +1570,8 @@
 
 -(void)hideSplashShowActivationError:(NSString*)results
 {
-	if(activationController == nil)
-	{
-        activationController = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
-	}
-	
+
+    activationController = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
 	activationController.message = results;
 	
 	activationError = YES;
@@ -1556,6 +1579,23 @@
     PortraitNavController *newnav = [[PortraitNavController alloc] initWithRootViewController:activationController];
 	[self showHideVC:newnav withHide:splashView];
 }
+
+-(void)showActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController
+{
+
+    ActivationErrorController *controller = [[ActivationErrorController alloc] init];
+
+    controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
+    controller.message = results;
+    activationController = (ActivationErrorController*)[[PortraitNavController alloc] initWithRootViewController:controller];
+    
+    activationError = true;
+    
+    [self showHideVC:activationController withHide:viewController];
+    
+}
+
+
 
 -(void)hideDownloadShowCustomers
 {
@@ -1596,23 +1636,30 @@
     
     [window setRootViewController:show];
     
-//	[show viewWillAppear:YES];
-//	[hide viewWillDisappear:YES];
-//	
-//	[hide.view removeFromSuperview];
-//	[window	addSubview:show.view];
-//	
-//	[hide viewDidDisappear:YES];
-//	[show viewDidAppear:YES];
-	
 	[UIView commitAnimations];
 }
+
+-(void)logoutAndShowActivationError:(NSString*)results fromCurrentView:(UIViewController*)viewController
+{
+    ActivationErrorController *controller = [[ActivationErrorController alloc] init];
+
+    if([SurveyAppDelegate iPad])
+        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView-iPad" bundle:nil];
+    else
+        controller = [[ActivationErrorController alloc] initWithNibName:@"ActivationErrorView" bundle:nil];
+   
+    controller.message = results;
+    activationController = (ActivationErrorController*)[[PortraitNavController alloc] initWithRootViewController:controller];
+    activationError = true;
+    [self.operationQueue cancelAllOperations];
+    [self.dashCalcQueue cancelAllOperations];
+    [self showHideVC:activationController withHide:viewController];
+}
+
 
 - (void)dealloc {
     self.debugController = nil;
 }
-
-
 
 
 -(void)showPVODamageController:(PortraitNavController*)nav
@@ -2151,6 +2198,57 @@
     }
     
     return false;
+}
+
+- (void)verifyTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull) result {
+    BOOL resultSuccess  = (BOOL)result.success;
+    
+    if (resultSuccess == NO) {
+        TokenWrapper *tokenWrapper = [[TokenWrapper alloc] init];
+        tokenWrapper.caller = self;
+        if ([result.errorMessage containsString:@"blacklisted"] ) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self logoutAndShowActivationError:@"Access to the application has been revoked, please contact support" fromCurrentView:self.currentView];
+            });
+        }
+        else {
+            [tokenWrapper refreshTokenWithJwt:self.session._access_token];
+        }
+    }
+}
+ 
+- (void)refreshTokenResponseCompletedWithResult:(TokenResponseWrapperResult * _Nonnull)result
+{
+     if (result.success == NO) {
+        if (![result.errorMessage containsString:@"blacklisted"]) {
+            HubActivationWrapper *hubWrapper = [[HubActivationWrapper alloc] init];
+            [hubWrapper activateWithCaller:self];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self logoutAndShowActivationError:result.errorMessage fromCurrentView:self.currentView];
+            });
+            NSLog(@"refresh token error %@", result.errorMessage);
+        }
+    }
+}
+
+- (void)hubActivationCompletedWithResult:(HubActivationWrapperResult * _Nonnull) result {
+    SurveyAppDelegate *del = (SurveyAppDelegate*)[[UIApplication sharedApplication] delegate];
+    ActivationRecord *rec = [del.surveyDB getActivation];
+    
+    if (result.success) {
+        rec.unlocked = 1;
+        rec.lastOpen = rec.lastValidation = [NSDate date];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [del.surveyDB updateActivation:rec];
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [del logoutAndShowActivationError:result.errorMessage fromCurrentView:del.currentView];
+        });
+        NSLog(@"Activation error %@", result.errorMessage);
+    }
 }
 
 @end

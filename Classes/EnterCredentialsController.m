@@ -357,7 +357,7 @@
         {
             textCell.tboxValue.tag = ENTER_CREDENTIALS_BETAPASSWORD;
             
-            textCell.tboxValue.placeholder = @"Beta Password";
+            textCell.tboxValue.placeholder = @"Config Code";
             textCell.tboxValue.secureTextEntry = NO;
             textCell.tboxValue.keyboardType = UIKeyboardTypeASCIICapable;
             textCell.tboxValue.autocapitalizationType = UITextAutocapitalizationTypeNone;

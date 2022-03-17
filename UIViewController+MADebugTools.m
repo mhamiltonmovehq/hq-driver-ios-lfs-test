@@ -73,6 +73,9 @@ static inline void Swizzle(Class c, SEL sourceSelector, SEL destSelector)
         //[self.view addSubview:debugLabel];
         NSLog(@"%@", theText);
     }
+    
+    SurveyAppDelegate *del = SURVEY_APP_DELEGATE;
+    del.currentView = self;
 }
 
 @end
@@ -80,6 +83,16 @@ static inline void Swizzle(Class c, SEL sourceSelector, SEL destSelector)
 #else
 
 @implementation UIViewController (MADebugTools)
+
+- (void)override_viewDidLoad
+{
+    // run existing implementation
+    [self override_viewDidLoad];
+    
+    SurveyAppDelegate *del = SURVEY_APP_DELEGATE;
+    del.currentView = self;
+}
+
 
 @end
 

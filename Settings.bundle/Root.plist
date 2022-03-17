@@ -178,11 +178,11 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Beta Password</string>
+			<string>Config Code</string>
 		</dict>
 		<dict>
 			<key>Placeholder</key>
-			<string>Enable Beta Pass</string>
+			<string>Enable Config Code</string>
 			<key>DefaultValue</key>
 			<string></string>
 			<key>Type</key>

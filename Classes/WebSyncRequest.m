@@ -63,6 +63,7 @@
 		url	= [NSURL URLWithString:pitsDir];
     
     NSLog(@"REQ.ServiceURL: %@", [NSString stringWithFormat:@"%@", url]);
+    NSLog(@"REQ.Function name: %@", [NSString stringWithFormat:@"%@",functionName]);
 	
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
 	
@@ -121,8 +122,7 @@
     
 	[req setHTTPBody:postDataArray];
     
-    if (type == PVO_SYNC || type == ATLAS_SYNC)
-        [req setTimeoutInterval:[AppFunctionality webRequestTimeoutInSeconds]];
+    [req setTimeoutInterval:[AppFunctionality webRequestTimeoutInSeconds]];
     
 	NSURLResponse *response;
 	NSError *error = nil;
