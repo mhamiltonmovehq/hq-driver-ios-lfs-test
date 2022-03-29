@@ -16,7 +16,7 @@ class ButtonPicker: UIButton {
   lazy var numberLabel: UILabel = { [unowned self] in
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = Configuration.numberLabelFont
+      label.font = ImagePicker.Configuration.numberLabelFont
 
     return label
     }()

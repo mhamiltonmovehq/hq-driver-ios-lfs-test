@@ -420,6 +420,15 @@
     self.printController.noSignatureAllowed = hideSignButton;
     self.printController.pdfPath = nil;
 
+    if(selectedItem.reportTypeID == 3073)
+    {
+        SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+        // 1850 as Dest
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = IN_TRANSIT;
+        [del.surveyDB updateShipInfo:info];
+    }
+    
     [self.navigationController pushViewController:self.printController animated:YES];
 }
 
@@ -435,7 +444,7 @@
 
 -(void)setupCurrentPage
 {
-    //SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if(currentPage == PVO_DONE)
     {
@@ -446,6 +455,45 @@
     [rows removeAllObjects];
     
     PVONavigationCategory *category = [categories objectAtIndex:currentPage-1];
+    
+    PVONavigationListItem *crew = [[PVONavigationListItem alloc] init];
+    crew.navItemID = PVO_CREW;
+    crew.display = @"Crew";
+    crew.reportNoteType = -1;
+    crew.reportTypeID = -1;
+    
+    PVONavigationListItem *actions = [[PVONavigationListItem alloc] init];
+    actions.navItemID = PVO_ACTIONS;
+    actions.display = category.categoryID == 1 ? @"Origin Actions" : @"Destination Actions";
+    actions.reportNoteType = -1;
+    actions.reportTypeID = -1;
+    actions.itemCategory = category.categoryID;
+    
+    PVONavigationListItem *checklist = [[PVONavigationListItem alloc] init];
+    checklist.navItemID = PVO_CHECKLIST;
+    checklist.display = @"Checklist";
+    checklist.reportNoteType = -1;
+    checklist.reportTypeID = -1;
+    checklist.itemCategory = category.categoryID;
+    
+    [rows addObject:crew];
+    [rows addObject:actions];
+    [rows addObject:checklist];
+    
+    
+    for (NSNumber* cat in allNavItems)
+    {
+        _checklistCompleted = [del.surveyDB areAllQuestionsAnsweredWithCustomerID:del.customerID withVehicleID:[cat intValue]];
+        
+        if (!_checklistCompleted)
+        {
+            for (PVONavigationListItem* item in allNavItems[cat])
+            {
+                item.enabledOverride = -1;
+            }
+        }
+    }
+    
     [rows addObjectsFromArray:[allNavItems objectForKey:[NSNumber numberWithInt:category.categoryID]]];
     
     //set up all completed, enabled, required... should be driven from DB?
@@ -702,6 +750,43 @@
             [SurveyAppDelegate setDefaultBackButton:self];
             [self.navigationController pushViewController:bulkyInventoryController animated:YES];
             break;
+        case PVO_CREW:
+            
+            if(crewController == nil)
+                crewController = [[CrewViewController alloc] init];
+            
+            crewController.title = @"Crew";
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:crewController animated:YES];
+            
+            break;
+        case PVO_ACTIONS:
+            
+            if(actionsController == nil)
+                actionsController = [[PVOActionItemsController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            actionsController.title = @"Actions";
+            
+            actionsController.isOrigin = selectedItem.itemCategory == 1;
+            
+            actionsController.actionTimes = [del.surveyDB getPVOActionTime:del.customerID];
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:actionsController animated:YES];
+            
+            break;
+        case PVO_CHECKLIST:
+            
+            if(checklistController == nil)
+                checklistController = [[PVOChecklistController alloc] initWithStyle:UITableViewStyleGrouped];
+            
+            checklistController.vehicle = [[PVOVehicle alloc] init];
+            checklistController.vehicle.vehicleID = selectedItem.itemCategory;
+            
+            [SurveyAppDelegate setDefaultBackButton:self];
+            [self.navigationController pushViewController:checklistController animated:YES];
+            break;
         default:
             [SurveyAppDelegate showAlert:[NSString stringWithFormat:@"This functionality is not supported with this version of %@. Please check the App Store for any available updates.", appName]
                                withTitle:@"Update Required"];
@@ -766,7 +851,10 @@
     WebSyncRequest *req = [[WebSyncRequest alloc] init];
     req.type = WEB_REPORTS;
     req.functionName = @"GetPVOReport";
-    req.serverAddress = @"print.moverdocs.com";
+//    req.serverAddress = @"print.moverdocs.com";
+    req.serverAddress = @"homesafe-docs.movehq.com";
+
+    
     req.pitsDir = @"PVOReports";
     
     if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"webdir:"].location != NSNotFound)

@@ -2545,6 +2545,102 @@
             [db updateDB:@"CREATE TABLE ItemFavoritesByRoom (ItemID INT, RoomID INT);"];
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
+        
+        // [db checkDatabaseIntegrity]; // prescott's safety check to use when necessary
+        // OT 6177 - Atlas crating update
+
+        //[db checkDatabaseIntegrity];
+        if (maj < ++ver)
+        {//MARK: Version 83 - Add OpsList related tables for replacing PVOCheckList
+            // Create the 'OpLists' table, this is the parent list of all OpLists on the device
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpLists (ListID INTEGER PRIMARY KEY, ServerListID TEXT, Agent TEXT, Name TEXT, BusinessLine TEXT, Commodity TEXT, OpListType INT)"];
+            
+            // Create the 'OpListSections' table, this lists all sections within each OpList
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListSections (SectionID INTEGER, SectionName TEXT, SortKey INT, ListID INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListQuestions' table, this lists all OpList Questions and which list they correlate to
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListQuestions (SeriesID INTEGER, SectionID INT, QuestionType INT, Question TEXT, DefaultAnswer TEXT, IsLimit INT, SortKey INT, ServerListID TEXT)"];
+            
+            // Create the 'OpListAppliedItems' table
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT)"];
+        
+            if (![db columnExists:@"AppliedItemId" inTable:@"OpListAppliedItems"])
+            {
+                // MattH: Wanted to add a Primary Key to a table that is previously unused
+                //    So just dropping it is data safe.
+                [db updateDB:@"DROP TABLE OpListAppliedItems"];
+                [db updateDB:@"CREATE TABLE IF NOT EXISTS OpListAppliedItems (AppliedItemId INTEGER PRIMARY KEY, OpListID INTEGER, CustomerID INT, SectionID INT, SeriesID INT, TextResponse TEXT, YesNoResponse INT, DateResponse REAL, QtyResponse REAL, MultChoiceResponse TEXT, ServerListID TEXT, VehicleId INT)"];
+                
+                [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+            }
+        }
+        
+        if(maj < ++ver)
+        {
+            // Adds the table for PVOActionTimes (what controls the Orig/Dest start/arrived for jobs)
+            [db updateDB:@"CREATE TABLE IF NOT EXISTS PVOActionTimes (PVOActionTimesId INTEGER PRIMARY KEY, CustomerId INTEGER, OrigStarted REAL, OrigArrived REAL, DestStarted REAL, DestArrived REAL)"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        if (maj < ++ver)
+        {
+            [db updateDB:@"BEGIN TRANSACTION; \
+            DROP TABLE IF EXISTS `OpLists`;\
+            CREATE TABLE IF NOT EXISTS `OpLists` (\
+                `ListID`    INTEGER,\
+                `ServerListID`    TEXT,\
+                `Agent`    TEXT,\
+                `Name`    TEXT,\
+                `BusinessLine`    TEXT,\
+                `Commodity`    TEXT,\
+                `OpListType`    INT,\
+                PRIMARY KEY(`ListID`)\
+            );\
+            INSERT INTO `OpLists` (ListID,ServerListID,Agent,Name,BusinessLine,Commodity,OpListType) VALUES (1,'1','296','Test','0','All',0);\
+            DROP TABLE IF EXISTS `OpListSections`;\
+            CREATE TABLE IF NOT EXISTS `OpListSections` (\
+                `SectionID`    INTEGER,\
+                `SectionName`    TEXT,\
+                `SortKey`    INT,\
+                `ListID`    INT,\
+                `ServerListID`    TEXT\
+            );\
+            INSERT INTO `OpListSections` (SectionID,SectionName,SortKey,ListID,ServerListID) VALUES (1,'Packing',1,1,'1'),\
+             (2,'Furniture',2,1,'1'),\
+             (3,'Special Instructions',3,1,'1');\
+            DROP TABLE IF EXISTS `OpListQuestions`;\
+            CREATE TABLE IF NOT EXISTS `OpListQuestions` (\
+                `SeriesID`    INTEGER,\
+                `SectionID`    INT,\
+                `QuestionType`    INT,\
+                `Question`    TEXT,\
+                `DefaultAnswer`    TEXT,\
+                `IsLimit`    INT,\
+                `SortKey`    INT,\
+                `ServerListID`    TEXT\
+            );\
+            INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,1,2,'All cartons and materials are new','false','',1,'1'),\
+             (1,1,2,'Linens, towels, bedding, draperies and other items of this type shall be packed into wardrobe type cartons and completely sealed.','false','',2,'1'),\
+             (1,1,2,'All mattresses and box springs shall be packed in cartons and completely sealed.','false','',3,'1'),\
+             (1,2,2,'Upholstered and wicker furniture shall be place right side up on all legs and covered in plastic, shrink wrap, or paper and secured with tape','false',NULL,1,'1'),\
+             (1,2,2,'All rugs, rug pads, and carpets shall be properly rolled (not folded) and protected.','false','',2,'1'),\
+             (1,3,2,'All firearms shall be stored with the bulk of the lot.','false','',1,'1'),\
+             (1,3,2,'All articles shall be removed from chest of drawers, bureaus, clothes hampers and other similar items and packed.','false','',2,'1'),\
+             (1,3,2,'Nothing shall be packed in washer, dryers, refrigerators, or other major appliances.','false','',3,'1'),\
+             (1,3,2,'All power-driven equipment shall be drained of all gasoline and batteries removed.','false','',4,'1'),\
+             (1,3,2,'Uncrated power-driven equipment and motorcycles shall be placed upright, fully covered, and wrapped in protective material.','false',NULL,5,'1');\
+            COMMIT;"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        if (maj < ++ver)
+        {
+            [db updateDB:@"INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,3,2,'All crew in uniform','false','',6,'1')"];
+            [db updateDB:@"INSERT INTO `OpListQuestions` (SeriesID,SectionID,QuestionType,Question,DefaultAnswer,IsLimit,SortKey,ServerListID) VALUES (1,3,2,'No smoking within 50ft of Service Member residence','false','',6,'1')"];
+            
+            [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
+        }
+        
         if(maj < ++ver) {
             [db updateDB: @"INSERT INTO PhoneTypes values (5, 'Phone 1', 1);"];
             [db updateDB: @"INSERT INTO PhoneTypes values (6, 'Phone 2', 1);"];
@@ -2556,7 +2652,6 @@
             [db updateDB:[NSString stringWithFormat:@"UPDATE Versions SET Major = %d", ver]];
         }
         
-        // [db checkDatabaseIntegrity]; // prescott's safety check to use when necessary
         
         [self completed];
     }

@@ -308,7 +308,9 @@
             WebSyncRequest *req = [[WebSyncRequest alloc] init];
             req.type = WEB_REPORTS;
             req.functionName = @"GetPVOReport";
-            req.serverAddress = @"print.moverdocs.com";
+            //req.serverAddress = @"print.moverdocs.com";
+            req.serverAddress = @"homesafe-win.movehq.com";
+
             req.pitsDir = @"PVOReports";
             
             if([Prefs betaPassword] != nil && [[Prefs betaPassword] rangeOfString:@"webdir:"].location != NSNotFound)
@@ -1399,6 +1401,14 @@
     
     [docsToUpload removeObjectAtIndex:0];
     
+    ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+    
+    PVOSync* sync = [[PVOSync alloc] init];
+    sync.syncAction = PVO_SYNC_ACTION_UPDATE_ORDER_STATUS;
+    sync.orderStatus = [ShipmentInfo getStatusString:info.status];
+    sync.orderNumber = info.orderNumber;
+    [del.operationQueue addOperation:sync];
+    
     [self uploadNextDoc];
     //[self done:nil];
 }
@@ -1827,6 +1837,21 @@
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature
 {
     [self signatureView:sigController confirmedSignature:signature withPrintedName:signatureName];
+    
+    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    // Set Load status for next sync
+    if(self.pvoItem.reportTypeID == INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = LOAD;
+        [del.surveyDB updateShipInfo:info];
+    }
+    else if(self.pvoItem.reportTypeID == DELIVERY_INVENTORY)
+    {
+        ShipmentInfo* info = [del.surveyDB getShipInfo:del.customerID];
+        info.status = DELIVERED;
+        [del.surveyDB updateShipInfo:info];
+    }
 }
 
 -(void)signatureView:(SignatureViewController*)sigController confirmedSignature:(UIImage*)signature withPrintedName:(NSString*)printedName

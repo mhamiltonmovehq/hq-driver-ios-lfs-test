@@ -12,6 +12,7 @@
 #import "SurveyAppDelegate.h"
 #import "CustomerUtilities.h"
 #import "SurveyCustomer.h"
+#import "OLCombinedQuestionAnswer.h"
 
 @interface PVOChecklistController ()
 
@@ -19,7 +20,10 @@
 
 @implementation PVOChecklistController
 
+//@synthesize order, process;
 @synthesize checklist;
+//@synthesize tableChecklist;
+//@synthesize tableSummary;
 @synthesize vehicle;
 @synthesize isOrigin;
 
@@ -39,108 +43,142 @@
     if([SurveyAppDelegate iPad])
     {
         self.clearsSelectionOnViewWillAppear = YES;
-        self.preferredContentSize = CGSizeMake(320, 416);
+        self.contentSizeForViewInPopover = CGSizeMake(320, 416);
     }
     
     [SurveyAppDelegate adjustTableViewForiOS7:self.tableView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonSystemItemDone target:self action:@selector(cmdNextClick:)];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.title = @"Checklist";
     
+    //[self.tableSummary reloadData];
+    
     [super viewWillAppear:animated];
     
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
+    //[self.tableChecklist reloadData];
+    
+    SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
+    customer = [del.surveyDB getCustomer:del.customerID];
     DriverData *data = [del.surveyDB getDriverData];
-    self.checklist = [del.surveyDB getCheckListItems:del.customerID withVehicleID:vehicle.vehicleID withAgencyCode:data.haulingAgent];
-        
+    int listID = [del.surveyDB getOpListIDForBusinessLine:customer.pricingMode withAgent:data.haulingAgent];
+    _sections = [del.surveyDB getOpListSections:listID];
+    self.checklist = [del.surveyDB getOpListQuestionsAndAnswersWithListID:listID withCustomerID:del.customerID withVehicleID:vehicle.vehicleID];
+    
+    
     if ([self.checklist count] <= 0 && [self isMovingToParentViewController])
     {
         [self cmdNextClick:self];
         return;
     }
     
+    
     [self.tableView reloadData];
-    [self.tableView setContentOffset:CGPointZero animated:YES];
+    if([self.tableView numberOfSections] > 0 && [self.tableView numberOfRowsInSection:0] > 0)
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    //[self.tableView setContentOffset:CGPointZero animated:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
-{    
+{
+    //disabled, user will need to check mark every item whenever the enter an item JL
+    //    SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
+    //    [del.surveyDB saveVehicleCheckList:checklist];
+    
+    
     [super viewWillDisappear:animated];
 }
 
+//- (void)viewDidUnload
+//{
+//    [self setTableChecklist:nil];
+//    [self setTableSummary:nil];
+//    [super viewDidUnload];
+//    // Release any retained subviews of the main view.
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)cmdNextClick:(id)sender 
+-(void)dealloc
+{
+}
+
+- (IBAction)cmdNextClick:(id)sender
 {
     if(![self verifyFieldsAreComplete])
         return;
-    
-    if(wireframe == nil)
-        wireframe = [[PVOWireFrameTypeController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    wireframe.wireframeItemID = vehicle.vehicleID;
-    wireframe.selectedWireframeTypeID = vehicle.wireframeType;
-    wireframe.isOrigin = isOrigin;
-    wireframe.isAutoInventory = YES; //not sure that we need checklists in here, maybe we'll add it once people have moveHq?
-    wireframe.delegate = self;
-    
-    [SurveyAppDelegate setDefaultBackButton:self];
-    [self.navigationController pushViewController:wireframe animated:YES];
+    [self saveOpListResponses];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 -(BOOL)verifyFieldsAreComplete
 {
-    for (int i = 0; i < [checklist count]; i++)
-    {
-        PVOCheckListItem *item = checklist[i];
-        
-        if(item != nil && !item.isChecked)
+    for (NSMutableArray* section in checklist) {
+        for (int i = 0; i < [section count]; i++)
         {
-            [SurveyAppDelegate showAlert:@"All Items must be checked before continuing." withTitle:@"Items must be checked"];
-            return FALSE;
+            OLCombinedQuestionAnswer *item = section[i];
+        
+            if(item.answer.yesNoResponse == NO)
+            {
+                [SurveyAppDelegate showAlert:@"All Items must be checked before continuing." withTitle:@"Items must be checked"];
+                return FALSE;
+            }
+        
         }
     }
     
     return TRUE;
 }
 
-- (IBAction)cmdPreviousClick:(id)sender 
+- (IBAction)cmdPreviousClick:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) saveOpListResponses
+{
+    // Save applied OpListItems
+    SurveyAppDelegate *del = [[UIApplication sharedApplication] delegate];
+    
+    for (NSMutableArray* section in checklist) {
+        for (OLCombinedQuestionAnswer *item in section)
+        {
+            [del.surveyDB saveOpListItem:item.answer];
+        }
+    }
+}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [checklist count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [checklist count];
+    return [checklist[section] count];
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PVOCheckListItem *item = checklist[indexPath.row];
-    return [AutoSizeLabelCell sizeOfCellForText:item.description];
-
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
+    return [AutoSizeLabelCell sizeOfCellForText:item.question.question];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Pre-Ship Checklist";
+    return ((OLSection*)_sections[section]).sectionName;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -151,8 +189,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *AutoSizeCellIdentifier = @"AutoSizeLabelCell";
-
+    
     AutoSizeLabelCell *sizeCell = nil;
+    
     sizeCell = (AutoSizeLabelCell*)[tableView dequeueReusableCellWithIdentifier:AutoSizeCellIdentifier];
     
     if (sizeCell == nil) {
@@ -161,10 +200,10 @@
     }
     sizeCell.accessoryType = UITableViewCellAccessoryNone;
     
-    PVOCheckListItem *item = checklist[indexPath.row];
-    sizeCell.text = item.description;
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
+    sizeCell.text = item.question.question;
     
-    if(item.isChecked)
+    if(item.answer.yesNoResponse == YES)
         sizeCell.accessoryType = UITableViewCellAccessoryCheckmark;
 
     return sizeCell;
@@ -176,35 +215,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
+    
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    PVOCheckListItem *item = checklist[indexPath.row];
-    if(item.isChecked)
+    OLCombinedQuestionAnswer *item = checklist[indexPath.section][indexPath.row];
+    if(item.answer.yesNoResponse == YES)
     {//remove it, clear check
         cell.accessoryType = UITableViewCellAccessoryNone;
-        item.isChecked = NO;
+        item.answer.yesNoResponse = NO;
     }
-    else 
+    else
     {//add and check
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        item.isChecked = YES;
+        item.answer.yesNoResponse = YES;
     }
-}
-
-#pragma mark - PVOWiretypeControllerDelegate methods
-
--(NSDictionary*)getWireFrameTypes:(id)controller
-{
-    return [[NSDictionary alloc] initWithObjects:@[@"Car", @"Truck", @"SUV", @"Photo"]
-                                         forKeys:@[[NSNumber numberWithInt:1],[NSNumber numberWithInt:2],[NSNumber numberWithInt:3],[NSNumber numberWithInt:4]]];
-    
-}
-
--(void)saveWireFrameTypeIDForDelegate:(int)selectedWireframeType
-{
-    SurveyAppDelegate *del = (SurveyAppDelegate *)[[UIApplication sharedApplication] delegate];
-    vehicle.wireframeType = selectedWireframeType;
-    [del.surveyDB saveVehicle:vehicle];
     
 }
 

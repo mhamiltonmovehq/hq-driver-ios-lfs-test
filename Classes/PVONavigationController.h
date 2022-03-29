@@ -28,6 +28,8 @@
 #import "PVOAutoInventoryController.h"
 #import "PVOAutoinventorySignController.h"
 #import "PVOBulkyInventoryController.h"
+#import "PVOActionItemsController.h"
+#import "CrewViewController.h"
 
 #define PVO_DONE 0
 
@@ -70,6 +72,9 @@ UIAlertViewDelegate, PVOUploadReportViewDelegate, PVOSyncDelegate, HTMLReportGen
     PVOAutoInventoryController *autoInventoryController;
     PVOAutoInventorySignController *autoInventorySignController;
     PVOBulkyInventoryController *bulkyInventoryController;
+    PVOChecklistController *checklistController;
+    PVOActionItemsController *actionsController;
+    CrewViewController *crewController;
     DownloadFile *htmlDownloader;
     HTMLReportGenerator *htmlGenerator;
     
@@ -128,6 +133,8 @@ UIAlertViewDelegate, PVOUploadReportViewDelegate, PVOSyncDelegate, HTMLReportGen
 @property (nonatomic, retain) NSMutableString *currentSyncMessage;
 
 @property (nonatomic, retain) PVOAttachDocController *attachDocController;
+
+@property (nonatomic) BOOL checklistCompleted;
 
 -(IBAction)previous:(id)sender;
 -(IBAction)next:(id)sender;

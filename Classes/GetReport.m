@@ -96,7 +96,9 @@
 		WebSyncRequest *req = [[WebSyncRequest alloc] init];
 		req.type = WEB_REPORTS;
 		req.functionName = @"EmailReport";
-		req.serverAddress = @"print.moverdocs.com";
+//        req.serverAddress = @"print.moverdocs.com";
+        req.serverAddress = @"homesafe-win.movehq.com";
+
         if (emailReport && option.htmlSupported)
         {
             req.pitsDir = @"PVOReports";

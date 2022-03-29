@@ -36,6 +36,8 @@
 #import "PVONavigationListItem.h"
 #import "PVOSTGBOL.h"
 #import "PVOSTGBOLParser.h"
+#import "OpList.h"
+#import "OLCombinedQuestionAnswer.h"
 
 @implementation SurveyDB
 
@@ -125,6 +127,24 @@
 -(void)dealloc
 {
     [self closeDB];
+}
+
+-(BOOL)updateDB:(NSString*)cmd withLastInsertRowID:(int*)lastInsertRowID
+{
+    *lastInsertRowID = 0;
+    BOOL success = YES;
+    @synchronized(self)
+    {
+        char* err;
+        int resultCode;
+        if((resultCode = sqlite3_exec(db, [cmd UTF8String], NULL, NULL, &err)) != SQLITE_OK)
+        {
+            [SurveyAppDelegate showAlert:[NSString stringWithFormat: @"%s: CMD: %@", err, cmd] withTitle:@"Error updating database" withDelegate:nil onSeparateThread:runningOnSeparateThread];
+            success = NO;
+        }
+        *lastInsertRowID = sqlite3_last_insert_rowid(db);
+    }
+    return success;
 }
 
 -(BOOL)prepareStatement:(NSString*)cmd withStatement:(sqlite3_stmt**)stmnt
@@ -1083,6 +1103,8 @@
     [self updateDB:cmd];
     
     
+    [self deletePVOActionTime:cID];
+    
     CubeSheet *cs = [self openCubeSheet:cID];
     
     if(cs != nil)
@@ -1331,6 +1353,9 @@
             [self deleteVehicle:vehicle];
         }
     }
+    
+    // Remove OpList/Checklist Answers
+    [self deleteOpListItemsForCustomerID:cID];
     
 #if defined(ATLASNET)
     // delete the STG BOL XML data file
@@ -10794,5 +10819,413 @@
     NSString* locationColumnName = origin ? @"OriginCompletionDate" : @"DestinationCompletionDate";
     [self updateDB:[NSString stringWithFormat:@"UPDATE Customer SET %@ = '' WHERE CustomerID = %d",locationColumnName,customerID]];
 }
+
+#pragma mark - Operational List
+
+-(int)saveOpList:(OpList*)opList
+{
+    NSString *moveTypes = [opList.businessLines componentsJoinedByString:@","];
+    NSString *cmd = [NSString stringWithFormat:@"INSERT INTO OpLists (ServerListID, Agent, Name, BusinessLine, Commodity) VALUES ('%@', '%@', '%@','%@', '%@')",opList.serverListID, opList.agent,[opList.name stringByReplacingOccurrencesOfString:@"'" withString:@"''"],moveTypes,opList.commodity];
+    
+    int lastInsertRowID = 0;
+    [self updateDB:cmd withLastInsertRowID:&lastInsertRowID];
+    
+    return lastInsertRowID;
+}
+
+-(OpList*)getOpListById:(int)opListId
+{
+    OpList *retval = [[OpList alloc] init];
+    
+    @synchronized(self)
+    {
+        NSString *cmd = [NSString stringWithFormat:@"SELECT ListID, ServerListID, Agent, Name, Commodity FROM OpLists WHERE ListID = %d",opListId];
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                retval.listID = sqlite3_column_int(stmnt, 0);
+                retval.serverListID = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 1)];
+                retval.agent = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 2)];
+                retval.name = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 3)];
+                
+                NSString *moveTypes = [[NSString alloc] initWithString:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 1)]];
+                retval.businessLines = [[NSMutableArray alloc] initWithArray:[moveTypes componentsSeparatedByString:@","]];
+                
+                retval.commodity = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 4)];
+            }
+        }
+        sqlite3_finalize(stmnt);
+    }
+    
+    return retval;
+}
+
+-(int)getOpListIDForBusinessLine:(int)businessLine withAgent:(NSString*)agent
+{
+    int retval = -1;
+    int listID = -1;
+    NSString *cmd = [NSString stringWithFormat:@"SELECT ListID, BusinessLine FROM OpLists WHERE (Commodity LIKE '%%Auto%%' or Commodity LIKE '%%All%%') AND Agent = '%@'",agent];
+    
+    @synchronized(self)
+    {
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                listID = sqlite3_column_int(stmnt, 0);
+                
+                NSString *moveTypes = [[NSString alloc] initWithString:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 1)]];
+                
+                if (moveTypes != nil && ![moveTypes isEqualToString:@""])
+                {
+                    NSArray *moveTypeArr = [[NSArray alloc] initWithArray:[moveTypes componentsSeparatedByString:@","]];
+                    
+                    if (moveTypeArr != nil && [moveTypeArr count] > 0)
+                    {
+                        for(int i = 0; i < [moveTypeArr count]; i++)
+                        {
+                            if (businessLine == [moveTypeArr[i] intValue])
+                            {
+                                retval = listID;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        sqlite3_finalize(stmnt);
+    }
+    
+    return retval;
+}
+
+-(int)getOpListIDForBooker:(NSString*)agent
+{
+    int retval = -1;
+    NSString *cmd = [NSString stringWithFormat:@"SELECT ListID FROM OpLists WHERE Agent = '%@'",agent];
+    
+    @synchronized(self)
+    {
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                retval = sqlite3_column_int(stmnt, 0);
+            }
+        }
+        sqlite3_finalize(stmnt);
+    }
+    
+    return retval;
+}
+
+-(NSMutableArray*)getOpListSections:(int)listID
+{
+    NSMutableArray *retval = [[NSMutableArray alloc] init];
+    
+    @synchronized(self)
+    {
+        //        NSString *listIDArg = listID == -1 ? @"" : [NSString stringWithFormat:@"WHERE ListID = %d",listID];
+        //@modified rc on 4/12/2017: fix Bug 29731 -  returns list sections based on listID only and not everything if move type not found
+        NSString *listIDArg = [NSString stringWithFormat:@"WHERE ListID = %d",listID];
+        NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT SectionID, SectionName, SortKey, ListID, ServerListID FROM OpListSections %@ ORDER BY SortKey",listIDArg];
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                OLSection *section = [[OLSection alloc] init];
+                section.sectionID = sqlite3_column_int(stmnt, 0);
+                section.sectionName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 1)];
+                section.sortKey = sqlite3_column_int(stmnt, 2);
+                section.listID = sqlite3_column_int(stmnt, 3);
+                //const char *columnText = (const char *)sqlite3_column_text(stmnt, 4);
+                //section.serverListID = columnText != NULL ? [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 4)] : @"";
+                section.serverListID = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 4)];
+                [retval addObject:section];
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+    }
+    
+    return retval;
+}
+
+-(NSArray*)getOpListQuestionsAndAnswersWithListID:(int)listId withCustomerID:(int)customerId withVehicleID:(int)vehicleId
+{
+    // Loop through the Sections of the OpList, pull all Questions, then pull all Answers for those Questions
+    NSMutableArray *retval = [[NSMutableArray alloc] init];
+    NSArray *sections = [self getOpListSections:listId];
+    
+    for (OLSection *section in sections)
+    {
+        NSMutableArray *sectionQuestions = [[NSMutableArray alloc] init];
+        // So the customers want McAuto to use the same design for OpList as for PreFlightChecklist
+        //    Since they want all questions on a single screen, I'm pulling all sections together
+        //    This also helps customers with configuration on the MoveHQ side, as previously the plan
+        //    was to have them only make Lists with 1 section. But Customers can't be expected to
+        //    follow directions (assuming they even receive the directions)
+        NSMutableArray *questions = [self getOpListSectionYesNoQuestions:section.sectionID withServerListID:section.serverListID];
+        
+        for (OLQuestion *question in questions)
+        {
+            OLAppliedItem *answer = [self getOpListAppliedItem:customerId withSectionID:section.sectionID withQuestionID:question.questionID withServerListID:section.serverListID withVehicleID:vehicleId];
+            
+            // The OpListID isn't available for default answers
+            answer.opListID = listId;
+            
+            // Now that we have both the AppliedItem(Answer) and Question, combine them and add to our return
+            OLCombinedQuestionAnswer *combinedQA = [[OLCombinedQuestionAnswer alloc] init];
+            combinedQA.customerId = customerId;
+            combinedQA.sectionId = section.sectionID;
+            combinedQA.questionId = question.questionID;
+            combinedQA.question = question;
+            combinedQA.answer = answer;
+            [sectionQuestions addObject:combinedQA];
+        }
+        
+        [retval addObject:sectionQuestions];
+    }
+    
+    return retval;
+}
+
+-(bool)areAllQuestionsAnsweredWithCustomerID:(int)customerId withVehicleID:(int)vehicleId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM OpListAppliedItems WHERE CustomerID = %d AND VehicleId = %d",customerId,vehicleId];
+    if([self getIntValueFromQuery:cmd] == 0)
+        return false;
+    
+    cmd = [[NSString alloc] initWithFormat:@"SELECT COUNT(*) FROM OpListAppliedItems WHERE CustomerID = %d AND VehicleId = %d AND YesNoResponse = 0",customerId,vehicleId];
+
+    return [self getIntValueFromQuery:cmd] == 0;
+}
+
+-(NSMutableArray*)getOpListSectionYesNoQuestions:(int)sectionID withServerListID:(NSString*)serverListID
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT SeriesID, QuestionType, Question, DefaultAnswer, IsLimit, SortKey, ServerListID FROM OpListQuestions WHERE SectionID = %d AND ServerListID = '%@' AND QuestionType = %d ORDER BY SortKey",sectionID,serverListID, QUESTION_TYPE_YESNO];
+    
+    NSMutableArray *retval = [[NSMutableArray alloc] init];
+    
+    @synchronized(self)
+    {
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                OLQuestion *question = [[OLQuestion alloc] init];
+                question.questionID = sqlite3_column_int(stmnt, 0);
+                question.questionType = sqlite3_column_int(stmnt, 1);
+                question.question = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 2)];
+                question.defaultAnswer = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 3)];
+                question.isLimit = sqlite3_column_int(stmnt, 4) > 0;
+                question.sortKey = sqlite3_column_int(stmnt, 5);
+                question.serverListID = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 6)];
+                [retval addObject:question];
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+    }
+    
+    return retval;
+}
+
+-(NSMutableArray*)getOpListAppliedItems:(int)customerID
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT AppliedItemId, OpListID, CustomerID, SectionID, SeriesID, TextResponse, YesNoResponse, DateResponse, QtyResponse, MultChoiceResponse, ServerListID, VehicleId FROM OpListAppliedItems WHERE CustomerID = %d ORDER BY SectionID",customerID];
+    
+    NSMutableArray *retval = [[NSMutableArray alloc] init];
+    
+    @synchronized(self)
+    {
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            while(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                OLAppliedItem *item = [[OLAppliedItem alloc] init];
+                item.appliedItemId = sqlite3_column_int(stmnt, 0);
+                item.opListID = sqlite3_column_int(stmnt, 1);
+                item.customerID = sqlite3_column_int(stmnt, 2);
+                item.sectionID = sqlite3_column_int(stmnt, 3);
+                item.questionID = sqlite3_column_int(stmnt, 4);
+                item.textResponse = [SurveyDB stringFromStatement:stmnt columnID:5];
+                item.yesNoResponse = sqlite3_column_int(stmnt, 6) > 0;
+                item.dateResponse = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 7)];
+                item.qtyResponse = sqlite3_column_double(stmnt, 8);
+                item.multChoiceResponse = [SurveyDB stringFromStatement:stmnt columnID:9];
+                item.serverListID = [SurveyDB stringFromStatement:stmnt columnID:10];
+                item.vehicleId = sqlite3_column_int(stmnt, 11);
+                [retval addObject:item];
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+        
+    }
+    
+    return retval;
+}
+
+-(OLAppliedItem*)getOpListAppliedItem:(int)customerID withSectionID:(int)sectionID withQuestionID:(int)seriesID withServerListID:(NSString*)serverListID withVehicleID:(int)vehicleId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT AppliedItemId, OpListID, CustomerID, SectionID, SeriesID, TextResponse, YesNoResponse, DateResponse, QtyResponse, MultChoiceResponse, ServerListID, VehicleId FROM OpListAppliedItems WHERE CustomerID = %d AND SectionID = %d AND SeriesID = %d AND ServerListID = '%@' AND VehicleId = %d ORDER BY SeriesID",customerID,sectionID,seriesID,serverListID,vehicleId];
+    
+    // Modified logic to return blank AppliedItems
+    OLAppliedItem *retval = [[OLAppliedItem alloc] init];
+    retval.appliedItemId = -1;
+    retval.customerID = customerID;
+    retval.sectionID = sectionID;
+    retval.questionID = seriesID;
+    retval.serverListID = serverListID;
+    retval.vehicleId = vehicleId;
+    
+    @synchronized(self)
+    {
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            if(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                retval.appliedItemId = sqlite3_column_int(stmnt, 0);
+                retval.opListID = sqlite3_column_int(stmnt, 1);
+                retval.customerID = sqlite3_column_int(stmnt, 2);
+                retval.sectionID = sqlite3_column_int(stmnt, 3);
+                retval.questionID = sqlite3_column_int(stmnt, 4);
+                retval.textResponse = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 5)];
+                retval.yesNoResponse = sqlite3_column_int(stmnt, 6) > 0;
+                retval.dateResponse = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 7)];
+                retval.qtyResponse = sqlite3_column_double(stmnt, 8);
+                retval.multChoiceResponse = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 9)];
+                retval.serverListID = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(stmnt, 10)];
+                retval.vehicleId = sqlite3_column_int(stmnt, 11);
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+    }
+    
+    return retval;
+}
+
+-(void)saveOpListSection:(OLSection*)section
+{
+    [self updateDB:[NSString stringWithFormat:@"INSERT INTO OpListSections (SectionID, SectionName, SortKey, ListID, ServerListID) VALUES (%d,'%@',%d, %d, '%@')",section.sectionID,
+                    [section.sectionName stringByReplacingOccurrencesOfString:@"'" withString:@"''"], section.sortKey, section.listID, section.serverListID]];
+}
+
+-(void)saveOpListQuestion:(OLQuestion*)question withSectionID:(int)sectionID
+{
+    [self updateDB:[NSString stringWithFormat:@"INSERT INTO OpListQuestions (SeriesID, SectionID, QuestionType, Question, DefaultAnswer, IsLimit, SortKey, ServerListID) VALUES (%d,%d,%d,'%@','%@',%d,%d, '%@')",question.questionID,sectionID,question.questionType,[question.question stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                    [question.defaultAnswer stringByReplacingOccurrencesOfString:@"'" withString:@"''"], question.isLimit ? 1 : 0, question.sortKey, question.serverListID]];
+}
+
+-(void)saveOpListItem:(OLAppliedItem*)item
+{
+    if(item.appliedItemId == -1)
+    {
+        [self updateDB:[NSString stringWithFormat:@"INSERT INTO OpListAppliedItems (CustomerID, SectionID, SeriesID, TextResponse, YesNoResponse, DateResponse, QtyResponse, MultChoiceResponse, ServerListID, VehicleId) VALUES (%d,%d,%d,'%@',%d,%f,%f,'%@','%@', %d)",item.customerID, item.sectionID, item.questionID,
+                        [item.textResponse stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                        item.yesNoResponse ? 1 : 0, [item.dateResponse timeIntervalSince1970], item.qtyResponse,
+                        [item.multChoiceResponse stringByReplacingOccurrencesOfString:@"'" withString:@"''"],item.serverListID, item.vehicleId]];
+        
+        item.appliedItemId = (int) sqlite3_last_insert_rowid(db);
+    }
+    else
+    {
+        [self updateDB:[NSString stringWithFormat:@"UPDATE OpListAppliedItems SET TextResponse = '%@', YesNoResponse = %d, DateResponse = %f, QtyResponse = %f, MultChoiceResponse = '%@' WHERE CustomerID = %d AND SectionID = %d AND SeriesID = %d AND ServerListID = '%@' AND AppliedItemId = %d",
+                        [item.textResponse stringByReplacingOccurrencesOfString:@"'" withString:@"''"],
+                        item.yesNoResponse ? 1 : 0, [item.dateResponse timeIntervalSince1970], item.qtyResponse,
+                        [item.multChoiceResponse stringByReplacingOccurrencesOfString:@"'" withString:@"''"],item.customerID,item.sectionID,item.questionID,item.serverListID,
+                        item.appliedItemId]];
+    }
+    
+    
+}
+
+-(void)deleteOpListItemsForCustomerID:(int)custID
+{
+    [self updateDB:[NSString stringWithFormat:@"DELETE FROM OpListAppliedItems WHERE CustomerID = %d", custID]];
+}
+
+-(void)deleteOperationalList
+{
+    [self updateDB:@"DELETE FROM OpLists"];
+    [self updateDB:@"DELETE FROM OpListSections"];
+    [self updateDB:@"DELETE FROM OpListQuestions"];
+    [self updateDB:@"DELETE FROM OpListMultChoiceOptions"];
+}
+
+-(int)savePVOActionTime:(PVOActionTimes*)actionTimes
+{
+    NSString* cmd = nil;
+    if (actionTimes.pvoActionTimesId == -1)
+    {
+        cmd = [[NSString alloc] initWithFormat:@"INSERT INTO PVOActionTimes(CustomerId, OrigStarted, OrigArrived, DestStarted, DestArrived) VALUES(%d,%f,%f,%f,%f)", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970]];
+        
+        [self updateDB:cmd];
+        actionTimes.pvoActionTimesId = (int) sqlite3_last_insert_rowid(db);
+    }
+    else
+    {
+        cmd = [[NSString alloc] initWithFormat:@"UPDATE PVOActionTimes SET CustomerId = %d, OrigStarted = %f, OrigArrived = %f, DestStarted = %f, DestArrived = %f WHERE PVOActionTimesId = %d", actionTimes.customerId, [actionTimes.origStarted timeIntervalSince1970], [actionTimes.origArrived timeIntervalSince1970], [actionTimes.destStarted timeIntervalSince1970], [actionTimes.destArrived timeIntervalSince1970], actionTimes.pvoActionTimesId];
+        
+        [self updateDB:cmd];
+    }
+    
+    return actionTimes.pvoActionTimesId;
+}
+
+-(PVOActionTimes*)getPVOActionTime:(int)customerId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"SELECT PVOActionTimesId, OrigStarted, OrigArrived, DestStarted, DestArrived FROM PVOActionTimes WHERE CustomerId = %d", customerId];
+    
+    
+    PVOActionTimes *retval = [[PVOActionTimes alloc] init];
+    retval.pvoActionTimesId = -1;
+    retval.customerId = customerId;
+    
+    @synchronized(self)
+    {
+        
+        sqlite3_stmt *stmnt;
+        if([self prepareStatement:cmd withStatement:&stmnt])
+        {
+            if(sqlite3_step(stmnt) == SQLITE_ROW)
+            {
+                retval.pvoActionTimesId = sqlite3_column_int(stmnt, 0);
+                retval.origStarted = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 1)];
+                retval.origArrived = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 2)];
+                retval.destStarted = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 3)];
+                retval.destArrived = [NSDate dateWithTimeIntervalSince1970: sqlite3_column_double(stmnt, 4)];
+            }
+        }
+        sqlite3_finalize(stmnt);
+        
+    }
+    
+    return retval;
+}
+
+-(void)deletePVOActionTime:(int)customerId
+{
+    NSString *cmd = [[NSString alloc] initWithFormat:@"DELETE FROM PVOActionTimes WHERE CustomerId = %d", customerId];
+    [self updateDB:cmd];
+}
+
+//CREATE TABLE IF NOT EXISTS PVOActionTimes (CustomerId INTEGER, OrigStarted REAL, OrigArrived REAL, DestStarted REAL, DestArrived REAL)
 
 @end

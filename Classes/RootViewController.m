@@ -351,6 +351,8 @@
                 pvoDownload = [[PVOSyncController alloc] initWithStyle:UITableViewStyleGrouped];
             pvoDownload.title = @"Download";
             navController = [[PortraitNavController alloc] initWithRootViewController:pvoDownload];
+
+            //MARK: Next two lines from updated MASTER merge
             navController.dismissDelegate = self;
             navController.dismissCallback = @selector(reloadTableViewData);
             

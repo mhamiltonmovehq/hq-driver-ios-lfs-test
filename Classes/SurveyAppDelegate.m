@@ -30,6 +30,8 @@
 #import "RootViewController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "UIViewController+SwizzlePresent.h"
+
 #if defined(ATLASNET)
 #import <ScanbotSDK/ScanbotSDK.h>
 #endif
@@ -110,7 +112,11 @@
     if (hasInternet && testExternal)
     {//test external connection.  timeout of 10 seconds
         NSHTTPURLResponse *resp = nil;
-        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://print.moverdocs.com/"]
+//        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://print.moverdocs.com/"]
+//                                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+//                                                                                timeoutInterval:10.0]
+//                                                 returningResponse:&resp error:nil];
+        NSData *respData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://homesafe-docs.movehq.com/"]
                                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                                                 timeoutInterval:10.0]
                                                  returningResponse:&resp error:nil];
@@ -842,6 +848,15 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	    
+    if (@available(iOS 15, *)){
+            UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+            [appearance configureWithOpaqueBackground];
+        appearance.backgroundColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:1.00];//[UIColor colorNamed:@"NavBarColor"];
+            [UINavigationBar appearance].standardAppearance = appearance;
+            [UINavigationBar appearance].scrollEdgeAppearance = appearance;
+        }
+
+    
     if([SurveyAppDelegate isRetina4] || [SurveyAppDelegate iPad])
         [window setFrame:[[UIScreen mainScreen] bounds]];
     
@@ -855,6 +870,14 @@
 	
 	[Fabric with:@[[Crashlytics class]]];
 
+    
+    // METHOD SWIZZLING
+    // This is for iOS13 and how they changed Modal presentations to no longer be full screen
+    //  which means the parent ViewWillAppear (and similar methods) do not get called
+    //  we have logic that depends on this, so we need to force all presentations to be
+    //  fullscreen
+    [UIViewController swizzlePresent];
+    
     [SurveyAppDelegate setupScanbot];
 
     //check beta password for debug code.  if present, go to debug view instead.

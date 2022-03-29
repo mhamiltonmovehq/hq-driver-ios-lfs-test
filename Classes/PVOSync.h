@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WebSyncRequest.h"
-#import "RestSyncRequest.h"
 #import "XMLWriter.h"
 #import "SurveyDownloadXMLParser.h"
 
@@ -22,29 +21,13 @@
 #define PVO_SYNC_ACTION_UPLOAD_PPI 7
 #define PVO_SYNC_ACTION_UPLOAD_WEIGHT_TICKET 8
 #define PVO_SYNC_ACTION_UPLOAD_PACK_SERVICES 9
-#define PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES 10  // TODO: Atlas logic. Dead in this repo. Remove.
+#define PVO_SYNC_ACTION_UPDATE_ACTUAL_DATES 10
 #define PVO_SYNC_ACTION_UPLOAD_BOL 11
 #define PVO_SYNC_ACTION_UPLOAD_DOCUMENT_WITH_REPORTTYPEID 12
 #define PVO_SYNC_ACTION_SYNC_CANADA 13
 #define PVO_SYNC_ACTION_GET_DATA 16
 #define PVO_SYNC_ACTION_GET_DATA_WITH_ORDER_REQUEST 17
-
-#define SCHEME @"https://"
-#define QA_HOST @"basesync-qa.movehq.com/"
-#define UAT_HOST @"basesync-uat.movehq.com/"
-#define PROD_HOST @"basesync.movecrm.com/"
-
-#define AICLOUD_PATH @"moveCRMSync/api/aicloud"
-
-#define UNLOADS_PATH @"/unloads"
-#define LOADS_PATH @"/loads"
-#define ORDERS_PATH @"/orders"
-#define REPORTS_PATH @"/reports"
-#define WEIGHT_TICKET_PATH @"/weightTickets"
-#define INVENTORY_ACTIVITY_PATH @"/inventoryActivity"
-#define ITEM_IMAGES_PATH @"/images/items"
-#define ROOM_IMAGES_PATH @"/images/rooms"
-#define LOCATION_IMAGES_PATH @"/images/locations"
+#define PVO_SYNC_ACTION_UPDATE_ORDER_STATUS 18
 
 @class PVOSync;
 @protocol PVOSyncDelegate <NSObject>
@@ -90,6 +73,7 @@
     
     BOOL ssl;
 }
+
 @property (nonatomic) SEL updateCallback;
 @property (nonatomic) SEL completedCallback;
 @property (nonatomic) SEL errorCallback;
@@ -107,8 +91,6 @@
 @property (nonatomic) int sproWeight;
 @property (nonatomic) int consWeight;
 
-@property (nonatomic, strong) RestSyncRequest *restRequest;
-
 @property (nonatomic, strong) NSObject *updateWindow;
 @property (nonatomic, strong) NSString *orderNumber;
 @property (nonatomic, strong) NSArray *inventoryItemEntries;
@@ -119,6 +101,7 @@
 @property (nonatomic, strong) NSObject<PVOSyncDelegate> *delegate;
 
 @property (nonatomic) BOOL isDelivery;
+@property (nonatomic) NSString* orderStatus;
 
 // added for generic report/data download
 @property (nonatomic, strong) NSString *functionName;
@@ -150,7 +133,9 @@
 -(BOOL)downloadMMRoomImages:(int)imageID forRoomID:(int)roomID;
 -(BOOL)downloadMMLocationImages;
 
+-(BOOL)updateActualDates;
+-(BOOL)updateOrderStatus;
+
 -(XMLWriter*)getRequestXML;
--(NSDictionary*)getOrderRequestJson:(NSError**) error;
 
 @end
